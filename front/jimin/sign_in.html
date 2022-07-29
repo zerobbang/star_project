@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="signin.css" rel="stylesheet" />
+    <title>회원가입 페이지</title>
+</head>
+<body>
+    <div class="wrapper"> <!-- 칸앞에 글을 나둬야 한다-->
+        <div class="title"><h1 style="font-size: 30px;">회원 가입</h1></div>
+        <div class="ID"><span>ID</span> 
+            <input id="ID" type="text" placeholder="영어(대소문자 구분 가능)+숫자">
+            <div id="IDerror" class="error"></div>
+        </div>
+        <div class="password"><span>비밀번호</span> 
+            <input id="password" type="text" placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리">
+            <div id="PasswordError" class="error"></div>
+        </div>
+        <div class="passwordCheck"><span>비밀번호 재입력</span> 
+            <input id="passwordCheck" type="text" placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리">
+            <div id="PasswordCheckError" class="error"></div>
+        </div>
+        <div class="nickname"><span>닉네임</span> 
+            <input id="nickname" type="text" placeholder="닉네임을 입력해주세요.">
+            <div id="nicknameError" class="error"></div>
+        </div>
+        <div class="phonenumber"><span>핸드폰번호</span> 
+            <input id="phonenumber" type="text" placeholder="ex. 01012345678">
+            <!-- <button disabled id="check">인증번호발송</button> -->
+            <button disabled id="sendMessage" onclick="getToken()">인증번호 전송</button>
+            <div id="phonenumberError" class="error"></div>
+        </div>
+        <!-- <div class="auth"><span>인증번호</span> -->
+            <!-- <div id="certificationNumber">000000</div> -->
+        </div>
+        <div class="region"><span>기본 지역</span> 
+            <select id="region">
+                <option selected disabled>지역을 선택하세요.</option>
+                <option>서울</option>
+                <option>부산</option>
+                <option>대구</option>
+                <option>인천</option>
+                <option>광주</option>
+                <option>대전</option>
+                <option>울산</option>
+                <option>세종</option>
+                <option>경기도</option>
+                <option>강원도</option>
+                <option>충청북도</option>
+                <option>충청남도</option>
+                <option>전라북도</option>
+                <option>전라남도</option>
+                <option>경상북도</option>
+                <option>경상남도</option>
+                <option>제주도</option>
+            </select>
+            <div id="regionError" class="error"></div>
+            <div class="line">
+                <hr>
+            </div>
+            <div class="signIn">
+                <button id="signInButton" disabled onclick="signInCheck()">가입하기</button>
+            </div>
+    </div>
+</body>
+</html>
