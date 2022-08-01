@@ -4,27 +4,65 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.star.domain.BoardDTO;
-import com.star.mapper.BoardMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.star.domain.UserDTO;
+import com.star.mapper.UserMapper;
 
 @SpringBootTest
 public class MapperTests {
 
 	@Autowired
-	private BoardMapper boardMapper;
+	private UserMapper userMapper;
 
 	@Test
 	public void testOfInsert() {
-		BoardDTO params = new BoardDTO();
+		UserDTO params = new UserDTO();
 		
-		 params.setUserNickname("∞°øµ"); 
+		 params.setUserNickname("Í∞ÄÏòÅ"); 
 		 params.setUserId("zerobbang");
 		 params.setUserPhoneNumber("zerobban123");
 		 params.setUserPassword("01022223333");
-		 params.setUserRegion("º≠øÔ");
+		 params.setUserRegion("Í≤ΩÍ∏∞");
 
-		int result = boardMapper.insertUser(params);
-		System.out.println("∞·∞˙¥¬ " + result + "¿‘¥œ¥Ÿ.");
+		int result = userMapper.insertUser(params);
+		System.out.println(params.toString());
+		System.out.println("result" + result + "ÏûÖÎãàÎã§.");
+	}
+	
+	@Test
+	public void testMap() {
+		String result = userMapper.testImg((long) 6);
+		
+		try {
+            String boardJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(result);
+
+			System.out.println("=========================");
+			System.out.println(boardJson);
+			System.out.println("=========================");
+
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+//	Ïú†Ï†Ä Ï†ïÎ≥¥ Ï°∞Ìöå
+	@Test
+	public void testUser() {
+		UserDTO result = userMapper.detailUser((long) 6);
+		
+		try {
+            String boardJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(result);
+
+			System.out.println("=========================");
+			System.out.println(boardJson);
+			System.out.println("=========================");
+
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
