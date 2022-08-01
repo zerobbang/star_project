@@ -17,14 +17,14 @@ public class MapperTests {
 	public void testOfInsert() {
 		BoardDTO params = new BoardDTO();
 		
-		 params.setUserNickname("가영"); 
+		 params.setUserNickname("test"); 
 		 params.setUserId("zerobbang");
 		 params.setUserPhoneNumber("zerobban123");
 		 params.setUserPassword("01022223333");
-		 params.setUserRegion("서울");
+		 params.setUserRegion("test");
 
 		int result = boardMapper.insertUser(params);
-		System.out.println("결과는 " + result + "입니다.");
+		System.out.println("testetst" + result + "tete.");
 	}
 
 }

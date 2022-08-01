@@ -23,12 +23,14 @@ public class BoardDTO {
 	
 	private LocalDateTime signInDate;
 	
-//	mysql¿¡¼­ tinyint ÀÚµ¿À¸·Î mybatis¿¡¼­´Â booleanÀ¸·Î ÀÎ½Ä °¡´É -> booleanÀ¸·Î ÇÒÁö int·Î ÇÒÁö ¼±ÅÃÇÏ¸é µÉµí
+//	mysqlï¿½ï¿½ï¿½ï¿½ tinyint ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ mybatisï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ booleanï¿½ï¿½ï¿½ï¿½ ï¿½Î½ï¿½ ï¿½ï¿½ï¿½ï¿½ -> booleanï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ intï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Éµï¿½
 	private boolean withdrawalYn;
 	
 	private LocalDateTime withdrawalDate;
 	
 	private boolean adminYn;
+	
+	
 	
 
 }
