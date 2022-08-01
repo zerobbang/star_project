@@ -20,6 +20,7 @@ public class MapperTests {
 	public void testOfInsert() {
 		UserDTO params = new UserDTO();
 		
+<<<<<<< HEAD
 		 params.setUserNickname("가영"); 
 		 params.setUserId("zerobbang");
 		 params.setUserPhoneNumber("zerobban123");
@@ -63,6 +64,16 @@ public class MapperTests {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
+=======
+		 params.setUserNickname("test"); 
+		 params.setUserId("zerobbang");
+		 params.setUserPhoneNumber("zerobban123");
+		 params.setUserPassword("01022223333");
+		 params.setUserRegion("test");
+
+		int result = boardMapper.insertUser(params);
+		System.out.println("testetst" + result + "tete.");
+>>>>>>> fa9e2879d871bddd044bf5f0815aa2da406b7c06
 	}
 
 }

@@ -4,38 +4,45 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="signin.css" rel="stylesheet" />
+    <!-- <link href="signin.css" rel="stylesheet" /> -->
+    <!--비밀번호 눈모양 아이콘을 가져다 쓰는 url?-->
+    <link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <title>회원가입 페이지</title>
 </head>
 <body>
-    <div class="wrapper"> <!-- 칸앞에 글을 나둬야 한다-->
+<!--가운데 정렬, 칸과 글 정렬-->
+    <div class="wrapper"> 
         <div class="title"><h1 style="font-size: 30px;">회원 가입</h1></div>
-        <div class="ID"><span>ID</span> 
+    </div>
+        <div class="ID"><span>ID</span> <!--아이디-->
             <input id="ID" type="text" placeholder="영어(대소문자 구분 가능)+숫자">
             <div id="IDerror" class="error"></div>
         </div>
-        <div class="password"><span>비밀번호</span> 
+        <div class="password"></div><span>비밀번호</span> <!--비밀번호 입력-->
             <input id="password" type="text" placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리">
-            <div id="PasswordError" class="error"></div>
-        </div>
-        <div class="passwordCheck"><span>비밀번호 재입력</span> 
+            <!--비밀번호 input 태그와 눈모양 아이콘을 위한 i 태그.-->
+            <i class="fa fa-eye fa-lg"></i>
+            <div id="PasswordError" class="error"></div> <!--비밀번호 확인-->
+        <div class="passwordCheck"><span>비밀번호 재확인</span> 
             <input id="passwordCheck" type="text" placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리">
             <div id="PasswordCheckError" class="error"></div>
         </div>
-        <div class="nickname"><span>닉네임</span> 
+        <div class="nickname"><span>닉네임</span> <!--닉네임-->
             <input id="nickname" type="text" placeholder="닉네임을 입력해주세요.">
             <div id="nicknameError" class="error"></div>
         </div>
-        <div class="phonenumber"><span>핸드폰번호</span> 
+        <div class="phonenumber"><span>핸드폰번호</span> <!--핸드폰번호-->
             <input id="phonenumber" type="text" placeholder="ex. 01012345678">
-            <!-- <button disabled id="check">인증번호발송</button> -->
-            <button disabled id="sendMessage" onclick="getToken()">인증번호 전송</button>
+            <input type="button" name="checkNumber" value="인증번호 발송"><br><br>
+            <input type="text" name="check" value="인증번호를 입력해주세요.">
+            <input type="button" name="check" value="확인">
+            <!-- <button disabled id="sendMessage" onclick="getToken()">인증번호 전송</button> -->
             <div id="phonenumberError" class="error"></div>
         </div>
         <!-- <div class="auth"><span>인증번호</span> -->
             <!-- <div id="certificationNumber">000000</div> -->
         </div>
-        <div class="region"><span>기본 지역</span> 
+        <div class="region"><span>기본 지역</span> <!--기본 지역 선택-->
             <select id="region">
                 <option selected disabled>지역을 선택하세요.</option>
                 <option>서울</option>
@@ -61,8 +68,8 @@
                 <hr>
             </div>
             <div class="signIn">
-                <button id="signInButton" disabled onclick="signInCheck()">가입하기</button>
+                <input type="button" value="가입하기">
             </div>
-    </div>
+        </div>
 </body>
 </html>
