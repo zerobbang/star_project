@@ -32,8 +32,6 @@ public class UserDTO {
 	
 	private boolean adminYn;
 	
-
-	
 	
 //	default 값 생성
 	public UserDTO() {
