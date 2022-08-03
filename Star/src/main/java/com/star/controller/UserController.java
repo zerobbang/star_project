@@ -5,11 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-<<<<<<< HEAD
 
-=======
- 
->>>>>>> 6a87356ae86685edcc6c06a5dfe0b5d084810982
 
 import com.star.domain.MailDto;
 import com.star.service.UserService;
@@ -25,33 +21,30 @@ public class UserController {
 		return "star/main3";
 	}
 	
-<<<<<<< HEAD
-	
-	// 메일 
-	public UserController(UserService userService) {
-        this.userService = userService;
-    }
-=======
-//	필요없어보여서 삭제
-//	public UserController(UserService userService) {
-//        this.userService = userService;
-//    }
->>>>>>> 6a87356ae86685edcc6c06a5dfe0b5d084810982
-	
 	@GetMapping(value = "/star/sendmail.do")
 	public String openMailPage(Model model) {
 		return "star/sendmail";
 	}
  
-    @PostMapping("/mail/send")
-    public String sendMail(MailDto mailDto) {
-        userService.sendSimpleMessage(mailDto);
-        System.out.println("메일 전송 완료");
-        return "star/sendmail";
+    
+    @GetMapping(value = "/star/findUser.do")
+    public String findAccount() {
+    	return "star/findUser";
     }
-<<<<<<< HEAD
-	
-=======
+    
+    
+    @PostMapping(value="/dataSend")
+    public String dataSend(Model model,MailDto dto ){
+    	userService.sendSimpleMessage(dto);
+        System.out.println("메일 전송 완료");
+        System.out.println(dto.getContent());
+        model.addAttribute("msg",dto.getAddress()+"입니다.");
+        model.addAttribute("emailNumber", dto.getContent());
+        System.out.println(model.getAttribute("emailNumber"));
+        
+        return "/star/findUser :: #resultDiv";
+    }
+    
+   
 
->>>>>>> 6a87356ae86685edcc6c06a5dfe0b5d084810982
 }

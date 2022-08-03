@@ -1,10 +1,78 @@
 <!DOCTYPE html>
-<html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>계정 찾기 페이지</title>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
+          
+<div class="ddd">
+<label for = "emailAddress">이메일</label>
+<input name = "address" type="text" placeholder="woobin@gmail.com">
+<button onclick="dataSend()">인증번호 발송</button>
+<div id="resultDiv">
+            <p th:if="${msg}!=null" th:text="${msg}"></p>
+</div>
+</div>
+<script>
+	function dataSend(){
+		var email=$('input[name=address]').val();
+		console.log(email);
+		var mailDto = {
+				address:email
+				
+		};
+		console.log(mailDto);
+		 $.ajax({
+			 url:"/dataSend",
+			 data:mailDto,
+			 type:"POST",
+			 success:function(){
+				 alert("인증번호를 발송했습니다");
+			 }
+		 }).done(function (fragment){
+			 $("#resultDiv").replaceWith(fragment);
+		 });
+	}
+</script>
+
+
+    <div>
+        <label for="emailNum">인증번호 입력</label>
+        <input id="emailNum" type="text" placeholder="인증번호">
+        <button type="button" onclick="checkEmail()">인증하기</button>
+        <!-- <input type="text" name="name" value="${emailNumber}"> -->
+<!--         <p th:value="${emailNumber}"></p> -->
+    </div>
+    
+    
+  
+  
+<script>
+    function checkEmail(){
+    	var num=$('#emailNum').val();
+    	var value= "${emailNumber}";
+    	console.log("사용자가 입력한 값 : "+num);
+    	console.log(value);
+    	console.log("${emailNumber}")
+    	"${emailNumber}"
+    
+/*    	 $.ajax({
+		 url:"/email",
+		 type:"GET",
+		 success : function (data){
+			 alert(data);
+		 }
+	 }); */
+    	
+    	
+    }
+    </script>
+    
+    
+    <button type="button">로그인</button>
 
 </body>
 </html>
