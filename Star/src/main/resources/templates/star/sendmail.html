@@ -9,8 +9,33 @@
     <!--비밀번호 눈모양 아이콘을 가져다 쓰는 url?-->
     <link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
-    <!-- <meta charset="UTF-8"> -->
+    
     <title>Send Mail</title>
+    
+    
+    <!-- <script async src="/webjars/jquery/3.6.0/jquery.min.js"></script> -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+    	
+    	/* 아래는 블로그 */
+    	function dataSend() {
+
+    	    var email=$("#email_id").val();
+			
+    	    var mailDto={
+    	        address:email
+    	    };
+
+    	    $.ajax({
+    	        url: "/dataSend",
+    	        data: mailDto,
+    	        type:"POST",
+    	    }).done(function (fragment) {
+    	        $("#resultDiv").replaceWith(fragment);
+    	    });
+    	}
+    
+    </script>
 </head>
 <body>
 
@@ -37,30 +62,25 @@
         <div id="nicknameError" class="error"></div>
     </div>
     
-    <form th:action="@{/mail/send}" method="post">
     
-    	
-            메일 주소
-                
-                    <input type="text" name="address" placeholder="이메일 주소를 입력하세요">
-                    <button>발송</button>
-                
-        
+    	<div class="emailAddress">
+    		<span>메일 주소</span>
+            <form th:action="@{/mail/send}" method="post">
+            
+            		        
+                <input type="text" name="address" id="email_id" placeholder="이메일 주소를 입력하세요">
+                <!-- <button onclick="sendmail()">발송</button> -->
+                <input value="블로그식 발송" type="button" onclick="dataSend()">
+		        
+		        <div id="resultDiv">
+		          <p th:if="${msg}!=null" th:text="${msg}"></p>
+		        </div>
+		        
+        	</form>
+		
+        <input type="hidden" name="certify" value="3">
+        </div>
     
-        <input type="hidden" name="certify">
-    </form>
-    
-    <div class="phonenumber"><span>핸드폰번호</span> 핸드폰번호
-        <input id="phonenumber" type="text" placeholder="ex. 01012345678">
-        <input type="button" name="checkNumber" value="인증번호 발송"><br><br>
-        <input type="text" name="check" value="인증번호를 입력해주세요.">
-        <input type="button" name="check" value="확인">
-        <button disabled id="sendMessage" onclick="getToken()">인증번호 전송</button>
-        <div id="phonenumberError" class="error"></div>
-    </div>
-    <!-- <div class="auth"><span>인증번호</span> -->
-        <!-- <div id="certificationNumber">000000</div> -->
-    </div>
     <div class="region"><span>기본 지역</span> <!--기본 지역 선택-->
         <select id="region">
             <option selected disabled>지역을 선택하세요.</option>
@@ -90,25 +110,6 @@
             <input type="button" value="가입하기">
         </div>
     </div>
-
-
-
-    <!-- <h1>메일 보내기</h1>
- 
-    <form th:action="@{/mail/send}" method="post">
-    
-    	<table>
-            <tr>
-                <td>메일 주소</td>
-                <td>
-                    <input type="text" name="address" placeholder="이메일 주소를 입력하세요">
-                    <button>발송</button>
-                </td>
-            </tr>
-        </table>
-    
-        <input type="hidden" name="certify">
-    </form> -->
  
 </body>
 </html>

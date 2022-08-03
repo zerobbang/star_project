@@ -22,7 +22,7 @@ public class MailDto {
     	
     	this.title = "인증번호입니다.";
     	this.content = certifyNum;
-    	
+//    	this.address = "dnqls0326@naver.com";
     }
     
 }
