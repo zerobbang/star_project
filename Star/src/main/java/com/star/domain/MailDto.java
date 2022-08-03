@@ -3,13 +3,10 @@ package com.star.domain;
 import java.util.Random;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-//import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-//@NoArgsConstructor
 public class MailDto {
     private String address;
     private String title;
@@ -23,7 +20,6 @@ public class MailDto {
     	
     	this.title = "인증번호입니다.";
     	this.content = certifyNum;
-//    	this.address = "dnqls0326@naver.com";
     }
     
 }
