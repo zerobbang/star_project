@@ -32,7 +32,7 @@ public class UserController {
 	public String openMailPage(Model model) {
 		return "star/sendmail";
 	} 
-
+ 
 	
 	@PostMapping("/mail/send")
     @ResponseBody
