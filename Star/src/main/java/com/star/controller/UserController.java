@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PostMapping;
  
 
@@ -22,10 +21,10 @@ public class UserController {
 		return "star/main";
 	}
 	
-
-	public UserController(UserService userService) {
-        this.userService = userService;
-    }
+//	필요없어보여서 삭제
+//	public UserController(UserService userService) {
+//        this.userService = userService;
+//    }
 	
 	@GetMapping(value = "/star/sendmail.do")
 	public String openMailPage(Model model) {
