@@ -19,7 +19,7 @@ public class UserDTO {
 	
 	private String userPassword;
 	
-	private String userPhoneNumber;
+	private String userEmail;
 	
 	private String userRegion;
 	
@@ -39,13 +39,15 @@ public class UserDTO {
 	}
 
 
-
 	@Override
 	public String toString() {
-		return "UserDTO [userNumber=" + userNumber + ", userNickname=" + userNickname + ", userId=" + userId
-				+ ", userPassword=" + userPassword + ", userPhoneNumber=" + userPhoneNumber + ", userRegion="
-				+ userRegion + ", signInDate=" + signInDate + ", withdrawalYn=" + withdrawalYn + ", withdrawalDate="
-				+ withdrawalDate + ", adminYn=" + adminYn + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserDTO [userNumber=").append(userNumber).append(", userNickname=").append(userNickname)
+				.append(", userId=").append(userId).append(", userPassword=").append(userPassword)
+				.append(", userEmail=").append(userEmail).append(", userRegion=").append(userRegion)
+				.append(", signInDate=").append(signInDate).append(", withdrawalYn=").append(withdrawalYn)
+				.append(", withdrawalDate=").append(withdrawalDate).append(", adminYn=").append(adminYn).append("]");
+		return builder.toString();
 	}
 
 	
