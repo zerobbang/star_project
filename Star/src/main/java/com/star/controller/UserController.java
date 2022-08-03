@@ -31,7 +31,7 @@ public class UserController {
 	@GetMapping(value = "/star/sendmail.do")
 	public String openMailPage(Model model) {
 		return "star/sendmail";
-	}
+	} 
 
 	
 	@PostMapping("/mail/send")
