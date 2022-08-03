@@ -30,17 +30,17 @@ public class UserServiceImpl implements UserService{
 	public UserDTO getUser(Long userNumber) {
 		return userMapper.detailUser(userNumber);
 	}
+	
+	
 
 	private JavaMailSender emailSender;
 	 
     public void sendSimpleMessage(MailDto mailDto) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("gdqgdq05@gmail.com");
+        message.setFrom("woobingcodegod@gmail.com");
         message.setTo(mailDto.getAddress());
         message.setSubject(mailDto.getTitle());
         message.setText(mailDto.getContent());
         emailSender.send(message);
     }
-	
-	
 }

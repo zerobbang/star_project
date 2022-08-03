@@ -4,11 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-<<<<<<< HEAD
-import org.springframework.web.bind.annotation.ResponseBody;
-=======
 import org.springframework.web.bind.annotation.PostMapping;
->>>>>>> 761b2fe9b6dab4f763cb40e9b02f5962cdf60406
+
 
 import com.star.domain.MailDto;
 import com.star.service.UserService;
@@ -19,13 +16,13 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping(value = "/star/main.do")
-	public String openUser(Model model) {
-		return "star/main";
+	@GetMapping(value = "/star/main2.do")
+	public String openMap(Model model) {
+		return "star/main3";
 	}
 	
-<<<<<<< HEAD
-=======
+	
+	// 메일 
 	public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -42,5 +39,4 @@ public class UserController {
         return "star/sendmail";
     }
 	
->>>>>>> 761b2fe9b6dab4f763cb40e9b02f5962cdf60406
 }

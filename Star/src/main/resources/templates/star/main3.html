@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div id="map" style="width:50%;height:350px;"></div>
+<!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b9125e70384813c29bb964a22bf69f75"></script> -->
+안녕
+<p id="demo"></p>
+<script type="text/javascript">
+let xhttp = new XMLHttpRequest();
+
+xhttp.onreadystatechange = function () {
+	if(xhttp.readyState == 4 && xhttp.status == 200){
+		jsonfunc(this.responseText); //this = xhttp
+//		jsonfunc(xhttp.responseText); // 둘다 가능
+	}
+}
+xhttp.open("GET","member.json", true);
+xhttp.send();
+
+function jsonfunc( jsonText ) {
+
+	let json = JSON.parse(jsonText); // String -> json으로 변환
+	
+	let txt = "";
+	// 접근법 1
+	for(i=0; i<json.length; i++){
+		for(key in json[i]){ // key값 가져오기
+			txt += key + ":" + json[i][key]; 
+		}
+		txt += "<br>";
+	} 
+	document.getElementById('demo').innerHTML = txt;
+}
+	
+</script>
+
+</body>
+</html>
