@@ -4,13 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-<<<<<<< HEAD
 import org.springframework.web.bind.annotation.PostMapping;
 
-=======
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
->>>>>>> f2fd8d5784b92edf21dc42ae237ceb303564cfaa
+
 
 import com.star.domain.MailDto;
 import com.star.service.UserService;
@@ -34,23 +30,11 @@ public class UserController {
 		return "star/main3";
 	}
 	
-<<<<<<< HEAD
-=======
-
-	
-	// 메일 
-	public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
-
->>>>>>> f2fd8d5784b92edf21dc42ae237ceb303564cfaa
 	@GetMapping(value = "/star/sendmail.do")
 	public String openMailPage(Model model) {
 		return "star/sendmail";
 	}  
- 
-<<<<<<< HEAD
+
     
     @GetMapping(value = "/star/findUser.do")
     public String findAccount() {
@@ -71,25 +55,6 @@ public class UserController {
     }
     
    
-=======
-	
-//	@PostMapping("/mail/send")
-//    @ResponseBody
-//    public String sendMail(MailDto mailDto) {
-//		
-//		userService.sendSimpleMessage(mailDto); System.out.println("메일 전송 완료");
-//		return "star/sendmail"; 
-//	}
-	
-	@RequestMapping(value = "/dataSend",method = RequestMethod.POST)
-    public String dataSend(Model model,MailDto mailDto){
-		
-		userService.sendSimpleMessage(mailDto);
-		System.out.println("메일 전송 완료");
-        model.addAttribute("msg",mailDto.getAddress());
-        return "/star/sendmail :: #resultDiv";
-    };
-	
->>>>>>> f2fd8d5784b92edf21dc42ae237ceb303564cfaa
+
 
 }
