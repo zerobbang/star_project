@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.star.domain.MailDto;
+import com.star.domain.MailDTO;
 import com.star.domain.UserDTO;
 import com.star.service.UserService;
 
@@ -32,7 +32,7 @@ public class UserController {
 	}
  
     @PostMapping("/mail/send")
-    public String sendMail(MailDto mailDto) {
+    public String sendMail(MailDTO mailDto) {
         userService.sendSimpleMessage(mailDto);
         System.out.println("메일 전송 완료");
         return "star/sendmail";

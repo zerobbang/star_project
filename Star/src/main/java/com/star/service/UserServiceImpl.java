@@ -6,7 +6,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import com.star.domain.MailDto;
+import com.star.domain.MailDTO;
 import com.star.domain.UserDTO;
 import com.star.mapper.UserMapper;
 
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService{
 
 	private JavaMailSender emailSender;
 	 
-    public void sendSimpleMessage(MailDto mailDto) {
+    public void sendSimpleMessage(MailDTO mailDto) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("woobingcodegod@gmail.com");
         message.setTo(mailDto.getAddress());

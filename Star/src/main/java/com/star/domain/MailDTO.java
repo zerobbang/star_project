@@ -10,13 +10,13 @@ import lombok.Setter;
 @Getter
 @Setter
 //@NoArgsConstructor
-public class MailDto {
+public class MailDTO {
     private String address;
     private String title;
     private String content;
     
     
-    public MailDto() {
+    public MailDTO() {
     	Random random = new Random();
 		int rdNum = random.nextInt(10);
 		String certifyNum = Integer.toString(rdNum);
