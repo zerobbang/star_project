@@ -10,7 +10,7 @@
 		, user_password
 		, user_email
 		, user_region
-		, sign_in_date
+		, signup_date
 		, withdrawal_yn
 		, withdrawal_date
 		, admin_yn
