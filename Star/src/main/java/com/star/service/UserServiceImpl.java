@@ -8,7 +8,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import com.star.domain.MailDto;
+import com.star.domain.MailDTO;
 import com.star.domain.UserDTO;
 import com.star.mapper.UserMapper;
 
@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	 
-	
+	  
 //	유저 정보 조회
 	@Override
 	public UserDTO getUser(Long userNumber) {
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService{
 	private JavaMailSender emailSender;
 	
 	
-    public String sendSimpleMessage(MailDto mailDto) {
+    public String sendSimpleMessage(MailDTO mailDto) {
     	Random random = new Random();
 		int rdNum = random.nextInt(10);
 		String certifyNum = Integer.toString(rdNum);

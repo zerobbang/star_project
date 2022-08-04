@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 
 
-import com.star.domain.MailDto;
+import com.star.domain.MailDTO;
 import com.star.service.UserService;
 
 @Controller
@@ -43,7 +43,7 @@ public class UserController {
     
     
     @PostMapping(value="/dataSend")
-    public String dataSend(Model model,MailDto dto ){
+    public String dataSend(Model model,MailDTO dto ){
     	userService.sendSimpleMessage(dto);
         System.out.println("메일 전송 완료");
         System.out.println(dto.getContent());
