@@ -1,5 +1,7 @@
 package com.star.service;
 
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 //메일
 import org.springframework.mail.SimpleMailMessage;
@@ -34,14 +36,32 @@ public class UserServiceImpl implements UserService{
 	
 
 	private JavaMailSender emailSender;
+<<<<<<< HEAD
 	 
     public void sendSimpleMessage(MailDTO mailDto) {
+=======
+	
+	
+    public String sendSimpleMessage(MailDTO mailDto) {
+    	Random random = new Random();
+		int rdNum = random.nextInt(10);
+		String certifyNum = Integer.toString(rdNum);
+
+ 
+    	mailDto.setTitle("인증번호입니다.");
+    	mailDto.setContent(certifyNum);
+ 
+    	
+>>>>>>> 1941fcd9176c3abbe2cc4f5aa7d53e95e95b1088
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("woobingcodegod@gmail.com");
+        message.setFrom("gdqqdq05@gmail.com");
         message.setTo(mailDto.getAddress());
         message.setSubject(mailDto.getTitle());
         message.setText(mailDto.getContent());
+        
+//        session.setAttribute("emailNum", mailDto.getContent());
         emailSender.send(message);
+        return certifyNum;
     }
     
     @Override 
