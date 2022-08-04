@@ -27,7 +27,7 @@ public class UserDTO {
 	
 //	mysql tinyint - 0,1 mybatis에서는 tinyint를 자동적으로 boolean 인식한다.
 	private boolean withdrawalYn;
-	
+	 
 	private LocalDateTime withdrawalDate;
 	
 	private boolean adminYn;
@@ -49,10 +49,4 @@ public class UserDTO {
 				.append(", withdrawalDate=").append(withdrawalDate).append(", adminYn=").append(adminYn).append("]");
 		return builder.toString();
 	}
-
-	
-	
-	
-
 }
-

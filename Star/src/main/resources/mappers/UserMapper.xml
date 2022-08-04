@@ -8,7 +8,7 @@
 		, user_nickname
 		, user_id
 		, user_password
-		, user_phone_number
+		, user_email
 		, user_region
 		, sign_in_date
 		, withdrawal_yn
@@ -29,7 +29,7 @@
 				, #{userNickname}
 				, #{userId}
 				, #{userPassword}
-				, #{userPhoneNumber}
+				, #{userEmail}
 				, #{userRegion}
 				, NOW()
 				, false
@@ -38,10 +38,25 @@
 			)
 	</insert> 
 	
+
 	<select id="detailUser" parameterType="long" resultType="UserDTO">
 		SELECT <include refid="userColumns"/>
 		FROM users_table
 		WHERE user_number = #{userNumber}
+	</select>
+	
+	<!-- 새로 작성한 -->
+    <select id="loginCheck" parameterType="UserDTO" resultType="UserDTO">
+<!-- 		SELECT user_id, user_password
+		FROM users_table 
+		WHERE user_id = #{userId} AND user_password = #{userPassword} -->
+		SELECT
+			<!-- user_number, user_id, user_password -->
+			*
+		FROM
+			users_table 
+		WHERE
+			user_id = #{userId} AND user_password = #{userPassword} AND withdrawal_yn = 0
 	</select>
 	
 	

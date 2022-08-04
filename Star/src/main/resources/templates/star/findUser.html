@@ -38,6 +38,18 @@
 	}
 </script>
 
+<script>
+    function checkEmail(){
+    	var num=$('#emailNum').val();
+    	var value= "${emailNumber}";
+    	console.log("사용자가 입력한 값 : "+num);
+    	console.log(value);
+    	console.log("${emailNumber}")
+    	"${emailNumber}"
+    	
+    }
+</script>
+
 
     <div>
         <label for="emailNum">인증번호 입력</label>
@@ -50,26 +62,7 @@
     
   
   
-<script>
-    function checkEmail(){
-    	var num=$('#emailNum').val();
-    	var value= "${emailNumber}";
-    	console.log("사용자가 입력한 값 : "+num);
-    	console.log(value);
-    	console.log("${emailNumber}")
-    	"${emailNumber}"
-    
-/*    	 $.ajax({
-		 url:"/email",
-		 type:"GET",
-		 success : function (data){
-			 alert(data);
-		 }
-	 }); */
-    	
-    	
-    }
-    </script>
+
     
     
     <button type="button">로그인</button>

@@ -31,20 +31,15 @@ public class UserServiceImpl implements UserService{
 	  
 //	유저 정보 조회
 	@Override
-	public UserDTO getUser(Long userNumber) {             
+	public UserDTO getUser(Long userNumber) {
 		return userMapper.detailUser(userNumber);
 	}
 	
 	
 
 	private JavaMailSender emailSender;
-
 	
-<<<<<<< HEAD
 	
-=======
-	/* void */
->>>>>>> 0f164a7917499bccd9a929571bd595cf6de04458
     public String sendSimpleMessage(MailDTO mailDto) {
     	Random random = new Random();
 		int rdNum = random.nextInt(10);
@@ -54,7 +49,7 @@ public class UserServiceImpl implements UserService{
     	mailDto.setTitle("인증번호입니다.");
     	mailDto.setContent(certifyNum);
  
-
+    	
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("gdqqdq05@gmail.com");
         message.setTo(mailDto.getAddress());
@@ -65,15 +60,4 @@ public class UserServiceImpl implements UserService{
         emailSender.send(message);
         return certifyNum;
     }
-    
-    @Override 
-    public UserDTO loginUser(UserDTO userDTO) {
-//    	이제 같은지 안 같은지 판단
-//    	어떻게 판단하지 
-//    	db id = 읿력한 id
-    	
-    	return userMapper.loginCheck(userDTO);
-    	
-    }
-    	
 }

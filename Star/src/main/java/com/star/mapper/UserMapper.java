@@ -14,5 +14,8 @@ public interface UserMapper {
 	public String testImg(Long userNumber);
 	
 	public UserDTO detailUser(Long userNumber);
+	
+	//로그인체크
+	public UserDTO loginCheck(UserDTO userDTO);
 
-}
+} 
