@@ -40,11 +40,7 @@ public class UserServiceImpl implements UserService{
 	private JavaMailSender emailSender;
 
 	
-<<<<<<< HEAD
-	
-=======
 	/* void */
->>>>>>> 0f164a7917499bccd9a929571bd595cf6de04458
     public String sendSimpleMessage(MailDTO mailDto) {
     	Random random = new Random();
 		int rdNum = random.nextInt(10);

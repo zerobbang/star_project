@@ -4,13 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-<<<<<<< HEAD
-import org.springframework.web.bind.annotation.PostMapping;
 
-
-
-import com.star.domain.MailDTO;
-=======
 
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -21,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
->>>>>>> 0f164a7917499bccd9a929571bd595cf6de04458
 import com.star.service.UserService;
 
 @Controller
@@ -43,13 +36,6 @@ public class UserController {
 		return "star/main3";
 	}
 	
-<<<<<<< HEAD
-	@GetMapping(value = "/star/sendmail.do")
-	public String openMailPage(Model model) {
-		return "star/sendmail";
-	}  
-
-=======
 
 	// 메일 
 	public UserController(UserService userService) {
@@ -111,7 +97,6 @@ public class UserController {
     public String singIn(Model model) {
     	return "star/sendmail";
 	}  
->>>>>>> 0f164a7917499bccd9a929571bd595cf6de04458
     
     @GetMapping(value = "/star/findUser.do")
     public String findAccount() {
@@ -119,23 +104,6 @@ public class UserController {
     }
     
     
-<<<<<<< HEAD
-    @PostMapping(value="/dataSend")
-    public String dataSend(Model model,MailDTO dto ){
-    	userService.sendSimpleMessage(dto);
-        System.out.println("메일 전송 완료");
-        System.out.println(dto.getContent());
-        model.addAttribute("msg",dto.getAddress()+"입니다.");
-        model.addAttribute("emailNumber", dto.getContent());
-        System.out.println(model.getAttribute("emailNumber"));
-        
-        return "/star/findUser :: #resultDiv";
-    }
-    
-   
-
-
-=======
 //    @PostMapping(value="/dataSend")
 //    public String dataSend(Model model,MailDto dto){
 //    	System.out.println("메일 전송 시작");
@@ -166,5 +134,4 @@ public class UserController {
         return returndata;
     };
 	
->>>>>>> 0f164a7917499bccd9a929571bd595cf6de04458
 }
