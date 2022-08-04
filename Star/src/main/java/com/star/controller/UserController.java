@@ -4,15 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-<<<<<<< HEAD
-import org.springframework.web.bind.annotation.PostMapping;
-
-=======
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
->>>>>>> f2fd8d5784b92edf21dc42ae237ceb303564cfaa
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.star.domain.MailDto;
+import com.star.domain.MailDTO;
 import com.star.service.UserService;
 
 @Controller
@@ -34,23 +30,20 @@ public class UserController {
 		return "star/main3";
 	}
 	
-<<<<<<< HEAD
-=======
+
 
 	
-	// 메일 
-	public UserController(UserService userService) {
-        this.userService = userService;
-    }
+//	// 메일 
+//	public UserController(UserService userService) {
+//        this.userService = userService;
+//    }
 
 
->>>>>>> f2fd8d5784b92edf21dc42ae237ceb303564cfaa
+
 	@GetMapping(value = "/star/sendmail.do")
 	public String openMailPage(Model model) {
 		return "star/sendmail";
 	}  
- 
-<<<<<<< HEAD
     
     @GetMapping(value = "/star/findUser.do")
     public String findAccount() {
@@ -58,38 +51,35 @@ public class UserController {
     }
     
     
-    @PostMapping(value="/dataSend")
-    public String dataSend(Model model,MailDto dto ){
-    	userService.sendSimpleMessage(dto);
-        System.out.println("메일 전송 완료");
-        System.out.println(dto.getContent());
-        model.addAttribute("msg",dto.getAddress()+"입니다.");
-        model.addAttribute("emailNumber", dto.getContent());
-        System.out.println(model.getAttribute("emailNumber"));
-        
-        return "/star/findUser :: #resultDiv";
-    }
-    
-   
-=======
-	
-//	@PostMapping("/mail/send")
-//    @ResponseBody
-//    public String sendMail(MailDto mailDto) {
-//		
-//		userService.sendSimpleMessage(mailDto); System.out.println("메일 전송 완료");
-//		return "star/sendmail"; 
-//	}
+//    @PostMapping(value="/dataSend")
+//    public String dataSend(Model model,MailDto dto){
+//    	System.out.println("메일 전송 시작");
+//    	userService.sendSimpleMessage(dto);
+//        System.out.println("메일 전송 완료");
+//        System.out.println(dto.getContent());
+//        model.addAttribute("msg",dto.getAddress()+"입니다.");
+//        model.addAttribute("emailNumber", dto.getContent());
+//        System.out.println(model.getAttribute("emailNumber"));
+//        
+//        return "/star/findUser :: #resultDiv";
+//    }	<<-- 필요없다고 판단되면 지울것.
+
 	
 	@RequestMapping(value = "/dataSend",method = RequestMethod.POST)
-    public String dataSend(Model model,MailDto mailDto){
+	@ResponseBody
+    public String[] dataSend(Model model,MailDTO mailDto){
 		
+		System.out.println("메일 전송 시작");
 		userService.sendSimpleMessage(mailDto);
 		System.out.println("메일 전송 완료");
-        model.addAttribute("msg",mailDto.getAddress());
-        return "/star/sendmail :: #resultDiv";
+		String certifyNum = mailDto.getContent();
+		System.out.println("testing");
+		System.out.println(certifyNum);
+		
+        String firstdata = "<div id=resultDiv>메일을 확인해주세요!</div>"; 
+        String[] returndata = {firstdata, certifyNum};
+        return returndata;
     };
 	
->>>>>>> f2fd8d5784b92edf21dc42ae237ceb303564cfaa
 
 }
