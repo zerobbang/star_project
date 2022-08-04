@@ -36,12 +36,9 @@ public class UserServiceImpl implements UserService{
 	
 
 	private JavaMailSender emailSender;
-<<<<<<< HEAD
-	 
-    public void sendSimpleMessage(MailDTO mailDto) {
-=======
+
 	
-	
+	/* void */
     public String sendSimpleMessage(MailDTO mailDto) {
     	Random random = new Random();
 		int rdNum = random.nextInt(10);
@@ -51,8 +48,7 @@ public class UserServiceImpl implements UserService{
     	mailDto.setTitle("인증번호입니다.");
     	mailDto.setContent(certifyNum);
  
-    	
->>>>>>> 1941fcd9176c3abbe2cc4f5aa7d53e95e95b1088
+
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("gdqqdq05@gmail.com");
         message.setTo(mailDto.getAddress());
