@@ -10,7 +10,7 @@ import lombok.Setter;
 public class UserDTO {
 	
 	
-//	users_table �÷�
+//	users_table
 	private Long userNumber;
 	
 	private String userNickname;
@@ -23,7 +23,7 @@ public class UserDTO {
 	
 	private String userRegion;
 	
-	private LocalDateTime signInDate;
+	private LocalDateTime signUpDate;
 	
 //	mysql tinyint - 0,1 mybatis에서는 tinyint를 자동적으로 boolean 인식한다.
 	private boolean withdrawalYn;
@@ -41,12 +41,12 @@ public class UserDTO {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("UserDTO [userNumber=").append(userNumber).append(", userNickname=").append(userNickname)
-				.append(", userId=").append(userId).append(", userPassword=").append(userPassword)
-				.append(", userEmail=").append(userEmail).append(", userRegion=").append(userRegion)
-				.append(", signInDate=").append(signInDate).append(", withdrawalYn=").append(withdrawalYn)
-				.append(", withdrawalDate=").append(withdrawalDate).append(", adminYn=").append(adminYn).append("]");
-		return builder.toString();
+		return "UserDTO [userNumber=" + userNumber + ", userNickname=" + userNickname + ", userId=" + userId
+				+ ", userPassword=" + userPassword + ", userEmail=" + userEmail + ", userRegion=" + userRegion
+				+ ", signUpDate=" + signUpDate + ", withdrawalYn=" + withdrawalYn + ", withdrawalDate=" + withdrawalDate
+				+ ", adminYn=" + adminYn + "]";
 	}
+
+
+
 }

@@ -42,6 +42,10 @@ public class UserServiceImpl implements UserService{
 	
 	/* void */
     public String sendSimpleMessage(MailDTO mailDto) {
+    	// 회원 정보 이메일과 일치하는지 확인 하기
+//    	userMapper.
+    	
+    	
     	Random random = new Random();
 		int rdNum = random.nextInt(10);
 		String certifyNum = Integer.toString(rdNum);
