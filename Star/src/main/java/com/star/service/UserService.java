@@ -11,4 +11,6 @@ public interface UserService {
 	
 	public void sendSimpleMessage(MailDto mailDto);
 	
+	public UserDTO loginUser(UserDTO userDTO); 
+	
 }
