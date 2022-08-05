@@ -20,7 +20,6 @@ public class MapperTests {
 	public void testOfInsert() {
 		UserDTO params = new UserDTO();
 		
-<<<<<<< HEAD
 		 params.setUserNickname("가영"); 
 		 params.setUserId("zerobbang");
 		 params.setUserEmail("zerobban123");
@@ -28,16 +27,7 @@ public class MapperTests {
 		 params.setUserRegion("경기");
 
 		int result = userMapper.insertUser(params);
-=======
-		params.setUserNickname("가영"); 
-		params.setUserId("zerobbang");
-		params.setUserEmail("zerobban123");
-		params.setUserPassword("01022223333");
-		params.setUserRegion("경기");
-		
->>>>>>> 47278b040358a804883f1c0c8f416a12feb341de
 		System.out.println(params.toString());
-		int result = userMapper.insertUser(params);
 		System.out.println("result" + result + "입니다.");
 	}
 	
