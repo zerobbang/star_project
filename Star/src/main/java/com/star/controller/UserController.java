@@ -70,27 +70,24 @@ public class UserController {
     	System.out.println("do action!"); 
 //    	System.out.println(userDTO.toString());
     	
-//    	String temp_id = userDTO.getUserId();
     	
 //    	여기에서 이제 service에 정의한 함수를 사용할거임
 //    	그거로 db에 있는 id,password와 일치하면 메인페이지로 이동시킬거임
 //    	근데 db에 접근해야 되니까 mapper.xml에도 관련 코드를 작성해줘야 됨
     	    	
     	UserDTO userDto = userService.loginUser(userDTO);
+    	model.addAttribute("UserInfo",userDto);
     	System.out.println(userDto);
 
     	if(userDto.getUserId() != null) {
-    		return "star/main3";
+    		return "star/main2"; 
     	}else if(userDto.getUserId() == null){
-    		return "star/sendmail"; 
+    		return "star/login"; 
     	}else {
     		return "star/sendmail";
     	}
-
     }
-   
-    
-    
+     
     // 회원가입 페이지 (임시로 sendmail)
     @GetMapping(value = "/star/signin.do")
     public String singIn(Model model) {

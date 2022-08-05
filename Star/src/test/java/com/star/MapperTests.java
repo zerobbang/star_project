@@ -23,7 +23,7 @@ public class MapperTests {
 		 params.setUserNickname("가영"); 
 		 params.setUserId("zerobbang");
 		 params.setUserEmail("zerobban123");
-		 params.setUserPassword("01022223333");
+		 params.setUserPassword("01022223333"); 
 		 params.setUserRegion("경기");
 
 		int result = userMapper.insertUser(params);
