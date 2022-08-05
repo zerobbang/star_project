@@ -41,18 +41,12 @@ public class UserDTO {
 
 	@Override
 	public String toString() {
-<<<<<<< HEAD
-=======
-
->>>>>>> d070c87704a488b6ccc9c1ab27b2d5e3fd16b5af
+		
 		return "UserDTO [userNumber=" + userNumber + ", userNickname=" + userNickname + ", userId=" + userId
 				+ ", userPassword=" + userPassword + ", userEmail=" + userEmail + ", userRegion=" + userRegion
-				+ ", signUpDate=" + signUpDate + ", withdrawalYn=" + withdrawalYn + ", withdrawalDate=" + withdrawalDate
+				+ ", signUpDate=" + signupDate + ", withdrawalYn=" + withdrawalYn + ", withdrawalDate=" + withdrawalDate
 				+ ", adminYn=" + adminYn + "]";
 
-<<<<<<< HEAD
-
-=======
 //		StringBuilder builder = new StringBuilder();
 //		builder.append("UserDTO [userNumber=").append(userNumber).append(", userNickname=").append(userNickname)
 //				.append(", userId=").append(userId).append(", userPassword=").append(userPassword)
@@ -60,7 +54,7 @@ public class UserDTO {
 //				.append(", signInDate=").append(signUpDate).append(", withdrawalYn=").append(withdrawalYn)
 //				.append(", withdrawalDate=").append(withdrawalDate).append(", adminYn=").append(adminYn).append("]");
 //		return builder.toString();
->>>>>>> d070c87704a488b6ccc9c1ab27b2d5e3fd16b5af
+
 	}
 
 
