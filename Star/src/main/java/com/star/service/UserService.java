@@ -16,6 +16,10 @@ public interface UserService {
 	public String sendSimpleMessage(MailDTO mailDto);
 	/* void */
 	
-	public UserDTO loginUser(UserDTO userDTO); 
+	public UserDTO loginUser(UserDTO userDTO);
+	
+	public int doSignUp(UserDTO userDTO);
+
+	public String idCheck(UserDTO userDto);
 	
 }

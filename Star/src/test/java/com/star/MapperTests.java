@@ -38,9 +38,15 @@ public class MapperTests {
 		
 		 params.setUserNickname("가영"); 
 		 params.setUserId("zerobbang");
+<<<<<<< HEAD
 		 params.setUserEmail("zerobbang123");
 		 params.setUserPassword("01022223333");
 		 params.setUserRegion("서울");
+=======
+		 params.setUserEmail("zerobban123");
+		 params.setUserPassword("01022223333"); 
+		 params.setUserRegion("경기");
+>>>>>>> d070c87704a488b6ccc9c1ab27b2d5e3fd16b5af
 
 		int result = userMapper.insertUser(params);
 		System.out.println(params.toString());

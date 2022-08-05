@@ -18,4 +18,6 @@ public interface UserMapper {
 	//로그인체크
 	public UserDTO loginCheck(UserDTO userDTO);
 
+	public String idCheck(UserDTO userDto);
+
 } 
