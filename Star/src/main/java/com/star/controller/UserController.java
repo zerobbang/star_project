@@ -4,17 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-
 import org.springframework.web.bind.annotation.PostMapping;
-
-import com.star.domain.MailDTO;
-import com.star.domain.UserDTO;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.star.domain.MailDTO;
+import com.star.domain.UserDTO;
 import com.star.service.UserService;
 
 @Controller
@@ -92,10 +88,10 @@ public class UserController {
    
     
     
-    // 회원가입 페이지 (임시로 sendmail)
-    @GetMapping(value = "/star/signin.do")
-    public String singIn(Model model) {
-    	return "star/sendmail";
+    // 회원가입 페이지 (임시로 sendmail) -> (signUp으로 변경)
+    @GetMapping(value = "/star/signup.do")
+    public String singUp(Model model) {
+    	return "star/signUp";
 	}  
     
     @GetMapping(value = "/star/findUser.do")
@@ -126,12 +122,53 @@ public class UserController {
 		userService.sendSimpleMessage(mailDto);
 		System.out.println("메일 전송 완료");
 		String certifyNum = mailDto.getContent();
-		System.out.println("testing");
+		
 		System.out.println(certifyNum);
 		
         String firstdata = "<div id=resultDiv>메일을 확인해주세요!</div>"; 
         String[] returndata = {firstdata, certifyNum};
         return returndata;
     };
+    
+    // 회원가입 페이지 (임시로 sendmail) -> (signUp으로 변경)
+    @PostMapping(value = "/signupCheck")
+    public String doSingUp(UserDTO userDTO, Model model) {
+    	
+    	System.out.println("do action!"); 
+    	System.out.println(userDTO.toString());
+    	
+    	try {
+    		userService.doSignUp(userDTO);
+    	} catch(Exception e) {
+    		System.out.println("nono");
+    	}
+    	
+    	
+    	return "star/login";
+	}  
 	
+    
+    
+    @RequestMapping(value = "/inputCheck",method = RequestMethod.POST)
+	@ResponseBody
+    public String[] inputCheck(Model model,UserDTO userDto){
+		
+		System.out.println(userDto.toString());
+		
+		String resultID = userService.idCheck(userDto);
+		System.out.println(resultID);
+        String result;
+        
+        if(resultID == null) {
+        	result = "사용가능한 ID입니다.";
+        }else {
+        	result = "이미 사용중입니다.";
+        }
+        
+        
+        String tagdata = "<div id=IDresultDiv>"+ result +"</div>";
+        
+        String[] returndata = {tagdata, result};
+        return returndata;
+    };
 }

@@ -73,7 +73,23 @@ public class UserServiceImpl implements UserService{
 //    	db id = 읿력한 id
     	
     	return userMapper.loginCheck(userDTO);
-    	
     }
+
+	@Override
+	public int doSignUp(UserDTO userDTO) {
+		
+		userMapper.insertUser(userDTO);
+		
+		return 0;
+	}
+
+	@Override
+	public String idCheck(UserDTO userDto) {
+		// TODO Auto-generated method stub
+		System.out.println("service step");
+//		userMapper.idCheck(userDto);
+		return userMapper.idCheck(userDto);
+	}
     	
+	
 }
