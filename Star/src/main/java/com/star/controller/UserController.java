@@ -1,6 +1,7 @@
 package com.star.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,40 +54,55 @@ public class UserController {
     }
     
     // 로그인 페이지
-    @GetMapping(value = "/star/login.do")
+    @GetMapping(value = "/star/login")
     public String logIn(Model model) { 
 //    	UserDTO userdto = new UserDTO(); 
 //    	model.addAttribute("Account",userdto );
     	return "star/login";
     } 
     
-    // 로그인 체크
-    @PostMapping(value = "/star/logInCheck")
+    // 로그인 체크  /star/logInCheck
+    @PostMapping(value = "/star/login") 
     public String logInCheck(UserDTO userDTO, Model model) {
 
-    	System.out.println("do action!"); 
 //    	System.out.println(userDTO.toString());
-    	
-//    	String temp_id = userDTO.getUserId();
-    	
+  	
 //    	여기에서 이제 service에 정의한 함수를 사용할거임
 //    	그거로 db에 있는 id,password와 일치하면 메인페이지로 이동시킬거임
 //    	근데 db에 접근해야 되니까 mapper.xml에도 관련 코드를 작성해줘야 됨
-    	    	
-    	UserDTO userDto = userService.loginUser(userDTO);
-    	System.out.println(userDto);
+    	
+		try {
+			System.out.println("do action!"); 
+	    	UserDTO userDto = userService.loginUser(userDTO);
+	    	model.addAttribute("UserInfo",userDTO);
+	    	
+	    	System.out.println(userDto);
+	    	System.out.println(userDto.toString());
+	    	System.out.println(model);
+			 
+			if (userDto.getUserId() != null) {
+				return "star/findUser";
+			}else {
+				return "star/login";
+			}
+		} catch (DataAccessException e) {
+			return "star/login"; 
+		} catch (Exception e) {
+			return "star/login";  
+		} 
 
-    	if(userDto.getUserId() != null) {
-    		return "star/main3";
-    	}else if(userDto.getUserId() == null){
-    		return "star/sendmail"; 
-    	}else {
-    		return "star/sendmail";
-    	}
 
-    }
-   
-    
+//    	if(userDto.getUserId() != null) {
+//    		return "star/findUser"; 
+//    	}
+//    	else if(userDto.getUserId() == null){
+//    		return "star/login"; 
+//    	}
+//    	else { 
+//    		return "star/sendmail";
+//    	} 
+    	
+    }    
     
     // 회원가입 페이지 (임시로 sendmail) -> (signUp으로 변경)
     @GetMapping(value = "/star/signup.do")
@@ -98,20 +114,6 @@ public class UserController {
     public String findAccount() {
     	return "star/findUser";
     }
-    
-    
-//    @PostMapping(value="/dataSend")
-//    public String dataSend(Model model,MailDto dto){
-//    	System.out.println("메일 전송 시작");
-//    	userService.sendSimpleMessage(dto);
-//        System.out.println("메일 전송 완료");
-//        System.out.println(dto.getContent());
-//        model.addAttribute("msg",dto.getAddress()+"입니다.");
-//        model.addAttribute("emailNumber", dto.getContent());
-//        System.out.println(model.getAttribute("emailNumber"));
-//        
-//        return "/star/findUser :: #resultDiv";
-//    }	<<-- 필요없다고 판단되면 지울것.
 
 	
 	@RequestMapping(value = "/dataSend",method = RequestMethod.POST)

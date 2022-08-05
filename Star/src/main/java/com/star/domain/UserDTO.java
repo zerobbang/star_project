@@ -6,9 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter
+@Setter 
 public class UserDTO {
-	
+	 
 	
 //	users_table
 	private Long userNumber;
@@ -41,17 +41,19 @@ public class UserDTO {
 
 	@Override
 	public String toString() {
-		
-		
-		
-		StringBuilder builder = new StringBuilder();
-		builder.append("UserDTO [userNumber=").append(userNumber).append(", userNickname=").append(userNickname)
-				.append(", userId=").append(userId).append(", userPassword=").append(userPassword)
-				.append(", userEmail=").append(userEmail).append(", userRegion=").append(userRegion)
-				.append(", signInDate=").append(signupDate).append(", withdrawalYn=").append(withdrawalYn)
-				.append(", withdrawalDate=").append(withdrawalDate).append(", adminYn=").append(adminYn).append("]");
-		return builder.toString();
 
+		return "UserDTO [userNumber=" + userNumber + ", userNickname=" + userNickname + ", userId=" + userId
+				+ ", userPassword=" + userPassword + ", userEmail=" + userEmail + ", userRegion=" + userRegion
+				+ ", signUpDate=" + signUpDate + ", withdrawalYn=" + withdrawalYn + ", withdrawalDate=" + withdrawalDate
+				+ ", adminYn=" + adminYn + "]";
+
+//		StringBuilder builder = new StringBuilder();
+//		builder.append("UserDTO [userNumber=").append(userNumber).append(", userNickname=").append(userNickname)
+//				.append(", userId=").append(userId).append(", userPassword=").append(userPassword)
+//				.append(", userEmail=").append(userEmail).append(", userRegion=").append(userRegion)
+//				.append(", signInDate=").append(signUpDate).append(", withdrawalYn=").append(withdrawalYn)
+//				.append(", withdrawalDate=").append(withdrawalDate).append(", adminYn=").append(adminYn).append("]");
+//		return builder.toString();
 	}
 
 
