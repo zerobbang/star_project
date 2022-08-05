@@ -8,9 +8,9 @@
 		, user_nickname
 		, user_id
 		, user_password
-		, user_phone_number
+		, user_email
 		, user_region
-		, sign_in_date
+		, singup_date
 		, withdrawal_yn
 		, withdrawal_date
 		, admin_yn
@@ -29,7 +29,7 @@
 				, #{userNickname}
 				, #{userId}
 				, #{userPassword}
-				, #{userPhoneNumber}
+				, #{userEmail}
 				, #{userRegion}
 				, NOW()
 				, false
