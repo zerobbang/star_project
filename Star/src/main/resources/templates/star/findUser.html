@@ -7,65 +7,88 @@
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
-          
-<div class="ddd">
-<label for = "emailAddress">이메일</label>
-<input name = "address" type="text" placeholder="woobin@gmail.com">
-<button onclick="dataSend()">인증번호 발송</button>
-<div id="resultDiv">
-            <p th:if="${msg}!=null" th:text="${msg}"></p>
-</div>
-</div>
-<script>
-	function dataSend(){
-		var email=$('input[name=address]').val();
-		console.log(email);
-		var mailDto = {
-				address:email
-				
-		};
-		console.log(mailDto);
-		 $.ajax({
-			 url:"/dataSend",
-			 data:mailDto,
-			 type:"POST",
-			 success:function(){
-				 alert("인증번호를 발송했습니다");
-			 }
-		 }).done(function (fragment){
-			 $("#resultDiv").replaceWith(fragment);
-		 });
-	}
-</script>
-
-<script>
-    function checkEmail(){
-    	var num=$('#emailNum').val();
-    	var value= "${emailNumber}";
-    	console.log("사용자가 입력한 값 : "+num);
-    	console.log(value);
-    	console.log("${emailNumber}")
-    	"${emailNumber}"
+    <script>
     	
-    }
-</script>
-
-
-    <div>
-        <label for="emailNum">인증번호 입력</label>
-        <input id="emailNum" type="text" placeholder="인증번호">
-        <button type="button" onclick="checkEmail()">인증하기</button>
-        <!-- <input type="text" name="name" value="${emailNumber}"> -->
-<!--         <p th:value="${emailNumber}"></p> -->
-    </div>
+    	var certify;
+    	var certifyCheck = false;
+    	/* 아래는 블로그 */
+    	function dataSend() {			
+    		
+    	    var email=$("#email_id").val();
+			
+    	    var mailDto={
+    	        address:email
+    	    };
+			
+			console.log(mailDto)
+			console.log("start!!")
+    	    $.ajax({
+    	        url: "/dataSend",
+    	        data: mailDto,
+    	        type:"POST",
+    	    }).done(function (fragments) {
+    	    	var fragment = fragments[0];
+    	    	certify = fragments[1];
+    	    	console.log(fragment);
+    	    	console.log(certify);
+    	    	
+    	        $("#resultDiv").replaceWith(fragment);
+    	    });
+		}
+    	
+    	
+    	function check_certify(){
+    		var input_data = $("#certify_id").val();
+    		var user_email = $("#email_id").val();
+    		console.log(input_data);
+    		console.log(certify);
+    		
+    		if (input_data == certify){
+    			certifyCheck = true;
+    			alert("인증 성공")
+    			$("#resultDiv").replaceWith("<div id=resultDiv></div>");
+    			$("#email_id").replaceWith('<input type="text" name="address" id="email_id" readonly="readonly" value='+ user_email +'>' );
+    		} else {
+    			alert("인증 실패")
+    		}
+    		console.log(certifyCheck);
+    	}
+    	
+    	function movePage (){
+    		// 입력한 이메일과 회원 번호 넘겨주기
+    		var user_email = $("#email_id").val();
+    		var user_email = $("#email_id").val();
+    		 var userInfo = {
+    			
+    		 }
+    		
+    		$.ajax({
+    			url:"/moveFind",
+    			data : ,
+    		});
+    	}
+    	
+    
+    </script>
     
     
-  
-  
-
+    <form>
+   		<div class="emailAddress">
+    		<span>메일 주소</span>
+            <input type="text" name="address" id="email_id" placeholder="이메일 주소를 입력하세요">
+            
+            <input value="메일 발송" type="button" onclick="dataSend()">
+	        
+	        <div id="resultDiv">
+	          <p th:if="${msg}!=null" th:text="${msg}"></p>
+	        </div>
+       	</div>
+       	인증 번호
+        <input type="text" id="certify_id" placeholder="인증번호 입력">
+        <input type="button" onclick="check_certify()" value="인증하기">
+     </form>
     
-    
-    <button type="button">로그인</button>
+    <input type = "button" onclick="movePage()" value="계정 찾기">
 
 </body>
 </html>

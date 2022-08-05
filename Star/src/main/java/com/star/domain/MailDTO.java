@@ -7,9 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-
 //@NoArgsConstructor
-
 public class MailDTO {
     private String address;
     private String title;
@@ -25,5 +23,6 @@ public class MailDTO {
     	this.content = certifyNum;
     	
     }
+
 
 }
