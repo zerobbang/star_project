@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.star.mapper.BoardMapper">
+
+<!-- 게시글 테이블 -->
+ <sql id="boardColumns">
+ 	bno
+ 	, category
+ 	, user_number
+ 	, title
+ 	, content
+ 	, reg_date
+ 	, update_date
+ 	, delete_yn
+ </sql>
+ 
+ <!-- 신고 테이블 -->
+ <sql id="reportColumns">
+ 	bno
+ 	, user_number
+ 	, report_content
+ 	, manage_yn
+ </sql>
+ 
+ <!-- 댓글 테이블 -->
+ <sql id="commentColumns">
+ 	cmt_num
+ 	, bno
+ 	, user_number
+ 	, cmt_content
+ 	, write_date
+ 	, cmt_update
+ 	, cmt_delete_yn
+ </sql>
+ 
+ <!-- 이미지 테이블 -->
+ <sql id="imgColumns">
+ 	img_number
+ 	, bno
+ 	, img_url
+ 	, img_show_yn
+ </sql>
+ 
+ <!-- 게시글 카테고리 -->
+ <sql id="categoryColumns">
+ 	category
+ </sql>
+ 
+ <!-- 게시글 조회 -->
+ <select id="detailBoard" parameterType="BoardDTO" resultType="BoardDTO">
+ 	select <include refid="boardColumns"/>
+ 	from board_list
+ </select>
+ 
+  <!-- 신고 조회 -->
+ <select id="detailReport" parameterType="BoardDTO" resultType="BoardDTO">
+ 	select <include refid="reportColumns"/>
+ 	from report_table
+ </select>
+ 
+  <!-- 댓글 조회 -->
+ <select id="detailComment" parameterType="BoardDTO" resultType="BoardDTO">
+ 	select <include refid="commentColumns"/>
+ 	from comment_table
+ </select>
+ 
+  <!-- 이미지 조회 -->
+ <select id="detailImg" parameterType="BoardDTO" resultType="BoardDTO">
+ 	select <include refid="imgColumns"/>
+ 	from img_table
+ </select>
+ 
+  <!-- 카테고리 조회 -->
+ <select id="detailCategory" parameterType="BoardDTO" resultType="BoardDTO">
+ 	select <include refid="categoryColumns"/>
+ 	from category
+ </select>
+ 
+ 
+ 
+ 
+
+
+
+</mapper>

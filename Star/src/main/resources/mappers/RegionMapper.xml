@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.star.mapper.RegionMapper">
+
+	<!-- 지역 테이블 카테고리 -->
+	<sql id="regionColumns">
+		region
+	</sql>
+	
+	<!-- 지역 상세 테이블  -->
+	<sql id="regionDetailColumns">
+		lower_region
+		, upper_region
+		, latitude
+		, longitude
+	</sql>
+	
+	<!-- 관측지 테이블  -->
+	<sql id="observatoryColumns">
+		observatory
+		, placed_region
+		, observatory_address
+		, observatory_img_url
+		, observatory_phone
+		, observatory_homepage
+	</sql>
+	
+	<!-- 지역 테이블 조회 -->
+	<select id="detailRegion" parameterType="RegionDTO" resultType="RegionDTO" >
+		select <include refid="regionColumns"/>
+		from region_table
+	</select>
+	
+	<!-- 지역 상세 테이블 조회 -->
+	<select id="detailDetail" parameterType="RegionDTO" resultType="RegionDTO" >
+		select <include refid="regionDetailColumns"/>
+		from region_detail_table
+	</select>
+	
+	<!-- 관측지 테이블 조회 -->
+	<select id="detailObservatory" parameterType="RegionDTO" resultType="RegionDTO" >
+		select <include refid="observatoryColumns"/>
+		from observatory_table
+	</select>
+	
+	
+	
+	
+	
+</mapper>

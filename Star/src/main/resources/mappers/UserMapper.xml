@@ -16,12 +16,7 @@
 		, admin_yn
 	</sql>
 	
-	<sql id="mapColumns">
-		region
-		, img_url
-	</sql>
-	
-	<insert id="insertUser" parameterType="UserDTO">
+		<insert id="insertUser" parameterType="UserDTO">
 		INSERT INTO users_table(
 			<include refid="userColumns"/>
 			) VALUES (
@@ -38,7 +33,6 @@
 			)
 	</insert> 
 	
-
 	<select id="detailUser" parameterType="long" resultType="UserDTO">
 		SELECT <include refid="userColumns"/>
 		FROM users_table
@@ -60,11 +54,7 @@
 	</select>
 	
 	
-	<select id="testImg" parameterType="long" resultType="String">
-		SELECT img_url
-		FROM map_image_table
-		WHERE region = (select user_region from users_table where user_number = #{userNumber})
-	</select>
+
 	
 
 	

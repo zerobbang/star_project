@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.star.mapper.DustMapper">
+
+<!-- 훈련 데이터 -->
+<sql id="trainColumns">
+	region
+	, date
+	, weather
+	, humidity
+	, wind_speed
+	, kor_wind
+	, cn_pm10
+	, kor_pm10
+</sql>
+
+<!-- 예측 테이블 -->
+<sql id="predictColumns">
+	region
+	, date
+	, weather
+	, humidity
+	, wind_speed
+	, kor_wind
+	, cn_pm10
+	, kor_pm10
+</sql>
+
+<!-- 훈련 테이블 조회 -->
+	<select id="detailInfo" parameterType="DustDTO" resultType="DustDTO" >
+		select <include refid="trainColumns"/>
+		from training_table
+	</select>
+	
+<!-- 예측 테이블 조회 -->
+		<select id="detailInfo2" parameterType="DustDTO" resultType="DustDTO" >
+		select <include refid="predictColumns"/>
+		from prediction_table
+	</select>
+
+
+
+
+
+
+</mapper>
