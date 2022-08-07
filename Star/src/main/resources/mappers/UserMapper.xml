@@ -63,7 +63,11 @@
 		where user_id = #{userId};
 	</select>
 	
-	
+	<select id="nicknameCheck" parameterType="UserDTO" resultType="String">
+		select user_id
+		from users_table
+		where user_nickname = #{userNickname};
+	</select>
 
 
 

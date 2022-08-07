@@ -22,4 +22,6 @@ public interface UserService {
 
 	public String idCheck(UserDTO userDto);
 	
+	public String nicknameCheck(UserDTO userDto);
+	
 }

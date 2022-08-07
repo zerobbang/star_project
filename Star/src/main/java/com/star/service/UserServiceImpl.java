@@ -83,12 +83,23 @@ public class UserServiceImpl implements UserService{
 		return 0;
 	}
 
+	// id 중복검사
 	@Override
 	public String idCheck(UserDTO userDto) {
 		// TODO Auto-generated method stub
 		System.out.println("service step");
 //		userMapper.idCheck(userDto);
 		return userMapper.idCheck(userDto);
+	}
+
+
+	// 닉네임 중복검사
+	@Override
+	public String nicknameCheck(UserDTO userDto) {
+		// TODO Auto-generated method stub
+			System.out.println("service step");
+//			userMapper.idCheck(userDto);
+			return userMapper.nicknameCheck(userDto);
 	}
     	
 	

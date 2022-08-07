@@ -105,7 +105,7 @@ public class UserController {
     }    
     
     // 회원가입 페이지 (임시로 sendmail) -> (signUp으로 변경)
-    @GetMapping(value = "/star/signup.do")
+    @GetMapping(value = "/star/signup")
     public String singUp(Model model) {
     	return "star/signUp";
 	}  
@@ -132,8 +132,9 @@ public class UserController {
         return returndata;
     };
     
-    // 회원가입 페이지 (임시로 sendmail) -> (signUp으로 변경)
-    @PostMapping(value = "/signupCheck")
+    // 회원가입 기능
+    @RequestMapping(value = "/signup.do",method = RequestMethod.POST)
+    @ResponseBody
     public String doSingUp(UserDTO userDTO, Model model) {
     	
     	System.out.println("do action!"); 
@@ -142,16 +143,17 @@ public class UserController {
     	try {
     		userService.doSignUp(userDTO);
     	} catch(Exception e) {
-    		System.out.println("nono");
+    		System.out.println("fail...");
+    		return "fail";
     	}
     	
     	
-    	return "star/login";
-	}  
+    	return "success";
+	};
 	
     
-    
-    @RequestMapping(value = "/inputCheck",method = RequestMethod.POST)
+    // id 유효성 체크
+    @RequestMapping(value = "/inputIDCheck",method = RequestMethod.POST)
 	@ResponseBody
     public String[] inputCheck(Model model,UserDTO userDto){
 		
@@ -173,4 +175,29 @@ public class UserController {
         String[] returndata = {tagdata, result};
         return returndata;
     };
+    
+    // 닉네임 유효성 체크
+    @RequestMapping(value = "/inputNicknameCheck",method = RequestMethod.POST)
+	@ResponseBody
+    public String[] inputNicknameCheck(Model model,UserDTO userDto){
+		
+		System.out.println(userDto.toString());
+		
+		String resultID = userService.nicknameCheck(userDto);
+		System.out.println(resultID);
+        String result;
+        
+        if(resultID == null) {
+        	result = "사용가능한 닉네임입니다.";
+        }else {
+        	result = "이미 사용중입니다.";
+        }
+        
+        
+        
+        
+        String[] returndata = {result};
+        return returndata;
+    };
+    
 }
