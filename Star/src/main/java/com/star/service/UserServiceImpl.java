@@ -43,14 +43,16 @@ public class UserServiceImpl implements UserService{
 	/* void */
     public String sendSimpleMessage(MailDTO mailDto) {
     	// 회원 정보 이메일과 일치하는지 확인 하기
-//    	userMapper.
-    	
     	
     	Random random = new Random();
-		int rdNum = random.nextInt(10);
-		String certifyNum = Integer.toString(rdNum);
-
- 
+		String certifyNum = ""; 
+				
+				for(int i=0; i<6; i++) {
+					int rdNum = random.nextInt(10);
+					
+					certifyNum += Integer.toString(rdNum); 
+				}
+				 
     	mailDto.setTitle("인증번호입니다.");
     	mailDto.setContent(certifyNum);
  
@@ -61,7 +63,6 @@ public class UserServiceImpl implements UserService{
         message.setSubject(mailDto.getTitle());
         message.setText(mailDto.getContent());
         
-//        session.setAttribute("emailNum", mailDto.getContent());
         emailSender.send(message);
         return certifyNum;
     }
@@ -85,21 +86,63 @@ public class UserServiceImpl implements UserService{
 
 	// id 중복검사
 	@Override
-	public String idCheck(UserDTO userDto) {
+	public String[] idCheck(UserDTO userDto) {
 		// TODO Auto-generated method stub
-		System.out.println("service step");
-//		userMapper.idCheck(userDto);
-		return userMapper.idCheck(userDto);
+		
+		String resultId = userMapper.idCheck(userDto);
+		
+		String result;
+        
+        if(resultId == null) {
+        	result = "사용 가능한 닉네임입니다.";
+        }else {
+        	result = "이미 사용중입니다.";
+        }
+        String[] returndata = {result};
+        
+        return returndata;
+		
 	}
 
 
 	// 닉네임 중복검사
 	@Override
-	public String nicknameCheck(UserDTO userDto) {
+	public String[] nicknameCheck(UserDTO userDto) {
 		// TODO Auto-generated method stub
-			System.out.println("service step");
-//			userMapper.idCheck(userDto);
-			return userMapper.nicknameCheck(userDto);
+		
+		String resultNickname = userMapper.nicknameCheck(userDto);
+		
+		String result;
+        
+        if(resultNickname == null) {
+        	result = "사용 가능한 닉네임입니다.";
+        }else {
+        	result = "이미 사용중입니다.";
+        }
+        String[] returndata = {result};
+        
+        return returndata;
+	}
+
+
+	// 이메일 중복검사
+	@Override
+	public String[] emailCheck(UserDTO userDto) {
+		// TODO Auto-generated method stub
+		String resultEmail = userMapper.emailCheck(userDto);
+		
+		String result;
+        
+        if(resultEmail == null) {
+        	result = "사용가능한 이메일입니다.";
+        }else {
+        	result = "이미 사용중입니다.";
+        }
+        String[] returndata = {result};
+        
+        return returndata;
+		
+		
 	}
     	
 	

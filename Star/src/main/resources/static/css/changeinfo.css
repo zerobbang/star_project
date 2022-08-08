@@ -1,0 +1,123 @@
+@charset "UTF-8";
+
+#change_logo {
+  text-align: center;
+}
+
+/* 정보변경 글자 */
+.change_info {
+  margin-top: 30px;
+  text-align: center;
+  /* margin: 0 auto; */
+}
+
+#change_pn {
+  /* display: flex;
+  flex-direction: column; */
+  position: relative;
+  text-align: center;
+  width: 400px;
+  margin: 0 auto;
+  font-size: 30px;
+}
+
+/* 비밀번호 css */
+.change_pass {
+  padding: 2%;
+  /* font-size: 30px; */
+  margin: 10px -10px;
+}
+
+/* 닉네임 css */
+.change_nick {
+  padding: 2%;
+  margin: 10px -10px;
+  }
+
+/* input css */
+input {
+  width: 100%;
+  height: 50px;
+  font-size: 15px;
+  padding: 10px 12px;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid rgb(90, 89, 89);
+  box-shadow : 0 1px 0 0 rgba(149, 147, 147, 0.955);
+}
+
+input:focus {
+  outline: none;
+}
+
+.material-symbols-outlined {
+  position: absolute;
+  right: -10px;
+  top: 35px;
+  color: gray;
+}
+
+/* 지역변경 css */
+.change_reg {
+  display: flex;
+  padding-top: 15px;
+  padding-right: 15%;
+  padding-bottom: 3%;
+  width: 200px;
+  margin: 0 auto;
+}
+
+/* 지역변경 옵션 css */
+select {
+  text-align: center;
+  border-radius: 5px;
+  width: 100%;
+  height: 50px;
+  font-size: 18px;
+}
+
+/* select option[value=""][disabled] {
+	display: none;
+} */
+
+/* 저장 버튼 css */
+.change_btn {
+  text-align: center;
+}
+
+ .btn{
+  margin:0 auto; 
+  width: 295px;
+  height:65px; 
+  line-height:65px; 
+  background:rgb(90, 89, 89);; 
+  color:#fff; font-size:18px;
+  border-radius: 5px;
+  padding:0;
+  border:0;
+  font-weight:bold; 
+  text-align:center; 
+  transition:0.5s all; 
+  overflow:hidden;
+}
+.btn:hover{
+  transform:scale(1.1);
+}
+.btn:after{
+  content:''; 
+  position: absolute; 
+  top: calc(50% - 50px); 
+  left: -50px; 
+  width: 20px; 
+  height: 100px; 
+  background: white; 
+  -webkit-transform: rotate(30deg); 
+  transform:rotate(30deg); 
+  -webkit-transition: all 1000ms cubic-bezier(0.23, 1, 0.32, 1); 
+  transition: all 1000ms cubic-bezier(0.23, 1, 0.32, 1); 
+  opacity: 0;
+}
+.btn:hover:after {
+  left: calc(100% + 50px); 
+  opacity: 1;
+}

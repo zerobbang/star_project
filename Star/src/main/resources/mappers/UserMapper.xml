@@ -68,6 +68,12 @@
 		from users_table
 		where user_nickname = #{userNickname};
 	</select>
+	
+	<select id="emailCheck" parameterType="UserDTO" resultType="String">
+		select user_email
+		from users_table
+		where user_email = #{userEmail};
+	</select>
 
 
 

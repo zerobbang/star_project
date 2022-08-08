@@ -125,9 +125,8 @@ public class UserController {
 		String certifyNum = mailDto.getContent();
 		
 		System.out.println(certifyNum);
-		
-        String firstdata = "<div id=resultDiv>메일을 확인해주세요!</div>"; 
-        String[] returndata = {firstdata, certifyNum};
+		 
+        String[] returndata = {certifyNum};
         return returndata;
     };
     
@@ -135,8 +134,7 @@ public class UserController {
     @RequestMapping(value = "/signup.do",method = RequestMethod.POST)
     @ResponseBody
     public String doSingUp(UserDTO userDTO, Model model) {
-    	
-    	System.out.println("do action!"); 
+    	 
     	System.out.println(userDTO.toString());
     	
     	try {
@@ -151,51 +149,33 @@ public class UserController {
 	};
 	
     
-    // id 유효성 체크
+    // id 유일성 체크
     @RequestMapping(value = "/inputIDCheck",method = RequestMethod.POST)
 	@ResponseBody
     public String[] inputCheck(Model model,UserDTO userDto){
 		
-		System.out.println(userDto.toString());
-		
-		String resultID = userService.idCheck(userDto);
-		System.out.println(resultID);
-        String result;
+        String[] returndata = userService.idCheck(userDto);
         
-        if(resultID == null) {
-        	result = "사용가능한 ID입니다.";
-        }else {
-        	result = "이미 사용중입니다.";
-        }
-        
-        
-        String tagdata = "<div id=IDresultDiv>"+ result +"</div>";
-        
-        String[] returndata = {tagdata, result};
         return returndata;
     };
     
-    // 닉네임 유효성 체크
+    // 닉네임 유일성 체크
     @RequestMapping(value = "/inputNicknameCheck",method = RequestMethod.POST)
 	@ResponseBody
     public String[] inputNicknameCheck(Model model,UserDTO userDto){
 		
-		System.out.println(userDto.toString());
+        String[] returndata = userService.nicknameCheck(userDto);
+        
+        return returndata;
+    };
+    
+    // 이메일 유일성 체크
+    @RequestMapping(value = "/inputEmailCheck",method = RequestMethod.POST)
+	@ResponseBody
+    public String[] inputEmailCheck(Model model,UserDTO userDto){
 		
-		String resultID = userService.nicknameCheck(userDto);
-		System.out.println(resultID);
-        String result;
-        
-        if(resultID == null) {
-        	result = "사용가능한 닉네임입니다.";
-        }else {
-        	result = "이미 사용중입니다.";
-        }
-        
-        
-        
-        
-        String[] returndata = {result};
+		String[] returndata = userService.emailCheck(userDto);
+		
         return returndata;
     };
     
