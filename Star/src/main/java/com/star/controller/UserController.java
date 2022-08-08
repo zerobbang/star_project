@@ -108,8 +108,9 @@ public class UserController {
     public String singUp(Model model) {
     	return "star/signUp";
 	}  
-    
-    @GetMapping(value = "/star/findUser.do")
+
+    // 계정찾기 페이지
+    @GetMapping(value = "/star/findUser")
     public String findAccount() {
     	return "star/findUser";
     }
