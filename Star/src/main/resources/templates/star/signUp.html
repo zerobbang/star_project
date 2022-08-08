@@ -18,12 +18,13 @@
     	var userInputPassword;
     	var userInputNickname;
     	var userInputEmail;
+    	var userInputRegion;
     	var certify;
     	
     	// id, 닉네임, 비밀번호, 이메일 입력칸을 잘 넘어갔는지 Yes or No
     	var IdCheck = false;
-    	var nicknameCheck = false;
     	var passwordCheck = false;
+    	var nicknameCheck = false;
     	var emailCheck = false;
     	var certifyCheck = false;
     	
@@ -53,7 +54,7 @@
     	    }).done(function (fragments) {
     	    	certify = fragments[0];
     	    	
-    	        $("#resultDiv").replaceWith("<div id=resultDiv>메일을 확인해주세요!</div>");
+    	        $("#emailError").replaceWith("<div id=emailError>메일을 확인해주세요!</div>");
     	    });
 		}
     	
@@ -66,7 +67,7 @@
     		if (input_data == certify){
     			certifyCheck = true;
     			alert("인증 성공")
-    			$("#resultDiv").replaceWith("<div id=resultDiv></div>");
+    			$("#emailError").replaceWith("<div id=emailError></div>");
     			$("#userEmail").replaceWith('<input type="text" name="userEmail" id="userEmail" readonly="readonly" value='+ userInputEmail +'>' );
     			
     		} else {
@@ -90,12 +91,14 @@
     			userInputPassword=$("#userPassword").val();
     			userInputNickname=$("#userNickname").val();
     			userInputEmail=$("#userEmail").val();
+    			userInputRegion=$("#userRegion").val();
     			
     			var userDto={
        	       		userId:userInputId
 	       	    	, userPassword:userInputPassword
 	       	    	, userNickname:userInputNickname
 	       	  		, userEmail:userInputEmail
+	       	  		, userRegion:userInputRegion
           	    };
     			console.log(userDto); 
     			
@@ -106,9 +109,9 @@
         	    }).done(function(returnData) {
         	    	if(returnData=="success"){        	    		
         	    		// 지금은 테스트를 위해서 뒤로가기 기능을 넣어둠.
-        	    		location.href = "/star/login";
-        	    		// 나중엔 아래꺼로 바꾸어야 뒤로가기를 못하게 됨.
-        	    		// location.replace("/star/login");
+        	    		// location.href = "/star/login";
+        	    		// 나중엔 아래꺼로 바꾸어야 뒤로가기를 못하게 됨. (바꿔둔 상태, 필요시 위 코드와 교체해도 무방)
+        	    		location.replace("/star/login");
         	    	}
        	    	});
     			
@@ -154,13 +157,12 @@
         	        data: userDto,
         	        type:"POST",
         	    }).done(function (fragments) {
-        	    	var fragment = fragments[0];
-        	    	var uniqueResult = fragments[1];
+        	    	var uniqueResult = fragments[0];
         	    	
-        	        
         	        if (uniqueResult == "이미 사용중입니다."){
         	        	IdCheck = false;
         	        	$("#IDerror").replaceWith('<div id="IDerror" class="error">'+ '이미 사용중입니다.' +'</div>');
+        	        	console.log("samesame")
         	        } else {
         	        	IdCheck = true;
         	        	$("#IDerror").replaceWith('<div id="IDerror" class="error"></div>');
@@ -186,6 +188,7 @@
             	
             	if (newValue==""){
             		$("#PasswordCheckError").replaceWith('<div id="PasswordCheckError" class="error">' + '비밀번호를 입력해주세요' + '</div>');
+            		passwordCheck = false;
             		return;
             	}
                 if(rule != newValue || rule == ""){
@@ -397,24 +400,24 @@
 	    
 	    	<span>관측 희망 지역</span> <!--기본 지역 선택-->
 	        <select id="userRegion" name="userRegion">
-	            <option selected disabled>지역을 선택하세요.</option>
-	            <option>서울</option>
-	            <option>부산</option>
-	            <option>대구</option>
-	            <option>인천</option>
-	            <option>광주</option>
-	            <option>대전</option>
-	            <option>울산</option>
-	            <option>세종</option>
-	            <option>경기도</option>
-	            <option>강원도</option>
-	            <option>충청북도</option>
-	            <option>충청남도</option>
-	            <option>전라북도</option>
-	            <option>전라남도</option>
-	            <option>경상북도</option>
-	            <option>경상남도</option>
-	            <option>제주도</option>
+	            <option value="전국">전국</option>
+	            <option value="서울">서울</option>
+	            <option value="부산">부산</option>
+	            <option value="대구">대구</option>
+	            <option value="인천">인천</option>
+	            <option value="광주">광주</option>
+	            <option value="대전">대전</option>
+	            <option value="울산">울산</option>
+	            <option value="세종">세종</option>
+	            <option value="경기도">경기도</option>
+	            <option value="강원도">강원도</option>
+	            <option value="충청북도">충청북도</option>
+	            <option value="충청남도">충청남도</option>
+	            <option value="전라북도">전라북도</option>
+	            <option value="전라남도">전라남도</option>
+	            <option value="경상북도">경상북도</option>
+	            <option value="경상남도">경상남도</option>
+	            <option value="제주도">제주도</option>
 	        </select>
 	        <div id="regionError" class="error"></div>
 	        <div class="line">
