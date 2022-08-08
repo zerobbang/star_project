@@ -24,4 +24,8 @@ public interface UserMapper {
 
 	public String emailCheck(UserDTO userDto);
 
+	public int updateNickRegion(UserDTO userDto);
+	
+	public int updatePassNickRegion(UserDTO userDto);
+
 } 

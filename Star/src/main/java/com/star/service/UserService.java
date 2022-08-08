@@ -26,5 +26,7 @@ public interface UserService {
 	public String[] nicknameCheck(UserDTO userDto);
 	
 	public String[] emailCheck(UserDTO userDto);
+
+	public String changeInfo(UserDTO userDto);
 	
 }

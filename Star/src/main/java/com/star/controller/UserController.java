@@ -181,8 +181,20 @@ public class UserController {
     
     @GetMapping(value = "/star/changeInfo")
 	public String changeInfo(UserDTO userDTO, Model model) {
+    	model.addAttribute("UserInfo",userDTO);
 		return "star/changeInfo";
-
 	}
+    
+    // 이메일 유일성 체크
+    @RequestMapping(value = "/changeInfo.do",method = RequestMethod.POST)
+	@ResponseBody
+    public String changeInfo(Model model,UserDTO userDto){
+		
+		String returndata = userService.changeInfo(userDto);
+		
+        return returndata;
+    };
+    
+    
     
 }

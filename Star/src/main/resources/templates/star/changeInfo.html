@@ -16,8 +16,9 @@
 	var userInputNickname;
     
 	// 닉네임, 비밀번호 입력칸을 잘 넘어갔는지 Yes or No
-    var nicknameCheck = true;
-	var passwordCheck = false;
+    var passwordCheck = true;
+	var nicknameCheck = false;
+	
     
 	// 비밀번호, 닉네임 정규표현식
     var passwordRegex = /[a-zA-Z0-9]{6,20}/;
@@ -28,7 +29,6 @@
 		
 		$("#userPassword").change("change keyup paste", function() {
         	
-			console.log("aa")
         	// 현재 변경된 데이터 셋팅
             var newValue = $(this).val();
         	
@@ -36,9 +36,9 @@
         	
         	try{
         		rule = newValue.match(passwordRegex)[0];
-        		console.log("bb")
+        		
         	} catch(e){
-        		console.log("cc")
+        		console.log("fail..")
         	};
         	
         	if (newValue==""){
@@ -54,14 +54,136 @@
             
             var userInputPassword=$("#passwordCheck").val();
             
-            $("#PasswordCheckError").replaceWith('<div id="PasswordCheckError" class="error">'+'</div>');
-        	passwordCheck = trueq;
-        	return;
-            
+            if(newValue == userInputPassword){
+	            $("#PasswordCheckError").replaceWith('<div id="PasswordCheckError" class="error">'+'</div>');
+	        	passwordCheck = true;
+            } else{
+            	$("#PasswordCheckError").replaceWith('<div id="PasswordCheckError" class="error">입력한 비밀번호와 일치하지 않습니다.</div>');
+            	passwordCheck = false;
+            }
 		});
+            
+		$("#passwordCheck").change("change keyup paste", function() {
+            	
+           	// 현재 변경된 데이터 셋팅
+               var newValue = $(this).val();
+           	
+			var rule = "";
+           	
+           	try{
+           		rule = newValue.match(passwordRegex)[0];
+                console.log(rule);
+           	} catch(e){
+           		console.log("fail")
+           	};
+           	
+           	
+           	if (newValue==""){
+           		$("#PasswordCheckError").replaceWith('<div id="PasswordCheckError" class="error">' + '비밀번호를 입력해주세요' + '</div>');
+           		return;
+           	}
+           	
+            if(rule != newValue || rule == ""){
+            	$("#PasswordCheckError").replaceWith('<div id="PasswordCheckError" class="error">' + '6~20자의 영문,숫자만 사용 가능합니다.' + '</div>');
+            	passwordCheck = false;
+            	return;
+            }
+            
+            var userInputPassword=$("#userPassword").val();
+            
+            if(newValue == userInputPassword){
+            	$("#PasswordCheckError").replaceWith('<div id="PasswordCheckError" class="error"></div>');
+            	passwordCheck = true;
+            } else{
+            	$("#PasswordCheckError").replaceWith('<div id="PasswordCheckError" class="error">입력한 비밀번호와 일치하지 않습니다.</div>');
+            	passwordCheck = false;
+            }
+		});
+            
+		$("#userNickname").change("change keyup paste", function() {
+           	
+           	// 현재 변경된 데이터 셋팅
+           	var newValue = $(this).val();
+           	var rule = "";
+           	
+           	try{
+           		rule = newValue.match(nicknameRegex)[0];
+                console.log(rule);
+           	} catch(e){
+           		console.log("fail")
+           	};
+           	
+           	if (newValue==""){
+           		$("#nicknameError").replaceWith('<div id="nicknameError" class="error">' + '닉네임을 입력해주세요' + '</div>');
+           		return;
+           	}
+           	
+            if(rule != newValue || rule == ""){
+            	$("#nicknameError").replaceWith('<div id="nicknameError" class="error">' + '2~8자의 한글,영문,숫자만 사용 가능합니다.' + '</div>');
+            	nicknameCheck = false;
+            	return;
+            }
+               
+            //json 형태로 전송
+       	    var userDto={
+       	        userNickname:newValue
+       	    };
+   			
+       	    $.ajax({
+       	        url: "/inputNicknameCheck",
+       	        data: userDto,
+       	        type:"POST",
+       	    }).done(function (fragments) {
+       	    	
+       	    	var uniqueResult = fragments[0];
+       	    	
+       	        if (uniqueResult == "이미 사용중입니다."){
+       	        	nicknameCheck = false;
+       	        	$("#nicknameError").replaceWith('<div id="nicknameError" class="error">' + uniqueResult + '</div>');
+       	        } else {
+       	        	nicknameCheck = true;
+       	        	$("#nicknameError").replaceWith('<div id="nicknameError" class="error"></div>');
+       	        }
+       	    });
+                
+        });
+        	
+            
+	});
 		
 		
-	})
+	
+	
+	function changeUserInfo(){
+		
+		if (passwordCheck == false){
+			alert("비밀번호를 확인해주세요.")
+		} else if (nicknameCheck == false){
+			alert("닉네임을 확인해주세요.")
+		} else{
+			userInputPassword=$("#userPassword").val();
+			userInputNickname=$("#userNickname").val();
+			userInputRegion=$("#userRegion").val();
+		
+			var userDto={
+   	    	userPassword:userInputPassword
+   	    	, userNickname:userInputNickname
+   	  		, userRegion:userInputRegion
+   	    	};
+			
+			$.ajax({
+       	        url: "/changeInfo.do",
+       	        data: userDto,
+       	        type:"POST",
+       	    }).done(function(returnData) {
+    	    	if(returnData=="success"){        	    		
+    	    		alert("변경되었습니다.");
+    	    		location.href = "/star/mainpage";
+    	    	}
+   	    	});
+			
+		}
+	}
     
     
     
@@ -78,9 +200,8 @@
         </div>
     </h1>
     </div>
-    <form id="changeInfo_form" action="changeInfo.do" method="post" onsubmit="userinfoCheck(this)">
     
-<!-- 비밀번호 변경 -->
+		<!-- 비밀번호 변경 -->
         <div id="change_pn">
         <div class="change_pass" style="text-align: center;"> 
             <label for="userPassword" class="lab_pass"></label>
@@ -88,42 +209,51 @@
             <span class="material-symbols-outlined">
                 visibility
             </span>
-            <div id="PasswordCheckError" class="error"></div> <!--비밀번호 확인-->
         </div>
-<!-- 닉네임 변경 -->
+        
+        <div class="change_pass" style="text-align: center;">
+	        <label for="passwordCheck" class="lab_pass"></label>
+	        <input type="password" name="passwordCheck" id="passwordCheck" placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리">
+	        <span class="material-symbols-outlined">
+	            visibility
+	        </span>
+        </div>
+        <div id="PasswordCheckError" class="error"></div> <!--비밀번호 확인-->
+        
+        
+		<!-- 닉네임 변경 -->
         <div class="change_nick" style="text-align: center;">
             <label for="userNickname" class="lab_nick"></label>
             <input type="text" name="userNickname" id="userNickname" required placeholder="닉네임을 입력해주세요.">
             <div id="nicknameError" class="error"></div>
         </div>
         </div>
-<!-- 기본지역 변경 -->
+	<!-- 기본지역 변경 -->
     <div class="change_reg">
-        <select name="region" required>
-            <option value="" disabled selected>관측 원하는 지역</option>
-            <option value="Nationwide"> 전국 </option>
-            <option value="Seoul"> 서울 </option>
-            <option value="Busan"> 부산 </option>
-            <option value="Daegu"> 대구 </option>
-            <option value="Incheon"> 인천 </option>
-            <option value="Gwangju"> 광주 </option>
-            <option value="Daejeon"> 대전 </option>
-            <option value="Ulsan"> 울산 </option>
-            <option value="Sejong"> 세종 </option>
-            <option value="Gyeonggi-do"> 경기도 </option>
-            <option value="Gangwon-do"> 강원도 </option>
-            <option value="Chungcheongbuk-do"> 충청북도 </option>
-            <option value="Chungcheongnam-do"> 충청남도 </option>
-            <option value="Jeollabuk-do"> 전라북도 </option>
-            <option value="Jeollanam-do"> 전라남도 </option>
-            <option value="Gyeongsangbuk-do"> 경상북도 </option>
-            <option value="Gyeongsangnam-do"> 경상남도 </option>
-            <option value="Jeju-do"> 제주도 </option>
+        <select name="userRegion" required>
+            <option value="전국">전국</option>
+            <option value="서울">서울</option>
+            <option value="부산">부산</option>
+            <option value="대구">대구</option>
+            <option value="인천">인천</option>
+            <option value="광주">광주</option>
+            <option value="대전">대전</option>
+            <option value="울산">울산</option>
+            <option value="세종">세종</option>
+            <option value="경기도">경기도</option>
+            <option value="강원도">강원도</option>
+            <option value="충청북도">충청북도</option>
+            <option value="충청남도">충청남도</option>
+            <option value="전라북도">전라북도</option>
+            <option value="전라남도">전라남도</option>
+            <option value="경상북도">경상북도</option>
+            <option value="경상남도">경상남도</option>
+            <option value="제주도">제주도</option>
         </select>
     </div>
-</form>
     <div class="change_btn">
-        <button class="btn" type="submit">저장하기</button>
+        <button class="btn" type="button" onclick="changeUserInfo()">저장하기</button>
     </div>
+    
 </body>
 </html>

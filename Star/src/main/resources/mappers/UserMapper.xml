@@ -74,8 +74,21 @@
 		from users_table
 		where user_email = #{userEmail};
 	</select>
+	
+	<update id="updateNickRegion" parameterType="UserDTO">
+		update users_table
+		set user_nickname = #{userNickname}
+			, user_region = #{userRegion}
+		where user_id = 'id1';
+	</update>
 
-
+	<update id="updatePassNickRegion" parameterType="UserDTO">
+		update users_table
+		set user_password = #{userPassword}
+			, user_nickname = #{userNickname}
+			, user_region = #{userRegion}
+		where user_id = 'id1';
+	</update>
 
 
 </mapper>
