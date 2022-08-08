@@ -50,6 +50,7 @@
  <select id="detailBoard" parameterType="BoardDTO" resultType="BoardDTO">
  	select <include refid="boardColumns"/>
  	from board_list
+ 	where bno = 2
  </select>
  
   <!-- 신고 조회 -->
@@ -93,6 +94,29 @@
  		, 0
  	)
  </insert>
+ 
+ 
+ <!-- 상세 조회 -->
+ <select id="selectDetail" parameterType="long" resultType="BoardDTO">
+ 	select 
+ 		<include refid="boardColumns"/>
+ 	from board_list
+ 	where bno = #{bno}
+ 	AND delete_yn = 0
+ </select>
+ 
+ 
+ <!-- 게시글 리스트 조회 -->
+ <select id="selectList" parameterType="BoardDTO" resultType="BoardDTO">
+ 	SELECT 
+ 		<include refid="boardColumns"/>
+	FROM 
+		board_list
+	WHERE 
+		deltet_yn = 0
+	ORDER BY
+		bno DESC 
+ </select>
  
  
  
