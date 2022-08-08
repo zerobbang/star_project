@@ -4,12 +4,12 @@ import java.time.LocalDateTime;
 
 import lombok.Getter;
 import lombok.Setter;
-
+ 
 @Getter
-@Setter 
+@Setter
 public class UserDTO {
 	 
-	
+	 
 //	users_table
 	private Long userNumber;
 	

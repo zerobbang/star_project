@@ -33,9 +33,17 @@
 	</select>
 	
 <!-- 예측 테이블 조회 -->
-		<select id="detailInfo2" parameterType="DustDTO" resultType="DustDTO" >
+	<select id="detailInfo2" parameterType="DustDTO" resultType="DustDTO" >
 		select <include refid="predictColumns"/>
 		from prediction_table
+	</select> 
+	
+	
+	<select id="getPredictionList" parameterType="DustDTO" resultType="DustDTO">
+		select 
+			*
+		from 
+			prediction_table
 	</select>
 
 

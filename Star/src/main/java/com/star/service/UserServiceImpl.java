@@ -1,5 +1,7 @@
 package com.star.service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,18 +10,23 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import com.star.domain.DustDTO;
 import com.star.domain.MailDTO;
 import com.star.domain.UserDTO;
+import com.star.mapper.DustMapper;
 import com.star.mapper.UserMapper;
 
 import lombok.AllArgsConstructor;
 
-@Service
+@Service 
 @AllArgsConstructor
 public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private DustMapper dustMapper;
 
 	@Override
 	public boolean registerUser(UserDTO params) {
@@ -90,6 +97,17 @@ public class UserServiceImpl implements UserService{
 //		userMapper.idCheck(userDto);
 		return userMapper.idCheck(userDto);
 	}
+	
+
+	@Override
+	public List<DustDTO> getPrediction(DustDTO params) {
+		
+		// List<DustDTO> boardList = Collections.emptyList();
+		List<DustDTO> boardList;
+		boardList = dustMapper.getPredictionList(params);
+		return boardList;
+	}
+
     	
 	
 }

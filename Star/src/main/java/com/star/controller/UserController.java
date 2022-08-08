@@ -1,15 +1,19 @@
 package com.star.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.star.domain.DustDTO;
 import com.star.domain.MailDTO;
 import com.star.domain.UserDTO;
 import com.star.service.UserService;
@@ -19,15 +23,14 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-
-
+	
+	
 	@GetMapping(value = "/star/main.do")
 	public String openUser(Model model) {
 		return "star/main";
 	} 
 
 
-	
 	@GetMapping(value = "/star/main2.do")
 	public String openMap(Model model) {
 		return "star/main3";
@@ -64,7 +67,6 @@ public class UserController {
     // 로그인 체크  /star/logInCheck
     @PostMapping(value = "/star/login") 
     public String logInCheck(UserDTO userDTO, Model model) {
-
 //    	System.out.println(userDTO.toString());
   	
 //    	여기에서 이제 service에 정의한 함수를 사용할거임
@@ -81,7 +83,7 @@ public class UserController {
 	    	System.out.println(model);
 			 
 			if (userDto.getUserId() != null) {
-				return "star/findUser";
+				return "star/tempMain";
 			}else {
 				return "star/login";
 			}
@@ -90,19 +92,29 @@ public class UserController {
 		} catch (Exception e) {
 			return "star/login";  
 		} 
-
-
-//    	if(userDto.getUserId() != null) {
-//    		return "star/findUser"; 
-//    	}
-//    	else if(userDto.getUserId() == null){
-//    		return "star/login"; 
-//    	}
-//    	else { 
-//    		return "star/sendmail";
-//    	} 
     	
     }    
+    
+    // 임시 메인 페이지
+	@GetMapping(value = "/star/tempMain")
+	public String openMain(Model model) {
+		return "star/tempMain";
+	} 
+
+	// 리스트
+	@GetMapping(value = "/star/list")
+	public String openPredictionList(@ModelAttribute("params") DustDTO params, Model model) {
+		List<DustDTO> boardList = userService.getPrediction(params);
+		model.addAttribute("boardList", boardList);
+		System.out.println("dd");
+		System.out.println(boardList.get(0).getHumidity());
+		System.out.println(boardList.get(1).getHumidity());
+		return "star/tempMain";
+	}
+	
+
+
+
     
     // 회원가입 페이지 (임시로 sendmail) -> (signUp으로 변경)
     @GetMapping(value = "/star/signup.do")
@@ -173,4 +185,5 @@ public class UserController {
         String[] returndata = {tagdata, result};
         return returndata;
     };
+    
 }

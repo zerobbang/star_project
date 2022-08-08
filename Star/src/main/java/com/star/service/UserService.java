@@ -1,11 +1,15 @@
 package com.star.service;
 
 
+import java.util.List;
+
+import com.star.domain.DustDTO;
+
 //import javax.servlet.http.HttpServletRequest;
 
 import com.star.domain.MailDTO;
 import com.star.domain.UserDTO;
-
+ 
 public interface UserService {
 	
 	public boolean registerUser(UserDTO params);
@@ -21,5 +25,7 @@ public interface UserService {
 	public int doSignUp(UserDTO userDTO);
 
 	public String idCheck(UserDTO userDto);
+	
+	public List<DustDTO> getPrediction(DustDTO params);
 	
 }
