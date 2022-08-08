@@ -87,7 +87,6 @@ public class UserServiceImpl implements UserService{
 	// id 중복검사
 	@Override
 	public String[] idCheck(UserDTO userDto) {
-		// TODO Auto-generated method stub
 		
 		String resultId = userMapper.idCheck(userDto);
 		
@@ -108,7 +107,6 @@ public class UserServiceImpl implements UserService{
 	// 닉네임 중복검사
 	@Override
 	public String[] nicknameCheck(UserDTO userDto) {
-		// TODO Auto-generated method stub
 		
 		String resultNickname = userMapper.nicknameCheck(userDto);
 		

@@ -179,4 +179,10 @@ public class UserController {
         return returndata;
     };
     
+    @GetMapping(value = "/star/changeInfo")
+	public String changeInfo(UserDTO userDTO, Model model) {
+		return "star/changeInfo";
+
+	}
+    
 }

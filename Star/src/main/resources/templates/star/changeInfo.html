@@ -4,9 +4,69 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 	<link rel="stylesheet" href="changeInfo.css">
+ 	<link rel="stylesheet" href="/css/changeInfo.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <title>changeInfo</title>
+    
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+    
+ 	// 사용자가 입력한 데이터
+    var userInputPassword;
+	var userInputNickname;
+    
+	// 닉네임, 비밀번호 입력칸을 잘 넘어갔는지 Yes or No
+    var nicknameCheck = true;
+	var passwordCheck = false;
+    
+	// 비밀번호, 닉네임 정규표현식
+    var passwordRegex = /[a-zA-Z0-9]{6,20}/;
+	var nicknameRegex = /[가-힣a-zA-Z0-9]{2,8}/;
+    
+	/* 아이디, 닉네임, 이메일 유효성 체크 */
+	$( document ).ready( function() {
+		
+		$("#userPassword").change("change keyup paste", function() {
+        	
+			console.log("aa")
+        	// 현재 변경된 데이터 셋팅
+            var newValue = $(this).val();
+        	
+			var rule = "";
+        	
+        	try{
+        		rule = newValue.match(passwordRegex)[0];
+        		console.log("bb")
+        	} catch(e){
+        		console.log("cc")
+        	};
+        	
+        	if (newValue==""){
+        		$("#PasswordCheckError").replaceWith('<div id="PasswordCheckError" class="error">' + '</div>');
+        		passwordCheck = true;
+        		return;
+        	}
+            if(rule != newValue || rule == ""){
+            	$("#PasswordCheckError").replaceWith('<div id="PasswordCheckError" class="error">' + '6~20자의 영문,숫자만 사용 가능합니다.' + '</div>');
+            	passwordCheck = false;
+            	return;
+            }
+            
+            var userInputPassword=$("#passwordCheck").val();
+            
+            $("#PasswordCheckError").replaceWith('<div id="PasswordCheckError" class="error">'+'</div>');
+        	passwordCheck = trueq;
+        	return;
+            
+		});
+		
+		
+	})
+    
+    
+    
+    </script>
+    
 </head>
 <body>
     <!-- 이미지 + 정보변경 텍스트 -->
@@ -19,19 +79,22 @@
     </h1>
     </div>
     <form id="changeInfo_form" action="changeInfo.do" method="post" onsubmit="userinfoCheck(this)">
+    
 <!-- 비밀번호 변경 -->
         <div id="change_pn">
         <div class="change_pass" style="text-align: center;"> 
-            <label for="password" class="lab_pass"></label>
-            <input type="password" name="" id="password" placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리">
+            <label for="userPassword" class="lab_pass"></label>
+            <input type="password" name="userPassword" id="userPassword" placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리">
             <span class="material-symbols-outlined">
                 visibility
             </span>
+            <div id="PasswordCheckError" class="error"></div> <!--비밀번호 확인-->
         </div>
 <!-- 닉네임 변경 -->
         <div class="change_nick" style="text-align: center;">
-            <label for="nickname" class="lab_nick"></label>
-            <input type="text" name="" id="nickname" required placeholder="닉네임을 입력해주세요.">
+            <label for="userNickname" class="lab_nick"></label>
+            <input type="text" name="userNickname" id="userNickname" required placeholder="닉네임을 입력해주세요.">
+            <div id="nicknameError" class="error"></div>
         </div>
         </div>
 <!-- 기본지역 변경 -->
