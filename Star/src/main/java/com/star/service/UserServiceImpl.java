@@ -150,7 +150,7 @@ public class UserServiceImpl implements UserService{
 		
 	}
 	
-
+	// 예측 리스트 불러오기 (임시)
 	@Override
 	public List<DustDTO> getPrediction(DustDTO params) {
 		

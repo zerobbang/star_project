@@ -23,19 +23,6 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-<<<<<<< HEAD
-	
-	
-	@GetMapping(value = "/star/main.do")
-	public String openUser(Model model) {
-		return "star/main";
-	} 
-
-
-	@GetMapping(value = "/star/main2.do")
-	public String openMap(Model model) {
-		return "star/main3";
-=======
 
 //	메인 페이지
 	@GetMapping(value = "/star/mainpage")
@@ -47,7 +34,7 @@ public class UserController {
 	@GetMapping(value = "/star/main2")
 	public String openMap() {
 		return "star/main2";
->>>>>>> 661026da716e1efc6e17f5a2ce5bf796ca43cb40
+
 	}
 
 //
@@ -97,11 +84,8 @@ public class UserController {
 	    	System.out.println(model);
 			 
 			if (userDto.getUserId() != null) {
-<<<<<<< HEAD
-				return "star/tempMain";
-=======
 				return "star/main";
->>>>>>> 661026da716e1efc6e17f5a2ce5bf796ca43cb40
+
 			}else {
 				return "star/login";
 			}
@@ -112,14 +96,9 @@ public class UserController {
 		} 
     	
     }    
-    
-    // 임시 메인 페이지
-	@GetMapping(value = "/star/tempMain")
-	public String openMain(Model model) {
-		return "star/tempMain";
-	} 
+   
 
-	// 리스트
+	// 메인페이지 ( with. 중간에 있는 테이블 )
 	@GetMapping(value = "/star/list")
 	public String openPredictionList(@ModelAttribute("params") DustDTO params, Model model) {
 		List<DustDTO> boardList = userService.getPrediction(params);
@@ -190,9 +169,6 @@ public class UserController {
         return returndata;
     };
     
-<<<<<<< HEAD
-}
-=======
     // 닉네임 유일성 체크
     @RequestMapping(value = "/inputNicknameCheck",method = RequestMethod.POST)
 	@ResponseBody
@@ -220,4 +196,4 @@ public class UserController {
 	}
     
 }
->>>>>>> 661026da716e1efc6e17f5a2ce5bf796ca43cb40
+

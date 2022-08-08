@@ -15,7 +15,7 @@ public interface DustMapper {
 	// test 예측
 	public DustDTO detailInfo2(DustDTO dustDto);
 	
-	
+	// 예측 리스트 불러오기 (임시)
 	public List<DustDTO> getPredictionList(DustDTO params);
 
 }

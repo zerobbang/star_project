@@ -36,17 +36,11 @@ public class MapperTests {
 	public void testOfInsert() {
 		UserDTO params = new UserDTO();
 		
-<<<<<<< HEAD
-		 params.setUserNickname("가영12"); 
-		 params.setUserId("zerobbang212");
-		 params.setUserEmail("zerobbang123412");
-		 params.setUserPassword("0102222333312");
-=======
+
 		 params.setUserNickname("가영"); 
 		 params.setUserId("zerobbang");
 		 params.setUserEmail("gydiane1008@gmail.com");
 		 params.setUserPassword("zero123");
->>>>>>> 661026da716e1efc6e17f5a2ce5bf796ca43cb40
 		 params.setUserRegion("서울");
 
 
