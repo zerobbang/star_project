@@ -20,24 +20,23 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-
-	@GetMapping(value = "/star/main.do")
+//	메인 페이지
+	@GetMapping(value = "/star/mainpage")
 	public String openUser(Model model) {
 		return "star/main";
 	} 
-
-
 	
-	@GetMapping(value = "/star/main2.do")
-	public String openMap(Model model) {
-		return "star/main3";
+	// ajax 중간 main
+	@GetMapping(value = "/star/main2")
+	public String openMap() {
+		return "star/main2";
 	}
-	
 
-	// 메일 
-	public UserController(UserService userService) {
-        this.userService = userService;
-    }
+//
+//	// 메일 
+//	public UserController(UserService userService) {
+//        this.userService = userService;
+//    }
 
 
 	@GetMapping(value = "/star/sendmail.do")
@@ -81,7 +80,7 @@ public class UserController {
 	    	System.out.println(model);
 			 
 			if (userDto.getUserId() != null) {
-				return "star/findUser";
+				return "star/main";
 			}else {
 				return "star/login";
 			}

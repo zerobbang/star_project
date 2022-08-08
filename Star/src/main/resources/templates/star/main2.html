@@ -1,0 +1,114 @@
+    <div id="map" style="width:70%;height:450px;"></div>
+
+    <script>
+        
+        // 처음 보여줄 지도 > 전국으로 바꾸기
+        showMap("/geojson/korea.geojson");
+
+            
+        // 지도 보여주기
+        function showMap(userSelectRegionUrl){
+            $.getJSON(userSelectRegionUrl, function(geojson){
+                var data = geojson.features;
+                var coordinates = [];   
+                var polygonType = '';
+                var name = '';          
+
+                $.each(data, function(index, val) {
+                    console.log("index 값 : ",index);
+
+                    // 폴리곤 vs 멀티 폴리곤
+                    polygonType = val.geometry.type;
+                    console.log("polygon타입 : ",polygonType);
+                    if(polygonType == "Polygon"){
+                        // console.log("단일  :",val.geometry.coordinates);
+                        coordinates = val.geometry.coordinates;
+                        name = val.properties.SIG_KOR_NM; 
+                        displayArea(coordinates, name);
+                    }else{
+                        name = val.properties.SIG_KOR_NM; 
+                        var multicoordinates = val.geometry.coordinates;
+
+                        $.each(multicoordinates,function(index,val){
+                            if(val.length==1){
+                                // console.log(val);
+                                coordinates = val;
+                                // console.log("반복 안 반복 coordinates",coordinates);
+                                displayArea(coordinates, name);
+                            }else{
+                                $.each(val,function(index,val2){
+                                    // console.log([val2]);
+                                    coordinates = [val2];
+                                    // console.log("반복 안 반복 안 반복 coordinates",coordinates);
+                                    displayArea(coordinates, name);
+                                })
+                            }
+                        })
+
+                    }
+
+                });
+            })
+        }
+
+        function displayArea(coordinates,name){
+            var path = [];
+            // var points = [];
+
+            console.log(name);
+            console.log(coordinates);
+
+            // geojson 형태에 따라 달라질 수 있다.
+            $.each(coordinates[0], function(index,coordinate){
+                var point = new Object();
+                point.x = coordinate[1];
+                point.y = coordinate[0];
+                // points.push(point);
+                path.push(new kakao.maps.LatLng(coordinate[1], coordinate[0]));
+            });
+
+            // 다각형을 생성
+            var polygon = new kakao.maps.Polygon({
+                map:map,
+                path : path,
+                strokeWeight : 2,
+                strokeColor : '#004c80',
+                strokeOpacity : 0.8,
+                fillColor : '#fff',
+                fillOpacity : 0.7
+            });
+
+            // 폴리곤s에 집어넣기
+            polygons.push(polygon);
+        }
+
+
+        function setCenter(userSelectRegionCenter) {            
+            // 이동할 위도 경도 위치를 생성합니다 
+            console.log(userSelectRegionCenter);
+            var moveLatLon = new kakao.maps.LatLng(userSelectRegionCenter[0],userSelectRegionCenter[1]);
+            
+            // 지도 중심을 이동 시킵니다
+            map.setCenter(moveLatLon);
+        }
+
+        //지도 위 표시되고 있는 폴리곤 제거
+        function deletePolygon(polygons,centerAsix) {
+            for (var i = 0; i < polygons.length; i++) {
+                polygons[i].setMap(null);
+            }
+            polygons = [];
+        }
+
+        // 지도 띄우기
+        var mapContainer = document.getElementById('map'),
+        mapOption = { 
+            // 지도의 중심좌표
+            center: new kakao.maps.LatLng(37.566826, 126.9786567), 
+            // 소수점 불가
+            level: 10
+        };
+        // 지도를 표시할 div와  지도 옵션으로  지도를 생성
+        var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+    </script>

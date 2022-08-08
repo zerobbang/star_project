@@ -38,8 +38,8 @@ public class MapperTests {
 		
 		 params.setUserNickname("가영"); 
 		 params.setUserId("zerobbang");
-		 params.setUserEmail("zerobbang123");
-		 params.setUserPassword("01022223333");
+		 params.setUserEmail("gydiane1008@gmail.com");
+		 params.setUserPassword("zero123");
 		 params.setUserRegion("서울");
 
 

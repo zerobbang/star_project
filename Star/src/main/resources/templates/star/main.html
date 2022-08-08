@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko" >
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인 페이지</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b9125e70384813c29bb964a22bf69f75"></script>
+
+
+</head>
+<body>
+
+<script>
+	// 지역, geojson 경로 ->db?
+	var region = new Array('서울','제주','부산','전국','광주','전남','세종','전북','경남','경북','경기','울산','대구','대전','충남','충북','강원','인천');
+	/* var geojsonUrl = ['/geojson/seoul.geojson','/geojson/korea.geojson']; */
+	var geojsonUrl = new Array ('/geojson/seoul.geojson','/geojson/jeju.geojson','/geojson/busan.geojson','/geojson/korea.geojson','/geojson/gwangju.geojson','/geojson/jn.geojson','/geojson/sejong.geojson','/geojson/jb.geojson','/geojson/gn.geojson','/geojson/gb.geojson','/geojson/gg.geojson','/geojson/ulsan.geojson','/geojson/daegu.geojson','/geojson/daejeon.geojson','/geojson/cn.geojson','/geojson/cb.geojson','/geojson/gangwon.geojson','/geojson/incheon.geojson');
+	var regionCenter = new Array([37.566826, 126.9786567],[33.400, 126.5000],[35.1379222,129.05562775],[36.6,127.5],[35.1,126.8],[35.1,126.8],[36.504,127.249],[35.824,127.147],[35.15,128.15],[36.15,128.45],[37.3,127.15],[35.5,129.184],[35.8,128.46],[36.37,127.33],[36.6,127],[36.6,127.5],[37.8,128.2],[37.2722,126.425]);
+	var regionData = {region, geojsonUrl};
+	var regionCenterData = {region,regionCenter};
+	
+	// 이전에 생성한 폴리곤들을 지우기 위해 
+    var polygons=[] ;
+
+    $(document).ready(function(){
+         $.ajax({
+            url : "/star/main2",
+            // data : {"userSelect":$("#selectedRegion")},
+            dataType: "html",	// 이 부분이 반환 타입을 핸들링하는 곳이다.
+            type: "get",
+            success: function(data) {
+            $('#mapImg').html(data);
+            },
+            error: function (){alert("실패");}
+        });
+        
+/*         $.ajax({
+            url : "./test3.html",
+            // data : {"userSelect":$("#selectedRegion")},
+            dataType: "html",	// 이 부분이 반환 타입을 핸들링하는 곳이다.
+            type: "get",
+            success: function(data) {
+            $('#weather').html(data);
+            },
+            error: function (){alert("실패");}
+        }); */
+
+        $("select").on('focus',function(){
+        var previous = this.value;
+        console.log("현재값 : ",previous);
+        }).change(function(){      
+               
+            // 이전 폴리곤들 지우기
+            deletePolygon(polygons);          
+            
+            // 선택한 값
+            var next = this.value;
+
+            // 선택한 값 출력
+            $("#selectedRegion").val(next);
+
+            var userSelectRegion = next;
+            
+            for(i=0; i < region.length; i++){
+                if(userSelectRegion == regionData.region[i]){
+                    console.log("지역 데이터URL : ",regionData.geojsonUrl[i]);
+                    var userSelectRegionUrl = regionData.geojsonUrl[i];
+                    var userSelectRegionCenter = regionCenterData.regionCenter[i];
+                }
+            }
+            setCenter(userSelectRegionCenter);
+            showMap(userSelectRegionUrl);
+        });
+    });
+</script>
+
+    <h1>안녕하세요</h1>
+    <select id="selectRegion">
+        <option value="전국" selected="selected">전국</option>
+        <option value="강원">강원</option>
+        <option value="경기">경기</option>
+        <option value="경남">경남</option>
+        <option value="경북">경북</option>
+        <option value="전남">전남</option>
+        <option value="전북">전북</option>
+        <option value="충남">충남</option>
+        <option value="충북">충북</option>
+        <option value="광주">광주</option>
+        <option value="대구">대구</option>
+        <option value="대전">대전</option>
+        <option value="부산">부산</option>
+        <option value="서울">서울</option>
+        <option value="세종">세종</option>
+        <option value="울산">울산</option>
+        <option value="인천">인천</option>
+        <option value="제주">제주</option>
+    </select>
+    <input type="text" id="selectedRegion" value="전국"/>
+    <div id="mapImg"></div>
+    <h2>카카오 이미지 띄우기 비동기 처리 ..?(default 가 비동기)</h2>
+
+</body>
+</html>
