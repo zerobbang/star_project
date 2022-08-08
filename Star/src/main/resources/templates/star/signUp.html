@@ -13,7 +13,7 @@
     
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
-    	
+    	// 사용자가 입력한 데이터
     	var userInputId;
     	var userInputPassword;
     	var userInputNickname;
@@ -32,8 +32,6 @@
     	var passwordRegex = /[a-zA-Z0-9]{6,20}/;
     	var nicknameRegex = /[가-힣a-zA-Z0-9]{2,8}/;
     	var emailRegex= /[a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z-.]+/;
-    	
-    	
     	
     	/* 메일 발송하기 */
     	function dataSend() {			
@@ -62,7 +60,6 @@
     	/* 인증번호 체크하기 */
     	function check_certify(){
     		var input_data = $("#certify_id").val();
-    		/* var user_email = $("#userEmail").val(); */
     		console.log(input_data);
     		console.log(certify);
     		
