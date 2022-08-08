@@ -11,17 +11,17 @@ public interface UserService {
 	public boolean registerUser(UserDTO params);
 	
 	public UserDTO getUser(Long userNumber);
-	
 
 	public String sendSimpleMessage(MailDTO mailDto);
-	/* void */
 	
 	public UserDTO loginUser(UserDTO userDTO);
 	
 	public int doSignUp(UserDTO userDTO);
 
-	public String idCheck(UserDTO userDto);
+	public String[] idCheck(UserDTO userDto);
 	
-	public String nicknameCheck(UserDTO userDto);
+	public String[] nicknameCheck(UserDTO userDto);
+	
+	public String[] emailCheck(UserDTO userDto);
 	
 }

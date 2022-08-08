@@ -22,4 +22,6 @@ public interface UserMapper {
 
 	public String nicknameCheck(UserDTO userDto);
 
+	public String emailCheck(UserDTO userDto);
+
 } 
