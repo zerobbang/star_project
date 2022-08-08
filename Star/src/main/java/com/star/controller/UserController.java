@@ -23,6 +23,7 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+<<<<<<< HEAD
 	
 	
 	@GetMapping(value = "/star/main.do")
@@ -34,13 +35,26 @@ public class UserController {
 	@GetMapping(value = "/star/main2.do")
 	public String openMap(Model model) {
 		return "star/main3";
-	}
-	
+=======
 
-	// 메일 
-	public UserController(UserService userService) {
-        this.userService = userService;
-    }
+//	메인 페이지
+	@GetMapping(value = "/star/mainpage")
+	public String openUser(Model model) {
+		return "star/main";
+	} 
+	
+	// ajax 중간 main
+	@GetMapping(value = "/star/main2")
+	public String openMap() {
+		return "star/main2";
+>>>>>>> 661026da716e1efc6e17f5a2ce5bf796ca43cb40
+	}
+
+//
+//	// 메일 
+//	public UserController(UserService userService) {
+//        this.userService = userService;
+//    }
 
 
 	@GetMapping(value = "/star/sendmail.do")
@@ -83,7 +97,11 @@ public class UserController {
 	    	System.out.println(model);
 			 
 			if (userDto.getUserId() != null) {
+<<<<<<< HEAD
 				return "star/tempMain";
+=======
+				return "star/main";
+>>>>>>> 661026da716e1efc6e17f5a2ce5bf796ca43cb40
 			}else {
 				return "star/login";
 			}
@@ -117,7 +135,7 @@ public class UserController {
 
     
     // 회원가입 페이지 (임시로 sendmail) -> (signUp으로 변경)
-    @GetMapping(value = "/star/signup.do")
+    @GetMapping(value = "/star/signup")
     public String singUp(Model model) {
     	return "star/signUp";
 	}  
@@ -138,52 +156,68 @@ public class UserController {
 		String certifyNum = mailDto.getContent();
 		
 		System.out.println(certifyNum);
-		
-        String firstdata = "<div id=resultDiv>메일을 확인해주세요!</div>"; 
-        String[] returndata = {firstdata, certifyNum};
+		 
+        String[] returndata = {certifyNum};
         return returndata;
     };
     
-    // 회원가입 페이지 (임시로 sendmail) -> (signUp으로 변경)
-    @PostMapping(value = "/signupCheck")
+    // 회원가입 기능
+    @RequestMapping(value = "/signup.do",method = RequestMethod.POST)
+    @ResponseBody
     public String doSingUp(UserDTO userDTO, Model model) {
-    	
-    	System.out.println("do action!"); 
+    	 
     	System.out.println(userDTO.toString());
     	
     	try {
     		userService.doSignUp(userDTO);
     	} catch(Exception e) {
-    		System.out.println("nono");
+    		System.out.println("fail...");
+    		return "fail";
     	}
     	
     	
-    	return "star/login";
-	}  
+    	return "success";
+	};
 	
     
-    
-    @RequestMapping(value = "/inputCheck",method = RequestMethod.POST)
+    // id 유일성 체크
+    @RequestMapping(value = "/inputIDCheck",method = RequestMethod.POST)
 	@ResponseBody
     public String[] inputCheck(Model model,UserDTO userDto){
 		
-		System.out.println(userDto.toString());
-		
-		String resultID = userService.idCheck(userDto);
-		System.out.println(resultID);
-        String result;
+        String[] returndata = userService.idCheck(userDto);
         
-        if(resultID == null) {
-        	result = "사용가능한 ID입니다.";
-        }else {
-        	result = "이미 사용중입니다.";
-        }
-        
-        
-        String tagdata = "<div id=IDresultDiv>"+ result +"</div>";
-        
-        String[] returndata = {tagdata, result};
         return returndata;
     };
     
+<<<<<<< HEAD
 }
+=======
+    // 닉네임 유일성 체크
+    @RequestMapping(value = "/inputNicknameCheck",method = RequestMethod.POST)
+	@ResponseBody
+    public String[] inputNicknameCheck(Model model,UserDTO userDto){
+		
+        String[] returndata = userService.nicknameCheck(userDto);
+        
+        return returndata;
+    };
+    
+    // 이메일 유일성 체크
+    @RequestMapping(value = "/inputEmailCheck",method = RequestMethod.POST)
+	@ResponseBody
+    public String[] inputEmailCheck(Model model,UserDTO userDto){
+		
+		String[] returndata = userService.emailCheck(userDto);
+		
+        return returndata;
+    };
+    
+    @GetMapping(value = "/star/changeInfo")
+	public String changeInfo(UserDTO userDTO, Model model) {
+		return "star/changeInfo";
+
+	}
+    
+}
+>>>>>>> 661026da716e1efc6e17f5a2ce5bf796ca43cb40

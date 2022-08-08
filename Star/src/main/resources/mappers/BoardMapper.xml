@@ -78,6 +78,24 @@
  
  
  
+ <!-- 게시글 저장 -->
+ <insert id="insertBoard" parameterType="BoardDto" >
+ 	insert into board_list (
+ 		<include refid="boardColumns"/>
+ 	) values (
+ 		#{bno}
+ 		, #{category}
+ 		, #{userNumber}
+ 		, #{title}
+ 		, #{content}
+ 		, now()
+ 		, null
+ 		, 0
+ 	)
+ </insert>
+ 
+ 
+ 
  
 
 

@@ -9,21 +9,37 @@
     <!--비밀번호 눈모양 아이콘을 가져다 쓰는 url?-->
     <link rel="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
-    <title>Send Mail</title>
+    <title>회원가입</title>
     
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
-    	
+    	// 사용자가 입력한 데이터
     	var userInputId;
     	var userInputPassword;
     	var userInputNickname;
     	var userInputEmail;
-    	
+    	var userInputRegion;
     	var certify;
+    	
+    	// id, 닉네임, 비밀번호, 이메일 입력칸을 잘 넘어갔는지 Yes or No
+    	var IdCheck = false;
+    	var passwordCheck = false;
+    	var nicknameCheck = false;
+    	var emailCheck = false;
     	var certifyCheck = false;
     	
-    	/* 아래는 블로그 */
+    	// id,비밀번호, 닉네임, 정규식 기준
+    	var IdRegex = /[a-zA-Z0-9]{6,12}/;
+    	var passwordRegex = /[a-zA-Z0-9]{6,20}/;
+    	var nicknameRegex = /[가-힣a-zA-Z0-9]{2,8}/;
+    	var emailRegex= /[a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z-.]+/;
+    	
+    	/* 메일 발송하기 */
     	function dataSend() {			
+    		
+    		if (emailCheck == false){
+    			return;
+    		}
     		
     	    userInputEmail=$("#userEmail").val();
 			
@@ -31,72 +47,302 @@
     	        address:userInputEmail
     	    };
 			
-			console.log(mailDto)
-			console.log("start!!")
     	    $.ajax({
     	        url: "/dataSend",
     	        data: mailDto,
     	        type:"POST",
     	    }).done(function (fragments) {
-    	    	var fragment = fragments[0];
-    	    	certify = fragments[1];
-    	    	console.log(fragment);
-    	    	console.log(certify);
+    	    	certify = fragments[0];
     	    	
-    	        $("#resultDiv").replaceWith(fragment);
+    	        $("#emailError").replaceWith("<div id=emailError>메일을 확인해주세요!</div>");
     	    });
 		}
     	
-    	
+    	/* 인증번호 체크하기 */
     	function check_certify(){
     		var input_data = $("#certify_id").val();
-    		/* var user_email = $("#userEmail").val(); */
     		console.log(input_data);
     		console.log(certify);
     		
     		if (input_data == certify){
     			certifyCheck = true;
     			alert("인증 성공")
-    			$("#resultDiv").replaceWith("<div id=resultDiv></div>");
-    			$("#userEmail").replaceWith('<input type="text" name="address" id="email_id" readonly="readonly" value='+ userInputEmail +'>' );
+    			$("#emailError").replaceWith("<div id=emailError></div>");
+    			$("#userEmail").replaceWith('<input type="text" name="userEmail" id="userEmail" readonly="readonly" value='+ userInputEmail +'>' );
+    			
     		} else {
+    			certifyCheck = false;
     			alert("인증 실패")
     		}
-    		console.log(certifyCheck);
     	}
     	
+    	function doSignup(){
+    		
+   			if (IdCheck == false){
+   				alert("아이디를 확인해주세요.")
+ 			} else if (passwordCheck == false){
+   			alert("비밀번호를 확인해주세요.")
+    		} else if (nicknameCheck == false){
+    			alert("닉네임을 확인해주세요.")
+    		} else if (certifyCheck == false){
+    			alert("이메일 인증을 진행해주세요.")
+    		} else{
+    			userInputId=$("#userId").val();
+    			userInputPassword=$("#userPassword").val();
+    			userInputNickname=$("#userNickname").val();
+    			userInputEmail=$("#userEmail").val();
+    			userInputRegion=$("#userRegion").val();
+    			
+    			var userDto={
+       	       		userId:userInputId
+	       	    	, userPassword:userInputPassword
+	       	    	, userNickname:userInputNickname
+	       	  		, userEmail:userInputEmail
+	       	  		, userRegion:userInputRegion
+          	    };
+    			console.log(userDto); 
+    			
+    			$.ajax({
+        	        url: "/signup.do",
+        	        data: userDto,
+        	        type:"POST",
+        	    }).done(function(returnData) {
+        	    	if(returnData=="success"){        	    		
+        	    		// 지금은 테스트를 위해서 뒤로가기 기능을 넣어둠.
+        	    		// location.href = "/star/login";
+        	    		// 나중엔 아래꺼로 바꾸어야 뒤로가기를 못하게 됨. (바꿔둔 상태, 필요시 위 코드와 교체해도 무방)
+        	    		location.replace("/star/login");
+        	    	}
+       	    	});
+    			
+    		}
+    		
+    	}
+    	
+    	/* 아이디, 닉네임, 이메일 유효성 체크 */
     	$( document ).ready( function() {
-            var newValue;
+            
             // 모든 텍스트의 변경에 반응합니다.
             $("#userId").change("change keyup paste", function() {
-            
-                // 현재 변경된 데이터 셋팅
-                newValue = $(this).val();
+                
+            	// 현재 변경된 데이터 셋팅
+                var newValue = $(this).val();
+            	var rule = "";
             	
+            	try{
+            		rule = newValue.match(IdRegex)[0];
+	                console.log(rule);
+            	} catch(e){
+            		console.log("fail")
+            	};
+            	
+            	if (newValue==""){
+            		$("#IDerror").replaceWith('<div id="IDerror" class="error">' + '아이디를 입력해주세요.' + '</div>');
+            		return;
+            	}
+            	
+                if(rule != newValue || rule == ""){
+                	$("#IDerror").replaceWith('<div id="IDerror" class="error">' + '6~12자의 영문,숫자만 사용 가능합니다.' + '</div>');
+                	IdCheck = false;
+                	return;
+                }
+                
+                //json 형태로 전송
         	    var userDto={
         	        userId:newValue
         	    };
     			
-    			console.log(userDto)
-    			console.log("start!!")
         	    $.ajax({
-        	        url: "/inputCheck",
+        	        url: "/inputIDCheck",
         	        data: userDto,
         	        type:"POST",
         	    }).done(function (fragments) {
-        	    	var fragment = fragments[0];
-        	    	certify = fragments[1];
-        	    	console.log(fragment);
-        	    	console.log(certify);
+        	    	var uniqueResult = fragments[0];
         	    	
-        	        $("#IDresultDiv").replaceWith(fragment);
+        	        if (uniqueResult == "이미 사용중입니다."){
+        	        	IdCheck = false;
+        	        	$("#IDerror").replaceWith('<div id="IDerror" class="error">'+ '이미 사용중입니다.' +'</div>');
+        	        	console.log("samesame")
+        	        } else {
+        	        	IdCheck = true;
+        	        	$("#IDerror").replaceWith('<div id="IDerror" class="error"></div>');
+        	        }
+        	    
         	    });
                 
+            });
+            
+			$("#userPassword").change("change keyup paste", function() {
+            	
+            	// 현재 변경된 데이터 셋팅
+                var newValue = $(this).val();
+            	
+				var rule = "";
+            	
+            	try{
+            		rule = newValue.match(passwordRegex)[0];
+	                console.log(rule);
+            	} catch(e){
+            		console.log("fail")
+            	};
+            	
+            	if (newValue==""){
+            		$("#PasswordCheckError").replaceWith('<div id="PasswordCheckError" class="error">' + '비밀번호를 입력해주세요' + '</div>');
+            		passwordCheck = false;
+            		return;
+            	}
+                if(rule != newValue || rule == ""){
+                	$("#PasswordCheckError").replaceWith('<div id="PasswordCheckError" class="error">' + '6~20자의 영문,숫자만 사용 가능합니다.' + '</div>');
+                	passwordCheck = false;
+                	return;
+                }
+                
+                var userInputPassword=$("#passwordCheck").val();
+                
+                if(newValue == userInputPassword){
+                	$("#PasswordCheckError").replaceWith('<div id="PasswordCheckError" class="error"></div>');
+                	passwordCheck = true;
+                } else{
+                	$("#PasswordCheckError").replaceWith('<div id="PasswordCheckError" class="error">입력한 비밀번호와 일치하지 않습니다.</div>');
+                	passwordCheck = false;
+                }
+			});
+			
+			$("#passwordCheck").change("change keyup paste", function() {
+            	
+            	// 현재 변경된 데이터 셋팅
+                var newValue = $(this).val();
+            	
+				var rule = "";
+            	
+            	try{
+            		rule = newValue.match(passwordRegex)[0];
+	                console.log(rule);
+            	} catch(e){
+            		console.log("fail")
+            	};
+            	
+            	
+            	if (newValue==""){
+            		$("#PasswordCheckError").replaceWith('<div id="PasswordCheckError" class="error">' + '비밀번호를 입력해주세요' + '</div>');
+            		return;
+            	}
+            	
+                if(rule != newValue || rule == ""){
+                	$("#PasswordCheckError").replaceWith('<div id="PasswordCheckError" class="error">' + '6~20자의 영문,숫자만 사용 가능합니다.' + '</div>');
+                	passwordCheck = false;
+                	return;
+                }
+                
+                var userInputPassword=$("#userPassword").val();
+                
+                if(newValue == userInputPassword){
+                	$("#PasswordCheckError").replaceWith('<div id="PasswordCheckError" class="error"></div>');
+                	passwordCheck = true;
+                } else{
+                	$("#PasswordCheckError").replaceWith('<div id="PasswordCheckError" class="error">입력한 비밀번호와 일치하지 않습니다.</div>');
+                	passwordCheck = false;
+                }
+			});
+            
+			
+			$("#userNickname").change("change keyup paste", function() {
+            	
+            	// 현재 변경된 데이터 셋팅
+                var newValue = $(this).val();
+            	var rule = "";
+            	
+            	try{
+            		rule = newValue.match(nicknameRegex)[0];
+	                console.log(rule);
+            	} catch(e){
+            		console.log("fail")
+            	};
+            	
+            	if (newValue==""){
+            		$("#nicknameError").replaceWith('<div id="nicknameError" class="error">' + '닉네임을 입력해주세요' + '</div>');
+            		return;
+            	}
+            	
+                if(rule != newValue || rule == ""){
+                	$("#nicknameError").replaceWith('<div id="nicknameError" class="error">' + '2~8자의 한글,영문,숫자만 사용 가능합니다.' + '</div>');
+                	nicknameCheck = false;
+                	return;
+                }
+                
+                //json 형태로 전송
+        	    var userDto={
+        	        userNickname:newValue
+        	    };
     			
-                // 현재 실시간 데이터 표츌
-                alert("텍스트 :: " + newValue);
+        	    $.ajax({
+        	        url: "/inputNicknameCheck",
+        	        data: userDto,
+        	        type:"POST",
+        	    }).done(function (fragments) {
+        	    	
+        	    	var uniqueResult = fragments[0];
+        	    	
+        	        if (uniqueResult == "이미 사용중입니다."){
+        	        	nicknameCheck = false;
+        	        	$("#nicknameError").replaceWith('<div id="nicknameError" class="error">' + uniqueResult + '</div>');
+        	        } else {
+        	        	nicknameCheck = true;
+        	        	$("#nicknameError").replaceWith('<div id="nicknameError" class="error"></div>');
+        	        }
+        	    });
                 
             });
+			
+			$("#userEmail").change("change keyup paste", function() {
+            	
+            	// 현재 변경된 데이터 셋팅
+                var newValue = $(this).val();
+            	var rule = "";
+            	
+            	try{
+            		rule = newValue.match(emailRegex)[0];
+	                console.log(rule);
+            	} catch(e){
+            		console.log("fail")
+            	};
+            	
+            	
+            	if (newValue==""){
+            		$("#emailError").replaceWith('<div id="emailError" class="error">' + '이메일 계정을 입력해주세요.' + '</div>');
+            		return;
+            	}
+            	
+                if(rule != newValue || rule == ""){
+                	$("#emailError").replaceWith('<div id="emailError" class="error">' + 'e-mail형식으로 작성해주세요.' + '</div>');
+                	emailCheck = false;
+                	return;
+                }
+                
+                //json 형태로 전송
+        	    var userDto={
+        	        userEmail:newValue
+        	    };
+    			
+        	    $.ajax({
+        	        url: "/inputEmailCheck",
+        	        data: userDto,
+        	        type:"POST",
+        	    }).done(function (fragments) {
+        	    	
+        	    	var uniqueResult = fragments[0];
+        	    	
+        	        if (uniqueResult == "이미 사용중입니다."){
+        	        	emailCheck = false;
+        	        	$("#emailError").replaceWith('<div id="emailError" class="error">' + uniqueResult + '<br> <a href="/star/findUser.do">계정 찾기</a>를 이용해주세요. </div>');
+        	        } else {
+        	        	emailCheck = true;
+        	        	$("#emailError").replaceWith('<div id="emailError" class="error"></div>');
+        	        }
+        	    });
+                
+            });
+			
         });
     	
     	    
@@ -110,16 +356,13 @@
         <div class="title"><h1 style="font-size: 30px;">회원 가입</h1></div>
     </div>
     
-    <form th:action="@{/signupCheck}" method="post">
+    <form th:action="@{/ssignupCheck}" method="post">
     
 	       <div class="ID">
 	       <!-- <span>ID</span> 아이디 -->
 	       		<label for="userId">아이디</label>
 	           <input type="text" id="userId" name="userId" placeholder="영어(대소문자 구분 가능)+숫자">
 	           <div id="IDerror" class="error"></div>
-	           <div id="IDresultDiv">
-		          <!-- <p th:if="${msg}!=null" th:text="${msg}"></p> -->
-		        </div>
 	       </div>
 	       
 	    <div class="password">
@@ -130,7 +373,7 @@
 	        <div id="PasswordError" class="error"></div> <!--비밀번호 확인-->
 	    </div>
 	    <div class="passwordCheck"><span>비밀번호 재확인</span> 
-	        <input id="passwordCheck" type="text" placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리">
+	        <input id="passwordCheck" type="password" placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리">
 	        <div id="PasswordCheckError" class="error"></div>
 	    </div>
 	    
@@ -140,20 +383,13 @@
 	        <div id="nicknameError" class="error"></div>
 	    </div>
 	    
-	    
-	    <!-- <form> -->
 	   		<div class="emailAddress">
 	   			<label for="userEmail">메일 주소</label> <!--닉네임-->
-	        	<input id="userEmail" name="userEmail" type="text" placeholder="이메일 주소를 입력하세요">
-	   			
-	    		<!-- <span>메일 주소</span>
-	            <input type="text" name="address" id="email_id" placeholder="이메일 주소를 입력하세요"> -->
+	        	<input id="userEmail" name="userEmail" type="email" placeholder="이메일 주소를 입력하세요">
 	            
 	            <input value="메일 발송" type="button" onclick="dataSend()">
 		        
-		        <div id="resultDiv">
-		          <p th:if="${msg}!=null" th:text="${msg}"></p>
-		        </div>
+		        <div id="emailError" class="error"></div>
 	       	</div>
 	       	인증 번호
 	        <input type="text" id="certify_id" placeholder="인증번호 입력">
@@ -162,26 +398,26 @@
 	
 	    <div class="region">
 	    
-	    	<span>기본 지역</span> <!--기본 지역 선택-->
+	    	<span>관측 희망 지역</span> <!--기본 지역 선택-->
 	        <select id="userRegion" name="userRegion">
-	            <option selected disabled>지역을 선택하세요.</option>
-	            <option>서울</option>
-	            <option>부산</option>
-	            <option>대구</option>
-	            <option>인천</option>
-	            <option>광주</option>
-	            <option>대전</option>
-	            <option>울산</option>
-	            <option>세종</option>
-	            <option>경기도</option>
-	            <option>강원도</option>
-	            <option>충청북도</option>
-	            <option>충청남도</option>
-	            <option>전라북도</option>
-	            <option>전라남도</option>
-	            <option>경상북도</option>
-	            <option>경상남도</option>
-	            <option>제주도</option>
+	            <option value="전국">전국</option>
+	            <option value="서울">서울</option>
+	            <option value="부산">부산</option>
+	            <option value="대구">대구</option>
+	            <option value="인천">인천</option>
+	            <option value="광주">광주</option>
+	            <option value="대전">대전</option>
+	            <option value="울산">울산</option>
+	            <option value="세종">세종</option>
+	            <option value="경기도">경기도</option>
+	            <option value="강원도">강원도</option>
+	            <option value="충청북도">충청북도</option>
+	            <option value="충청남도">충청남도</option>
+	            <option value="전라북도">전라북도</option>
+	            <option value="전라남도">전라남도</option>
+	            <option value="경상북도">경상북도</option>
+	            <option value="경상남도">경상남도</option>
+	            <option value="제주도">제주도</option>
 	        </select>
 	        <div id="regionError" class="error"></div>
 	        <div class="line">
@@ -191,8 +427,8 @@
 	    </div>
 	    
 	    <div class="signUp">
-	            <!-- <input type="button" value="가입하기" > -->
-	            <button type="submit">가입하기</button>
+	    		
+            <input value="가입하기" type="button" onclick="doSignup()">
         </div>
  	
  	</form>
