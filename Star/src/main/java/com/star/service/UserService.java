@@ -1,11 +1,14 @@
 package com.star.service;
 
 
+import org.springframework.stereotype.Service;
+
 //import javax.servlet.http.HttpServletRequest;
 
 import com.star.domain.MailDTO;
 import com.star.domain.UserDTO;
 
+@Service
 public interface UserService {
 	
 	public boolean registerUser(UserDTO params);

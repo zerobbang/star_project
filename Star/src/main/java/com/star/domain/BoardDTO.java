@@ -13,7 +13,7 @@ public class BoardDTO {
 	private String category;
 	
 	// 게시글 테이블
-	private int bno;
+	private Long bno;
 	
 //	privat String category;		// 게시글 테이블의 카테고리도 카테고리 연결
 	
