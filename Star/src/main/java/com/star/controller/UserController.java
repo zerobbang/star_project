@@ -71,15 +71,28 @@ public class UserController {
 //    	근데 db에 접근해야 되니까 mapper.xml에도 관련 코드를 작성해줘야 됨
     	
 		try {
-			System.out.println("do action!"); 
+<<<<<<< HEAD
+			System.out.println("do action!");
+			System.out.println(model);
+		
 	    	UserDTO userDto = userService.loginUser(userDTO);
-	    	model.addAttribute("UserInfo",userDTO);
+	    	model.addAttribute("userDTO",userDto);
 	    	
 	    	System.out.println(userDto);
 	    	System.out.println(userDto.toString());
-	    	System.out.println(model);
+=======
+			System.out.println("do action!"); 
+//	    	UserDTO userDto = userService.loginUser(userDTO);
+	    	userDTO = userService.loginUser(userDTO);
+	    	model.addAttribute("userDTO",userDTO);
+	    	
+	    	System.out.println(userDTO);
+	    	System.out.println(userDTO.toString());
+>>>>>>> f051aa0c2bf14f6de0f2060ea7bef4e322d0e603
+	    	System.out.println(model.getAttribute("userDTO"));
 			 
-			if (userDto.getUserId() != null) {
+			if (userDTO
+					.getUserId() != null) {
 				return "star/main";
 			}else {
 				return "star/login";
@@ -88,7 +101,9 @@ public class UserController {
 			return "star/login"; 
 		} catch (Exception e) {
 			return "star/login";  
-		} 
+		}
+
+
 
 
 //    	if(userDto.getUserId() != null) {
