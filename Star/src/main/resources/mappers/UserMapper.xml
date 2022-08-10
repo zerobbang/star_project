@@ -79,7 +79,7 @@
 		update users_table
 		set user_nickname = #{userNickname}
 			, user_region = #{userRegion}
-		where user_id = 'id1';
+		where user_id = #{userId};
 	</update>
 
 	<update id="updatePassNickRegion" parameterType="UserDTO">
@@ -87,7 +87,7 @@
 		set user_password = #{userPassword}
 			, user_nickname = #{userNickname}
 			, user_region = #{userRegion}
-		where user_id = 'id1';
+		where user_id = #{userId};
 	</update>
 
 

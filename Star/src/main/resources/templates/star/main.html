@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" >
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -99,6 +99,14 @@
     </select>
     <input type="text" id="selectedRegion" value="전국"/>
     <div id="mapImg"></div>
-    <h2>카카오 이미지 띄우기 비동기 처리 ..?(default 가 비동기)</h2>
+    
+    <form th:action="@{/star/changeInfo}" method="post">
+    
+    	<input type="text" id="userId" name="userId" th:value="*{userDTO.userId}"/>
+    	<input type="submit" value="제출2">
+    
+    </form>
+    
+    
 </body>
 </html>

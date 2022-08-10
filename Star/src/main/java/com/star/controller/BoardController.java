@@ -61,7 +61,16 @@ public class BoardController {
 	}
 	
 	
-	
+	// 게시글 쓰기 화면으로 이동
+	@GetMapping(value="/star/test")
+	public String testBoard(Model model, UserDTO userDto) {
+		
+		userDto.setUserRegion("전국");
+		
+		model.addAttribute("region", userDto.getUserRegion());
+		
+		return "/star/test";
+	}
 	
 	
 }
