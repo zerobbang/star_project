@@ -72,14 +72,16 @@ public class UserController {
     	
 		try {
 			System.out.println("do action!"); 
-	    	UserDTO userDto = userService.loginUser(userDTO);
-	    	model.addAttribute("UserInfo",userDTO);
+//	    	UserDTO userDto = userService.loginUser(userDTO);
+	    	userDTO = userService.loginUser(userDTO);
+	    	model.addAttribute("userDTO",userDTO);
 	    	
-	    	System.out.println(userDto);
-	    	System.out.println(userDto.toString());
-	    	System.out.println(model);
+	    	System.out.println(userDTO);
+	    	System.out.println(userDTO.toString());
+	    	System.out.println(model.getAttribute("userDTO"));
 			 
-			if (userDto.getUserId() != null) {
+			if (userDTO
+					.getUserId() != null) {
 				return "star/main";
 			}else {
 				return "star/login";
