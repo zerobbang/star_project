@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -25,15 +26,16 @@ public class BoardController {
 	public String listBoard(@RequestParam(value="params") BoardDTO params, Model model) {
 		List<BoardDTO> boardList = boardService.getBoardList(params);
 		model.addAttribute("boardList", boardList);
-		return "board/boardLlist";
+		return "board/list";
 	}
 	
 	
 	
 	// 게시글 쓰기 화면으로 이동
-	@GetMapping(value="/board/write")
+	@PostMapping(value="/board/write")
 //	public String writeBoard(@RequestParam(value = "bno", required = false) final Long bno ,Model model) {
 	public String writeBoard(Model model, UserDTO userDto) {
+//	public String writeBoard(@ModelAttribute("params") final UserDTO params, Model model) {
 //		// 글 번호를 뷰에서 받아오는데
 //		if(bno==null) {
 //			// 새로 생성하는 글인 경우 새로운 보드 DTO 객체 생성
@@ -46,18 +48,41 @@ public class BoardController {
 //			// service를 통해 실행된 mapper 결과값을 "board" 속성?에 저장
 //			model.addAttribute("board", boardDTO);
 //		}
-		// String writer = userDto.getUserNickname();
-		String writer = "코신황";
-		System.out.println("유저 닉네임"+writer);
-		model.addAttribute("writer", writer);
 		
-		return "/board/boardWrite";
+		System.out.println("model"+model);
+
+		System.out.println("------------------"+userDto);
+
+//		System.out.println("params"+params);
+
+//		String writer = userDto.getUserNickname();
+//		Long number = userDto.getUserNumber();
+////		String writer = "코신황";
+////		long number = 1; 
+//		System.out.println("유저 닉네임"+writer);
+//		System.out.println("회원 번호"+number);
+//		
+//		
+//		
+//		model.addAttribute("writer", writer);
+//		model.addAttribute("userNumber", number);
+		
+		return "/board/write";
 	}
 	
 	// 게시글 쓰기가 완료 되면
 	@PostMapping(value="/board/registerBoard")
-	public String registerBoard() {
-		return "" ;
+	public String registerBoard(BoardDTO params) {
+		
+		System.out.println(params.toString());
+		
+		boardService.registerBoard(params);
+		return "/star/main" ;
+	}
+	
+	@GetMapping(value="/board/test")
+	public String test() {
+		return "/star/test";
 	}
 	
 	

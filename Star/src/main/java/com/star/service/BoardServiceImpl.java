@@ -21,13 +21,14 @@ public class BoardServiceImpl implements BoardService{
 		int queryResult = 0;
 		
 		queryResult = boardMapper.insertBoard(params);
+		System.out.println(queryResult);
 		
-//		// 글 번호가 널값이면 새로 글을 생성
-//		if(params.getBno() == null) {
+		// 글 번호가 널값이면 새로 글을 생성
+		if(params.getBno() == null) {
+			queryResult = boardMapper.insertBoard(params);
+		}else {
 //			queryResult = boardMapper.insertBoard(params);
-//		}else {
-//			// 글 번호 존재하면 수정 페이지로 이동 -> 임시로 main 페이지로 이동
-//		}
+		}
 		
 		return (queryResult == 1) ? true:false ;
 	}
