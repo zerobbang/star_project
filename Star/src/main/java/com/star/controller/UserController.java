@@ -74,10 +74,29 @@ public class UserController {
     	System.out.println(model);
     	
 		try {
+<<<<<<< HEAD
+			System.out.println("do action!");
+			System.out.println(model);
+		
+	    	UserDTO userDto = userService.loginUser(userDTO);
+	    	model.addAttribute("userDTO",userDto);
+	    	
+	    	System.out.println(userDto);
+	    	System.out.println(userDto.toString());
+=======
 			System.out.println("do action!"); 
 	    	userDTO = userService.loginUser(userDTO);
+<<<<<<< HEAD
 	    	model.addAttribute("UserDTO",userDTO);
 	    	System.out.println(model);
+=======
+	    	model.addAttribute("userDTO",userDTO);
+	    	
+	    	System.out.println(userDTO);
+	    	System.out.println(userDTO.toString());
+>>>>>>> f051aa0c2bf14f6de0f2060ea7bef4e322d0e603
+	    	System.out.println(model.getAttribute("userDTO"));
+>>>>>>> 82fd87504de5af8c07a71906d234b1a00968d7c0
 			 
 			if (userDTO
 					.getUserId() != null) {
@@ -89,7 +108,24 @@ public class UserController {
 			return "star/login"; 
 		} catch (Exception e) {
 			return "star/login";  
+<<<<<<< HEAD
 		} 
+=======
+		}
+
+
+
+
+//    	if(userDto.getUserId() != null) {
+//    		return "star/findUser"; 
+//    	}
+//    	else if(userDto.getUserId() == null){
+//    		return "star/login"; 
+//    	}
+//    	else { 
+//    		return "star/sendmail";
+//    	} 
+>>>>>>> 82fd87504de5af8c07a71906d234b1a00968d7c0
     	
     }    
     
@@ -192,4 +228,26 @@ public class UserController {
         return "/star/main";
     };
     
+<<<<<<< HEAD
+=======
+	// 마이 페이지 테스트
+    @GetMapping(value = "/star/gayeong/mypage")
+    public String mypage() {
+    	return "star/gayeong/mypage";
+    }
+    
+    //회원탈퇴
+    @GetMapping(value = "/star/signdown")
+    public String mypage2() {
+    	
+    	System.out.println("컨트롤러 확인");
+    	
+    	userService.pagedown();
+    	
+    	System.out.println("회원탈퇴 완료됨!");
+    	
+    	return "star/main";
+    }
+    
+>>>>>>> 82fd87504de5af8c07a71906d234b1a00968d7c0
 }

@@ -80,7 +80,7 @@
  
  
  <!-- 게시글 저장 -->
- <insert id="insertBoard" parameterType="BoardDto" >
+ <insert id="insertBoard" parameterType="BoardDTO" >
  	insert into board_list (
  		<include refid="boardColumns"/>
  	) values (
@@ -91,8 +91,8 @@
  		, #{content}
  		, now()
  		, null
- 		, 0
- 	)
+ 		, IFNULL(#{deleteYn},0)
+ 	) 
  </insert>
  
  
@@ -118,10 +118,10 @@
 		bno DESC 
  </select>
  
- 
- 
- 
-
+  <!-- 신고하기 -->
+	<insert id="report" parameterType="BoardDTO">
+		insert into report_table values (#{bno},#{userNumber},#{reportContent},0);
+	</insert>
 
 
 </mapper>
