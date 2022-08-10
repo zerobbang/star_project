@@ -90,5 +90,12 @@
 		where user_id = 'id1';
 	</update>
 
+<!-- 마이페이지_회원탈퇴 -->
+	<update id="pagedown">
+		update users_table 
+		set withdrawal_yn = 1
+			, withdrawal_date = now()
+		where user_id='id1';
+	</update>
 
 </mapper>

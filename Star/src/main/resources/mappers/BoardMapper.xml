@@ -118,10 +118,10 @@
 		bno DESC 
  </select>
  
- 
- 
- 
-
+  <!-- 신고하기 -->
+	<insert id="report" parameterType="BoardDTO">
+		insert into report_table values (#{bno},#{userNumber},#{reportContent},0);
+	</insert>
 
 
 </mapper>

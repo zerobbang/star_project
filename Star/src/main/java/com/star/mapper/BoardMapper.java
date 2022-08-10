@@ -32,7 +32,8 @@ public interface BoardMapper {
 	// 게시글 전체 조회
 	public List<BoardDTO> selectList(BoardDTO params);
 	
-
+	// 상세글 조회 신고하기	
+//	public void report(BoardDTO params);
 	
 	
 }

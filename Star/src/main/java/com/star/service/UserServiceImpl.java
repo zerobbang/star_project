@@ -139,11 +139,7 @@ public class UserServiceImpl implements UserService{
         String[] returndata = {result};
         
         return returndata;
-		
-		
 	}
-
-
 
 	@Override
 	public String changeInfo(UserDTO userDto) {
@@ -162,6 +158,14 @@ public class UserServiceImpl implements UserService{
 			return "fail";
 		}
 	}
-    	
+
+	// 회원탈퇴
+	@Override
+	public void pagedown() {
+		// TODO Auto-generated method stub
+		System.out.println("유저 impl 확인");
+		
+		userMapper.pagedown();
+	}
 	
 }

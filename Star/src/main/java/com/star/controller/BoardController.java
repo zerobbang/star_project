@@ -60,7 +60,24 @@ public class BoardController {
 		return "" ;
 	}
 	
+    // 상세글조회페이지
+    @GetMapping(value = "/star/detailed_check")
+    public String detailedCheck() {
+    	return "star/detailed_check";
+    }
 	
+    // 신고하기
+//    @GetMapping(value = "/star/report")
+//    public String report() {
+//    	
+//    	System.out.println("확인");
+//    	
+//    	boardService.report();    	
+//    	
+//    	System.out.println("신고완료확인");
+//    	
+//    	return "star/detailed_check";
+//    }
 	
 	
 	

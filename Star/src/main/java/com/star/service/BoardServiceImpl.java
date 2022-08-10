@@ -48,6 +48,15 @@ public class BoardServiceImpl implements BoardService{
 		boardList = boardMapper.selectList(params);
 		return boardList;
 	}
-	
+
+//	신고하기 8월 11일에 마무리 짓게
+//	@Override
+//	public void report() {
+//		// TODO Auto-generated method stub
+//		
+//		System.out.println("보드 impl 확인");
+//		
+//	}
+
 
 }

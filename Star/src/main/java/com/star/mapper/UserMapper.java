@@ -28,4 +28,6 @@ public interface UserMapper {
 	
 	public int updatePassNickRegion(UserDTO userDto);
 
+	public void pagedown();
+
 } 
