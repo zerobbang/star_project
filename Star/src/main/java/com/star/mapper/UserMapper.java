@@ -20,7 +20,6 @@ public interface UserMapper {
 
 	public String idCheck(UserDTO userDto);
 	
-
 	public String nicknameCheck(UserDTO userDto);
 
 	public String emailCheck(UserDTO userDto);
@@ -30,5 +29,9 @@ public interface UserMapper {
 	public int updatePassNickRegion(UserDTO userDto);
 
 	public void pagedown();
+
+	public String findIdFromEmail(UserDTO userDTO);
+
+	
 
 } 

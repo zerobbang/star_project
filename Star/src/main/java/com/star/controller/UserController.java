@@ -27,7 +27,7 @@ public class UserController {
 
 //	메인 페이지
 	@GetMapping(value = "/star/mainpage")
-	public String openUser(Model model) {
+	public String openUser(UserDTO userDTO) {
 		return "star/main";
 	} 
 	
@@ -39,18 +39,18 @@ public class UserController {
 	
 	// 메인페이지 ( with. 중간에 있는 테이블 )
 	@GetMapping(value = "/star/main3")
-	public String openPredictionList(@ModelAttribute("params") DustDTO params, Model model) {
+	public String openPredictionList(DustDTO params, RedirectAttributes rttr) {
 		List<DustDTO> dustList = userService.getPrediction(params);
-		model.addAttribute("dustList", dustList);
-		System.out.println("dd");
-		System.out.println(model);
+		rttr.addFlashAttribute(dustList);
+
 		System.out.println(params);
 		System.out.println(params.getRegion());
-		model.addAttribute("selectRegion", params.getRegion());
+		rttr.getFlashAttributes();
 		
 		System.out.println(dustList.get(0).getHumidity());
 		System.out.println(dustList.get(1).getHumidity());
-		return "star/main3"; 
+		return "star/main3";
+		
 	}
 
 	@GetMapping(value = "/star/sendmail.do")
@@ -68,11 +68,11 @@ public class UserController {
     
     // 로그인 페이지
     @GetMapping(value = "/star/login")
-    public String logIn(Model model) { 
+    public String logIn() { 
     	return "star/login";
     } 
     
-    // 로그인 체크  /star/logInCheck
+    // 로그인 체크
     @PostMapping(value = "/star/login") 
     public String logInCheck(UserDTO userDTO, RedirectAttributes rttr) {
     	
@@ -92,7 +92,6 @@ public class UserController {
 			 
 			if (userDTO.getUserId() != null) {
 		        return "redirect:/star/mainpage";
-//		        return new RedirectView("/apidocs/index.html");
 			}else {
 				return "star/login";
 			}
@@ -106,7 +105,7 @@ public class UserController {
     
     // 회원가입 페이지 (임시로 sendmail) -> (signUp으로 변경)
     @GetMapping(value = "/star/signup")
-    public String singUp(Model model) {
+    public String singUp() {
     	return "star/signUp";
 	}  
 
@@ -116,9 +115,10 @@ public class UserController {
     	return "star/findUser";
     }
 
-	@RequestMapping(value = "/dataSend",method = RequestMethod.POST)
+    // 입력한 이메일로 메일 보내기
+	@PostMapping(value = "/mailSend")
 	@ResponseBody
-    public String[] dataSend(Model model,MailDTO mailDto){
+	public String[] dataSend(MailDTO mailDto){
 		
 		System.out.println("메일 전송 시작");
 		userService.sendSimpleMessage(mailDto);
@@ -132,9 +132,9 @@ public class UserController {
     };
     
     // 회원가입 기능
-    @RequestMapping(value = "/signup.do",method = RequestMethod.POST)
+    @PostMapping(value = "/signup.do")
     @ResponseBody
-    public String doSingUp(UserDTO userDTO, Model model) {
+    public String doSingUp(UserDTO userDTO) {
     	 
     	System.out.println(userDTO.toString());
     	
@@ -145,15 +145,14 @@ public class UserController {
     		return "fail";
     	}
     	
-    	
     	return "success";
 	};
 	
     
     // id 유일성 체크
-    @RequestMapping(value = "/inputIDCheck",method = RequestMethod.POST)
+    @PostMapping(value = "/inputIDCheck")
 	@ResponseBody
-    public String[] inputCheck(Model model,UserDTO userDto){
+    public String[] inputCheck(UserDTO userDto){
 		
         String[] returndata = userService.idCheck(userDto);
         
@@ -161,9 +160,9 @@ public class UserController {
     };
     
     // 닉네임 유일성 체크
-    @RequestMapping(value = "/inputNicknameCheck",method = RequestMethod.POST)
-	@ResponseBody
-    public String[] inputNicknameCheck(Model model,UserDTO userDto){
+    @PostMapping(value = "/inputNicknameCheck")
+    @ResponseBody
+    public String[] inputNicknameCheck(UserDTO userDto){
 		
         String[] returndata = userService.nicknameCheck(userDto);
         
@@ -171,57 +170,42 @@ public class UserController {
     };
     
     // 이메일 유일성 체크
-    @RequestMapping(value = "/inputEmailCheck",method = RequestMethod.POST)
-	@ResponseBody
-    public String[] inputEmailCheck(Model model,UserDTO userDto){
+    @PostMapping(value = "/inputEmailCheck")
+    @ResponseBody
+    public String[] inputEmailCheck(UserDTO userDto){
 		
 		String[] returndata = userService.emailCheck(userDto);
 		
         return returndata;
     };
     
+    // 정보 변경 페이지 이동
     @PostMapping(value = "/star/changeInfo")
-    public String changeInfo(UserDTO userDto, RedirectAttributes rttr) {
+    public String changeInfoPage(UserDTO userDto, RedirectAttributes rttr) {
     	
-    	System.out.println("--------------");
-    	
-    	System.out.println(rttr.getFlashAttributes());
     	rttr.addFlashAttribute(userDto);
-    	System.out.println(rttr.getFlashAttributes());
-    	
-		return "star/changeInfo";
-	}
-    
-    // **테스트용 나중에 지워버려야함!!**
-    @GetMapping(value = "/star/changeInfo")
-    public String getChangeInfo(UserDTO userDto, RedirectAttributes rttr) {
-    	
-    	System.out.println("--------------");
-    	System.out.println(rttr.getFlashAttributes());
-    	rttr.addFlashAttribute(userDto);
-    	System.out.println(rttr.getFlashAttributes());
     	
 		return "star/changeInfo";
 	}
     
     // 정보 변경 실행
     @PostMapping(value = "/changeInfo.do")
-    public String changeInfo(Model model, UserDTO userDto){
+    public String changeInfo(UserDTO userDto, RedirectAttributes rttr){
 		
 		userService.changeInfo(userDto);
 		
-		model.addAttribute(userDto);
+		rttr.addFlashAttribute(userDto);
 		
         return "/star/main";
     };
     
-	// 마이 페이지 테스트
+	// 마이 페이지 이동
     @GetMapping(value = "/star/gayeong/mypage")
     public String mypage() {
     	return "star/gayeong/mypage";
     }
     
-    //회원탈퇴
+    // 회원탈퇴
     @GetMapping(value = "/star/signdown")
     public String mypage2() {
     	
@@ -234,4 +218,13 @@ public class UserController {
     	return "star/main";
     }
     
+    // id 찾기
+    @PostMapping(value = "/findId")
+	@ResponseBody
+    public String findId(UserDTO userDTO){
+		
+        String returndata = userService.findId(userDTO);
+        
+        return returndata;
+    };
 }

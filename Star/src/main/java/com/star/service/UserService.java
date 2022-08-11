@@ -37,5 +37,7 @@ public interface UserService {
 	public void pagedown();
 	
 	public List<DustDTO> getPrediction(DustDTO params);
+
+	public String findId(UserDTO userDTO);
 	
 }

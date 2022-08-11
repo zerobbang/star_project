@@ -35,7 +35,7 @@
     	var emailRegex= /[a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z-.]+/;
     	
     	/* 메일 발송하기 */
-    	function dataSend() {			
+    	function mailSend() {			
     		
     		if (emailCheck == false){
     			return;
@@ -48,7 +48,7 @@
     	    };
 			
     	    $.ajax({
-    	        url: "/dataSend",
+    	        url: "/mailSend",
     	        data: mailDto,
     	        type:"POST",
     	    }).done(function (fragments) {
@@ -387,7 +387,7 @@
 	   			<label for="userEmail">메일 주소</label> <!--닉네임-->
 	        	<input id="userEmail" name="userEmail" type="email" placeholder="이메일 주소를 입력하세요">
 	            
-	            <input value="메일 발송" type="button" onclick="dataSend()">
+	            <input value="메일 발송" type="button" onclick="mailSend()">
 		        
 		        <div id="emailError" class="error"></div>
 	       	</div>

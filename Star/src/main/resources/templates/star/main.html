@@ -34,7 +34,7 @@
             success: function(data) {
             $('#mapImg').html(data);
             },
-            error: function (){alert("실패");}
+            error: function (){alert("지도 실패");}
         });
         
         $.ajax({
@@ -44,7 +44,7 @@
 	        success: function(data) {
 	        $('#weather').html(data);
 	        },
-	        error: function (){alert("실패");}
+	        error: function (){alert("기상조건 테이블 실패");}
 	    });
 
         $("select").on('focus',function(){

@@ -191,5 +191,14 @@ public class UserServiceImpl implements UserService{
 //			boardList = dustMapper.getPredictionList1(params);
 		return boardList;
 	}
+
+
+
+	@Override
+	public String findId(UserDTO userDTO) {
+		String result = userMapper.findIdFromEmail(userDTO);
+		
+		return result;
+	}
 	
 }
