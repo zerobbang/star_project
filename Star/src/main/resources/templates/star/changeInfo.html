@@ -223,7 +223,6 @@
 	        </div>
 	        <div id="PasswordCheckError" class="error"></div> <!--비밀번호 확인-->
 	        
-	        
 			<!-- 닉네임 변경 -->
 	        <div class="change_nick" style="text-align: center;">
 	            <label for="userNickname" class="lab_nick"></label>
@@ -238,9 +237,6 @@
 		<!-- 기본지역 변경 -->
 	    <div class="change_reg">
 	        <select id="userRegion" name="userRegion" required>
-	        	<!-- <option th:selected="${userDTO.userRegion}=='전국'">전국</option>
-	        	<option th:selected="${userDTO.userRegion}=='서울'">서울</option>
-	        	<option th:selected="${userDTO.userRegion}=='부산'">부산</option> -->
 	            <option value="전국" th:selected="${userDTO.userRegion}== '전국' ">전국</option>
 	            <option value="서울" th:selected="${userDTO.userRegion}== '서울' ">서울</option>
 	            <option value="부산" th:selected="${userDTO.userRegion}== '부산' ">부산</option>

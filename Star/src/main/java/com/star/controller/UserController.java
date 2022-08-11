@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.star.domain.MailDTO;
 import com.star.domain.UserDTO;
@@ -34,7 +35,7 @@ public class UserController {
 	}
 
 	@GetMapping(value = "/star/sendmail.do")
-	public String openMailPage(Model model) {
+	public String openMailPage() {
 		return "star/sendmail";
 
 	}
@@ -54,15 +55,9 @@ public class UserController {
     
     // 로그인 체크  /star/logInCheck
     @PostMapping(value = "/star/login") 
-    public String logInCheck(UserDTO userDTO, Model model) {
-//    public String logInCheck(Model model) {
-  	
-//    	여기에서 이제 service에 정의한 함수를 사용할거임
-//    	그거로 db에 있는 id,password와 일치하면 메인페이지로 이동시킬거임
-//    	근데 db에 접근해야 되니까 mapper.xml에도 관련 코드를 작성해줘야 됨
+    public String logInCheck(UserDTO userDTO, RedirectAttributes rttr) {
     	
     	System.out.println(userDTO);
-    	System.out.println(model);
     	
 		try {
 			
@@ -71,15 +66,14 @@ public class UserController {
 	    	System.out.println(userDTO.toString());
 			 
 	    	userDTO = userService.loginUser(userDTO);
-
-	    	model.addAttribute("userDTO",userDTO);
-	    	System.out.println(model);
-
-
+	    	
+	    	System.out.println(rttr.getFlashAttributes());
+	    	rttr.addFlashAttribute(userDTO);
+	    	System.out.println(rttr.getFlashAttributes());
 			 
-			if (userDTO
-					.getUserId() != null) {
-				return "star/main";
+			if (userDTO.getUserId() != null) {
+		        return "redirect:/star/mainpage";
+//		        return new RedirectView("/apidocs/index.html");
 			}else {
 				return "star/login";
 			}
@@ -168,10 +162,25 @@ public class UserController {
     };
     
     @PostMapping(value = "/star/changeInfo")
-	public String changeInfo(UserDTO userDto, Model model) {
+    public String changeInfo(UserDTO userDto, RedirectAttributes rttr) {
+    	
     	System.out.println("--------------");
-    	System.out.println(model);
-    	System.out.println(model.getAttribute("userDTO"));
+    	
+    	System.out.println(rttr.getFlashAttributes());
+    	rttr.addFlashAttribute(userDto);
+    	System.out.println(rttr.getFlashAttributes());
+    	
+		return "star/changeInfo";
+	}
+    
+    // **테스트용 나중에 지워버려야함!!**
+    @GetMapping(value = "/star/changeInfo")
+    public String getChangeInfo(UserDTO userDto, RedirectAttributes rttr) {
+    	
+    	System.out.println("--------------");
+    	System.out.println(rttr.getFlashAttributes());
+    	rttr.addFlashAttribute(userDto);
+    	System.out.println(rttr.getFlashAttributes());
     	
 		return "star/changeInfo";
 	}
@@ -179,8 +188,6 @@ public class UserController {
     // 정보 변경 실행
     @PostMapping(value = "/changeInfo.do")
     public String changeInfo(Model model, UserDTO userDto){
-		
-//		String returndata;
 		
 		userService.changeInfo(userDto);
 		

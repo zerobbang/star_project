@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter 
 public class UserDTO {
-	 
 	
 //	users_table
 	private Long userNumber;
