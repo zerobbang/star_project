@@ -33,13 +33,6 @@ public class UserController {
 		return "star/main2";
 	}
 
-//
-//	// 메일 
-//	public UserController(UserService userService) {
-//        this.userService = userService;
-//    }
-
-
 	@GetMapping(value = "/star/sendmail.do")
 	public String openMailPage(Model model) {
 		return "star/sendmail";
@@ -56,8 +49,6 @@ public class UserController {
     // 로그인 페이지
     @GetMapping(value = "/star/login")
     public String logIn(Model model) { 
-//    	UserDTO userdto = new UserDTO(); 
-//    	model.addAttribute("Account",userdto );
     	return "star/login";
     } 
     
@@ -74,29 +65,17 @@ public class UserController {
     	System.out.println(model);
     	
 		try {
-<<<<<<< HEAD
+			
 			System.out.println("do action!");
-			System.out.println(model);
-		
-	    	UserDTO userDto = userService.loginUser(userDTO);
-	    	model.addAttribute("userDTO",userDto);
-	    	
-	    	System.out.println(userDto);
-	    	System.out.println(userDto.toString());
-=======
-			System.out.println("do action!"); 
-	    	userDTO = userService.loginUser(userDTO);
-<<<<<<< HEAD
-	    	model.addAttribute("UserDTO",userDTO);
-	    	System.out.println(model);
-=======
-	    	model.addAttribute("userDTO",userDTO);
-	    	
 	    	System.out.println(userDTO);
 	    	System.out.println(userDTO.toString());
->>>>>>> f051aa0c2bf14f6de0f2060ea7bef4e322d0e603
-	    	System.out.println(model.getAttribute("userDTO"));
->>>>>>> 82fd87504de5af8c07a71906d234b1a00968d7c0
+			 
+	    	userDTO = userService.loginUser(userDTO);
+
+	    	model.addAttribute("userDTO",userDTO);
+	    	System.out.println(model);
+
+
 			 
 			if (userDTO
 					.getUserId() != null) {
@@ -108,26 +87,9 @@ public class UserController {
 			return "star/login"; 
 		} catch (Exception e) {
 			return "star/login";  
-<<<<<<< HEAD
-		} 
-=======
 		}
-
-
-
-
-//    	if(userDto.getUserId() != null) {
-//    		return "star/findUser"; 
-//    	}
-//    	else if(userDto.getUserId() == null){
-//    		return "star/login"; 
-//    	}
-//    	else { 
-//    		return "star/sendmail";
-//    	} 
->>>>>>> 82fd87504de5af8c07a71906d234b1a00968d7c0
-    	
-    }    
+ 
+    };
     
     // 회원가입 페이지 (임시로 sendmail) -> (signUp으로 변경)
     @GetMapping(value = "/star/signup")
@@ -141,7 +103,6 @@ public class UserController {
     	return "star/findUser";
     }
 
-	
 	@RequestMapping(value = "/dataSend",method = RequestMethod.POST)
 	@ResponseBody
     public String[] dataSend(Model model,MailDTO mailDto){
@@ -219,7 +180,7 @@ public class UserController {
     @PostMapping(value = "/changeInfo.do")
     public String changeInfo(Model model, UserDTO userDto){
 		
-		String returndata;
+//		String returndata;
 		
 		userService.changeInfo(userDto);
 		
@@ -228,8 +189,6 @@ public class UserController {
         return "/star/main";
     };
     
-<<<<<<< HEAD
-=======
 	// 마이 페이지 테스트
     @GetMapping(value = "/star/gayeong/mypage")
     public String mypage() {
@@ -249,5 +208,4 @@ public class UserController {
     	return "star/main";
     }
     
->>>>>>> 82fd87504de5af8c07a71906d234b1a00968d7c0
 }

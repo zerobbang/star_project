@@ -85,7 +85,7 @@ public class BoardController {
 		return "/star/test";
 	}
 	
-<<<<<<< HEAD
+
 	// 게시글 쓰기 화면으로 이동
 	@GetMapping(value="/star/test")
 	public String testBoard(Model model, UserDTO userDto) {
@@ -96,7 +96,7 @@ public class BoardController {
 		
 		return "/star/test";
 	}
-=======
+
     // 상세글조회페이지
     @GetMapping(value = "/star/detailed_check")
     public String detailedCheck() {
@@ -116,7 +116,7 @@ public class BoardController {
 //    	return "star/detailed_check";
 //    }
 	
->>>>>>> 82fd87504de5af8c07a71906d234b1a00968d7c0
+
 	
 	
 }
