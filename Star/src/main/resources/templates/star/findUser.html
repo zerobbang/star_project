@@ -59,8 +59,8 @@
         	        url: "/findId",
         	        data: userDto,
         	        type:"POST",
-        	    }).done(function (fragments) {
-        	    	var userId = fragments;
+        	    }).done(function (userId) {
+        	    	/* var userId = userId; */
         	    	
         	    	console.log(userId);
         	    	alert("1차 테스트");
@@ -74,10 +74,11 @@
         	        	
         	        	$("#resultDiv").replaceWith(
         	        			'<div id="resultDiv">' +
-        	        				'<form action="/changePassword" method=post>' +
-	        	        				'<div id="userId" name="userId">' +
-	        	        					'당신의 아이디는 ' + userInputEmail +'입니다' +  
-	       	        					'</div>' +  
+        	        				'<form action="/star/changePassword" method=post>' +
+	        	        				'<div>' +
+	        	        					'당신의 아이디는 ' + userId +'입니다' +  
+	       	        					'</div>' +
+	       	        					'<input type="text" id="userId" name="userId" value="' + userId + '"/>' +
 	       	        					'<button type="submit">비밀번호 변경하러 가기</button> ' +
        	        					'</form>' +
     	        				'</div>');

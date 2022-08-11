@@ -39,5 +39,7 @@ public interface UserService {
 	public List<DustDTO> getPrediction(DustDTO params);
 
 	public String findId(UserDTO userDTO);
+
+	public int changePassword(UserDTO userDto);
 	
 }

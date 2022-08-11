@@ -102,5 +102,12 @@
 		from users_table
 		where user_email = #{userEmail};
 	</select>
-
+	
+	<!-- 비밀번호 변경 -->
+	<update id="changePassword" parameterType="UserDTO">
+		update users_table 
+		set user_password = #{userPassword}
+		where user_id = #{userId};
+	</update>
+	
 </mapper>

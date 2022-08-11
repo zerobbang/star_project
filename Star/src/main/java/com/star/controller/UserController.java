@@ -69,6 +69,7 @@ public class UserController {
     // 로그인 페이지
     @GetMapping(value = "/star/login")
     public String logIn() { 
+    	System.out.println("test!");
     	return "star/login";
     } 
     
@@ -227,4 +228,26 @@ public class UserController {
         
         return returndata;
     };
+    
+    // 비밀번호 변경 페이지
+    @PostMapping(value = "/star/changePassword")
+    public String changePasswordPage(UserDTO userDto, RedirectAttributes rttr){
+		
+		rttr.addFlashAttribute(userDto);
+		System.out.println(rttr.getFlashAttributes());
+		
+        return "/star/changePassword";
+    };
+    
+    // 비밀번호 변경 실행
+    @PostMapping(value = "/changePassword.do")
+    public String changePassword(UserDTO userDTO){
+		
+		int result = userService.changePassword(userDTO);
+		System.out.println(result);
+		
+		return "redirect:/star/login";
+
+    };
+    
 }

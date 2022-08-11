@@ -26,25 +26,20 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private DustMapper dustMapper;
+	
+	private JavaMailSender emailSender;
 
 	@Override
 	public boolean registerUser(UserDTO params) {
 		
 		return false;
 	}
-
-	 
 	  
-//	유저 정보 조회
+	//	유저 정보 조회
 	@Override
 	public UserDTO getUser(Long userNumber) {             
 		return userMapper.detailUser(userNumber);
 	}
-	
-	
-
-	private JavaMailSender emailSender;
-
 	
 	/* void */
     public String sendSimpleMessage(MailDTO mailDto) {
@@ -192,13 +187,17 @@ public class UserServiceImpl implements UserService{
 		return boardList;
 	}
 
-
-
 	@Override
 	public String findId(UserDTO userDTO) {
 		String result = userMapper.findIdFromEmail(userDTO);
 		
 		return result;
+	}
+
+	@Override
+	public int changePassword(UserDTO userDTO) {
+    	int result = userMapper.changePassword(userDTO);
+    	return result;
 	}
 	
 }

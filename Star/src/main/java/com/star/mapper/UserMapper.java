@@ -32,6 +32,8 @@ public interface UserMapper {
 
 	public String findIdFromEmail(UserDTO userDTO);
 
+	public int changePassword(UserDTO userDto);
+
 	
 
 } 
