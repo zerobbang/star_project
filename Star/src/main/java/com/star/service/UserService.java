@@ -1,7 +1,12 @@
 package com.star.service;
 
 
+
+import java.util.List;
+
 import org.springframework.stereotype.Service;
+
+import com.star.domain.DustDTO;
 
 //import javax.servlet.http.HttpServletRequest;
 
@@ -30,5 +35,7 @@ public interface UserService {
 	public String changeInfo(UserDTO userDto);
 
 	public void pagedown();
+	
+	public List<DustDTO> getPrediction(DustDTO params);
 	
 }

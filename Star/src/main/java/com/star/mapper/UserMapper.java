@@ -19,6 +19,7 @@ public interface UserMapper {
 	public UserDTO loginCheck(UserDTO userDTO);
 
 	public String idCheck(UserDTO userDto);
+	
 
 	public String nicknameCheck(UserDTO userDto);
 

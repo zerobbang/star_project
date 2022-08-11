@@ -1,5 +1,6 @@
 package com.star.service;
 
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +9,10 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import com.star.domain.DustDTO;
 import com.star.domain.MailDTO;
 import com.star.domain.UserDTO;
+import com.star.mapper.DustMapper;
 import com.star.mapper.UserMapper;
 
 import lombok.AllArgsConstructor;
@@ -20,6 +23,9 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private DustMapper dustMapper;
 
 	@Override
 	public boolean registerUser(UserDTO params) {
@@ -166,6 +172,24 @@ public class UserServiceImpl implements UserService{
 		System.out.println("유저 impl 확인");
 		
 		userMapper.pagedown();
+	}
+	
+	// 예측 리스트 불러오기 (임시)
+	@Override
+	public List<DustDTO> getPrediction(DustDTO params) {
+		
+		// List<DustDTO> boardList = Collections.emptyList();
+		List<DustDTO> boardList;
+		System.out.printf("이건 테스트용 : " + params.getRegion() + "\n");
+		
+//			if ( (params.getRegion() == null) || (params.getRegion() == "전국") ) {
+		if (params.getRegion() == null || (params.getRegion().equals("전국"))) {
+			boardList = dustMapper.getPredictionList2(params);
+		}else {
+			boardList = dustMapper.getPredictionList1(params);
+		}
+//			boardList = dustMapper.getPredictionList1(params);
+		return boardList;
 	}
 	
 }

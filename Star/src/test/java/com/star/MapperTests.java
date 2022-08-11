@@ -36,6 +36,7 @@ public class MapperTests {
 	public void testOfInsert() {
 		UserDTO params = new UserDTO();
 		
+
 		 params.setUserNickname("가영"); 
 		 params.setUserId("zerobbang");
 		 params.setUserEmail("gydiane1008@gmail.com");

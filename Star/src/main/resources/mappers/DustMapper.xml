@@ -33,14 +33,37 @@
 	</select>
 	
 <!-- 예측 테이블 조회 -->
-		<select id="detailInfo2" parameterType="DustDTO" resultType="DustDTO" >
+	<select id="detailInfo2" parameterType="DustDTO" resultType="DustDTO" >
 		select <include refid="predictColumns"/>
 		from prediction_table
+	</select> 
+	
+<!-- 예측 리스트 불러오기 (임시) -->
+	<select id="getPredictionList1" parameterType="DustDTO" resultType="DustDTO">
+	select 
+		pt.*
+	from 
+		prediction_table pt
+	inner join 
+		region_detail_table rdt
+	on 
+		pt.region = rdt.lower_region 
+	where 
+		rdt.upper_region = #{region}
+	limit
+		7;
 	</select>
 
-
-
-
-
+<!-- 예측 리스트 불러오기 = 전국일 경우(임시) -->
+	<select id="getPredictionList2" parameterType="DustDTO" resultType="DustDTO">
+	select 
+		*
+	from 
+		prediction_table
+	order by 
+		kor_pm10 
+	limit 
+		7;
+	</select>
 
 </mapper>

@@ -16,21 +16,21 @@
 		, admin_yn
 	</sql>
 	
-		<insert id="insertUser" parameterType="UserDTO">
-		INSERT INTO users_table(
-			<include refid="userColumns"/>
-			) VALUES (
-				#{userNumber}
-				, #{userNickname}
-				, #{userId}
-				, #{userPassword}
-				, #{userEmail}
-				, #{userRegion}
-				, NOW()
-				, false
-				, NULL
-				, false
-			)
+	<insert id="insertUser" parameterType="UserDTO">
+	INSERT INTO users_table(
+		<include refid="userColumns"/>
+		) VALUES (
+			#{userNumber}
+			, #{userNickname}
+			, #{userId}
+			, #{userPassword}
+			, #{userEmail}
+			, #{userRegion}
+			, NOW()
+			, false
+			, NULL
+			, false
+		)
 	</insert> 
 	
 	<select id="detailUser" parameterType="long" resultType="UserDTO">
@@ -39,19 +39,16 @@
 		WHERE user_number = #{userNumber}
 	</select>
 	
-	<!-- 새로 작성한 -->
+	<!-- 로그인 가능 여부 체크 -->
     <select id="loginCheck" parameterType="UserDTO" resultType="UserDTO">
-<!-- 		SELECT user_id, user_password
-		FROM users_table 
-		WHERE user_id = #{userId} AND user_password = #{userPassword} -->
 		SELECT
-			<!-- user_number, user_id, user_password -->
 			*
 		FROM
 			users_table 
 		WHERE
 			user_id = #{userId} AND user_password = #{userPassword} AND withdrawal_yn = 0
 	</select>
+	
 	
 	
 
