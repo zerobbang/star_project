@@ -156,7 +156,15 @@ public class UserServiceImpl implements UserService{
 		
 		// List<DustDTO> boardList = Collections.emptyList();
 		List<DustDTO> boardList;
-		boardList = dustMapper.getPredictionList(params);
+		System.out.printf("이건 테스트용 : " + params.getRegion() + "\n");
+		
+//		if ( (params.getRegion() == null) || (params.getRegion() == "전국") ) {
+		if (params.getRegion() == null || (params.getRegion().equals("전국"))) {
+			boardList = dustMapper.getPredictionList2(params);
+		}else {
+			boardList = dustMapper.getPredictionList1(params);
+		}
+//		boardList = dustMapper.getPredictionList1(params);
 		return boardList;
 	}
 

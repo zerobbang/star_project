@@ -36,6 +36,15 @@ public class UserController {
 		return "star/main2";
 
 	}
+	
+	// ajax 중간 main
+//	@GetMapping(value = "/star/main3")
+//	public String openTable() {
+//		return "star/main3";
+//
+//	}
+	
+	
 
 //
 //	// 메일 
@@ -77,7 +86,7 @@ public class UserController {
 		try {
 			System.out.println("do action!"); 
 	    	UserDTO userDto = userService.loginUser(userDTO);
-	    	model.addAttribute("UserInfo",userDTO);
+	    	model.addAttribute("userDTO",userDto);
 	    	
 	    	System.out.println(userDto);
 	    	System.out.println(userDto.toString());
@@ -99,14 +108,19 @@ public class UserController {
    
 
 	// 메인페이지 ( with. 중간에 있는 테이블 )
-	@GetMapping(value = "/star/list")
+	@GetMapping(value = "/star/main3")
 	public String openPredictionList(@ModelAttribute("params") DustDTO params, Model model) {
-		List<DustDTO> boardList = userService.getPrediction(params);
-		model.addAttribute("boardList", boardList);
+		List<DustDTO> dustList = userService.getPrediction(params);
+		model.addAttribute("dustList", dustList);
 		System.out.println("dd");
-		System.out.println(boardList.get(0).getHumidity());
-		System.out.println(boardList.get(1).getHumidity());
-		return "star/tempMain";
+		System.out.println(model);
+		System.out.println(params);
+		System.out.println(params.getRegion());
+		model.addAttribute("selectRegion", params.getRegion());
+		
+		System.out.println(dustList.get(0).getHumidity());
+		System.out.println(dustList.get(1).getHumidity());
+		return "star/main3";
 	}
 	
 

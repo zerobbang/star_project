@@ -18,14 +18,14 @@
         }
         .container {
             width:1500px;
-            height:200px;
+            height:300px;
 
             border:1px solid blue;
             overflow: auto;
         }
         /* 스위치 버튼 CSS */
         .wrapper {
-            width: 50px;
+            width: 80px;
             height: 50px;
             text-align: center;
             margin: 50px auto;
@@ -108,16 +108,21 @@
 
 
 
-    <!-- 스위치 버튼 -->
-    <div class="wrapper" style = "float:right">
-        <input type="checkbox" id="switch">
-        <label for="switch" class="switch_label">
-          <span class="onf_btn"></span>
-        </label>
-    </div>
-    <p style="text-align:right;">주<->시간</p>
-    <div class="container">
 
+
+    <div class="container">
+    
+
+        <!-- 스위치 버튼 -->
+	    <div class="wrapper">
+
+	        <input type="checkbox" id="switch"  style="float:right;">
+	        <label for="switch" class="switch_label" >
+	          <span class="onf_btn"></span>
+	        </label> 
+   	        <p>주<->시간</p>
+	    </div>
+		<div>
         <div style="width: 33%; float:left;">
             <div class="temp3"> 종로구</div>
             <table border ="1"  width=500px bgcolor=#11a9c1 bordercolor="white">
@@ -240,6 +245,7 @@
                     <td>25μm</td> 
                 </tr>
             </table>
+        </div>
         </div>
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br>

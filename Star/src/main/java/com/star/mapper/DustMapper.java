@@ -16,6 +16,9 @@ public interface DustMapper {
 	public DustDTO detailInfo2(DustDTO dustDto);
 	
 	// 예측 리스트 불러오기 (임시)
-	public List<DustDTO> getPredictionList(DustDTO params);
+	public List<DustDTO> getPredictionList1(DustDTO params);
+	
+	// 예측 리스트 불러오기 (전국일 경우)
+	public List<DustDTO> getPredictionList2(DustDTO params);
 
 }
