@@ -1,16 +1,19 @@
 package com.star.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.star.domain.DustDTO;
 import com.star.domain.MailDTO;
 import com.star.domain.UserDTO;
 import com.star.service.UserService;
@@ -31,6 +34,22 @@ public class UserController {
 	@GetMapping(value = "/star/main2")
 	public String openMap() {
 		return "star/main2";
+	}
+	
+	// 메인페이지 ( with. 중간에 있는 테이블 )
+	@GetMapping(value = "/star/main3")
+	public String openPredictionList(@ModelAttribute("params") DustDTO params, Model model) {
+		List<DustDTO> dustList = userService.getPrediction(params);
+		model.addAttribute("dustList", dustList);
+		System.out.println("dd");
+		System.out.println(model);
+		System.out.println(params);
+		System.out.println(params.getRegion());
+		model.addAttribute("selectRegion", params.getRegion());
+		
+		System.out.println(dustList.get(0).getHumidity());
+		System.out.println(dustList.get(1).getHumidity());
+		return "star/main3"; 
 	}
 
 	@GetMapping(value = "/star/sendmail.do")

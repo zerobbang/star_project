@@ -47,6 +47,16 @@
             },
             error: function (){alert("실패");}
         }); */
+        
+        $.ajax({
+	        url : "/star/main3",
+	        dataType: "html",	// 이 부분이 반환 타입을 핸들링하는 곳이다.
+	        type: "get",
+	        success: function(data) {
+	        $('#weather').html(data);
+	        },
+	        error: function (){alert("실패");}
+	    });
 
         $("select").on('focus',function(){
         var previous = this.value;
@@ -73,6 +83,22 @@
             }
             setCenter(userSelectRegionCenter);
             showMap(userSelectRegionUrl);
+            
+            // 메인페이지 테이블
+            var DustDTO={
+            		region:next
+            };
+            
+            $.ajax({
+    	        url : "/star/main3",
+    	        dataType: "html",	// 이 부분이 반환 타입을 핸들링하는 곳이다.
+    	        data: DustDTO,
+    	        type: "get",
+    	        success: function(data) {
+    	        $('#weather').html(data);
+    	        },
+    	        error: function (){alert("실패");}
+    	    });
         });
     });
     
@@ -118,6 +144,9 @@
     	<input type="submit" value="제출2">
     
     </form> 
+    
+    <br><br><br>
+    <div id = "weather" ></div>
 
 </body>
 </html>
