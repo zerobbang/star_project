@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" >
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,7 +28,7 @@
     $(document).ready(function(){
          $.ajax({
             url : "/star/main2",
-
+            // data : {"userSelect":$("#selectedRegion")},
             dataType: "html",	// 이 부분이 반환 타입을 핸들링하는 곳이다.
             type: "get",
             success: function(data) {
@@ -46,17 +47,6 @@
             },
             error: function (){alert("실패");}
         }); */
-       
-       
-        $.ajax({
-	        url : "/star/main3",
-	        dataType: "html",	// 이 부분이 반환 타입을 핸들링하는 곳이다.
-	        type: "get",
-	        success: function(data) {
-	        $('#weather').html(data);
-	        },
-	        error: function (){alert("실패");}
-	    });
 
         $("select").on('focus',function(){
         var previous = this.value;
@@ -83,25 +73,9 @@
             }
             setCenter(userSelectRegionCenter);
             showMap(userSelectRegionUrl);
-            
-            
-            var DustDTO={
-            		region:next
-            };
-            
-            $.ajax({
-    	        url : "/star/main3",
-    	        dataType: "html",	// 이 부분이 반환 타입을 핸들링하는 곳이다.
-    	        data: DustDTO,
-    	        type: "get",
-    	        success: function(data) {
-    	        $('#weather').html(data);
-    	        },
-    	        error: function (){alert("실패");}
-    	    });
-            
         });
     });
+    
 </script>
 
     <h1>안녕하세요</h1>
@@ -127,8 +101,23 @@
     </select>
     <input type="text" id="selectedRegion" value="전국"/>
     <div id="mapImg"></div>
+
     <h2>카카오 이미지 띄우기 비동기 처리 ..?(default 가 비동기)</h2>
     
-	<div id = "weather" ></div>
+	<form th:action="@{/board/write}" method="post" >
+	    <input type="text" id="userNumber" th:value="${UserDTO}"/>
+	    <input type="text" id="userRegion" th:value="${UserDTO}"/>
+    	<input type="submit" value="글쓰기"/>
+    </form>
+    
+    <form th:action="@{/star/changeInfo}" method="post">
+    
+    	<input type="text" id="userId" name="userId" th:value="*{userDTO.userId}"/>
+    	<input type="text" id="userNickname" name="userNickname" th:value="*{userDTO.userNickname}"/>
+    	<input type="text" id="userRegion" name="userRegion" th:value="*{userDTO.userRegion}"/>
+    	<input type="submit" value="제출2">
+    
+    </form> 
+
 </body>
 </html>

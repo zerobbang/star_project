@@ -31,6 +31,10 @@ public interface UserService {
 	public String[] nicknameCheck(UserDTO userDto);
 	
 	public String[] emailCheck(UserDTO userDto);
+
+	public String changeInfo(UserDTO userDto);
+
+	public void pagedown();
 	
 	public List<DustDTO> getPrediction(DustDTO params);
 	

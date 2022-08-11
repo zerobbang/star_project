@@ -61,6 +61,18 @@ public class BoardDTO {
 	private String imgUrl;
 	
 	private boolean imgShowYn;
+
+	@Override
+	public String toString() {
+		return "BoardDTO [category=" + category + ", bno=" + bno + ", userNumber=" + userNumber + ", title=" + title
+				+ ", content=" + content + ", regDate=" + regDate + ", updateDate=" + updateDate + ", deleteYn="
+				+ deleteYn + ", reportContent=" + reportContent + ", manageYn=" + manageYn + ", cmtNum=" + cmtNum
+				+ ", cmtContent=" + cmtContent + ", writeDate=" + writeDate + ", cmtUpdate=" + cmtUpdate
+				+ ", cmtDeleteYn=" + cmtDeleteYn + ", imtNumber=" + imtNumber + ", imgUrl=" + imgUrl + ", imgShowYn="
+				+ imgShowYn + "]";
+	}
+	
+	
 	
 	
 

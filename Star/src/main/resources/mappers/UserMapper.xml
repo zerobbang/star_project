@@ -71,8 +71,28 @@
 		from users_table
 		where user_email = #{userEmail};
 	</select>
+	
+	<update id="updateNickRegion" parameterType="UserDTO">
+		update users_table
+		set user_nickname = #{userNickname}
+			, user_region = #{userRegion}
+		where user_id = #{userId};
+	</update>
 
+	<update id="updatePassNickRegion" parameterType="UserDTO">
+		update users_table
+		set user_password = #{userPassword}
+			, user_nickname = #{userNickname}
+			, user_region = #{userRegion}
+		where user_id = #{userId};
+	</update>
 
-
+<!-- 마이페이지_회원탈퇴 -->
+	<update id="pagedown">
+		update users_table 
+		set withdrawal_yn = 1
+			, withdrawal_date = now()
+		where user_id='id1';
+	</update>
 
 </mapper>
