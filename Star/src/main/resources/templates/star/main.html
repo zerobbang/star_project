@@ -113,6 +113,8 @@
     <form th:action="@{/star/changeInfo}" method="post">
     
     	<input type="text" id="userId" name="userId" th:value="*{userDTO.userId}"/>
+    	<input type="text" id="userNickname" name="userNickname" th:value="*{userDTO.userNickname}"/>
+    	<input type="text" id="userRegion" name="userRegion" th:value="*{userDTO.userRegion}"/>
     	<input type="submit" value="제출2">
     
     </form> 

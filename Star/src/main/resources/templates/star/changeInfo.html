@@ -14,7 +14,7 @@
  	// 사용자가 입력한 데이터
     var userInputId;
  	var userInputPassword;
-	var userInputNickname;
+	var userInputNickname;	
 	
 	// 닉네임, 비밀번호 입력칸을 잘 넘어갔는지 Yes or No
     var passwordCheck = true;
@@ -27,6 +27,12 @@
     
 	/* 아이디, 닉네임, 이메일 유효성 체크 */
 	$( document ).ready( function() {
+		
+		var userExistingNickname = $("#userNickname").val();
+		var userExistingRegion;
+		console.log(userExistingNickname);
+		console.log(userExistingRegion);
+		
 		
 		$("#userPassword").change("change keyup paste", function() {
         	
@@ -114,16 +120,23 @@
            		console.log("fail")
            	};
            	
+           	// 입력칸이 비어있는 경우
            	if (newValue==""){
            		$("#nicknameError").replaceWith('<div id="nicknameError" class="error">' + '닉네임을 입력해주세요' + '</div>');
            		return;
            	}
            	
+           	// 정규식에 부합하는 내용이 하나도 없거나 두개 이상인경우 
             if(rule != newValue || rule == ""){
             	$("#nicknameError").replaceWith('<div id="nicknameError" class="error">' + '2~8자의 한글,영문,숫자만 사용 가능합니다.' + '</div>');
             	nicknameCheck = false;
             	return;
             }
+           	if (userExistingNickname == newValue){
+           		$("#nicknameError").replaceWith('<div id="nicknameError" class="error">' + '</div>');
+            	nicknameCheck = true;
+            	return;
+           	}
                
             //json 형태로 전송
        	    var userDto={
@@ -164,23 +177,9 @@
 			alert("닉네임을 확인해주세요.")
 			return false;
 		} else{
-			
-			userInputId=$("#userId").val();
-			userInputPassword=$("#userPassword").val();
-			userInputNickname=$("#userNickname").val();
-			userInputRegion=$("#userRegion").val();
-		
-			var userDto={
-				userId:userInputId
-   	    		, userPassword:userInputPassword
-   	    		, userNickname:userInputNickname
-   	  			, userRegion:userInputRegion
-   	    	};
-			
-			alert("변경되었습니다.");
-			
+			alert("변경되었습니다.")
+			return true;
 		}
-		return false;
 	}
     
 </script>
@@ -200,7 +199,8 @@
 	    </h1>
     </div>
     
-    	<form th:action="@{/changeInfo.do}" method="post" onsubmit="changeUserInfo()">
+    	<!-- 아래 리턴에서 에러라고 밑줄 떠있는게 정상 ==> true일때만 컨트롤러로 이동하겠다는 의미 -->
+    	<form th:action="@{/changeInfo.do}" method="post" onsubmit="return changeUserInfoE()">
     
 	    	<input type="hidden" id="userId" name="userId" th:value="*{userDTO.userId}"/>
 	    
@@ -227,31 +227,38 @@
 			<!-- 닉네임 변경 -->
 	        <div class="change_nick" style="text-align: center;">
 	            <label for="userNickname" class="lab_nick"></label>
-	            <input type="text" name="userNickname" id="userNickname" required placeholder="닉네임을 입력해주세요.">
+	            <input type="text" name="userNickname" id="userNickname" required placeholder="닉네임을 입력해주세요." th:value="*{userDTO.userNickname}">
+	            
+	            <!-- <input type="text" id="userNickname" name="userNickname" th:value="*{userDTO.userNickname}"/> -->
+    			<!-- <input type="text" id="userRegion" name="userRegion" th:value="*{userDTO.userRegion}"/> -->
+	            
 	            <div id="nicknameError" class="error"></div>
 	        </div>
 	        </div>
 		<!-- 기본지역 변경 -->
 	    <div class="change_reg">
 	        <select id="userRegion" name="userRegion" required>
-	            <option value="전국">전국</option>
-	            <option value="서울">서울</option>
-	            <option value="부산">부산</option>
-	            <option value="대구">대구</option>
-	            <option value="인천">인천</option>
-	            <option value="광주">광주</option>
-	            <option value="대전">대전</option>
-	            <option value="울산">울산</option>
-	            <option value="세종">세종</option>
-	            <option value="경기도">경기도</option>
-	            <option value="강원도">강원도</option>
-	            <option value="충청북도">충청북도</option>
-	            <option value="충청남도">충청남도</option>
-	            <option value="전라북도">전라북도</option>
-	            <option value="전라남도">전라남도</option>
-	            <option value="경상북도">경상북도</option>
-	            <option value="경상남도">경상남도</option>
-	            <option value="제주도">제주도</option>
+	        	<!-- <option th:selected="${userDTO.userRegion}=='전국'">전국</option>
+	        	<option th:selected="${userDTO.userRegion}=='서울'">서울</option>
+	        	<option th:selected="${userDTO.userRegion}=='부산'">부산</option> -->
+	            <option value="전국" th:selected="${userDTO.userRegion}== '전국' ">전국</option>
+	            <option value="서울" th:selected="${userDTO.userRegion}== '서울' ">서울</option>
+	            <option value="부산" th:selected="${userDTO.userRegion}== '부산' ">부산</option>
+	            <option value="대구" th:selected="${userDTO.userRegion}== '대구' ">대구</option>
+	            <option value="인천" th:selected="${userDTO.userRegion}== '인천' ">인천</option>
+	            <option value="광주" th:selected="${userDTO.userRegion}== '광주' ">광주</option>
+	            <option value="대전" th:selected="${userDTO.userRegion}== '대전' ">대전</option>
+	            <option value="울산" th:selected="${userDTO.userRegion}== '울산' ">울산</option>
+	            <option value="세종" th:selected="${userDTO.userRegion}== '세종' ">세종</option>
+	            <option value="경기도" th:selected="${userDTO.userRegion}== '경기도' ">경기도</option>
+	            <option value="강원도" th:selected="${userDTO.userRegion}== '강원도' ">강원도</option>
+	            <option value="충청북도" th:selected="${userDTO.userRegion}== '충청북도' ">충청북도</option>
+	            <option value="충청남도" th:selected="${userDTO.userRegion}== '충청남도' ">충청남도</option>
+	            <option value="전라북도" th:selected="${userDTO.userRegion}== '전라북도' ">전라북도</option>
+	            <option value="전라남도" th:selected="${userDTO.userRegion}== '전라남도' ">전라남도</option>
+	            <option value="경상북도" th:selected="${userDTO.userRegion}== '경상북도' ">경상북도</option>
+	            <option value="경상남도" th:selected="${userDTO.userRegion}== '경상남도' ">경상남도</option>
+	            <option value="제주도" th:selected="${userDTO.userRegion}== '제주도' ">제주도</option>
 	        </select>
 	    </div>
 	    <div class="change_btn">
