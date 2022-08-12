@@ -50,14 +50,21 @@ public class BoardServiceImpl implements BoardService{
 		return boardList;
 	}
 
-//	신고하기 8월 11일에 마무리 짓게
-//	@Override
-//	public void report() {
-//		// TODO Auto-generated method stub
-//		
-//		System.out.println("보드 impl 확인");
-//		
-//	}
+//	신고하기
+	@Override
+	public void report(BoardDTO boardDTO) {
+		// TODO Auto-generated method stub
+		
+		System.out.println("보드 impl 확인");
+		
+		System.out.println(boardDTO);
+		
+		boardMapper.report(boardDTO);
+		
+		System.out.println("서비스 끝!");
+		 
+		
+	}
 
 
 }

@@ -3,12 +3,14 @@ package com.star.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.star.domain.BoardDTO;
 import com.star.domain.UserDTO;
@@ -97,27 +99,35 @@ public class BoardController {
 		return "/star/test";
 	}
 
-    // 상세글조회페이지
+    // 상세글조회 페이지
     @GetMapping(value = "/star/detailed_check")
     public String detailedCheck() {
-    	return "star/detailed_check";
+    	return "/star/detailed_check";
+    }
+    
+    // 신고사유 페이지
+    @GetMapping(value = "/star/userReport")
+    public String reportpage() {
+    	return "/star/userReport";
     }
 	
     // 신고하기
-//    @GetMapping(value = "/star/report")
-//    public String report() {
-//    	
-//    	System.out.println("확인");
-//    	
-//    	boardService.report();    	
+    @PostMapping(value = "/star/report")
+    @ResponseBody
+    public String report(BoardDTO boardDTO) {
+    	
+    	System.out.println("확인33");
+    	System.out.println(boardDTO);
+    	
+    	boardService.report(boardDTO); // 문제발생
+    	
+    	System.out.println("컨트롤러 끝!");
 //    	
 //    	System.out.println("신고완료확인");
-//    	
+    	
 //    	return "star/detailed_check";
-//    }
-	
-
-	
-	
+    	return "good";
+    }
+    	
 }
 

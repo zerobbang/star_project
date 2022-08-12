@@ -30,9 +30,9 @@ public class BoardDTO {
 	private boolean deleteYn;
 	
 	// 신고 테이블
-//	private int bno;		// 게시글 테이블의 bno와 연결 
+//	private int bno;		// 게시글 테이블의 bno와 연결 *게시글 테이블 정보를 끌어올 생각이기에 삭제해도 될듯(외래)
 	
-//	private int userNumber;		// 유저 테이블의 유저 넘버와 연결
+//	private int userNumber;		// 유저 테이블의 유저 넘버와 연결 *게시글 테이블 정보를 끌어올 생각이기에 삭제해도 될듯(외래)
 	
 	private String reportContent;
 	

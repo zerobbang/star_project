@@ -216,7 +216,7 @@ public class UserController {
     	
     	System.out.println("회원탈퇴 완료됨!");
     	
-    	return "star/main";
+    	return "redirect:/star/mainpage";
     }
     
     // id 찾기

@@ -120,7 +120,12 @@
  
   <!-- 신고하기 -->
 	<insert id="report" parameterType="BoardDTO">
-		insert into report_table values (#{bno},#{userNumber},#{reportContent},0);
+		<!-- insert into report_table values (#{bno},#{userNumber},#{reportContent},0); -->
+		insert into report_table values
+			(2
+			, 2
+			, #{reportContent}
+			, 0);
 	</insert>
 
 

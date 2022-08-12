@@ -40,8 +40,14 @@
     		if (emailCheck == false){
     			return;
     		}
+    		// $ => jquery 쓸 때
+    		// # => id를 찾을 때
+    		// . => 클래스 찾을 떄
+    		// 그냥 => 태그 찾을 때
     		
-    	    userInputEmail=$("#userEmail").val();
+    		userInputEmail=$("#userEmail").val();
+    		// console.log(userInputEmail)
+    		//
 			
     	    var mailDto={
     	        address:userInputEmail
