@@ -64,7 +64,7 @@ public class UserController {
 //		model.addAttribute("selectRegion", params.getRegion());
 		 
 		System.out.println(dustList.get(0).getHumidity());
-		System.out.println(dustList.get(1).getHumidity());
+//		System.out.println(dustList.get(1).getHumidity());
 		System.out.println("+++++++++++++++++++");
 		return "star/main3"; 
 	}
