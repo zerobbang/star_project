@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"> -->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" >
 
 <head>
     <meta charset="UTF-8">
@@ -25,37 +26,40 @@
     var polygons=[] ;
 
     $(document).ready(function(){
-         $.ajax({
-            url : "/star/main2",
-            // data : {"userSelect":$("#selectedRegion")},
-            dataType: "html",	// 이 부분이 반환 타입을 핸들링하는 곳이다.
-            type: "get",
-            success: function(data) {
-            $('#mapImg').html(data);
-            },
-            error: function (){alert("지도 실패");}
+        $.ajax({
+           url : "/star/main2",
+           // data : {"userSelect":$("#selectedRegion")},
+           dataType: "html",	// 이 부분이 반환 타입을 핸들링하는 곳이다.
+           type: "get",
+           success: function(data) {
+           	$('#mapImg').html(data);
+           },
+           error: function (){alert("지도 실패");}
         });
-        
+        console.log("--------------------1");
         $.ajax({
 	        url : "/star/main3",
 	        dataType: "html",	// 이 부분이 반환 타입을 핸들링하는 곳이다.
 	        type: "get",
 	        success: function(data) {
-	        $('#weather').html(data);
+	        	$('#weather').html(data);
 	        },
 	        error: function (){alert("기상조건 테이블 실패");}
+	        
 	    });
-
+        
+        
         $("select").on('focus',function(){
-        var previous = this.value;
-        console.log("현재값 : ",previous);
-        }).change(function(){      
-               
-            // 이전 폴리곤들 지우기
-            deletePolygon(polygons);          
-            
-            // 선택한 값
-            var next = this.value;
+
+        	var previous = this.value;
+        	console.log("현재값 : ",previous);
+        }).change(function(){
+              
+        	// 이전 폴리곤들 지우기
+        	deletePolygon(polygons);          
+           
+        	// 선택한 값
+        	var next = this.value;
 
             // 선택한 값 출력
             $("#selectedRegion").val(next);
@@ -71,18 +75,22 @@
             }
             setCenter(userSelectRegionCenter);
             showMap(userSelectRegionUrl);
-            
+            console.log("--------------------");
+            console.log(next);
+            console.log("--------------------");
             // 메인페이지 테이블
-            var DustDTO={
+            var dustDto={
             		region:next
             };
             
             $.ajax({
     	        url : "/star/main3",
     	        dataType: "html",	// 이 부분이 반환 타입을 핸들링하는 곳이다.
-    	        data: DustDTO,
+    	        data: dustDto,
     	        type: "get",
     	        success: function(data) {
+    	        	console.log("test!")
+    	        	console.log("data")
     	        $('#weather').html(data);
     	        },
     	        error: function (){alert("실패");}
@@ -135,7 +143,7 @@
     </form> 
     
     <br><br><br>
-    <div id = "weather" ></div>
+    <div id="weather">asd</div>
 
 </body>
 </html>
