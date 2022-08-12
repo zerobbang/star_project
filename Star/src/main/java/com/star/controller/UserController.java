@@ -40,16 +40,23 @@ public class UserController {
 	
 	// 메인페이지 ( with. 중간에 있는 테이블 )
 	@GetMapping(value = "/star/main3")
-	public String openPredictionList(DustDTO params, RedirectAttributes rttr) {
-		List<DustDTO> dustList = userService.getPrediction(params);
-		rttr.addFlashAttribute(dustList);
-
-		System.out.println(params);
-		System.out.println(params.getRegion());
-		rttr.getFlashAttributes();
+	public String openPredictionList(DustDTO dustDto, Model model) {
+		
+		System.out.println(dustDto);
+		
+		List<DustDTO> dustList = userService.getPrediction(dustDto);
+//		rttr.addFlashAttribute(dustList);
+		System.out.println(model);
+		model.addAttribute("dustDto", dustList);
+		System.out.println("-------------------------");
+//		System.out.println(rttr.getFlashAttributes());
+		System.out.println(model);
+		
+		System.out.println(dustDto.getRegion());
 		
 		System.out.println(dustList.get(0).getHumidity());
 		System.out.println(dustList.get(1).getHumidity());
+		
 		return "star/main3";
 		
 	}
