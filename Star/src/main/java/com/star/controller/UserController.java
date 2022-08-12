@@ -39,26 +39,36 @@ public class UserController {
 	}
 	
 	// 메인페이지 ( with. 중간에 있는 테이블 )
-	@GetMapping(value = "/star/main3")
-	public String openPredictionList(DustDTO dustDto, Model model) {
-		
-		System.out.println(dustDto);
-		
-		List<DustDTO> dustList = userService.getPrediction(dustDto);
+//	@GetMapping(value = "/star/main3")
+//	public String openPredictionList(DustDTO params, RedirectAttributes rttr) {
+//		List<DustDTO> dustList = userService.getPrediction(params);
 //		rttr.addFlashAttribute(dustList);
+//
+//		System.out.println(params);
+//		System.out.println(params.getRegion());
+//		rttr.getFlashAttributes();
+//		
+//		System.out.println(dustList.get(0).getHumidity());
+//		System.out.println(dustList.get(1).getHumidity());
+//		return "star/main3";
+//		
+//	}
+	
+	
+	// 메인페이지 ( with. 중간에 있는 테이블 )
+	@GetMapping(value = "/star/main3")
+	public String openPredictionList(DustDTO params, Model model) {
+		List<DustDTO> dustList = userService.getPrediction(params);
+		model.addAttribute("dustList", dustList); 
+		System.out.println("dd");
 		System.out.println(model);
-		model.addAttribute("dustDto", dustList);
-		System.out.println("-------------------------");
-//		System.out.println(rttr.getFlashAttributes());
-		System.out.println(model);
-		
-		System.out.println(dustDto.getRegion());
-		
+		System.out.println(params);
+		System.out.println(params.getRegion()); 
+		model.addAttribute("selectRegion", params.getRegion());
+		 
 		System.out.println(dustList.get(0).getHumidity());
 		System.out.println(dustList.get(1).getHumidity());
-		
-		return "star/main3";
-		
+		return "star/main3"; 
 	}
 
 	@GetMapping(value = "/star/sendmail.do")
