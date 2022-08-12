@@ -18,8 +18,7 @@ public interface BoardService {
 	// 게시글 상세 조회
 	public BoardDTO getBoardDetail(Long bno);
 
-	// 상세글 조회 신고하기	
-//	public void report();
+	public void report(BoardDTO boardDTO);
 	
 
 
