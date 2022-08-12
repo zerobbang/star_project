@@ -199,5 +199,12 @@ public class UserServiceImpl implements UserService{
     	int result = userMapper.changePassword(userDTO);
     	return result;
 	}
+
+	// 닉네임 조회
+	@Override
+	public String getNickname(Long userNumber) {
+		String result = userMapper.getNickname(userNumber);
+		return result;
+	}
 	
 }

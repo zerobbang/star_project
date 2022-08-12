@@ -10,7 +10,7 @@ import com.star.domain.BoardDTO;
 public interface BoardService {
 	
 	// 게시글 리스트 조회
-	public List<BoardDTO> getBoardList(BoardDTO params);
+	public List<BoardDTO> getBoardList(String category);
 	
 	// 게시글 등록
 	public boolean registerBoard(BoardDTO params);

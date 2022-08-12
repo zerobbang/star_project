@@ -1,18 +1,20 @@
 package com.star.controller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.star.domain.BoardDTO;
 import com.star.domain.UserDTO;
 import com.star.service.BoardService;
+import com.star.service.UserService;
 
 @Controller
 public class BoardController {
@@ -20,12 +22,41 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
+	@Autowired
+	private UserService userService;
+	
 	
 	// 게시글 조회
 	@GetMapping(value="/board/list")
-	public String listBoard(@RequestParam(value="params") BoardDTO params, Model model) {
-		List<BoardDTO> boardList = boardService.getBoardList(params);
+	public String listBoard(@RequestParam(value="category") String category, Model model, UserDTO userDto) {
+		System.out.println("list list list : "+category);
+//		System.out.println(userDto);
+		model.addAttribute("selectCategory", category);
+		
+		List<BoardDTO> boardList = boardService.getBoardList(category);
 		model.addAttribute("boardList", boardList);
+		
+		// 로그인 한 유저 정보도 함께
+//		Long userNumber = userDto.getUserNumber();
+//		UserDTO userDTO = userService.getUser(userNumber);
+//		model.addAttribute("userDTO", userDTO);
+		
+		// 각 게시글의 유저 넘버로 조회해서 해당 닉네임을 가져오고 list에 저장한다.
+		List<String> userNickname = new ArrayList<>();
+		
+		Iterator<BoardDTO> list = boardList.iterator();
+
+		while(list.hasNext()) {
+			BoardDTO boardOne = list.next();
+			Long userNum = (long) boardOne.getUserNumber();
+			userNickname.add(userService.getNickname(userNum));
+//			System.out.println(boardOne.getUserNumber());
+//			System.out.println(userNickname);
+		}
+		
+		model.addAttribute("userNickname", userNickname);
+//		System.out.println("zzzzzzzzzzzzzzzzzzz"+boardList);
+//		System.out.println(userNickname);
 		return "board/list";
 	}
 	
@@ -49,23 +80,15 @@ public class BoardController {
 //			model.addAttribute("board", boardDTO);
 //		}
 		
-		System.out.println("model"+model);
 
-		System.out.println("------------------"+userDto);
-
-//		System.out.println("params"+params);
-
-//		String writer = userDto.getUserNickname();
-//		Long number = userDto.getUserNumber();
-////		String writer = "코신황";
-////		long number = 1; 
-//		System.out.println("유저 닉네임"+writer);
-//		System.out.println("회원 번호"+number);
-//		
-//		
-//		
-//		model.addAttribute("writer", writer);
-//		model.addAttribute("userNumber", number);
+		System.out.println("글쓰기 페이지 들어가기 전 userDto : "+userDto);
+		Long userNumber = userDto.getUserNumber();
+		System.out.println(userNumber);
+		
+		// 해당 user 정보 다 넘겨주기
+		UserDTO userDTO = userService.getUser(userNumber);
+		// String userNickname = userDTO.getUserNickname();
+		model.addAttribute("userDTO", userDTO);
 		
 		return "/board/write";
 	}
@@ -73,16 +96,9 @@ public class BoardController {
 	// 게시글 쓰기가 완료 되면
 	@PostMapping(value="/board/registerBoard")
 	public String registerBoard(BoardDTO params) {
-		
 		System.out.println(params.toString());
-		
 		boardService.registerBoard(params);
-		return "/star/main" ;
-	}
-	
-	@GetMapping(value="/board/test")
-	public String test() {
-		return "/star/test";
+		return "/board/list" ;
 	}
 	
 

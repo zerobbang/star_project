@@ -39,16 +39,18 @@ public class BoardServiceImpl implements BoardService{
 		return boardMapper.selectDetail(bno);
 	}
 
-	// 게시글 리스트 조회
+	// 카테고리별 게시글 리스트 조회
 	@Override
-	public List<BoardDTO> getBoardList(BoardDTO params) {
-		// 데이터 타입 BoardDTO로 빈 리스트 생성
+	public List<BoardDTO> getBoardList(String category) {
+		// 데이터 타입 BoardDTO로 빈 리스트 생성 > 조회된 결과 값을 받기 위해 준비
 		List<BoardDTO> boardList = Collections.emptyList();
 		
 		// 페이징 기능 아직 미구현
-		boardList = boardMapper.selectList(params);
+		boardList = boardMapper.selectList(category);
 		return boardList;
 	}
+	
+	
 
 //	신고하기 8월 11일에 마무리 짓게
 //	@Override

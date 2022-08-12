@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/common">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
     <th:block layout:fragment="title">
         <title>글작성 페이지</title>
     </th:block>
@@ -15,7 +15,7 @@
                 
                 <div class="form-group">
                 	<label for="category" class="col-sm-2 control-label">카테고리</label>
-                	<select name="category">
+                	<select id="category" name="category">
                 	<!-- observatory -->
                 		<option value="관측지">관측지</option>
                 		<option value="작품전">작품전</option>
@@ -29,7 +29,8 @@
                 <div class="form-group">
                     <label for="writer" class="col-sm-2 control-label">작성자</label>
                     <div class="col-sm-10">
-                    	<input type="text" id="writer" name="writer" class="form-control" maxlength="10" th:value="${writer}" disabled/>
+                    	<input type="hidden" id=userNumber name="userNumber" th:value="${userDTO.userNumber}"/>
+                    	<input type="text" id="writer" name="writer" class="form-control" maxlength="10" th:value="${userDTO.userNickname}" disabled/>
                         <!-- <input type="text" id="writer" name="writer" class="form-control" maxlength="10" value="" disabled/> -->
                     </div>
                 </div>
@@ -49,8 +50,8 @@
                     </div>
                 </div>
                 
-<!--                 우선 이미지 1개만
-                <div class="form-group">
+                <!-- 우선 이미지 1개만 -->
+               <!-- <div class="form-group">
                 	<label for="img" class="col-sm-2 control-label">파일</label>
                 	<div class="col-sm-10">
                 		<input id="img" name="img" class="form-control" type="file"/>

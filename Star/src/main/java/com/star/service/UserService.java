@@ -19,6 +19,9 @@ public interface UserService {
 	public boolean registerUser(UserDTO params);
 	
 	public UserDTO getUser(Long userNumber);
+	
+	// 닉네임 조회
+	public String getNickname(Long userNumber);
 
 	public String sendSimpleMessage(MailDTO mailDto);
 	

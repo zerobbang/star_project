@@ -1,10 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>게시판 리스트</title>
 </head>
 <body>
-리스트 페이지 입니다.
+<!-- <h3 th:value="${userDTO.userNickname}"></h3> -->
+<div class="container">
+	<h2>게시글 목록</h2>
+        <table class="board_list">
+            <colgroup>
+                <col width="15%"/>
+                <col width="*"/>
+                <col width="15%"/>
+                <col width="20%"/>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th scope="col">글번호</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">작성자</th>
+                    <th scope="col">작성일</th>
+                    <!-- <th scope="col">조회수</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${#lists.size(boardList)} > 0"  th:each="list : ${boardList}">
+					<!-- 고유 글의 번호를 출력 해 주는 것이 아닐 카테고리 별로 최신 순부터 1번으로 보여준다. -->
+                    <!-- <td th:text="${list.bno}"></td> -->
+                    <td th:text="${listStat.count}"></td>
+                    <td class="title" th:text="${list.title}"></td>
+                    <!-- 보드 리스트의 인덱스 값과 userNickname의 인덱스 값이 같은 경우에만 출력한다. -->
+                    <td class="writer" th:each="nick : ${userNickname}" th:if="${listStat.index} == ${nickStat.index}">
+                    	<span th:text="${nick}"></span>
+                    </td>
+                    <!-- <td class="regDate" th:text="${list.regDate}"></td> -->
+                    <!-- 보여지는 날짜 형식 여기서 변경 가능 -->
+                    <td class="regDate" th:text="${#temporals.format(list.regDate, 'dd-MM-yyyy HH:mm')}"></td>
+                </tr> 
+               <tr th:unless="${#lists.size(boardList)} > 0">
+                    <td colspan="4">조회된 결과가 없습니다.</td>
+               </tr>
+            </tbody>
+        </table>
+        
+        <!-- 글쓰기 버튼 -->
+<!--        	<form th:action="@{/board/write}" method="post" >
+		전체 userDTO로는 안보내짐...
+			<input type="hidden" id="userNumber" name="userNumber" th:value="${userDTO}"/>
+	    	<input type="submit" value="글쓰기"/>
+	    </form> -->
+        
+</div>
+
 </body>
 </html>

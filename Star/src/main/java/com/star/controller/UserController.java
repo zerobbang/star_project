@@ -25,7 +25,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-//	메인 페이지
+	//	메인 페이지
 	@GetMapping(value = "/star/mainpage")
 	public String openUser(UserDTO userDTO) {
 		System.out.println("mainpage로 잘왔음...");

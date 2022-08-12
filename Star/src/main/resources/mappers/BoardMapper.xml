@@ -107,13 +107,14 @@
  
  
  <!-- 게시글 리스트 조회 -->
- <select id="selectList" parameterType="BoardDTO" resultType="BoardDTO">
+ <select id="selectList" parameterType="String" resultType="BoardDTO">
  	SELECT 
  		<include refid="boardColumns"/>
 	FROM 
 		board_list
 	WHERE 
-		deltet_yn = 0
+		delete_yn = 0
+		AND category = #{category}
 	ORDER BY
 		bno DESC 
  </select>

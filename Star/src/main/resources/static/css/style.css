@@ -831,9 +831,19 @@ Version 1.0
   z-index: 20;
   right: 0px;
   padding: 0px 20px 0px 20px;
-  background: #1d84df;
+  background: rgb(255, 255, 255);
   color: #ffffff;
+  text-align: center;
 }
+.fixed-navbar .logo{
+	width:100%;
+	float:left;
+}
+.fixed-navbar .category{
+	position:fixed;
+	display:inline-block;
+}
+
 .fixed-navbar .searchform {
   opacity: 0;
   visibility: hidden;

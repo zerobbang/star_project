@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -77,21 +76,12 @@
             		region:next
             };
             
-            $.ajax({
-    	        url : "/star/main3",
-    	        dataType: "html",	// 이 부분이 반환 타입을 핸들링하는 곳이다.
-    	        data: DustDTO,
-    	        type: "get",
-    	        success: function(data) {
-    	        $('#weather').html(data);
-    	        },
-    	        error: function (){alert("실패");}
-    	    });
+
         });
     });
     
 </script>
-
+<th:block layout:fragment="main">
     <h1>안녕하세요</h1>
     <select id="selectRegion">
         <option value="전국" selected="selected">전국</option>
@@ -116,13 +106,15 @@
     <input type="text" id="selectedRegion" value="전국"/>
     <div id="mapImg"></div>
 
-    <h2>카카오 이미지 띄우기 비동기 처리 ..?(default 가 비동기)</h2>
+    <h2>카카오 이미지 띄우기 비동기 처리(default 가 비동기)</h2>
     
-	<form th:action="@{/board/write}" method="post" >
-	    <input type="text" id="userNumber" th:value="${UserDTO}"/>
-	    <input type="text" id="userRegion" th:value="${UserDTO}"/>
-    	<input type="submit" value="글쓰기"/>
-    </form>
+    
+    <!-- 네브바 임시용 -->
+    <a href="/board/list?category=관측지" >관측지</a>
+    <a href="/board/list?category=작품전" >작품전</a>
+    <!-- 소통방의 default 값으로 설정해주기 -->
+    <a href="/board/list?category=잡담" >소통방</a>
+    
     
     <form th:action="@{/star/changeInfo}" method="post">
     
@@ -136,6 +128,6 @@
     
     <br><br><br>
     <div id = "weather" ></div>
-
+</th:block>
 </body>
 </html>

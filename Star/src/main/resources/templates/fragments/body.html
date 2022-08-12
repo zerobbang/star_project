@@ -1,10 +1,44 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <body th:fragment="main-body">
-    <div class="fixed-navbar">
-        <div class="pull-left">
-            <h1 class="page-title">게시판</h1>
-        </div>
+<div class="fixed-navbar">
+	<div class="Logo">
+		<!-- <h1 class="page-title">게시판</h1>   -->  
+		<a href="#" class="Logo">
+            <svg class="bi me-2" width="50" height="50" role="img" aria-label="Logo">
+                <image href="/img/Logo.png" width="50" height="50"></image>
+            </svg>
+        </a>  
+    </div>
+    <div class="category">  
+        
+        <ul class="category">
+            <li><a href="#" class="nav-link px-2 link-secondary">Home</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">관측지</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark">소통방</a></li>
+        </ul>
+    </div>
+    <div class="userButton">    
+        <form id="login-signup">
+	        <button class="btn btn-secondary" type="button">Login</button>
+	        <button class="btn btn-primary" type="button">회원 가입</button>
+       	</form>
+    </div>
+
+                <!-- Login 했을 경우
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                <button type="submit">Logout</button>
+            </form>
+
+            <div class="dropdown text-end">
+              <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                <span>서누족장</span>
+              </a>
+              <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                <li><a class="dropdown-item" href="#">마이 페이지</a></li>
+                <li><a class="dropdown-item" href="#">정보 변경</a></li>
+              </ul>
+            </div> -->
     </div>
 
     <div id="wrapper">
@@ -19,19 +53,22 @@
                         </div>
 
                         <th:block layout:fragment="content"></th:block>
-                        
-                        <th:block layout:fragment="img"></th:block>
 
                         <th:block layout:fragment="paging"></th:block>
                     </div>
-
-                    <th:block layout:fragment="add-content"></th:block>
+					<div class="mainpage-content">
+	                    <th:block layout:fragment="main"></th:block>
+	                    
+	                    <th:block layout:fragment="map"></th:block>
+	                    
+	                    <th:block layout:fragment="weather"></th:block>
+	                </div>
                 </div>
             </div>
 
             <footer class="footer">
                 <ul class="list-inline">
-                    <li>2016 © NinjaAdmin.</li>
+                    <li>2022 © 건강최고.</li>
                 </ul>
             </footer>
         </div>
