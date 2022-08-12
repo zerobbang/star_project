@@ -28,6 +28,7 @@ public class UserController {
 //	메인 페이지
 	@GetMapping(value = "/star/mainpage")
 	public String openUser(UserDTO userDTO) {
+		System.out.println("mainpage로 잘왔음...");
 		return "star/main";
 	} 
 	
@@ -216,7 +217,7 @@ public class UserController {
     	
     	System.out.println("회원탈퇴 완료됨!");
     	
-    	return "star/main";
+    	return "redirect:/star/mainpage";
     }
     
     // id 찾기
