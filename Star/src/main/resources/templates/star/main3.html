@@ -1,55 +1,39 @@
 <!doctype html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="board/layout/basic">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
 	<meta charset="UTF-8" />
 	<title>Document</title>
 </head>
 <body>
 	<table class="table table-hover">
-	
-
-	
-	<thead> 
-		<tr>
-			<th>지역</th>
-			<th>날짜</th>
-			<th>계절</th>
-			<th>습도</th>
-			<th>풍속</th>
-			<th>바람</th>
-			<th>중국미세</th>
-			<th>한국미세</th>
-		</tr>
-	</thead>
-	<tbody>
-
-		<!-- <tr th:if="${not #lists.isEmpty( boardList )}" th:each="row : ${boardList}"> -->
-		 
-		<tr th:each="row : ${dustList}" >
-		<!-- <tr th:if=${row.region=="*{selectRegion}"} th:each="row : ${dustList}" > -->
-<!-- 						<td scope="row" th:text="${#strings.equals( row.noticeYn, 'Y' ) ? '공지' : row.idx}"></td>
-						<td class="text-left">
-							<a th:href="|@{/board/view.do}${params.makeQueryString(params.currentPageNo)}&idx=${row.idx}|" th:text="${row.title}"></a>
-						</td>
-						<td th:text="${row.writer}"></td>
-						<td th:text="${#temporals.format( row.insertTime, 'yyyy-MM-dd' )}"></td>
-						<td th:text="${row.viewCnt}"></td>
- -->											
-			<td th:text="${row.region}"></td>
-			<td th:text="${row.date}"></td> 
-			<td th:text="${row.weather}"></td>
-			<td th:text="${row.humidity}"></td>
-			<td th:text="${row.windSpeed}"></td>
-			<td th:text="${row.korWind}"></td>
-			<td th:text="${row.cnPm10}"></td>
-			<td th:text="${row.korPm10}"></td>
-
-		</tr>
-<!-- 					<tr th:unless="${not #lists.isEmpty( boardList )}">
-						<td colspan="5">조회된 결과가 없습니다.</td>
-					</tr> -->
-	</tbody>
-</table>
+		
+		<thead> 
+			<tr>
+				<th>지역</th>
+				<th>날짜</th>
+				<th>계절</th>
+				<th>습도</th>
+				<th>풍속</th>
+				<th>바람</th>
+				<th>중국미세</th>
+				<th>한국미세</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="row : ${dustList}" >
+			
+				<td th:text="${row.region}"></td>
+				<td th:text="${row.date}"></td> 
+				<td th:text="${row.weather}"></td>
+				<td th:text="${row.humidity}"></td>
+				<td th:text="${row.windSpeed}"></td>
+				<td th:text="${row.korWind}"></td>
+				<td th:text="${row.cnPm10}"></td>
+				<td th:text="${row.korPm10}"></td>
+			</tr>
+		</tbody>
+	</table>
 	
 </body>
 </html>
