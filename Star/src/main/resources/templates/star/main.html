@@ -128,7 +128,8 @@
     
     <!-- 네브바 임시용 -->
     <!-- 소통방의 default 값으로 설정해주기 -->
-    <form th:action="@{/board/list?category=관측지}" method="post">
+    <!-- boardController에서 requestparam으로 받을 경우 -->
+<!--     <form th:action="@{/board/list?category=관측지}" method="post">
     	<input type="text" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
     	<input type="submit" value="관측지">
     </form>
@@ -138,6 +139,22 @@
     </form>
     <form th:action="@{/board/list?category=잡담}" method="post">
     	<input type="text" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
+    	<input type="submit" value="소통방">
+    </form> -->
+    
+    <form th:action="@{/board/list}" method="post">
+    	<input type="text" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
+    	<input type="text" id="category" name="category" value="관측지">
+    	<input type="submit" value="관측지">
+    </form>
+    <form th:action="@{/board/list}" method="post">
+    	<input type="text" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
+    	<input type="text" id="category" name="category" value="작품전">
+    	<input type="submit" value="작품전">
+    </form>
+    <form th:action="@{/board/list}" method="post">
+    	<input type="text" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
+    	<input type="text" id="category" name="category" value="잡담">
     	<input type="submit" value="소통방">
     </form>
 

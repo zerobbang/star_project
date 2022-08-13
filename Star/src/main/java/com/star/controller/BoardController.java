@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -30,15 +29,41 @@ public class BoardController {
 	
 	
 	// 게시글 조회
+	/*
+	 * @RequestMapping(value="/board/list") public String
+	 * listBoard(@RequestParam(value="category") String category, Model model,
+	 * UserDTO userDto, RedirectAttributes rttr) {
+	 * System.out.println("선택한 게시글 카테고리 : "+category);
+	 * //model.addAttribute("selectCategory", category);
+	 * model.addAttribute("category", category);
+	 * 
+	 * // 유저 넘버만 존재 rttr.addFlashAttribute(userDto);
+	 * 
+	 * List<BoardDTO> boardList = boardService.getBoardList(category);
+	 * model.addAttribute("boardList", boardList);
+	 * 
+	 * // 각 게시글의 유저 넘버로 조회해서 해당 닉네임을 가져오고 list에 저장한다. List<String> nicknameList =
+	 * new ArrayList<>();
+	 * 
+	 * Iterator<BoardDTO> list = boardList.iterator();
+	 * 
+	 * while(list.hasNext()) { BoardDTO boardOne = list.next(); Long userNum =
+	 * (long) boardOne.getUserNumber();
+	 * nicknameList.add(userService.getNickname(userNum)); }
+	 * 
+	 * model.addAttribute("nicknameList", nicknameList); return "board/list"; }
+	 */
+
 	@RequestMapping(value="/board/list")
-	public String listBoard(@RequestParam(value="category") String category, Model model, UserDTO userDto, RedirectAttributes rttr) {
-		System.out.println("선택한 게시글 카테고리 : "+category);
-		//model.addAttribute("selectCategory", category);
-		model.addAttribute("category", category);
+	public String listBoard(BoardDTO boardDto, Model model, RedirectAttributes rttr) {
+		System.out.println("선택한 게시글 : "+boardDto);
+		//rttr.addFlashAttribute("boardDTO", boardDto);
+		// System.out.println("다시"+rttr.getFlashAttributes());
 		
-		// 유저 넘버만 존재
-		rttr.addFlashAttribute(userDto);
+		// 선택된 카테고리 뽑기
+		String category = boardDto.getCategory();
 		
+		// 선택된 글 리스트 뽑기
 		List<BoardDTO> boardList = boardService.getBoardList(category);
 		model.addAttribute("boardList", boardList);
 		
@@ -93,10 +118,16 @@ public class BoardController {
 	
 	// 게시글 쓰기가 완료 되면
 	@PostMapping(value="/board/registerBoard")
-	public String registerBoard(BoardDTO params) {
-		System.out.println(params.toString());
-		boardService.registerBoard(params);
-		return "/board/test" ;
+	public String registerBoard(BoardDTO boardDto, RedirectAttributes rttr) {
+		System.out.println("글 저장"+boardDto.toString());
+		
+		// 이렇게 넘기는 거 아님..?
+		// 유저 넘버랑 카테고리만 넘어가면된다.
+		rttr.addFlashAttribute("boardDto", boardDto);
+		
+		boardService.registerBoard(boardDto);
+		
+		return "redirect:/board/list" ;
 	}
 	
 

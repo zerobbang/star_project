@@ -99,7 +99,6 @@ public class UserController {
 			
 			System.out.println("do action!");
 	    	System.out.println(userDTO);
-	    	System.out.println(userDTO.toString());
 			 
 	    	userDTO = userService.loginUser(userDTO);
 	    	
