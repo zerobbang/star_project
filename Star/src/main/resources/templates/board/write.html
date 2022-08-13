@@ -8,20 +8,18 @@
 
     <th:block layout:fragment="content">
         <div class="card-content">
-        <!--  th:action="@{./board/registerBoard}" th:object="${board}" -->
-            <form th:action="@{/board/registerBoard}" class="form-horizontal" method="post" onsubmit="registerBoard(this)">
+            <form th:action="@{/board/registerBoard}" class="form-horizontal" method="post">
                 <!-- 기존 게시글 수정인 경우, 서버로 전달할 게시글 번호(bno) -->
             <!--     <input type="hidden" th:if="${bno != null and bno > 0}" th:value="*{bno}" /> -->
                 
                 <div class="form-group">
                 	<label for="category" class="col-sm-2 control-label">카테고리</label>
                 	<select id="category" name="category">
-                	<!-- observatory -->
-                		<option value="관측지">관측지</option>
-                		<option value="작품전">작품전</option>
+                		<option value="관측지" th:selected="${boardDTO.category}== '관측지'">관측지</option>
+                		<option value="작품전" th:selected="${boardDTO.category}== '작품전'">작품전</option>
                 		<optgroup label="소통방">
-                			<option value="잡담">잡담</option>
-                			<option value="사고팔아요">사고팔아요</option>
+                			<option value="잡담" th:selected="${boardDTO.category}== '잡담'">잡담</option>
+                			<option value="사고팔아요" th:selected="${boardDTO.category}=='사고팔아요'">사고팔아요</option>
                 		</optgroup>
                 	</select>
                 </div>
@@ -61,8 +59,7 @@
 
 <!-- 아직 손 안건들임 임시 main으로 이동 -->
 	            <div class="btn_wrap text-center" >
-	                <a th:href="@{/board/list}" class="btn btn-default waves-effect waves-light">뒤로가기</a>
-	                <button type="submit" class="btn btn-primary waves-effect waves-light">저장하기</button>
+	                <button type="submit">저장하기</button>
 	            </div>
         	</form>
         </div>

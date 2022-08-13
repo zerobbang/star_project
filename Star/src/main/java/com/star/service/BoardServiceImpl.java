@@ -23,12 +23,12 @@ public class BoardServiceImpl implements BoardService{
 		queryResult = boardMapper.insertBoard(params);
 		System.out.println(queryResult);
 		
-		// 글 번호가 널값이면 새로 글을 생성
-		if(params.getBno() == null) {
-			queryResult = boardMapper.insertBoard(params);
-		}else {
+//		// 글 번호가 널값이면 새로 글을 생성
+//		if(params.getBno() == null) {
 //			queryResult = boardMapper.insertBoard(params);
-		}
+//		}else {
+////			queryResult = boardMapper.insertBoard(params);
+//		}
 		
 		return (queryResult == 1) ? true:false ;
 	}

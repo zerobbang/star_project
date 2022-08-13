@@ -1,11 +1,6 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
-=======
 <!-- <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"> -->
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" >
-
->>>>>>> 3fdf136c5978380dafa53988abb5a8d50743199d
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -86,10 +81,7 @@
             var dustDto={
             		region:next
             };
-            
-<<<<<<< HEAD
 
-=======
             $.ajax({
     	        url : "/star/main3",
     	        dataType: "html",	// 이 부분이 반환 타입을 핸들링하는 곳이다.
@@ -102,12 +94,11 @@
     	        },
     	        error: function (){alert("실패");}
     	    });
->>>>>>> 3fdf136c5978380dafa53988abb5a8d50743199d
+
         });
     });
     
 </script>
-<th:block layout:fragment="main">
     <h1>안녕하세요</h1>
     <select id="selectRegion">
         <option value="전국" selected="selected">전국</option>
@@ -136,11 +127,20 @@
     
     
     <!-- 네브바 임시용 -->
-    <a href="/board/list?category=관측지" >관측지</a>
-    <a href="/board/list?category=작품전" >작품전</a>
     <!-- 소통방의 default 값으로 설정해주기 -->
-    <a href="/board/list?category=잡담" >소통방</a>
-    
+    <form th:action="@{/board/list?category=관측지}" method="post">
+    	<input type="text" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
+    	<input type="submit" value="관측지">
+    </form>
+    <form th:action="@{/board/list?category=작품전}" method="post">
+    	<input type="text" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
+    	<input type="submit" value="작품전">
+    </form>
+    <form th:action="@{/board/list?category=잡담}" method="post">
+    	<input type="text" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
+    	<input type="submit" value="소통방">
+    </form>
+
     
     <form th:action="@{/star/changeInfo}" method="post">
     
@@ -153,12 +153,7 @@
     </form> 
     
     <br><br><br>
-<<<<<<< HEAD
-    <div id = "weather" ></div>
-</th:block>
-=======
-    <div id="weather">asd</div>
+    <div id="weather"></div>
 
->>>>>>> 3fdf136c5978380dafa53988abb5a8d50743199d
 </body>
 </html>

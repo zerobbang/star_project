@@ -30,13 +30,8 @@ public interface BoardMapper {
 	public BoardDTO selectDetail(Long bno);
 	
 	// 게시글 전체 조회
-<<<<<<< HEAD
 	public List<BoardDTO> selectList(String category);
 	
-=======
-	public List<BoardDTO> selectList(BoardDTO params);
-
->>>>>>> 3fdf136c5978380dafa53988abb5a8d50743199d
 	// 상세글 조회 신고하기	
 	public void report(BoardDTO boardDTO);
 	
