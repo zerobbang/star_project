@@ -53,6 +53,9 @@
                 	<label for="img" class="col-sm-2 control-label">파일</label>
                 	<div class="col-sm-10">
                 		<input id="img" name="img" class="form-control" type="file"/>
+                		<!-- 자바스크립트쪽에 퍼온 함수에서 쓰일 예정 -->
+                		<div id="imgsZone">
+                		</div>
                		</div>
           		</div>
                
@@ -90,6 +93,23 @@
         }
         	
         /*]]>*/
+        
+        // 추가하면 아래에 리스트는 한글로 띄우고 값들은 imgList에 담아서 넘겨주면 방법을 생각해봤는데 필요없다면 지워버리시길
+        var imgList = [];
+        const fileInput = document.getElementById("img");
+     	// 또는 const fileInput = $("#fileUpload").get(0);
+        
+        fileInput.onchange = () => {
+        	  const selectedFile = fileInput.files[0];
+        	  console.log(selectedFile.name);
+        	  
+        	  $("#imgsZone").after("<div>" + selectedFile.name + "</div>");
+        	  imgList.push(selectedFile)
+        	  console.log(imgList)
+        	  
+       	};
+		///
+       	
         </script>
     </th:block>
 </html>
