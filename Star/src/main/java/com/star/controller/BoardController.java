@@ -104,8 +104,13 @@ public class BoardController {
 		
 		// 유저 넘버랑 category 가져옴.
 		System.out.println("글쓰기 페이지 BoardDto : "+boardDTO);
-		
-		Long userNumber = (long) boardDTO.getUserNumber();
+
+		// 가입 안한 사람도 볼 수 있기에 null이라면 로그인 페이지로 이동
+		Long userNumber = boardDTO.getUserNumber();
+		if (userNumber == null) {
+			return "redirect:/star/login";
+		}
+		//////
 		
 		// 해당 user 정보 다 넘겨주기
 		UserDTO userDTO = userService.getUser(userNumber);
