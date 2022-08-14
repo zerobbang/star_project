@@ -41,12 +41,27 @@
             </tbody>
         </table>
         
-    <form th:action="@{/star/signdown}" method="post">
+    <form th:action="@{/star/signdown}" method="post" onsubmit="return checkConfirm()">
     	<input type="text" id="userNumber" name="userNumber" th:value="${boardDTO.userNumber}">
 	    <input type="submit" value="회원탈퇴">
     </form>
         
 </div>
+<script>
+	
+	function checkConfirm(){
+		var confirmDelete = confirm("탈퇴를 하시겠습니까? 탈퇴하시면 다시는 같은 아이디로 가입할 수 없습니다.");
+		// 확인 true 취소 false
+
+		if(confirmDelete==true){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+
+</script>
 
 </body>
 </html>
