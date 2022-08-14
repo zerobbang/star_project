@@ -162,11 +162,12 @@ public class UserServiceImpl implements UserService{
 
 	// 회원탈퇴
 	@Override
-	public void pagedown() {
+	public void pagedown(Long userNumber) {
 		// TODO Auto-generated method stub
 		System.out.println("유저 impl 확인");
-		
-		userMapper.pagedown();
+		System.out.println(userNumber);
+//		Long userNumber = userDto.getUserNumber();
+		userMapper.pagedown(userNumber);
 	}
 	
 	// 예측 리스트 불러오기 (임시)

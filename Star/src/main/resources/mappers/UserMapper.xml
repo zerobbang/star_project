@@ -95,12 +95,12 @@
 		where user_id = #{userId};
 	</update>
 
-<!-- 마이페이지_회원탈퇴 -->
-	<update id="pagedown">
+	<!-- 마이페이지_회원탈퇴 -->
+	<update id="pagedown" parameterType="long">
 		update users_table 
 		set withdrawal_yn = 1
 			, withdrawal_date = now()
-		where user_id='id1';
+		where user_number=#{userNumber};
 	</update>
 	
 	

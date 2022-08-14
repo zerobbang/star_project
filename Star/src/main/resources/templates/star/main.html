@@ -15,7 +15,6 @@
 <script>
 	// 지역, geojson 경로 ->db?
 	var region = new Array('서울','제주','부산','전국','광주','전남','세종','전북','경남','경북','경기','울산','대구','대전','충남','충북','강원','인천');
-	/* var geojsonUrl = ['/geojson/seoul.geojson','/geojson/korea.geojson']; */
 	var geojsonUrl = new Array ('/geojson/seoul.geojson','/geojson/jeju.geojson','/geojson/busan.geojson','/geojson/korea.geojson','/geojson/gwangju.geojson','/geojson/jn.geojson','/geojson/sejong.geojson','/geojson/jb.geojson','/geojson/gn.geojson','/geojson/gb.geojson','/geojson/gg.geojson','/geojson/ulsan.geojson','/geojson/daegu.geojson','/geojson/daejeon.geojson','/geojson/cn.geojson','/geojson/cb.geojson','/geojson/gangwon.geojson','/geojson/incheon.geojson');
 	var regionCenter = new Array([37.566826, 126.9786567],[33.400, 126.5000],[35.1379222,129.05562775],[36.6,127.5],[35.1,126.8],[35.1,126.8],[36.504,127.249],[35.824,127.147],[35.15,128.15],[36.15,128.45],[37.3,127.15],[35.5,129.184],[35.8,128.46],[36.37,127.33],[36.6,127],[36.6,127.5],[37.8,128.2],[37.2722,126.425]);
 	var regionData = {region, geojsonUrl};
@@ -156,6 +155,12 @@
     	<input type="text" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
     	<input type="text" id="category" name="category" value="잡담">
     	<input type="submit" value="소통방">
+    </form>
+    
+    <!-- 마이페이지 임시 -->
+    <form th:action="@{/board/mypage}" method="post">
+    	<input type="text" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
+    	<input type="submit" value="마이페이지">
     </form>
 
     

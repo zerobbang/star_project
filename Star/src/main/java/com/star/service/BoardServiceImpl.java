@@ -68,5 +68,15 @@ public class BoardServiceImpl implements BoardService{
 		
 	}
 
+	// 내 글 조회
+	@Override
+	public List<BoardDTO> getMyListBoard(Long userNumber) {
+		List<BoardDTO> myList = Collections.emptyList();
+		
+		myList = boardMapper.getMyListBoard(userNumber);
+		
+		return myList;
+	}
+
 
 }

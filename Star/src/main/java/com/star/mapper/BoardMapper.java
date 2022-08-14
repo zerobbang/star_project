@@ -35,4 +35,7 @@ public interface BoardMapper {
 	// 상세글 조회 신고하기	
 	public void report(BoardDTO boardDTO);
 	
+	// 내 글 조회
+	public List<BoardDTO> getMyListBoard(Long userNumber);
+	
 }

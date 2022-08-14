@@ -37,7 +37,7 @@ public interface UserService {
 
 	public String changeInfo(UserDTO userDto);
 
-	public void pagedown();
+	public void pagedown(Long userNumber);
 	
 	public List<DustDTO> getPrediction(DustDTO params);
 

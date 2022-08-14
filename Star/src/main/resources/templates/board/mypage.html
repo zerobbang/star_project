@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>게시판 리스트</title>
+</head>
+<body>
+<div id="list" class="container">
+	<h2>마이 페이지</h2>
+        <table class="board_list">
+            <colgroup>
+                <col width="15%"/>
+                <col width="*"/>
+                <col width="15%"/>
+                <col width="20%"/>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th scope="col">글번호</th>
+                    <th scope="col">카테고리</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">작성자</th>
+                    <th scope="col">작성일</th>
+                    <!-- <th scope="col">조회수</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${#lists.size(myList)} > 0"  th:each="list : ${myList}">
+					<!-- 고유 글의 번호를 출력 해 주는 것이 아닐 카테고리 별로 최신 순부터 1번으로 보여준다. -->
+                    <!-- <td th:text="${list.bno}"></td> -->
+                    <td th:text="${listStat.count}"></td>
+                    <td th:text="${list.category}"></td>
+                    <td class="title" th:text="${list.title}"></td>
+                    <td class="writer" th:text="${userNickname}"></td>
+                    <!-- 보여지는 날짜 형식 여기서 변경 가능 -->
+                    <td class="regDate" th:text="${#temporals.format(list.regDate, 'dd-MM-yyyy HH:mm')}"></td>
+                </tr> 
+               <tr th:unless="${#lists.size(myList)} > 0">
+                    <td colspan="4">조회된 결과가 없습니다.</td>
+               </tr>
+            </tbody>
+        </table>
+        
+    <form th:action="@{/star/signdown}" method="post">
+    	<input type="text" id="userNumber" name="userNumber" th:value="${boardDTO.userNumber}">
+	    <input type="submit" value="회원탈퇴">
+    </form>
+        
+</div>
+
+</body>
+</html>

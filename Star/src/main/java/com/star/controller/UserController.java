@@ -215,19 +215,15 @@ public class UserController {
         return "/star/main";
     };
     
-	// 마이 페이지 이동
-    @GetMapping(value = "/star/gayeong/mypage")
-    public String mypage() {
-    	return "star/gayeong/mypage";
-    }
     
     // 회원탈퇴
-    @GetMapping(value = "/star/signdown")
-    public String mypage2() {
+    @PostMapping(value = "/star/signdown")
+    public String deleteUser(UserDTO userDto) {
     	
     	System.out.println("컨트롤러 확인");
-    	
-    	userService.pagedown();
+    	System.out.println(userDto);
+    	Long userNumber = userDto.getUserNumber();
+    	userService.pagedown(userNumber);
     	
     	System.out.println("회원탈퇴 완료됨!");
     	

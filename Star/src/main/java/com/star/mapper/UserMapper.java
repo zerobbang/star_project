@@ -31,7 +31,8 @@ public interface UserMapper {
 	
 	public int updatePassNickRegion(UserDTO userDto);
 
-	public void pagedown();
+	// 회원 탈퇴
+	public void pagedown(Long userNumber);
 
 	public String findIdFromEmail(UserDTO userDTO);
 

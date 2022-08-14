@@ -20,6 +20,9 @@ public interface BoardService {
 
 	public void report(BoardDTO boardDTO);
 	
+	// 내 글 조회
+	public List<BoardDTO> getMyListBoard(Long userNumber);
+	
 
 
 }

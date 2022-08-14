@@ -171,6 +171,28 @@ public class BoardController {
 //    	return "star/detailed_check";
     	return "good";
     }
+    
+    
+    // 마이페이지
+    @PostMapping(value="/board/mypage")
+    public String openMypage(BoardDTO boardDTO, Model model) {
+    	System.out.println("마이 페이지로 이동");
+    	// 유저 넘저 존재
+    	System.out.println(boardDTO);
+    	
+    	Long userNumber = (long) boardDTO.getUserNumber();
+    	
+    	String userNickname = userService.getNickname(userNumber);
+    	System.out.println(userNickname);
+    	model.addAttribute("userNickname",userNickname);
+    	
+    	System.out.println("---------------------");
+    	
+    	List<BoardDTO> myList = boardService.getMyListBoard(userNumber);
+    	model.addAttribute("myList", myList);
+    	
+    	return "/board/mypage";
+    }
     	
 }
 
