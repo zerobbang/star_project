@@ -43,8 +43,9 @@ public class UserServiceImpl implements UserService{
 	
 	/* void */
     public String sendSimpleMessage(MailDTO mailDto) {
-    	// 회원 정보 이메일과 일치하는지 확인 하기
     	
+    	System.out.println("서비스 - 메일");
+    	// 회원 정보 이메일과 일치하는지 확인 하기
     	Random random = new Random();
 		String certifyNum = ""; 
 				
@@ -56,15 +57,16 @@ public class UserServiceImpl implements UserService{
 				 
     	mailDto.setTitle("인증번호입니다.");
     	mailDto.setContent(certifyNum);
- 
+    	System.out.println("111111111111");
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("gdqqdq05@gmail.com");
         message.setTo(mailDto.getAddress());
         message.setSubject(mailDto.getTitle());
         message.setText(mailDto.getContent());
-        
+        System.out.println("22222222222");
         emailSender.send(message);
+        System.out.println("333333333333");
         return certifyNum;
     }
     
