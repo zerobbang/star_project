@@ -105,21 +105,7 @@
  	AND delete_yn = 0
  </select>
  
- 
- <!-- 게시글 리스트 조회 -->
- <select id="selectList" parameterType="String" resultType="BoardDTO">
- 	SELECT 
- 		<include refid="boardColumns"/>
-	FROM 
-		board_list
-	WHERE 
-		delete_yn = 0
-		AND category = #{category}
-	ORDER BY
-		bno DESC 
- </select>
- 
- <!-- 신고하기 -->
+  <!-- 신고하기 -->
 <insert id="report" parameterType="BoardDTO">
 	<!-- insert into report_table values (#{bno},#{userNumber},#{reportContent},0); -->
 	insert into report_table values
@@ -128,19 +114,62 @@
 		, #{reportContent}
 		, 0);
 </insert>
-	
-	
-<!-- 마이 페이지 글 조회 -->
- <select id="getMyListBoard" parameterType="long" resultType="BoardDTO">
+ 
+ 
+ <!-- 게시글 리스트 조회 -->
+ <select id="selectList" resultType="BoardDTO">
  	SELECT 
  		<include refid="boardColumns"/>
 	FROM 
 		board_list
 	WHERE 
 		delete_yn = 0
-		AND user_number = #{userNumber}
+	AND 
+		category = #{category}
 	ORDER BY
 		bno DESC 
+	LIMIT 
+		#{skip},#{amount}
+ </select>
+	
+	
+<!-- 마이 페이지 글 조회 -->
+ <select id="getMyListBoard" resultType="BoardDTO">
+ 	SELECT 
+ 		<include refid="boardColumns"/>
+	FROM 
+		board_list
+	WHERE 
+		delete_yn = 0
+	AND 
+		user_number = #{userNumber}
+	ORDER BY
+		bno DESC 
+	LIMIT 
+		#{skip},#{amount}
+</select>
+
+
+<!-- 총 게시글 수 출력 -->
+<select id="getCount" parameterType="String" resultType="int">
+	SELECT 
+ 		count(*)
+	FROM 
+		board_list
+	WHERE 
+		delete_yn = 0
+		AND category = #{category}
+</select>
+
+<!-- 총 마이 페이지 수 출력 -->
+<select id="getMyCount" parameterType="Long" resultType="int">
+	SELECT 
+ 		count(*)
+	FROM 
+		board_list
+	WHERE 
+		delete_yn = 0
+		AND user_number = #{userNumber}
 </select>
 
 

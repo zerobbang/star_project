@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.star.domain.BoardDTO;
+import com.star.domain.PageMakeDTO;
 import com.star.domain.UserDTO;
+import com.star.paging.Criteria;
 import com.star.service.BoardService;
 import com.star.service.UserService;
 
@@ -28,45 +30,16 @@ public class BoardController {
 	private UserService userService;
 
 	// 게시글 조회
-	/*
-	 * @RequestMapping(value="/board/list") public String
-	 * listBoard(@RequestParam(value="category") String category, Model model,
-	 * UserDTO userDto, RedirectAttributes rttr) {
-	 * System.out.println("선택한 게시글 카테고리 : "+category);
-	 * //model.addAttribute("selectCategory", category);
-	 * model.addAttribute("category", category);
-	 * 
-	 * // 유저 넘버만 존재 rttr.addFlashAttribute(userDto);
-	 * 
-	 * List<BoardDTO> boardList = boardService.getBoardList(category);
-	 * model.addAttribute("boardList", boardList);
-	 * 
-	 * // 각 게시글의 유저 넘버로 조회해서 해당 닉네임을 가져오고 list에 저장한다. List<String> nicknameList =
-	 * new ArrayList<>();
-	 * 
-	 * Iterator<BoardDTO> list = boardList.iterator();
-	 * 
-	 * while(list.hasNext()) { BoardDTO boardOne = list.next(); Long userNum =
-	 * (long) boardOne.getUserNumber();
-	 * nicknameList.add(userService.getNickname(userNum)); }
-	 * 
-	 * model.addAttribute("nicknameList", nicknameList); return "board/list"; }
-	 */
-
-	@RequestMapping(value = "/board/list")
-	public String listBoard(BoardDTO boardDto, Model model, RedirectAttributes rttr) {
-		System.out.println("선택한 게시글 : " + boardDto);
-		// rttr.addFlashAttribute("boardDTO", boardDto);
-		// System.out.println("다시"+rttr.getFlashAttributes());
-
-		// 선택된 카테고리 뽑기
-		String category = boardDto.getCategory();
+	@RequestMapping(value="/board/list")
+	public String listBoard(Criteria cri, Model model, BoardDTO boardDTO, RedirectAttributes rttr) {
+		System.out.println("리스트 카테고리 : "+cri.getCategory());
 
 		// 선택된 글 리스트 뽑기
-		List<BoardDTO> boardList = boardService.getBoardList(category);
+		List<BoardDTO> boardList = boardService.getBoardList(cri);
 		model.addAttribute("boardList", boardList);
 
 		// 각 게시글의 유저 넘버로 조회해서 해당 닉네임을 가져오고 list에 저장한다.
+		// > 우리 boardDTO에는 유저 번호가 있고 유저 닉네임이 없기 때문에
 		List<String> nicknameList = new ArrayList<>();
 
 		Iterator<BoardDTO> list = boardList.iterator();
@@ -78,14 +51,24 @@ public class BoardController {
 		}
 
 		model.addAttribute("nicknameList", nicknameList);
+		
+		// 페이징 처리
+		int total = boardService.getCount(cri.getCategory());
+		
+		PageMakeDTO pageMake = new PageMakeDTO(cri,total);
+		
+		model.addAttribute("pageMaker", pageMake);
+		model.addAttribute("criteria",cri);
+		
+		System.out.println(pageMake);
+		
 		return "board/list";
 	}
 
 	// 게시글 쓰기 화면으로 이동
-	@PostMapping(value = "/board/write")
-//	public String writeBoard(@RequestParam(value = "bno", required = false) final Long bno ,Model model) {
-	public String writeBoard(BoardDTO boardDTO, Model model) {
-//	public String writeBoard(@ModelAttribute("params") final UserDTO params, Model model) {
+	@PostMapping(value="/board/write")
+	public String writeBoard(Model model,Criteria cri) {
+
 //		// 글 번호를 뷰에서 받아오는데
 //		if(bno==null) {
 //			// 새로 생성하는 글인 경우 새로운 보드 DTO 객체 생성
@@ -99,43 +82,52 @@ public class BoardController {
 //			model.addAttribute("board", boardDTO);
 //		}
 
-		// 유저 넘버랑 category 가져옴.
-		System.out.println("글쓰기 페이지 BoardDto : " + boardDTO);
-
-		Long userNumber = (long) boardDTO.getUserNumber();
+		
+		System.out.println("글쓰기 페이지 이동 ");
+		// 이전 값 존재
+		model.addAttribute("criteria", cri);
+		
+		Long userNumber = (long) cri.getUserNumber();
+		
+		// 로그인 유저만 가능
+		if (userNumber == null) {
+			return "redirect:/star/login";
+		}
 
 		// 해당 user 정보 다 넘겨주기
+		// 로그인 된 유저의 닉네임 보여주기 위해
 		UserDTO userDTO = userService.getUser(userNumber);
-		model.addAttribute("userDTO", userDTO);
-		System.out.println("--------" + userDTO);
-
+		model.addAttribute("userDTO", userDTO);;
+		
 		return "/board/write";
 	}
 
 	// 게시글 쓰기가 완료 되면
-	@PostMapping(value = "/board/registerBoard")
-	public String registerBoard(BoardDTO boardDto, RedirectAttributes rttr) {
-		System.out.println("글 저장" + boardDto.toString());
 
-		// 이렇게 넘기는 거 아님..?
-		// 유저 넘버랑 카테고리만 넘어가면된다.
-		rttr.addFlashAttribute("boardDto", boardDto);
-
-		boardService.registerBoard(boardDto);
-
-		return "redirect:/board/list";
+	@PostMapping(value="/board/registerBoard")
+	public String registerBoard(BoardDTO boardDTO, Criteria cri, RedirectAttributes rttr) {
+		// 글 등록
+		boardService.registerBoard(boardDTO);
+		System.out.println("글 저장 완료 : "+boardDTO.toString());
+		
+		// 글 쓰기 전 cri 값 잘 받아 왔나 확인
+		// System.out.println(cri);
+		rttr.addFlashAttribute("criteria",cri);	
+		
+		return "redirect:/board/list" ;
 	}
 
-	// 게시글 쓰기 화면으로 이동
-	@GetMapping(value = "/star/test")
-	public String testBoard(Model model, UserDTO userDto) {
 
-		userDto.setUserRegion("전국");
-
-		model.addAttribute("region", userDto.getUserRegion());
-
-		return "/star/test";
-	}
+//	// 게시글 쓰기 화면으로 이동
+//	@GetMapping(value="/star/test")
+//	public String testBoard(Model model, UserDTO userDto) {
+//		
+//		userDto.setUserRegion("전국");
+//		
+//		model.addAttribute("region", userDto.getUserRegion());
+//		
+//		return "/star/test";
+//	}
 
 	// 상세글조회 페이지
 	@GetMapping(value = "/star/detailed_check")
@@ -162,6 +154,53 @@ public class BoardController {
 		System.out.println("컨트롤러 끝!");
 //    	
 //    	System.out.println("신고완료확인");
+    	
+//    	return "star/detailed_check";
+    	return "good";
+    }
+    
+    
+	// 마이 페이지
+	@RequestMapping(value="/board/mypage")
+	public String openMypage2(Criteria cri, Model model, BoardDTO boardDTO, RedirectAttributes rttr) {
+		System.out.println("마이 페이지로 이동");
+		
+		// System.out.println(cri);
+		
+		// 유저 번호 추출
+		Long userNumber = (long) cri.getUserNumber();
+		
+		// 선택된 글 리스트 뽑기
+		List<BoardDTO> myList = boardService.getMyListBoard(cri);
+    	model.addAttribute("myList", myList);
+		
+    	// 유저 닉네임
+    	String userNickname = userService.getNickname(userNumber);
+    	// System.out.println(userNickname);
+    	model.addAttribute("userNickname",userNickname);
+		
+		// 페이징 처리
+		int total = boardService.getMyCount(userNumber);
+		
+		PageMakeDTO pageMake = new PageMakeDTO(cri,total);
+		
+		model.addAttribute("pageMaker", pageMake);
+		model.addAttribute("criteria",cri);
+		
+		System.out.println(pageMake);
+		
+		return "board/mypage";
+	}
+    
+    // 상세글 테스트용 : get방식 채택 고려중  
+    @GetMapping(value = "/star/view.do")
+    public String viewContent() {
+    	return "/star/detailed_check";
+    }
+    
+    	
+}
+
 
 //    	return "star/detailed_check";
 		return "good";

@@ -15,11 +15,11 @@
                 <div class="form-group">
                 	<label for="category" class="col-sm-2 control-label">카테고리</label>
                 	<select id="category" name="category">
-                		<option value="관측지" th:selected="${boardDTO.category}== '관측지'">관측지</option>
-                		<option value="작품전" th:selected="${boardDTO.category}== '작품전'">작품전</option>
+                		<option value="관측지" th:selected="${criteria.category}== '관측지'">관측지</option>
+                		<option value="작품전" th:selected="${criteria.category}== '작품전'">작품전</option>
                 		<optgroup label="소통방">
-                			<option value="잡담" th:selected="${boardDTO.category}== '잡담'">잡담</option>
-                			<option value="사고팔아요" th:selected="${boardDTO.category}=='사고팔아요'">사고팔아요</option>
+                			<option value="잡담" th:selected="${criteria.category}== '잡담'">잡담</option>
+                			<option value="사고팔아요" th:selected="${criteria.category}=='사고팔아요'">사고팔아요</option>
                 		</optgroup>
                 	</select>
                 </div>
@@ -53,6 +53,9 @@
                 	<label for="img" class="col-sm-2 control-label">파일</label>
                 	<div class="col-sm-10">
                 		<input id="img" name="img" class="form-control" type="file"/>
+                		<!-- 자바스크립트쪽에 퍼온 함수에서 쓰일 예정 -->
+                		<div id="imgsZone">
+                		</div>
                		</div>
           		</div>
                
@@ -62,6 +65,12 @@
 	            <div class="btn_wrap text-center" >
 	                <button type="submit">저장하기</button>
 	            </div>
+	            
+	            
+	            
+	         <input type="text" id="pageNum" name="pageNum" th:value="${criteria.pageNum }">
+		     <input type="text" id="amount" name="amount" th:value="${criteria.amount }">
+	        
         	</form>
         </div>
     </th:block>
@@ -90,6 +99,23 @@
         }
         	
         /*]]>*/
+        
+        // 추가하면 아래에 리스트는 한글로 띄우고 값들은 imgList에 담아서 넘겨주면 방법을 생각해봤는데 필요없다면 지워버리시길
+        var imgList = [];
+        const fileInput = document.getElementById("img");
+     	// 또는 const fileInput = $("#fileUpload").get(0);
+        
+        fileInput.onchange = () => {
+        	  const selectedFile = fileInput.files[0];
+        	  console.log(selectedFile.name);
+        	  
+        	  $("#imgsZone").after("<div>" + selectedFile.name + "</div>");
+        	  imgList.push(selectedFile)
+        	  console.log(imgList)
+        	  
+       	};
+		///
+       	
         </script>
     </th:block>
 </html>
