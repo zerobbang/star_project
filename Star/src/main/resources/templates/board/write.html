@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
+<body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
     <th:block layout:fragment="title">
         <title>글작성 페이지</title>
     </th:block>
@@ -114,9 +115,14 @@
         	  console.log(imgList)
         	  
        	};
-		///
+		
+       	// 뒤로 가기로 다시 돌아오는 거 방지
+ 		function noBack(){
+ 			window.history.forward();
+ 			}
        	
         </script>
     </th:block>
+</body>
 </html>
 
