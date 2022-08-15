@@ -90,6 +90,11 @@ public class BoardController {
 		
 		Long userNumber = (long) cri.getUserNumber();
 		
+		// 로그인 유저만 가능
+		if (userNumber == null) {
+			return "redirect:/star/login";
+		}
+		
 		// 해당 user 정보 다 넘겨주기
 		// 로그인 된 유저의 닉네임 보여주기 위해
 		UserDTO userDTO = userService.getUser(userNumber);
@@ -187,6 +192,13 @@ public class BoardController {
 		
 		return "board/mypage";
 	}
+    
+    // 상세글 테스트용 : get방식 채택 고려중  
+    @GetMapping(value = "/star/view.do")
+    public String viewContent() {
+    	return "/star/detailed_check";
+    }
+    
     	
 }
 

@@ -17,7 +17,7 @@ public class BoardDTO  {
 	
 //	privat String category;		// 게시글 테이블의 카테고리도 카테고리 연결
 	
-	private int userNumber;		// 유저 테이블의 유저 넘버와 연결
+	private Long userNumber;		// 유저 테이블의 유저 넘버와 연결
 	
 	private String title;
 	
