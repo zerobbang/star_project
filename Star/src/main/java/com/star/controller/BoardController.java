@@ -20,14 +20,13 @@ import com.star.service.UserService;
 
 @Controller
 public class BoardController {
-	
+
 	@Autowired
 	private BoardService boardService;
-	
+
 	@Autowired
 	private UserService userService;
-	
-	
+
 	// 게시글 조회
 	/*
 	 * @RequestMapping(value="/board/list") public String
@@ -54,38 +53,36 @@ public class BoardController {
 	 * model.addAttribute("nicknameList", nicknameList); return "board/list"; }
 	 */
 
-	@RequestMapping(value="/board/list")
+	@RequestMapping(value = "/board/list")
 	public String listBoard(BoardDTO boardDto, Model model, RedirectAttributes rttr) {
-		System.out.println("선택한 게시글 : "+boardDto);
-		//rttr.addFlashAttribute("boardDTO", boardDto);
+		System.out.println("선택한 게시글 : " + boardDto);
+		// rttr.addFlashAttribute("boardDTO", boardDto);
 		// System.out.println("다시"+rttr.getFlashAttributes());
-		
+
 		// 선택된 카테고리 뽑기
 		String category = boardDto.getCategory();
-		
+
 		// 선택된 글 리스트 뽑기
 		List<BoardDTO> boardList = boardService.getBoardList(category);
 		model.addAttribute("boardList", boardList);
-		
+
 		// 각 게시글의 유저 넘버로 조회해서 해당 닉네임을 가져오고 list에 저장한다.
 		List<String> nicknameList = new ArrayList<>();
-		
+
 		Iterator<BoardDTO> list = boardList.iterator();
 
-		while(list.hasNext()) {
+		while (list.hasNext()) {
 			BoardDTO boardOne = list.next();
 			Long userNum = (long) boardOne.getUserNumber();
 			nicknameList.add(userService.getNickname(userNum));
 		}
-		
+
 		model.addAttribute("nicknameList", nicknameList);
 		return "board/list";
 	}
-	
-	
-	
+
 	// 게시글 쓰기 화면으로 이동
-	@PostMapping(value="/board/write")
+	@PostMapping(value = "/board/write")
 //	public String writeBoard(@RequestParam(value = "bno", required = false) final Long bno ,Model model) {
 	public String writeBoard(BoardDTO boardDTO, Model model) {
 //	public String writeBoard(@ModelAttribute("params") final UserDTO params, Model model) {
@@ -101,98 +98,94 @@ public class BoardController {
 //			// service를 통해 실행된 mapper 결과값을 "board" 속성?에 저장
 //			model.addAttribute("board", boardDTO);
 //		}
-		
+
 		// 유저 넘버랑 category 가져옴.
-		System.out.println("글쓰기 페이지 BoardDto : "+boardDTO);
-		
+		System.out.println("글쓰기 페이지 BoardDto : " + boardDTO);
+
 		Long userNumber = (long) boardDTO.getUserNumber();
-		
+
 		// 해당 user 정보 다 넘겨주기
 		UserDTO userDTO = userService.getUser(userNumber);
 		model.addAttribute("userDTO", userDTO);
-		System.out.println("--------"+userDTO);
-		
+		System.out.println("--------" + userDTO);
+
 		return "/board/write";
 	}
-	
-	
+
 	// 게시글 쓰기가 완료 되면
-	@PostMapping(value="/board/registerBoard")
+	@PostMapping(value = "/board/registerBoard")
 	public String registerBoard(BoardDTO boardDto, RedirectAttributes rttr) {
-		System.out.println("글 저장"+boardDto.toString());
-		
+		System.out.println("글 저장" + boardDto.toString());
+
 		// 이렇게 넘기는 거 아님..?
 		// 유저 넘버랑 카테고리만 넘어가면된다.
 		rttr.addFlashAttribute("boardDto", boardDto);
-		
+
 		boardService.registerBoard(boardDto);
-		
-		return "redirect:/board/list" ;
+
+		return "redirect:/board/list";
 	}
-	
 
 	// 게시글 쓰기 화면으로 이동
-	@GetMapping(value="/star/test")
+	@GetMapping(value = "/star/test")
 	public String testBoard(Model model, UserDTO userDto) {
-		
+
 		userDto.setUserRegion("전국");
-		
+
 		model.addAttribute("region", userDto.getUserRegion());
-		
+
 		return "/star/test";
 	}
 
-    // 상세글조회 페이지
-    @GetMapping(value = "/star/detailed_check")
-    public String detailedCheck() {
-    	return "/star/detailed_check";
-    }
-    
-    // 신고사유 페이지
-    @GetMapping(value = "/star/userReport")
-    public String reportpage() {
-    	return "/star/userReport";
-    }
-	
-    // 신고하기
-    @PostMapping(value = "/star/report")
-    @ResponseBody
-    public String report(BoardDTO boardDTO) {
-    	
-    	System.out.println("확인33");
-    	System.out.println(boardDTO);
-    	
-    	boardService.report(boardDTO); // 문제발생
-    	
-    	System.out.println("컨트롤러 끝!");
+	// 상세글조회 페이지
+	@GetMapping(value = "/star/detailed_check")
+	public String detailedCheck() {
+		return "/star/detailed_check";
+	}
+
+	// 신고사유 페이지
+	@GetMapping(value = "/star/userReport")
+	public String reportpage() {
+		return "/star/userReport";
+	}
+
+	// 신고하기
+	@PostMapping(value = "/star/report")
+	@ResponseBody
+	public String report(BoardDTO boardDTO) {
+
+		System.out.println("확인33");
+		System.out.println(boardDTO);
+
+		boardService.report(boardDTO); // 문제발생
+
+		System.out.println("컨트롤러 끝!");
 //    	
 //    	System.out.println("신고완료확인");
-    	
-//    	return "star/detailed_check";
-    	return "good";
-    }
-    
-    
-    // 마이페이지
-    @PostMapping(value="/board/mypage")
-    public String openMypage(BoardDTO boardDTO, Model model) {
-    	System.out.println("마이 페이지로 이동");
-    	// 유저 넘저 존재
-    	System.out.println(boardDTO);
-    	
-    	Long userNumber = (long) boardDTO.getUserNumber();
-    	
-    	String userNickname = userService.getNickname(userNumber);
-    	System.out.println(userNickname);
-    	model.addAttribute("userNickname",userNickname);
-    	
-    	System.out.println("---------------------");
-    	
-    	List<BoardDTO> myList = boardService.getMyListBoard(userNumber);
-    	model.addAttribute("myList", myList);
-    	
-    	return "/board/mypage";
-    }
-    	
-}
 
+//    	return "star/detailed_check";
+		return "good";
+	}
+
+	// 마이페이지
+	@PostMapping(value = "/board/mypage")
+	public String openMypage(BoardDTO boardDTO, Model model) {
+		System.out.println("마이 페이지로 이동");
+		// 유저 넘저 존재
+		System.out.println(boardDTO);
+
+		Long userNumber = (long) boardDTO.getUserNumber();
+
+		String userNickname = userService.getNickname(userNumber);
+		System.out.println(userNickname);
+		model.addAttribute("userNickname", userNickname);
+
+		System.out.println("---------------------");
+
+		List<BoardDTO> myList = boardService.getMyListBoard(userNumber);
+		model.addAttribute("myList", myList);
+
+		return "/board/mypage";
+	}
+
+}
