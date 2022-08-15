@@ -203,6 +203,13 @@ public class BoardController {
     	
     	return "/board/mypage";
     }
+    
+    // 상세글 테스트용 : get방식 채택 고려중  
+    @GetMapping(value = "/star/view.do")
+    public String viewContent() {
+    	return "/star/detailed_check";
+    }
+    
     	
 }
 
