@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.star.domain.BoardDTO;
 import com.star.mapper.BoardMapper;
+import com.star.paging.Criteria;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -38,17 +39,6 @@ public class BoardServiceImpl implements BoardService{
 	public BoardDTO getBoardDetail(Long bno) {
 		return boardMapper.selectDetail(bno);
 	}
-
-	// 카테고리별 게시글 리스트 조회
-	@Override
-	public List<BoardDTO> getBoardList(String category) {
-		// 데이터 타입 BoardDTO로 빈 리스트 생성 > 조회된 결과 값을 받기 위해 준비
-		List<BoardDTO> boardList = Collections.emptyList();
-		
-		// 페이징 기능 아직 미구현
-		boardList = boardMapper.selectList(category);
-		return boardList;
-	}
 	
 	
 
@@ -64,19 +54,40 @@ public class BoardServiceImpl implements BoardService{
 		boardMapper.report(boardDTO);
 		
 		System.out.println("서비스 끝!");
-		 
+		 	
+	}
+	
+	// 카테고리별 게시글 리스트 조회	
+	@Override
+	public List<BoardDTO> getBoardList(Criteria cri) {
+		// 데이터 타입 BoardDTO로 빈 리스트 생성 > 조회된 결과 값을 받기 위해 준비
+		List<BoardDTO> boardList = Collections.emptyList();
 		
+		boardList = boardMapper.selectList(cri);
+		
+		return boardList;
 	}
 
 	// 내 글 조회
 	@Override
-	public List<BoardDTO> getMyListBoard(Long userNumber) {
+	public List<BoardDTO> getMyListBoard(Criteria cri) {
 		List<BoardDTO> myList = Collections.emptyList();
 		
-		myList = boardMapper.getMyListBoard(userNumber);
+		myList = boardMapper.getMyListBoard(cri);
 		
 		return myList;
 	}
 
+	// 카테고리별 총 게시글 개수
+	@Override
+	public int getCount(String category) {
+		return boardMapper.getCount(category);
+	}
 
+	// 내 글 총 수
+	@Override
+	public int getMyCount(Long userNumber) {
+		return boardMapper.getMyCount(userNumber);
+	}
+	
 }
