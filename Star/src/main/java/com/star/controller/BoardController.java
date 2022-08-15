@@ -123,14 +123,19 @@ public class BoardController {
 	
 	// 게시글 쓰기가 완료 되면
 	@PostMapping(value="/board/registerBoard")
-	public String registerBoard(BoardDTO boardDto, RedirectAttributes rttr) {
-		System.out.println("글 저장"+boardDto.toString());
+	public String registerBoard(BoardDTO boardDTO, RedirectAttributes rttr) {
+		System.out.println("글 저장 "+boardDTO.toString());
 		
 		// 이렇게 넘기는 거 아님..?
 		// 유저 넘버랑 카테고리만 넘어가면된다.
-		rttr.addFlashAttribute("boardDto", boardDto);
+		// 넘길때는 boardDto였는데 list.html에서 받을때는 boardDTO였어서 찾지 못했던것.
+		// --> boardDTO로 변경함.
+		// rttr.addFlashAttribute("boardDto", boardDTO);
 		
-		boardService.registerBoard(boardDto);
+		rttr.addFlashAttribute("boardDTO", boardDTO);
+		
+		
+		boardService.registerBoard(boardDTO);
 		
 		return "redirect:/board/list" ;
 	}
