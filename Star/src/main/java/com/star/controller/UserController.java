@@ -69,9 +69,9 @@ public class UserController {
         return "star/sendmail";
     }
     
-    // 로그인 페이지
+    // 로그인 페이지 (logIn안에 값은 임시적으로 네비바 띄우기 위해서 적어놓음)
     @GetMapping(value = "/star/login")
-    public String logIn() { 
+    public String logIn(UserDTO userDTO) { 
     	System.out.println("test!");
     	return "star/login";
     } 
@@ -108,7 +108,7 @@ public class UserController {
     
     // 회원가입 페이지 (임시로 sendmail) -> (signUp으로 변경)
     @GetMapping(value = "/star/signup")
-    public String singUp() {
+    public String singUp(UserDTO userDTO) {
     	return "star/signUp";
 	}  
 

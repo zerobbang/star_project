@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- bootstrap css 연결 -->
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <!-- bootstrap icon 연결 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
     <title>상세글 조회 페이지</title>
 	<style>
 	.temp3{
@@ -19,11 +23,24 @@
         .container {
             width:1500px;
             height:200px;
-
             border:1px solid blue;
             overflow: auto;
         }
+        /* 신고 버튼 css */
+        .wrap button {
+        	width: 80px;
+			height: 35px;
+        	background-color: white;
+        	border-color: #d9d9d9;
+        	border-radius: 5px;
+        	margin-left: 90%;
+        }
+        /* 신고 아이콘 색상(레드) */
+        .bi-exclamation-circle-fill {
+  			color: #FF0000;
+        }
 	</style>
+	
 	<!-- 신고 팝업창 -->
 	<script type="text/javascript">
   function openPop(){
@@ -31,15 +48,16 @@
     						, 'width=500px,height=700px, top=100px, left=500px, scrollbars=no');
   }
 	</script>
-
 </head>
 <body>
     <!-- <div class="temp1"> 네비게이션 </div> -->
     <div style="width:1450px; height:20px; padding:20px; border:1px solid blue;">네비</div>
     
-    <!-- 신고하기 팝업 -->     
+    <!-- 신고하기 버튼 -->     
   <div class="wrap">
-	<button type="button" onclick="openPop()">신고</button>
+	<button type="button" onclick="openPop()">
+		<i class="bi bi-exclamation-circle-fill"></i>신고
+	</button>
  </div>
     
    
@@ -66,7 +84,9 @@
     <div>Antlia 3.0nm S2 30장 / 2bin / gain 200 / 180 sec</div>
     <br>
     <br>
-    <button> ❤️좋아요!</button>
+    <!-- 좋아요는 음 뺄 것 같은데요,,? ERD에 기능이 없는 것 같다. - JM  -->
+<!--     <button> ❤️좋아요!</button> -->
+    <!-- <button type="button" class="btn btn-success"> ❤️좋아요!</button> -->
     <br>
     <br>
     <br>
