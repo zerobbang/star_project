@@ -74,11 +74,11 @@
     </div>
     <form id="reportReasonForm" th:action="@{/star/report}" method="post">
     <div class="report_reason" >
-        <p>신고 사유</p>
-        <p><label for="reason"><input type="radio" name="reason" id="reason" value="관련 없는 내용">관련 없는 내용</label></p>
-        <p><label for="reason"><input type="radio" name="reason" id="reason" value="광고성">광고성</label></p>
-        <p><label for="reason"><input type="radio" name="reason" id="reason" value="욕설/비난">욕설/비난</label></p>
-        <p><label for="reason"><input type="radio" name="reason" id="reason" value="기타">기타</label></p>
+        <a>신고 사유</a><br>
+        <label><input type="radio" name="reason" id="reason" value="관련 없는 내용">관련 없는 내용</label><br>
+        <label><input type="radio" name="reason" id="reason" value="광고성">광고성</label><br>
+        <label><input type="radio" name="reason" id="reason" value="욕설/비난">욕설/비난</label><br>
+        <label><input type="radio" name="reason" id="reason" value="기타">기타</label><br>
     </div>
     <div class="form-group">
             <!-- <div class="custom-control custom-radio custom-control-inline">
@@ -98,7 +98,7 @@
     <label for="cancel"><input type="button" name="cancel" id="cancel" value="Cancel" onclick="self.close();"></label>
     <a href=/star/report>
     <!-- <label for="OK"><button type="submit" name="OK" id="OK" value="OK" onclick="moveClose();">OK</button></label> -->
-    <label for="OK"><button type="button" name="OK" id="OK" value="OK" onclick="transferReport()">OK</button></label>
+    <label for="OK"><input type="button" name="OK" id="OK" value="OK" onclick="transferReport()"></label>
     </a>
     </div>
     </form> 
