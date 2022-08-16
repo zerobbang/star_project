@@ -52,15 +52,6 @@ public class BoardDTO  {
 	private LocalDateTime cmtUpdate;
 	
 	private boolean cmtDeleteYn;
-	
-	// 이미지 테이블
-	private int imtNumber;
-	
-//	private int bno;		// 게시글 테이블의 bno와 연결 
-	
-	private String imgUrl;
-	
-	private boolean imgShowYn;
 
 	@Override
 	public String toString() {
@@ -68,12 +59,20 @@ public class BoardDTO  {
 				+ ", content=" + content + ", regDate=" + regDate + ", updateDate=" + updateDate + ", deleteYn="
 				+ deleteYn + ", reportContent=" + reportContent + ", manageYn=" + manageYn + ", cmtNum=" + cmtNum
 				+ ", cmtContent=" + cmtContent + ", writeDate=" + writeDate + ", cmtUpdate=" + cmtUpdate
-				+ ", cmtDeleteYn=" + cmtDeleteYn + ", imtNumber=" + imtNumber + ", imgUrl=" + imgUrl + ", imgShowYn="
-				+ imgShowYn + "]";
+				+ ", cmtDeleteYn=" + cmtDeleteYn + "]";
 	}
 	
-	
-	
+	// 이미지 테이블
+//	private int imgNumber;
+//	
+////	private int bno;		// 게시글 테이블의 bno와 연결 
+//	
+//	private String imgPath;
+//	
+//	private boolean imgShowYn;
+//	
+//	private String imgName;
+
 	
 
 }

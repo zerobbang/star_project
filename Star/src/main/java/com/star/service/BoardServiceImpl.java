@@ -1,12 +1,17 @@
 package com.star.service;
 
+import java.io.File;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.star.domain.BoardDTO;
+import com.star.domain.ImgDTO;
 import com.star.mapper.BoardMapper;
 import com.star.paging.Criteria;
 
@@ -18,11 +23,51 @@ public class BoardServiceImpl implements BoardService{
 
 	// 게시글 쓰기
 	@Override
-	public boolean registerBoard(BoardDTO params) {
-		int queryResult = 0;
+	public boolean registerBoard(BoardDTO params, List<MultipartFile> fileList) throws Exception {
 		
-		queryResult = boardMapper.insertBoard(params);
-		System.out.println(queryResult);
+		int queryResult = boardMapper.insertBoard(params);
+		
+		if(queryResult == 1) {
+			System.out.println("글 정상적으로 저장 성공."+queryResult);
+		}else {
+			System.out.println("글 정상적으로 저장 실패."+queryResult);
+		}
+		
+			
+		Iterator<MultipartFile> files = fileList.iterator();
+		
+		while(files.hasNext()) {
+			MultipartFile file = files.next();
+
+			// 이미지 저장
+			String filePath = System.getProperty("user.dir")+"/src/main/resources/static/imgfiles";
+			// 이미지 고유 번호 생성
+			UUID uuid = UUID.randomUUID();
+			// 이미지 이름 = UUID_파일원래이름
+			String fileName = uuid+"_"+ file.getOriginalFilename();
+			// 이미지 저장한다.
+			File saveFile = new File(filePath,fileName);
+			file.transferTo(saveFile);
+			
+			BoardDTO newBoard = boardMapper.getLastBoard();
+			System.out.println("저장한 게시글의 글 번호 : "+newBoard.getBno());
+			System.out.println("저장한 게시글의 정보 : "+newBoard);
+			
+			ImgDTO imgDTO = new ImgDTO();
+			
+			imgDTO.setImgName(fileName);
+			imgDTO.setImgPath(filePath);
+			imgDTO.setBno(newBoard.getBno());
+			
+			int imgResult = boardMapper.insertImg(imgDTO);
+			
+			if(imgResult == 1) {
+				System.out.println("글 이미지 정상적으로 저장 성공."+imgResult);
+			}else {
+				System.out.println("글 이미지 정상적으로 저장 실패."+imgResult);
+			}
+			
+		}	
 		
 //		// 글 번호가 널값이면 새로 글을 생성
 //		if(params.getBno() == null) {

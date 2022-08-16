@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.star.domain.BoardDTO;
@@ -28,7 +30,6 @@ public class BoardController {
 	
 	@Autowired
 	private UserService userService;
-	
 	
 	// 게시글 조회
 	@RequestMapping(value="/board/list")
@@ -106,10 +107,10 @@ public class BoardController {
 	
 	// 게시글 쓰기가 완료 되면
 	@PostMapping(value="/board/registerBoard")
-	public String registerBoard(BoardDTO boardDTO, Criteria cri, RedirectAttributes rttr) {
+	public String registerBoard(BoardDTO boardDTO, Criteria cri, @RequestParam(value="img",required=false) List<MultipartFile> file, RedirectAttributes rttr) throws Exception {
 		// 글 등록
-		boardService.registerBoard(boardDTO);
-		System.out.println("글 저장 완료 : "+boardDTO.toString());
+		System.out.println("file 여러개로가져오면   "+file);
+		boardService.registerBoard(boardDTO,file);
 		
 		// 글 쓰기 전 cri 값 잘 받아 왔나 확인
 		// System.out.println(cri);

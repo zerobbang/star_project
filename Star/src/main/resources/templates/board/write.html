@@ -9,7 +9,7 @@
 
     <th:block layout:fragment="content">
         <div class="card-content">
-            <form th:action="@{/board/registerBoard}" class="form-horizontal" method="post" onsubmit="return checkNull()">
+            <form th:action="@{/board/registerBoard}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return checkNull()">
                 <!-- 기존 게시글 수정인 경우, 서버로 전달할 게시글 번호(bno) -->
             <!--     <input type="hidden" th:if="${bno != null and bno > 0}" th:value="*{bno}" /> -->
                 
@@ -49,20 +49,16 @@
                     </div>
                 </div>
                 
-                <!-- 우선 이미지 1개만 -->
                <div class="form-group">
-                	<label for="img" class="col-sm-2 control-label">파일</label>
-                	<div class="col-sm-10">
-                		<input id="img" name="img" class="form-control" type="file"/>
-                		<!-- 자바스크립트쪽에 퍼온 함수에서 쓰일 예정 -->
-                		<div id="imgsZone">
-                		</div>
+                	<label for="img" class="col-sm-2 control-label">파일<button type="button" onclick="addImg();">이미지 추가하기</button></label>
+                	<div id="imgList" class="col-sm-10">
+                		<input id="img" name="img" class="form-control" type="file" accept=".jpg, .gif, .png, .bmp, .webp, .heif"/><br>
                		</div>
+               		<div id="imgsZone"></div>
           		</div>
                
-            
 
-<!-- 아직 손 안건들임 임시 main으로 이동 -->
+				<!-- 저장 버튼 -->            
 	            <div class="btn_wrap text-center" >
 	                <button type="submit">저장하기</button>
 	            </div>
@@ -80,18 +76,57 @@
     <th:block layout:fragment="script">
         <script th:inline="javascript">
         /*<![CDATA[*/
+        	
+        	
+        // 추가하면 아래에 리스트는 한글로 띄우고 값들은 imgList에 담아서 넘겨주면 방법을 생각해봤는데 필요없다면 지워버리시길
+        // var imgList = [];
+        // const fileInput = document.querySelectorAll("#imgList input");
+        var imgList = Array.from(document.querySelectorAll("#imgList input"));
+     	// 또는 const fileInput = $("#fileUpload").get(0);
+        
+        imgList.onchange = () => {
+        	console.log(imgList.length);
+/*         	  const selectedFile = imgList.files[0];
+        	  console.log(selectedFile);
+        	  console.log(selectedFile.name);
+        	  
+        	  $("#imgsZone").after("<div>" + selectedFile.name + "</div>");
+        	  imgList.push(selectedFile)
+        	  console.log(imgList) */
+        	  
+       	};
+       	
+       	function addImg(){
+       		var i = document.createElement('input');
+       		i.setAttribute("type","file");
+       		i.setAttribute("name","img");
+       		i.setAttribute("accept",".jpg, .gif, .png, .bmp, .webp, .heif");
+       		
+       		var addImg = document.getElementById("imgList");
+       		addImg.appendChild(i);
+       		addImg.appendChild(document.createElement('br'));
+       	}
 			    
-        // 제목 , 내용 널값 체크
+        // 제목 , 내용 널값 체크 & 작품전 카테고리일 경우 최소 1개 사진 필요
         var titleRegex = /\S/;
         var contentRegex = /\S/;
         
         function checkNull(){
         	console.log(titleRegex.test($("#title").val()));
+        	
+        	// var imgList = Array.from(document.querySelectorAll("#imgList input"));
+        	console.log(imgList.length);
+        	// 첨부 이미지 첫번째 값
+        	// console.log(imgList[0].files[0]);
+
         	if(titleRegex.test($("#title").val()) == false){
         		alert("제목을 입력해주세요.")
         		return false;
         	}else if(contentRegex.test($("#content").val()) == false){
         		alert("내용을 입력해주세요.");
+        		return false;
+        	}else if( imgList[0].files[0] == undefined && $("#category").val() == "작품전"){
+        		alert("작품전은 최소 1개 이상의 사진이 필요합니다.");
         		return false;
         	}else{
         		alert("글 쓰기 완료");
@@ -99,28 +134,13 @@
         	}
         }
         	
-        /*]]>*/
-        
-        // 추가하면 아래에 리스트는 한글로 띄우고 값들은 imgList에 담아서 넘겨주면 방법을 생각해봤는데 필요없다면 지워버리시길
-        var imgList = [];
-        const fileInput = document.getElementById("img");
-     	// 또는 const fileInput = $("#fileUpload").get(0);
-        
-        fileInput.onchange = () => {
-        	  const selectedFile = fileInput.files[0];
-        	  console.log(selectedFile.name);
-        	  
-        	  $("#imgsZone").after("<div>" + selectedFile.name + "</div>");
-        	  imgList.push(selectedFile)
-        	  console.log(imgList)
-        	  
-       	};
 		
        	// 뒤로 가기로 다시 돌아오는 거 방지
  		function noBack(){
  			window.history.forward();
  			}
        	
+ 		/*]]>*/
         </script>
     </th:block>
 </body>

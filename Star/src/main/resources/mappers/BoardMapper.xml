@@ -37,8 +37,9 @@
  <sql id="imgColumns">
  	img_number
  	, bno
- 	, img_url
+ 	, img_path
  	, img_show_yn
+ 	, img_name
  </sql>
  
  <!-- 게시글 카테고리 -->
@@ -170,6 +171,29 @@
 	WHERE 
 		delete_yn = 0
 		AND user_number = #{userNumber}
+</select>
+
+<!-- 이미지 저장 -->
+<insert id="insertImg" parameterType="BoardDTO">
+	INSERT INTO img_table
+	VALUES (
+		#{imgNumber}
+		,#{bno}
+		,#{imgPath}
+		,1
+		,#{imgName}
+		)
+</insert>
+
+<!-- 최근 마지막 게시글 데이터 불러오기 > bno 얻어오기 위해 -->
+<select id="getLastBoard" resultType="BoardDTO">
+	SELECT 
+		*
+	FROM 
+		board_list
+	ORDER BY 
+		bno DESC
+	LIMIT 1;
 </select>
 
 

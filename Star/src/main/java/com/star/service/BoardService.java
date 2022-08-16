@@ -3,6 +3,7 @@ package com.star.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.star.domain.BoardDTO;
 import com.star.paging.Criteria;
@@ -17,7 +18,7 @@ public interface BoardService {
 	public int getCount(String category);
 	
 	// 게시글 등록
-	public boolean registerBoard(BoardDTO params);
+	public boolean registerBoard(BoardDTO params, List<MultipartFile> file) throws Exception;
 	
 	// 게시글 상세 조회
 	public BoardDTO getBoardDetail(Long bno);

@@ -3,9 +3,9 @@ package com.star.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.data.repository.query.Param;
 
 import com.star.domain.BoardDTO;
+import com.star.domain.ImgDTO;
 import com.star.paging.Criteria;
 
 @Mapper
@@ -45,5 +45,11 @@ public interface BoardMapper {
 	
 	// 내가 쓴 글 게시글 총 수
 	public int getMyCount(Long userNumber);
+	
+	// 이미지 저장
+	public int insertImg(ImgDTO imgDTO);
+	
+	// 최신 글 1개 불러오기
+	public BoardDTO getLastBoard();
 	
 }
