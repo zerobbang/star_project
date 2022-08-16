@@ -1,48 +1,103 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<body th:fragment="main-body">
-    <div class="fixed-navbar">
-        <div class="pull-left">
-            <h1 class="page-title">게시판</h1>
-        </div>
-    </div>
-
-    <div id="wrapper">
-        <div class="main-content">
-            <div class="row row-inline-block small-spacing">
-                <div class="col-xs-12">
-                    <div class="box-content">
-                        <div class="clearfix">
-                            <h4 class="box-title pull-left"></h4>
-
-                            <th:block layout:fragment="search"></th:block>
-                        </div>
-
-                        <th:block layout:fragment="content"></th:block>
-                        
-                        <th:block layout:fragment="img"></th:block>
-
-                        <th:block layout:fragment="paging"></th:block>
-                    </div>
-
-                    <th:block layout:fragment="add-content"></th:block>
-                </div>
-            </div>
-
-            <footer class="footer">
-                <ul class="list-inline">
-                    <li>2016 © NinjaAdmin.</li>
-                </ul>
-            </footer>
-        </div>
-    </div>
-
-    <script th:src="@{/scripts/common.js}"></script>
-    <script th:src="@{/scripts/jquery.min.js}"></script>
-    <script th:src="@{/scripts/main.js}"></script>
-    <script th:src="@{/plugin/bootstrap/js/bootstrap.min.js}"></script>
-    <script th:src="@{/plugin/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js}"></script>
-
-    <th:block layout:fragment="script"></th:block>
+<head th:fragment="main-css">
+	
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/css/navHeader.css">
+	
+</head>
+<body th:fragment="main-nav">
+	
+		<header class="nav_header">
+			
+			<div class="Logo">
+				<h1 class="page-title">별애별 모임</h1>
+				
+				<a href="/star/mainpage">
+		            <svg class="bi me-2" width="70" height="70" role="img" aria-label="Logo">
+		                <image href="/img/Logo.png" width="70" height="70"></image>
+		            </svg>
+		        </a>  
+		    </div>
+		    <div class="category_part">  
+		        <ul class="category">
+		        
+		            <li>
+		            	<form class="nav-link px-2 link-secondary" th:action="@{/star/mainpage}" method="post">
+					    	<input type="hidden" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
+					    	<input type="hidden" id="userNickname" name="userNickname" th:value="*{userDTO.userNickname}">
+					    	<input type="hidden" id="userRegion" name="userRegion" th:value="*{userDTO.userRegion}"/>
+					    	<input type="hidden" id="userId" name="userId" th:value="*{userDTO.userId}"/>
+					    	<input type="hidden" id="userpassword" name="userpassword" th:value="*{userDTO.userPassword}"/>
+					    	<input type="submit" value="Home">
+					    </form>
+		            </li>
+		            
+		            <li>
+			            <form class="nav-link px-2 link-dark" th:action="@{/board/list}" method="post">
+					    	<input type="hidden" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
+					    	<input type="hidden" id="userNickname" name="userNickname" th:value="*{userDTO.userNickname}">
+					    	<input type="hidden" id="userRegion" name="userRegion" th:value="*{userDTO.userRegion}"/>
+					    	<input type="hidden" id="userId" name="userId" th:value="*{userDTO.userId}"/>
+					    	<input type="hidden" id="userpassword" name="userpassword" th:value="*{userDTO.userPassword}"/>
+					    	<input type="hidden" id="category" name="category" value="관측지">
+					    	<input type="submit" value="관측지">
+					    </form>
+		            </li>
+		            
+		            <li>
+			            <form class="nav-link px-2 link-dark" th:action="@{/board/list}" method="post">
+					    	<input type="hidden" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
+					    	<input type="hidden" id="userNickname" name="userNickname" th:value="*{userDTO.userNickname}">
+					    	<input type="hidden" id="userRegion" name="userRegion" th:value="*{userDTO.userRegion}"/>
+					    	<input type="hidden" id="userId" name="userId" th:value="*{userDTO.userId}"/>
+					    	<input type="hidden" id="userpassword" name="userpassword" th:value="*{userDTO.userPassword}"/>
+					    	<input type="hidden" id="category" name="category" value="작품전">
+					    	<input type="submit" value="작품전">
+					    </form>
+				    </li>
+		            
+		            <li>
+			            <form class="nav-link px-2 link-dark" th:action="@{/board/list}" method="post">
+					    	<input type="hidden" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
+					    	<input type="hidden" id="userNickname" name="userNickname" th:value="*{userDTO.userNickname}">
+					    	<input type="hidden" id="userRegion" name="userRegion" th:value="*{userDTO.userRegion}"/>
+					    	<input type="hidden" id="userId" name="userId" th:value="*{userDTO.userId}"/>
+					    	<input type="hidden" id="userpassword" name="userpassword" th:value="*{userDTO.userPassword}"/>
+					    	<input type="hidden" id="category" name="category" value="잡담">
+					    	<input type="submit" value="소통방">
+					    </form>
+		            </li>
+		            
+		        </ul>
+		    </div>
+		    <div class="userButton">
+		    	
+		    	<!-- 회원번호가 없을 때 -->
+		    	<form id="login-signup"
+		    		th:if= "${userDTO.userNumber == null}">
+		    		<!-- 버튼 태그에 페이지 이동을 달아두는거 재밌어보여서 써봄 ㅎ -->
+			        <button class="btn btn-secondary" type="button" onclick="location.href='/star/login' ">Login</button>
+			        <button class="btn btn-primary" type="button" onclick="location.href='/star/signup' ">회원 가입</button>
+		       	</form>
+		    	<!-- 회원번호가 있을 때 -->
+		    	<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search"
+		    		th:if= "${userDTO.userNumber != null}">
+	                <button type="button" onclick="location.href='/star/mainpage' ">Logout</button>
+	                <input type="button" th:value="*{userDTO.userNickname}">
+	            </form>    
+		        
+		    </div>
+	    </header>
+	
+   
+	<th:block layout:fragment="script">
+	    <script th:src="@{/scripts/common.js}"></script>
+	    <script th:src="@{/scripts/jquery.min.js}"></script>
+	    <script th:src="@{/scripts/main.js}"></script>
+	    <script th:src="@{/plugin/bootstrap/js/bootstrap.min.js}"></script>
+	    <script th:src="@{/plugin/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js}"></script>
+    </th:block>
+    
 </body>
 </html>

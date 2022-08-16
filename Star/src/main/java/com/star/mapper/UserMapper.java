@@ -15,6 +15,9 @@ public interface UserMapper {
 	
 	public UserDTO detailUser(Long userNumber);
 	
+	// 닉네임 조회
+	public String getNickname(Long userNumber);
+	
 	//로그인체크
 	public UserDTO loginCheck(UserDTO userDTO);
 
@@ -28,7 +31,8 @@ public interface UserMapper {
 	
 	public int updatePassNickRegion(UserDTO userDto);
 
-	public void pagedown();
+	// 회원 탈퇴
+	public void pagedown(Long userNumber);
 
 	public String findIdFromEmail(UserDTO userDTO);
 

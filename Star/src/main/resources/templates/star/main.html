@@ -1,105 +1,170 @@
 <!DOCTYPE html>
 <!-- <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"> -->
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" >
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>메인 페이지</title>
+    <style>
+	   /* 스위치 버튼 */
+		input{ 
+		  -webkit-appearance:none;
+		  -webkit-border-radius:0;
+		}
+		
+		#container{
+/* 		  display: flex;
+		  width: 100%;
+		  height: 98vh;
+		  justify-content:right;
+		  align-items:center; */
+		  width: 10px;
+		  height: 5px;
+
+		}
+		.toggle-switch input[type=checkbox]{
+		  display: none;
+		}
+		
+		.toggle-track{
+		  display: inline-block;
+		  position: relative;
+		  width: 60px;
+		  height: 25px;
+		  border-radius:60px;
+		  background: #8b8b8b;
+		}
+		.toggle-track:before{
+		  content:'';
+		  display: block;
+		  position: absolute;
+		  top: -8px;
+		  left: -15px;
+		  width: 30px;
+		  height: 30px; 
+		  margin: 5px;
+		  background: #fff;
+		  border-radius:100%;
+		  border:1px solid #8b8b8b;
+		  transition:left 0.3s;
+		}
+		.toggle-switch input[type=checkbox] + label .toggle-track:after{
+		  content:'시간';
+		  display: inline-block;
+		  position: absolute;
+		  right: 8px;
+		  color: #fff;
+		}
+		
+		.toggle-switch input[type=checkbox]:checked + label .toggle-track{
+		  background: #e51836;
+		}
+		.toggle-switch input[type=checkbox]:checked + label .toggle-track:before{
+		  left: 30px;
+		  border:1px solid #e51737;
+		}
+		.toggle-switch input[type=checkbox]:checked + label .toggle-track:after{
+		  content:'주';
+		  left: 5px;
+		}
+
+    </style>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b9125e70384813c29bb964a22bf69f75"></script>
-
+	<div th:replace="fragments/body :: main-css"></div>
 </head>
 <body>
 
-<script>
-	// 지역, geojson 경로 ->db?
-	var region = new Array('서울','제주','부산','전국','광주','전남','세종','전북','경남','경북','경기','울산','대구','대전','충남','충북','강원','인천');
-	/* var geojsonUrl = ['/geojson/seoul.geojson','/geojson/korea.geojson']; */
-	var geojsonUrl = new Array ('/geojson/seoul.geojson','/geojson/jeju.geojson','/geojson/busan.geojson','/geojson/korea.geojson','/geojson/gwangju.geojson','/geojson/jn.geojson','/geojson/sejong.geojson','/geojson/jb.geojson','/geojson/gn.geojson','/geojson/gb.geojson','/geojson/gg.geojson','/geojson/ulsan.geojson','/geojson/daegu.geojson','/geojson/daejeon.geojson','/geojson/cn.geojson','/geojson/cb.geojson','/geojson/gangwon.geojson','/geojson/incheon.geojson');
-	var regionCenter = new Array([37.566826, 126.9786567],[33.400, 126.5000],[35.1379222,129.05562775],[36.6,127.5],[35.1,126.8],[35.1,126.8],[36.504,127.249],[35.824,127.147],[35.15,128.15],[36.15,128.45],[37.3,127.15],[35.5,129.184],[35.8,128.46],[36.37,127.33],[36.6,127],[36.6,127.5],[37.8,128.2],[37.2722,126.425]);
-	var regionData = {region, geojsonUrl};
-	var regionCenterData = {region,regionCenter};
+	<script>
+		// 지역, geojson 경로 ->db?
+		var region = new Array('서울','제주','부산','전국','광주','전남','세종','전북','경남','경북','경기','울산','대구','대전','충남','충북','강원','인천');
+		var geojsonUrl = new Array ('/geojson/seoul.geojson','/geojson/jeju.geojson','/geojson/busan.geojson','/geojson/korea.geojson','/geojson/gwangju.geojson','/geojson/jn.geojson','/geojson/sejong.geojson','/geojson/jb.geojson','/geojson/gn.geojson','/geojson/gb.geojson','/geojson/gg.geojson','/geojson/ulsan.geojson','/geojson/daegu.geojson','/geojson/daejeon.geojson','/geojson/cn.geojson','/geojson/cb.geojson','/geojson/gangwon.geojson','/geojson/incheon.geojson');
+		var regionCenter = new Array([37.566826, 126.9786567],[33.400, 126.5000],[35.1379222,129.05562775],[36.6,127.5],[35.1,126.8],[35.1,126.8],[36.504,127.249],[35.824,127.147],[35.15,128.15],[36.15,128.45],[37.3,127.15],[35.5,129.184],[35.8,128.46],[36.37,127.33],[36.6,127],[36.6,127.5],[37.8,128.2],[37.2722,126.425]);
+		var regionData = {region, geojsonUrl};
+		var regionCenterData = {region,regionCenter};
+		
+		// 이전에 생성한 폴리곤들을 지우기 위해 
+	    var polygons=[] ;
 	
-	// 이전에 생성한 폴리곤들을 지우기 위해 
-    var polygons=[] ;
-
-    $(document).ready(function(){
-        $.ajax({
-           url : "/star/main2",
-           // data : {"userSelect":$("#selectedRegion")},
-           dataType: "html",	// 이 부분이 반환 타입을 핸들링하는 곳이다.
-           type: "get",
-           success: function(data) {
-           	$('#mapImg').html(data);
-           },
-           error: function (){alert("지도 실패");}
-        });
-        console.log("--------------------1");
-        $.ajax({
-	        url : "/star/main3",
-	        dataType: "html",	// 이 부분이 반환 타입을 핸들링하는 곳이다.
-	        type: "get",
-	        success: function(data) {
-	        	$('#weather').html(data);
-	        },
-	        error: function (){alert("기상조건 테이블 실패");}
+	    $(document).ready(function(){
+	        $.ajax({
+	           url : "/star/main2",
+	           // data : {"userSelect":$("#selectedRegion")},
+	           dataType: "html",	// 이 부분이 반환 타입을 핸들링하는 곳이다.
+	           type: "get",
+	           success: function(data) {
+	           	$('#mapImg').html(data);
+	           },
+	           error: function (){alert("지도 실패");}
+	        });
+	        console.log("--------------------1");
+	        $.ajax({
+		        url : "/star/main3",
+		        dataType: "html",	// 이 부분이 반환 타입을 핸들링하는 곳이다.
+		        type: "get",
+		        success: function(data) {
+		        	$('#weather').html(data);
+		        },
+		        error: function (){alert("기상조건 테이블 실패");}
+		        
+		    });
 	        
+	        
+	        $("select").on('focus',function(){
+	
+	        	var previous = this.value;
+	        	console.log("현재값 : ",previous);
+	        }).change(function(){
+	              
+	        	// 이전 폴리곤들 지우기
+	        	deletePolygon(polygons);          
+	           
+	        	// 선택한 값
+	        	var next = this.value;
+	
+	            // 선택한 값 출력
+	            $("#selectedRegion").val(next);
+	
+	            var userSelectRegion = next;
+	            
+	            for(i=0; i < region.length; i++){
+	                if(userSelectRegion == regionData.region[i]){
+	                    console.log("지역 데이터URL : ",regionData.geojsonUrl[i]);
+	                    var userSelectRegionUrl = regionData.geojsonUrl[i];
+	                    var userSelectRegionCenter = regionCenterData.regionCenter[i];
+	                }
+	            }
+	            setCenter(userSelectRegionCenter);
+	            showMap(userSelectRegionUrl);
+	            console.log("--------------------");
+	            console.log(next);
+	            console.log("--------------------");
+	            // 메인페이지 테이블
+	            var dustDto={
+	            		region:next
+	            };
+	
+	            $.ajax({
+	    	        url : "/star/main3",
+	    	        dataType: "html",	// 이 부분이 반환 타입을 핸들링하는 곳이다.
+	    	        data: dustDto,
+	    	        type: "get",
+	    	        success: function(data) {
+	    	        	console.log("test!")
+	    	        	console.log("data")
+	    	        $('#weather').html(data);
+	    	        },
+	    	        error: function (){alert("실패");}
+	    	    });
+	
+	        });
 	    });
-        
-        
-        $("select").on('focus',function(){
+	    
+	</script>
+	
 
-        	var previous = this.value;
-        	console.log("현재값 : ",previous);
-        }).change(function(){
-              
-        	// 이전 폴리곤들 지우기
-        	deletePolygon(polygons);          
-           
-        	// 선택한 값
-        	var next = this.value;
-
-            // 선택한 값 출력
-            $("#selectedRegion").val(next);
-
-            var userSelectRegion = next;
-            
-            for(i=0; i < region.length; i++){
-                if(userSelectRegion == regionData.region[i]){
-                    console.log("지역 데이터URL : ",regionData.geojsonUrl[i]);
-                    var userSelectRegionUrl = regionData.geojsonUrl[i];
-                    var userSelectRegionCenter = regionCenterData.regionCenter[i];
-                }
-            }
-            setCenter(userSelectRegionCenter);
-            showMap(userSelectRegionUrl);
-            console.log("--------------------");
-            console.log(next);
-            console.log("--------------------");
-            // 메인페이지 테이블
-            var dustDto={
-            		region:next
-            };
-            
-            $.ajax({
-    	        url : "/star/main3",
-    	        dataType: "html",	// 이 부분이 반환 타입을 핸들링하는 곳이다.
-    	        data: dustDto,
-    	        type: "get",
-    	        success: function(data) {
-    	        	console.log("test!")
-    	        	console.log("data")
-    	        $('#weather').html(data);
-    	        },
-    	        error: function (){alert("실패");}
-    	    });
-        });
-    });
-    
-</script>
-
+	<div th:replace="fragments/body :: main-nav"></div>	
     <h1>안녕하세요</h1>
     <select id="selectRegion">
         <option value="전국" selected="selected">전국</option>
@@ -124,26 +189,68 @@
     <input type="text" id="selectedRegion" value="전국"/>
     <div id="mapImg"></div>
 
-    <h2>카카오 이미지 띄우기 비동기 처리 ..?(default 가 비동기)</h2>
+    <h2>카카오 이미지 띄우기 비동기 처리(default 가 비동기)</h2>
     
-	<form th:action="@{/board/write}" method="post" >
-	    <input type="text" id="userNumber" th:value="${UserDTO}"/>
-	    <input type="text" id="userRegion" th:value="${UserDTO}"/>
-    	<input type="submit" value="글쓰기"/>
+    
+    <!-- 네브바 임시용 -->
+    <!-- 소통방의 default 값으로 설정해주기 -->
+    <!-- boardController에서 requestparam으로 받을 경우 -->
+    
+    <!-- <form th:action="@{/board/list}" method="post">
+    	<input type="text" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
+    	<input type="text" id="category" name="category" value="관측지">
+    	<input type="submit" value="관측지">
     </form>
+    <form th:action="@{/board/list}" method="post">
+    	<input type="text" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
+    	<input type="text" id="category" name="category" value="작품전">
+    	<input type="submit" value="작품전">
+    </form>
+    <form th:action="@{/board/list}" method="post">
+    	<input type="text" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
+    	<input type="text" id="category" name="category" value="잡담">
+    	<input type="submit" value="소통방">
+    </form> -->
+    
+    <!-- 마이페이지 임시 -->
+    <form th:action="@{/board/mypage}" method="post">
+    	<input type="hidden" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
+    	<input type="hidden" id="userNickname" name="userNickname" th:value="*{userDTO.userNickname}">
+    	<input type="hidden" id="userRegion" name="userRegion" th:value="*{userDTO.userRegion}"/>
+    	<input type="hidden" id="userId" name="userId" th:value="*{userDTO.userId}"/>
+					    	<input type="hidden" id="userpassword" name="userpassword" th:value="*{userDTO.userPassword}"/>
+    	<input type="submit" value="마이페이지">
+    </form>
+
     
     <form th:action="@{/star/changeInfo}" method="post">
     
-    	<input type="text" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}"/>
-    	<input type="text" id="userId" name="userId" th:value="*{userDTO.userId}"/>
-    	<input type="text" id="userNickname" name="userNickname" th:value="*{userDTO.userNickname}"/>
-    	<input type="text" id="userRegion" name="userRegion" th:value="*{userDTO.userRegion}"/>
+    	<input type="hidden" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
+    	<input type="hidden" id="userNickname" name="userNickname" th:value="*{userDTO.userNickname}">
+    	<input type="hidden" id="userRegion" name="userRegion" th:value="*{userDTO.userRegion}"/>
+    	<input type="hidden" id="userId" name="userId" th:value="*{userDTO.userId}"/>
+					    	<input type="hidden" id="userpassword" name="userpassword" th:value="*{userDTO.userPassword}"/>
     	<input type="submit" value="정보변경페이지">
     
     </form> 
     
-    <br><br><br>
-    <div id="weather">asd</div>
 
+
+    
+    <br><br><br>
+    <div>
+	        <!-- 스위치 버튼 -->
+	    <div id="container">
+		  <div class="toggle-switch">
+		    <input type="checkbox" id="chkTog">
+		    <label for="chkTog">
+		      <span class="toggle-track"></span>
+		    </label>
+		  </div>
+		</div><br><br>
+    
+    	<div id="weather"  style="overflow:scroll;"></div>
+
+	</div>
 </body>
 </html>

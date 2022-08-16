@@ -22,50 +22,37 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-//	메인 페이지
+	//	메인 페이지
 	@GetMapping(value = "/star/mainpage")
 	public String openUser(UserDTO userDTO) {
-		System.out.println("mainpage로 잘왔음...");
+//		System.out.println("mainpage로 잘왔음...");
 		return "star/main";
-	} 
+	}
+	
+//	메인 페이지
+	@PostMapping(value = "/star/mainpage")
+	public String openMain(UserDTO userDTO, RedirectAttributes rttr) {
+		
+		rttr.addFlashAttribute(userDTO);
+		
+		return "star/main";
+	}
 	
 	// ajax 중간 main
 	@GetMapping(value = "/star/main2")
 	public String openMap() {
 		return "star/main2";
-	}
-	
-	// 메인페이지 ( with. 중간에 있는 테이블 )
-//	@GetMapping(value = "/star/main3")
-//	public String openPredictionList(DustDTO params, RedirectAttributes rttr) {
-//		List<DustDTO> dustList = userService.getPrediction(params);
-//		rttr.addFlashAttribute(dustList);
-//
-//		System.out.println(params);
-//		System.out.println(params.getRegion());
-//		rttr.getFlashAttributes();
-//		
-//		System.out.println(dustList.get(0).getHumidity());
-//		System.out.println(dustList.get(1).getHumidity());
-//		return "star/main3";
-//		
-//	}
-	
+	}	
 	
 	// 메인페이지 ( with. 중간에 있는 테이블 )
 	@GetMapping(value = "/star/main3")
 	public String openPredictionList(DustDTO params, Model model) {
 		List<DustDTO> dustList = userService.getPrediction(params);
 		model.addAttribute("dustList", dustList); 
-		System.out.println("dd");
-		System.out.println(model);
 		System.out.println(params);
-		System.out.println(params.getRegion()); 
-//		model.addAttribute("selectRegion", params.getRegion());
 		 
 		System.out.println(dustList.get(0).getHumidity());
-//		System.out.println(dustList.get(1).getHumidity());
-		System.out.println("+++++++++++++++++++");
+
 		return "star/main3"; 
 	}
 
@@ -99,7 +86,6 @@ public class UserController {
 			
 			System.out.println("do action!");
 	    	System.out.println(userDTO);
-	    	System.out.println(userDTO.toString());
 			 
 	    	userDTO = userService.loginUser(userDTO);
 	    	
@@ -216,19 +202,15 @@ public class UserController {
         return "/star/main";
     };
     
-	// 마이 페이지 이동
-    @GetMapping(value = "/star/gayeong/mypage")
-    public String mypage() {
-    	return "star/gayeong/mypage";
-    }
     
     // 회원탈퇴
-    @GetMapping(value = "/star/signdown")
-    public String mypage2() {
+    @PostMapping(value = "/star/signdown")
+    public String deleteUser(UserDTO userDto) {
     	
     	System.out.println("컨트롤러 확인");
-    	
-    	userService.pagedown();
+    	System.out.println(userDto);
+    	Long userNumber = userDto.getUserNumber();
+    	userService.pagedown(userNumber);
     	
     	System.out.println("회원탈퇴 완료됨!");
     	
@@ -265,5 +247,13 @@ public class UserController {
 		return "redirect:/star/login";
 
     };
+    
+    
+    // 네비
+    @GetMapping(value = "/star/navi")
+    public String goNavi() {
+    	return "fragments/body";
+    }
+    
     
 }

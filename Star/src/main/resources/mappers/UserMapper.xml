@@ -33,8 +33,16 @@
 		)
 	</insert> 
 	
+	
 	<select id="detailUser" parameterType="long" resultType="UserDTO">
 		SELECT <include refid="userColumns"/>
+		FROM users_table
+		WHERE user_number = #{userNumber}
+	</select>
+	
+	<!-- 닉네임만 가져온다 -->
+	<select id="getNickname" parameterType="long" resultType="String">
+		SELECT user_nickname
 		FROM users_table
 		WHERE user_number = #{userNumber}
 	</select>
@@ -87,12 +95,12 @@
 		where user_id = #{userId};
 	</update>
 
-<!-- 마이페이지_회원탈퇴 -->
-	<update id="pagedown">
+	<!-- 마이페이지_회원탈퇴 -->
+	<update id="pagedown" parameterType="long">
 		update users_table 
 		set withdrawal_yn = 1
 			, withdrawal_date = now()
-		where user_id='id1';
+		where user_number=#{userNumber};
 	</update>
 	
 	

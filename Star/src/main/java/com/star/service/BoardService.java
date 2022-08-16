@@ -5,12 +5,16 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.star.domain.BoardDTO;
+import com.star.paging.Criteria;
 
 @Service
 public interface BoardService {
 	
 	// 게시글 리스트 조회
-	public List<BoardDTO> getBoardList(BoardDTO params);
+	public List<BoardDTO> getBoardList(Criteria cri);
+	
+	// 카테고리별 게시글 총 개수
+	public int getCount(String category);
 	
 	// 게시글 등록
 	public boolean registerBoard(BoardDTO params);
@@ -19,6 +23,12 @@ public interface BoardService {
 	public BoardDTO getBoardDetail(Long bno);
 
 	public void report(BoardDTO boardDTO);
+	
+	// 내 글 조회
+	public List<BoardDTO> getMyListBoard(Criteria cri);
+	
+	// 내 글 총 수
+	public int getMyCount(Long userNumber);
 	
 
 

@@ -19,6 +19,9 @@ public interface UserService {
 	public boolean registerUser(UserDTO params);
 	
 	public UserDTO getUser(Long userNumber);
+	
+	// 닉네임 조회
+	public String getNickname(Long userNumber);
 
 	public String sendSimpleMessage(MailDTO mailDto);
 	
@@ -34,7 +37,7 @@ public interface UserService {
 
 	public String changeInfo(UserDTO userDto);
 
-	public void pagedown();
+	public void pagedown(Long userNumber);
 	
 	public List<DustDTO> getPrediction(DustDTO params);
 
