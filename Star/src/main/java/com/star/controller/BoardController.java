@@ -116,7 +116,7 @@ public class BoardController {
     @ResponseBody
     public String report(BoardDTO boardDTO) {
     	
-    	System.out.println("확인33");
+    	System.out.println("확인");
     	System.out.println(boardDTO);
     	
     	boardService.report(boardDTO); // 문제발생
@@ -128,6 +128,8 @@ public class BoardController {
 //    	return "star/detailed_check";
     	return "good";
     }
-    	
+    
+    // 본인 게시글 수정/삭제 - 나중에 게시판 상세글 조회 페이지가 어느정도 구현 되면 하게
+	
 }
 
