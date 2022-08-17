@@ -30,6 +30,8 @@ public interface BoardService {
 	
 	// 내 글 총 수
 	public int getMyCount(Long userNumber);
+
+	public String getWriter(Long writerNumber);
 	
 
 

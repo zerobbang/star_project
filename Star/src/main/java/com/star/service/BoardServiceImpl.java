@@ -135,4 +135,25 @@ public class BoardServiceImpl implements BoardService{
 		return boardMapper.getMyCount(userNumber);
 	}
 	
+	public String getWriter(Long writerNumber) {
+		
+		String resultData = boardMapper.findWriterFromUserNumber(writerNumber);
+		System.out.println("----------------------");
+		System.out.println(resultData);
+		System.out.println("----------------------");
+		
+		return resultData;
+	};
+	
+	
+	public ImgDTO[] getImgsFromBno(Long boardBno) {
+		
+		ImgDTO[] resultData = boardMapper.findImgsFromBno(boardBno);
+		System.out.println("----------------------");
+		System.out.println(resultData);
+		System.out.println("----------------------");
+		
+		return resultData;
+	};
+	
 }

@@ -84,9 +84,11 @@ $(document).ready(function(){
 });
 
 
+
+
+
 /*]]>*/
-
-
+  
 </script>
 
 <div id="list" class="container">
@@ -117,10 +119,23 @@ $(document).ready(function(){
 					<!-- 고유 글의 번호를 출력 해 주는 것이 아닐 카테고리 별로 최신 순부터 1번으로 보여준다. -->
                     <td th:text="${list.bno}"></td>
                     <!-- <td th:text="${listStat.count}"></td> -->
-                    <td class="title" th:text="${list.title}"></td>
+                    
+                    <td class="title">
+	                    <form
+	                    	th:action="@{/star/detailed_check}" 
+	                    	method="get">
+	                   		<input type="hidden" id="bno" name="bno" th:value="${list.bno}">
+	                   		<input type="hidden" id="userNumber" name="userNumber" th:value="${criteria.userNumber }">
+	                   		<!-- css처리가 절실한 부분... -->
+	                   		<button type="submit" th:text="${list.title}"></button>
+	                   	</form>
+                   	</td>
+                    
+                    <!-- <td class="title" th:text="${list.title}" ></td> -->
+                    
                     <!-- 보드 리스트의 인덱스 값과 userNickname의 인덱스 값이 같은 경우에만 출력한다. -->
                     <!-- <td class="writer" th:text="${list.userNumber}"></td> -->
-                     <td class="writer" th:each="nick : ${nicknameList}" th:if="${listStat.index} == ${nickStat.index}">
+                    <td class="writer" th:each="nick : ${nicknameList}" th:if="${listStat.index} == ${nickStat.index}">
                     	<span th:text="${nick}"></span>
                     </td>
                     <!-- <td class="regDate" th:text="${list.regDate}"></td> -->

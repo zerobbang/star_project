@@ -51,5 +51,9 @@ public interface BoardMapper {
 	
 	// 최신 글 1개 불러오기
 	public BoardDTO getLastBoard();
+
+	public String findWriterFromUserNumber(Long writerNumber);
+
+	public ImgDTO[] findImgsFromBno(Long boardBno);
 	
 }

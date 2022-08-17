@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.star.domain.BoardDTO;
+import com.star.domain.ImgDTO;
 import com.star.domain.PageMakeDTO;
 import com.star.domain.UserDTO;
 import com.star.paging.Criteria;
@@ -30,6 +31,8 @@ public class BoardController {
 	
 	@Autowired
 	private UserService userService;
+	
+	
 	
 	// 게시글 조회
 	@RequestMapping(value="/board/list")
@@ -132,10 +135,42 @@ public class BoardController {
 //	}
 
     // 상세글조회 페이지
+//    @GetMapping(value = "/star/detailed_check")
+//    public String detailedCheck() {
+//    	return "/star/detailed_check";
+//    }
+
+    // 상세글조회 페이지
     @GetMapping(value = "/star/detailed_check")
-    public String detailedCheck() {
-    	return "/star/detailed_check";
+    public String detailedCheck2(@RequestParam(value="bno",required=true) Long bno, UserDTO userDto, Model model) {
+    	
+    	BoardDTO boardDto = boardService.getBoardDetail(bno);
+    	System.out.println(boardDto);
+    	
+    	model.addAttribute(boardDto);
+    	System.out.println(model);
+    	
+    	Long writerNumber = boardDto.getUserNumber();
+    	System.out.println(writerNumber);
+    	
+    	String writer = boardService.getWriter(writerNumber);
+    	System.out.println(writer);
+    	
+    	model.addAttribute("writer", writer);
+    	System.out.println(model);
+    	
+    	Long boardBno = boardDto.getBno();
+    	System.out.println(boardBno);
+//    	ImgDTO[] imgs = new ImgDTO[];
+    	ImgDTO[] imgs = userService.getImgsFromBno(boardBno);
+    	
+    	
+    	
+    	System.out.println("끝!!");
+    	
+    	return "star/detailed_check";
     }
+    
     
     // 신고사유 페이지
     @GetMapping(value = "/star/userReport")

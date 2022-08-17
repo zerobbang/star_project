@@ -196,5 +196,13 @@
 	LIMIT 1;
 </select>
 
+<select id="findWriterFromUserNumber" parameterType="Long" resultType="String">
+	select 
+		user_nickname 
+	from 
+		users_table
+	where 
+		user_number = #{writerNumber};
+</select>
 
 </mapper>

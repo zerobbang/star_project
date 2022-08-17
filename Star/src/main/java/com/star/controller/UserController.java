@@ -89,18 +89,24 @@ public class UserController {
 			 
 	    	userDTO = userService.loginUser(userDTO);
 	    	
-	    	System.out.println(rttr.getFlashAttributes());
+//	    	System.out.println(rttr.getFlashAttributes());
 	    	rttr.addFlashAttribute(userDTO);
+//	    	rttr.addAttribute("ID", userDTO.getUserId());
+//	    	rttr.addAttribute("ID", userDTO);
 	    	System.out.println(rttr.getFlashAttributes());
 			 
 			if (userDTO.getUserId() != null) {
+				System.out.println("로그인 성공!");
 		        return "redirect:/star/mainpage";
 			}else {
+				System.out.println("로그인 실패1...");
 				return "star/login";
 			}
 		} catch (DataAccessException e) {
+			System.out.println("로그인 실패2...");
 			return "star/login"; 
 		} catch (Exception e) {
+			System.out.println("로그인 실패3...");
 			return "star/login";  
 		}
  
@@ -250,6 +256,7 @@ public class UserController {
     
     
     // 네비
+    // 테스트할때 쓰던거라 네비 손 볼거 없으면 삭제해도 무방
     @GetMapping(value = "/star/navi")
     public String goNavi() {
     	return "fragments/body";

@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.star.domain.DustDTO;
+import com.star.domain.ImgDTO;
 
 //import javax.servlet.http.HttpServletRequest;
 
@@ -44,5 +45,7 @@ public interface UserService {
 	public String findId(UserDTO userDTO);
 
 	public int changePassword(UserDTO userDto);
+
+	public ImgDTO[] getImgsFromBno(Long boardBno);
 	
 }
