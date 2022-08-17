@@ -71,13 +71,7 @@ public class BoardController {
 	
 	// 게시글 쓰기 화면으로 이동
 	@PostMapping(value="/board/write")
-<<<<<<< HEAD
-//	public String writeBoard(@RequestParam(value = "bno", required = false) final Long bno ,Model model) {
-	public String writeBoard(UserDTO userDto) {
-//	public String writeBoard(@ModelAttribute("params") final UserDTO params, Model model) {
-=======
 	public String writeBoard(Model model,Criteria cri) {
->>>>>>> 6a6db1474b82e736e197636588d4e5df6985eb09
 //		// 글 번호를 뷰에서 받아오는데
 //		if(bno==null) {
 //			// 새로 생성하는 글인 경우 새로운 보드 DTO 객체 생성
@@ -91,25 +85,6 @@ public class BoardController {
 //			model.addAttribute("board", boardDTO);
 //		}
 		
-<<<<<<< HEAD
-//		System.out.println("model"+model);
-
-		System.out.println("------------------"+userDto);
-
-//		System.out.println("params"+params);
-
-//		String writer = userDto.getUserNickname();
-//		Long number = userDto.getUserNumber();
-////		String writer = "코신황";
-////		long number = 1; 
-//		System.out.println("유저 닉네임"+writer);
-//		System.out.println("회원 번호"+number);
-//		
-//		
-//		
-//		model.addAttribute("writer", writer);
-//		model.addAttribute("userNumber", number);
-=======
 		System.out.println("글쓰기 페이지 이동 ");
 		// 이전 값 존재
 		model.addAttribute("criteria", cri);
@@ -125,7 +100,6 @@ public class BoardController {
 		// 로그인 된 유저의 닉네임 보여주기 위해
 		UserDTO userDTO = userService.getUser(userNumber);
 		model.addAttribute("userDTO", userDTO);;
->>>>>>> 6a6db1474b82e736e197636588d4e5df6985eb09
 		
 		return "/board/write";
 	}
@@ -145,12 +119,6 @@ public class BoardController {
 		return "redirect:/board/list" ;
 	}
 	
-<<<<<<< HEAD
-	
-	
-}
-=======
->>>>>>> 6a6db1474b82e736e197636588d4e5df6985eb09
 
 //	// 게시글 쓰기 화면으로 이동
 //	@GetMapping(value="/star/test")

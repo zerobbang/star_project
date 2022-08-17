@@ -83,20 +83,6 @@ public class UserController {
     	System.out.println(userDTO);
     	
 		try {
-<<<<<<< HEAD
-
-			System.out.println("do action!"); 
-//	    	UserDTO userDto = userService.loginUser(userDTO);
-	    	userDTO = userService.loginUser(userDTO);
-	    	model.addAttribute("userDTO",userDTO);
-	    	
-	    	System.out.println(userDTO);
-	    	System.out.println(model);
-//	    	System.out.println(model.getAttribute("userDTO"));
-			 
-			if (userDTO.getUserId() != null) {
-				return "star/main";
-=======
 			
 			System.out.println("do action!");
 	    	System.out.println(userDTO);
@@ -109,7 +95,6 @@ public class UserController {
 			 
 			if (userDTO.getUserId() != null) {
 		        return "redirect:/star/mainpage";
->>>>>>> 6a6db1474b82e736e197636588d4e5df6985eb09
 			}else {
 				return "star/login";
 			}
