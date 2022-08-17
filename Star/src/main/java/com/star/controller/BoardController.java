@@ -34,7 +34,7 @@ public class BoardController {
 	// 게시글 쓰기 화면으로 이동
 	@PostMapping(value="/board/write")
 //	public String writeBoard(@RequestParam(value = "bno", required = false) final Long bno ,Model model) {
-	public String writeBoard(Model model, UserDTO userDto) {
+	public String writeBoard(UserDTO userDto) {
 //	public String writeBoard(@ModelAttribute("params") final UserDTO params, Model model) {
 //		// 글 번호를 뷰에서 받아오는데
 //		if(bno==null) {
@@ -49,7 +49,7 @@ public class BoardController {
 //			model.addAttribute("board", boardDTO);
 //		}
 		
-		System.out.println("model"+model);
+//		System.out.println("model"+model);
 
 		System.out.println("------------------"+userDto);
 
@@ -79,13 +79,6 @@ public class BoardController {
 		boardService.registerBoard(params);
 		return "/star/main" ;
 	}
-	
-	@GetMapping(value="/board/test")
-	public String test() {
-		return "/star/test";
-	}
-	
-	
 	
 	
 	

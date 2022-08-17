@@ -12,7 +12,8 @@
 </head>
 <body>
 
-<script>
+<script th:inline="javascript">
+	/*<![CDATA[*/
 	// 지역, geojson 경로 ->db?
 	var region = new Array('서울','제주','부산','전국','광주','전남','세종','전북','경남','경북','경기','울산','대구','대전','충남','충북','강원','인천');
 	/* var geojsonUrl = ['/geojson/seoul.geojson','/geojson/korea.geojson']; */
@@ -23,8 +24,14 @@
 	
 	// 이전에 생성한 폴리곤들을 지우기 위해 
     var polygons=[] ;
-
+	
     $(document).ready(function(){
+    	// 유저 정보 가져오기
+    	var userRegion = [[${userDTO.userRegion}]];
+    	alert(userRegion);
+    	
+    	/* $("#selectRegion").val(userRegion).prop("selected",true); */
+    	
          $.ajax({
             url : "/star/main2",
             // data : {"userSelect":$("#selectedRegion")},
@@ -48,13 +55,14 @@
         }); */
 
         $("select").on('focus',function(){
-        var previous = this.value;
-        console.log("현재값 : ",previous);
+	        	
+	        var previous = this.value;
+	        console.log("현재값 : ",previous);
         }).change(function(){      
                
             // 이전 폴리곤들 지우기
             deletePolygon(polygons);          
-            
+           
             // 선택한 값
             var next = this.value;
 
@@ -74,12 +82,13 @@
             showMap(userSelectRegionUrl);
         });
     });
+     /*]]>*/  
     
 </script>
 
     <h1>안녕하세요</h1>
     <select id="selectRegion">
-        <option value="전국" selected="selected">전국</option>
+        <option value="전국">전국</option>
         <option value="강원">강원</option>
         <option value="경기">경기</option>
         <option value="경남">경남</option>
@@ -101,15 +110,12 @@
     <input type="text" id="selectedRegion" value="전국"/>
     <div id="mapImg"></div>
     <h2>카카오 이미지 띄우기 비동기 처리 ..?(default 가 비동기)</h2>
-<<<<<<< HEAD
     
-<form th:action="@{/board/write}" method="post" >
-    <input type="text" id="userNumber" th:value="${UserDTO}"/>
-    <input type="text" id="userRegion" th:value="${UserDTO}"/>
+<form th:action="@{/board/write}" method="post" onsubmit="writeBoard(this)" >
+    <input type="text" id="userNumber" th:value="${userDTO.userNumber}"/>
+    <input type="text" id="userRegion" th:value="${userDTO.userRegion}"/>
     <input type="submit" value="글쓰기"/>
-    </form> 
+</form> 
 
-=======
->>>>>>> f051aa0c2bf14f6de0f2060ea7bef4e322d0e603
 </body>
 </html>
