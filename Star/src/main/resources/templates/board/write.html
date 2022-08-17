@@ -64,7 +64,6 @@
 	            </div>
 	            
 	            
-	            
 	         <input type="text" id="pageNum" name="pageNum" th:value="${criteria.pageNum }">
 		     <input type="text" id="amount" name="amount" th:value="${criteria.amount }">
 	        
@@ -76,25 +75,6 @@
     <th:block layout:fragment="script">
         <script th:inline="javascript">
         /*<![CDATA[*/
-        	
-        	
-        // 추가하면 아래에 리스트는 한글로 띄우고 값들은 imgList에 담아서 넘겨주면 방법을 생각해봤는데 필요없다면 지워버리시길
-        // var imgList = [];
-        // const fileInput = document.querySelectorAll("#imgList input");
-        var imgList = Array.from(document.querySelectorAll("#imgList input"));
-     	// 또는 const fileInput = $("#fileUpload").get(0);
-        
-        imgList.onchange = () => {
-        	console.log(imgList.length);
-/*         	  const selectedFile = imgList.files[0];
-        	  console.log(selectedFile);
-        	  console.log(selectedFile.name);
-        	  
-        	  $("#imgsZone").after("<div>" + selectedFile.name + "</div>");
-        	  imgList.push(selectedFile)
-        	  console.log(imgList) */
-        	  
-       	};
        	
        	function addImg(){
        		var i = document.createElement('input');
@@ -102,22 +82,39 @@
        		i.setAttribute("name","img");
        		i.setAttribute("accept",".jpg, .gif, .png, .bmp, .webp, .heif");
        		
+       		var j = document.createElement('input');	
+       		j.setAttribute("type","button");
+       		j.setAttribute("value","삭제");
+       		j.setAttribute("onclick","deleteImg();")
+       		
        		var addImg = document.getElementById("imgList");
        		addImg.appendChild(i);
+       		addImg.appendChild(j);
        		addImg.appendChild(document.createElement('br'));
        	}
+       	
+       	
+       function deleteImg(){
+    	   var addImg = document.getElementById("imgList");	   
+    	   var childList = addImg.children;
+    	   var childListSize = childList.length;
+    	   childList[childListSize-1].remove();
+    	   childList[childListSize-2].remove();
+    	   childList[childListSize-3].remove();  	   
+       }
 			    
         // 제목 , 내용 널값 체크 & 작품전 카테고리일 경우 최소 1개 사진 필요
         var titleRegex = /\S/;
         var contentRegex = /\S/;
         
         function checkNull(){
-        	console.log(titleRegex.test($("#title").val()));
+        	// console.log(titleRegex.test($("#title").val()));
         	
-        	// var imgList = Array.from(document.querySelectorAll("#imgList input"));
-        	console.log(imgList.length);
         	// 첨부 이미지 첫번째 값
         	// console.log(imgList[0].files[0]);
+        	
+        	var imgList = Array.from(document.querySelectorAll("#imgList input"));
+        	var imgListLength = imgList.length;
 
         	if(titleRegex.test($("#title").val()) == false){
         		alert("제목을 입력해주세요.")
@@ -127,6 +124,17 @@
         		return false;
         	}else if( imgList[0].files[0] == undefined && $("#category").val() == "작품전"){
         		alert("작품전은 최소 1개 이상의 사진이 필요합니다.");
+        		return false;
+        	}else if(imgList[0].files[0] != undefined){
+        		// 기본 img 첨부 파일이 존재하든 안하든
+        		// 이미지 버튼 추가를 누르고 이미지 첨부를 하지 않으면
+        		for(var i=0; i<imgListLength; i++){
+        			console.log(imgList[i].files[0]);
+         		   if(imgList[i].files[0] == undefined){
+         			   alert("이미지를 첨부해주세요.");
+         			   return false;
+         		   }
+         	   }
         		return false;
         	}else{
         		alert("글 쓰기 완료");
