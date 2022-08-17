@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BoardDTO {
+public class BoardDTO  {
 	
 	// 카테고리 테이블
 	private String category;
@@ -17,7 +17,7 @@ public class BoardDTO {
 	
 //	privat String category;		// 게시글 테이블의 카테고리도 카테고리 연결
 	
-	private int userNumber;		// 유저 테이블의 유저 넘버와 연결
+	private Long userNumber;		// 유저 테이블의 유저 넘버와 연결
 	
 	private String title;
 	
@@ -30,9 +30,9 @@ public class BoardDTO {
 	private boolean deleteYn;
 	
 	// 신고 테이블
-//	private int bno;		// 게시글 테이블의 bno와 연결 
+//	private int bno;		// 게시글 테이블의 bno와 연결 *게시글 테이블 정보를 끌어올 생각이기에 삭제해도 될듯(외래)
 	
-//	private int userNumber;		// 유저 테이블의 유저 넘버와 연결
+//	private int userNumber;		// 유저 테이블의 유저 넘버와 연결 *게시글 테이블 정보를 끌어올 생각이기에 삭제해도 될듯(외래)
 	
 	private String reportContent;
 	
@@ -52,15 +52,6 @@ public class BoardDTO {
 	private LocalDateTime cmtUpdate;
 	
 	private boolean cmtDeleteYn;
-	
-	// 이미지 테이블
-	private int imtNumber;
-	
-//	private int bno;		// 게시글 테이블의 bno와 연결 
-	
-	private String imgUrl;
-	
-	private boolean imgShowYn;
 
 	@Override
 	public String toString() {
@@ -68,12 +59,20 @@ public class BoardDTO {
 				+ ", content=" + content + ", regDate=" + regDate + ", updateDate=" + updateDate + ", deleteYn="
 				+ deleteYn + ", reportContent=" + reportContent + ", manageYn=" + manageYn + ", cmtNum=" + cmtNum
 				+ ", cmtContent=" + cmtContent + ", writeDate=" + writeDate + ", cmtUpdate=" + cmtUpdate
-				+ ", cmtDeleteYn=" + cmtDeleteYn + ", imtNumber=" + imtNumber + ", imgUrl=" + imgUrl + ", imgShowYn="
-				+ imgShowYn + "]";
+				+ ", cmtDeleteYn=" + cmtDeleteYn + "]";
 	}
 	
-	
-	
+	// 이미지 테이블
+//	private int imgNumber;
+//	
+////	private int bno;		// 게시글 테이블의 bno와 연결 
+//	
+//	private String imgPath;
+//	
+//	private boolean imgShowYn;
+//	
+//	private String imgName;
+
 	
 
 }

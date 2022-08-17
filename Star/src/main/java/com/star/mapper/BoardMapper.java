@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.star.domain.BoardDTO;
+import com.star.domain.ImgDTO;
+import com.star.paging.Criteria;
 
 @Mapper
 public interface BoardMapper {
@@ -30,9 +32,24 @@ public interface BoardMapper {
 	public BoardDTO selectDetail(Long bno);
 	
 	// 게시글 전체 조회
-	public List<BoardDTO> selectList(BoardDTO params);
+	public List<BoardDTO> selectList(Criteria cri);
 	
-
+	// 카테고리별 게시글 총 개수
+	public int getCount(String category);
 	
+	// 상세글 조회 신고하기	
+	public void report(BoardDTO boardDTO);
+	
+	// 내 글 조회
+	public List<BoardDTO> getMyListBoard(Criteria cri);
+	
+	// 내가 쓴 글 게시글 총 수
+	public int getMyCount(Long userNumber);
+	
+	// 이미지 저장
+	public int insertImg(ImgDTO imgDTO);
+	
+	// 최신 글 1개 불러오기
+	public BoardDTO getLastBoard();
 	
 }

@@ -1,5 +1,9 @@
 package com.star;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +19,7 @@ import com.star.mapper.BoardMapper;
 import com.star.mapper.DustMapper;
 import com.star.mapper.RegionMapper;
 import com.star.mapper.UserMapper;
+import com.star.paging.Criteria;
 
 @SpringBootTest
 public class MapperTests {
@@ -36,6 +41,7 @@ public class MapperTests {
 	public void testOfInsert() {
 		UserDTO params = new UserDTO();
 		
+
 		 params.setUserNickname("가영"); 
 		 params.setUserId("zerobbang");
 		 params.setUserEmail("gydiane1008@gmail.com");
@@ -147,5 +153,7 @@ public class MapperTests {
 		}
 		
 	}
+
+	
 
 }

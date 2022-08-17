@@ -1,5 +1,6 @@
 package com.star.service;
 
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +9,10 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import com.star.domain.DustDTO;
 import com.star.domain.MailDTO;
 import com.star.domain.UserDTO;
+import com.star.mapper.DustMapper;
 import com.star.mapper.UserMapper;
 
 import lombok.AllArgsConstructor;
@@ -20,30 +23,29 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private DustMapper dustMapper;
+	
+	private JavaMailSender emailSender;
 
 	@Override
 	public boolean registerUser(UserDTO params) {
 		
 		return false;
 	}
-
-	 
 	  
-//	유저 정보 조회
+	//	유저 정보 조회
 	@Override
 	public UserDTO getUser(Long userNumber) {             
 		return userMapper.detailUser(userNumber);
 	}
 	
-	
-
-	private JavaMailSender emailSender;
-
-	
 	/* void */
     public String sendSimpleMessage(MailDTO mailDto) {
-    	// 회원 정보 이메일과 일치하는지 확인 하기
     	
+    	System.out.println("서비스 - 메일");
+    	// 회원 정보 이메일과 일치하는지 확인 하기
     	Random random = new Random();
 		String certifyNum = ""; 
 				
@@ -55,15 +57,16 @@ public class UserServiceImpl implements UserService{
 				 
     	mailDto.setTitle("인증번호입니다.");
     	mailDto.setContent(certifyNum);
- 
+    	System.out.println("111111111111");
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("gdqqdq05@gmail.com");
         message.setTo(mailDto.getAddress());
         message.setSubject(mailDto.getTitle());
         message.setText(mailDto.getContent());
-        
+        System.out.println("22222222222");
         emailSender.send(message);
+        System.out.println("333333333333");
         return certifyNum;
     }
     
@@ -139,11 +142,7 @@ public class UserServiceImpl implements UserService{
         String[] returndata = {result};
         
         return returndata;
-		
-		
 	}
-
-
 
 	@Override
 	public String changeInfo(UserDTO userDto) {
@@ -162,6 +161,51 @@ public class UserServiceImpl implements UserService{
 			return "fail";
 		}
 	}
-    	
+
+	// 회원탈퇴
+	@Override
+	public void pagedown(Long userNumber) {
+		// TODO Auto-generated method stub
+		System.out.println("유저 impl 확인");
+		System.out.println(userNumber);
+//		Long userNumber = userDto.getUserNumber();
+		userMapper.pagedown(userNumber);
+	}
+	
+	// 예측 리스트 불러오기 (임시)
+	@Override
+	public List<DustDTO> getPrediction(DustDTO params) {
+		
+		// List<DustDTO> boardList = Collections.emptyList();
+		List<DustDTO> boardList;
+		System.out.printf("이건 테스트용 : " + params.getRegion() + "\n");
+		
+		if (params.getRegion() == null || (params.getRegion().equals("전국"))) {
+			boardList = dustMapper.getPredictionList2(params);
+		}else {
+			boardList = dustMapper.getPredictionList1(params);
+		}
+		return boardList;
+	}
+
+	@Override
+	public String findId(UserDTO userDTO) {
+		String result = userMapper.findIdFromEmail(userDTO);
+		
+		return result;
+	}
+
+	@Override
+	public int changePassword(UserDTO userDTO) {
+    	int result = userMapper.changePassword(userDTO);
+    	return result;
+	}
+
+	// 닉네임 조회
+	@Override
+	public String getNickname(Long userNumber) {
+		String result = userMapper.getNickname(userNumber);
+		return result;
+	}
 	
 }

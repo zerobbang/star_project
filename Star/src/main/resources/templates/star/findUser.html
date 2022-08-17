@@ -9,86 +9,170 @@
 <body>
     <script>
     	
+    	var userInputEmail;
     	var certify;
+    	
+    	var emailCheck = false;
     	var certifyCheck = false;
-    	/* 아래는 블로그 */
-    	function dataSend() {			
+    	
+    	var emailRegex= /[a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z-.]+/;
+    	
+    	function mailSend() {			
     		
-    	    var email=$("#email_id").val();
+    		if (emailCheck == false){
+    			return;
+    		}
+    		
+    	    userInputEmail = $("#userEmail").val();
 			
     	    var mailDto={
-    	        address:email
+    	        address:userInputEmail
     	    };
 			
-			console.log(mailDto)
-			console.log("start!!")
     	    $.ajax({
-    	        url: "/dataSend",
+    	        url: "/mailSend",
     	        data: mailDto,
     	        type:"POST",
     	    }).done(function (fragments) {
-    	    	var fragment = fragments[0];
-    	    	certify = fragments[1];
-    	    	console.log(fragment);
+    	    	certify = fragments[0];
     	    	console.log(certify);
     	    	
-    	        $("#resultDiv").replaceWith(fragment);
+    	        $("#emailError").replaceWith("<div id=emailError>메일을 확인해주세요!</div>");
     	    });
 		}
     	
-    	
+    	// 인증번호 체크하기
     	function check_certify(){
     		var input_data = $("#certify_id").val();
-    		var user_email = $("#email_id").val();
     		console.log(input_data);
     		console.log(certify);
     		
+    		// 인증이 성공한경우
     		if (input_data == certify){
     			certifyCheck = true;
-    			alert("인증 성공")
-    			$("#resultDiv").replaceWith("<div id=resultDiv></div>");
-    			$("#email_id").replaceWith('<input type="text" name="address" id="email_id" readonly="readonly" value='+ user_email +'>' );
+    			
+        	    var userDto={
+        	        userEmail:userInputEmail
+        	    };
+    			
+        	    $.ajax({
+        	        url: "/findId",
+        	        data: userDto,
+        	        type:"POST",
+        	    }).done(function (userId) {
+        	    	/* var userId = userId; */
+        	    	
+        	    	console.log(userId);
+        	    	alert("1차 테스트");
+        	    	
+        	        if (userId == null){
+        	        	certifyCheck = false;
+        	        	$("#resultDiv").replaceWith('<div id="resultDiv">'+'</div>');
+        	        	console.log("samesame")
+        	        } else {
+        	        	certifyCheck = true;
+        	        	
+        	        	$("#resultDiv").replaceWith(
+        	        			'<div id="resultDiv">' +
+        	        				'<form action="/star/changePassword" method=post>' +
+	        	        				'<div>' +
+	        	        					'당신의 아이디는 ' + userId +'입니다' +  
+	       	        					'</div>' +
+	       	        					'<input type="text" id="userId" name="userId" value="' + userId + '"/>' +
+	       	        					'<button type="submit">비밀번호 변경하러 가기</button> ' +
+       	        					'</form>' +
+    	        				'</div>');
+        	        }
+        	    });
+        	    
+    			/* alert("인증 성공") */
+    			$("#emailError").replaceWith("<div id=emailError></div>");
+    			$("#userEmail").replaceWith('<input type="text" name="userEmail" id="userEmail" readonly="readonly" value='+ userInputEmail +'>' );
+    			
+    			
+    			
+    			
     		} else {
     			alert("인증 실패")
     		}
     		console.log(certifyCheck);
     	}
     	
-    	function movePage (){
-    		// 입력한 이메일과 회원 번호 넘겨주기
-    		var user_email = $("#email_id").val();
-    		var user_email = $("#email_id").val();
-    		 var userInfo = {
-    			
-    		 }
-    		
-    		$.ajax({
-    			url:"/moveFind",
-    			/* data : , */
-    		});
-    	}
     	
-    
+    	
+    	/* 이메일 유효성 체크 */
+    	$( document ).ready( function() {
+            
+            // 모든 텍스트의 변경에 반응합니다.
+            $("#userEmail").change("change keyup paste", function() {
+            	
+            	// 현재 변경된 데이터 셋팅
+                var newValue = $(this).val();
+            	var rule = "";
+            	
+            	// 표현식에 부합하는지 체크
+            	try{
+            		rule = newValue.match(emailRegex)[0];
+	                console.log(rule);
+            	} catch(e){
+            		console.log("fail")
+            	};
+            	
+            	// 바뀐 칸이 빈칸이라면
+            	if (newValue==""){
+            		$("#emailError").replaceWith('<div id="emailError" class="error">' + '이메일 계정을 입력해주세요.' + '</div>');
+            		return;
+            	}
+            	
+            	// 정규식과 일치하는게 없거나 그 외의 입력값이 있을경우
+                if(rule != newValue || rule == ""){
+                	$("#emailError").replaceWith('<div id="emailError" class="error">' + 'e-mail형식으로 작성해주세요.' + '</div>');
+                	emailCheck = false;
+                	return;
+                }
+                
+                //json 형태로 전송
+        	    var userDto={
+        	        userEmail:newValue
+        	    };
+    			
+        	    $.ajax({
+        	        url: "/inputEmailCheck",
+        	        data: userDto,
+        	        type:"POST",
+        	    }).done(function (fragments) {
+        	    	
+        	    	var uniqueResult = fragments[0];
+        	    	
+        	        if (uniqueResult == "이미 사용중입니다."){
+        	        	emailCheck = true;
+        	        	$("#emailError").replaceWith('<div id="emailError" ' + '</div>');
+       	        	} else {
+        	        	emailCheck = false;
+        	        	$("#emailError").replaceWith('<div id="emailError" class="error"> ' + '해당 이메일로 등록된 계정이 없습니다.' + '<br><a href="/star/signup">회원가입</a>을 진행해주세요.' +'</div>');
+        	        }
+        	    });
+            });
+    	});
     </script>
     
     
     <form>
    		<div class="emailAddress">
     		<span>메일 주소</span>
-            <input type="text" name="address" id="email_id" placeholder="이메일 주소를 입력하세요">
+            <input type="text" id="userEmail" name="userEmail" placeholder="이메일 주소를 입력하세요">
             
-            <input value="메일 발송" type="button" onclick="dataSend()">
+            <input value="메일 발송" type="button" onclick="mailSend()">
 	        
-	        <div id="resultDiv">
-	          <p th:if="${msg}!=null" th:text="${msg}"></p>
-	        </div>
+	        <div id="emailError" class="error"></div>
        	</div>
        	인증 번호
         <input type="text" id="certify_id" placeholder="인증번호 입력">
         <input type="button" onclick="check_certify()" value="인증하기">
+        <div id="resultDiv"></div>
      </form>
     
-    <input type = "button" onclick="movePage()" value="계정 찾기">
+    <a href="/star/login"><input type = "button" value="로그인"></a>
 
 </body>
 </html>

@@ -37,8 +37,9 @@
  <sql id="imgColumns">
  	img_number
  	, bno
- 	, img_url
+ 	, img_path
  	, img_show_yn
+ 	, img_name
  </sql>
  
  <!-- 게시글 카테고리 -->
@@ -105,23 +106,95 @@
  	AND delete_yn = 0
  </select>
  
+  <!-- 신고하기 -->
+<insert id="report" parameterType="BoardDTO">
+	<!-- insert into report_table values (#{bno},#{userNumber},#{reportContent},0); -->
+	insert into report_table values
+		(2
+		, 2
+		, #{reportContent}
+		, 0);
+</insert>
+ 
  
  <!-- 게시글 리스트 조회 -->
- <select id="selectList" parameterType="BoardDTO" resultType="BoardDTO">
+ <select id="selectList" resultType="BoardDTO">
  	SELECT 
  		<include refid="boardColumns"/>
 	FROM 
 		board_list
 	WHERE 
-		deltet_yn = 0
+		delete_yn = 0
+	AND 
+		category = #{category}
 	ORDER BY
 		bno DESC 
+	LIMIT 
+		#{skip},#{amount}
  </select>
- 
- 
- 
- 
+	
+	
+<!-- 마이 페이지 글 조회 -->
+ <select id="getMyListBoard" resultType="BoardDTO">
+ 	SELECT 
+ 		<include refid="boardColumns"/>
+	FROM 
+		board_list
+	WHERE 
+		delete_yn = 0
+	AND 
+		user_number = #{userNumber}
+	ORDER BY
+		bno DESC 
+	LIMIT 
+		#{skip},#{amount}
+</select>
 
+
+<!-- 총 게시글 수 출력 -->
+<select id="getCount" parameterType="String" resultType="int">
+	SELECT 
+ 		count(*)
+	FROM 
+		board_list
+	WHERE 
+		delete_yn = 0
+		AND category = #{category}
+</select>
+
+<!-- 총 마이 페이지 수 출력 -->
+<select id="getMyCount" parameterType="Long" resultType="int">
+	SELECT 
+ 		count(*)
+	FROM 
+		board_list
+	WHERE 
+		delete_yn = 0
+		AND user_number = #{userNumber}
+</select>
+
+<!-- 이미지 저장 -->
+<insert id="insertImg" parameterType="BoardDTO">
+	INSERT INTO img_table
+	VALUES (
+		#{imgNumber}
+		,#{bno}
+		,#{imgPath}
+		,1
+		,#{imgName}
+		)
+</insert>
+
+<!-- 최근 마지막 게시글 데이터 불러오기 > bno 얻어오기 위해 -->
+<select id="getLastBoard" resultType="BoardDTO">
+	SELECT 
+		*
+	FROM 
+		board_list
+	ORDER BY 
+		bno DESC
+	LIMIT 1;
+</select>
 
 
 </mapper>

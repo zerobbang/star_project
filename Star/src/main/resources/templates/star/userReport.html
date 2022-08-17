@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>신고 사유</title>
+    <style>
+        .title {
+            text-align: center;
+            font-size: 25px;
+        }
+        .check_btn {
+            padding: 2%;
+            text-align: center;
+        }
+        .check_btn input {
+            width: 140px;
+            height: 45px;
+            border-radius: 5px;
+            font-size: 20px;
+            color: aliceblue;
+            border: none;
+        }
+        .check_btn #cancel {
+            background-color: lightslategray;
+        }
+        .check_btn #OK {
+            background-color: rgb(14, 121, 192);
+        }
+        .report_reason {
+            display: flex;
+            flex-direction: column;
+            margin-left: 10px;
+        }
+    </style>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript">
+        
+        function transferReport(){
+        	
+        	
+        	/*  강사님께서 시도하신 코드 
+        	alert("js함수 실행됨");
+			$('#reportReasonForm').submit();
+			alert("submit 실행됨");
+ 			window.open("about:black", "_self").close();
+ 			*/
+ 			var userInputReason = $('input[name="reason"]:checked').val();
+ 			
+			var boardDto = {
+				reportContent:userInputReason
+			};
+			
+			$.ajax({
+    	        url: "/star/report",
+    	        data: boardDto,
+    	        type:"POST",
+    	    }).done(function(returnData) {
+    	    	
+    	    	self.close();
+   	    	});
+ 			
+        }
+        
+        
+    </script>
+</head>
+<!-- 작은창 크기 조정 resizeTo -->
+<body onload="window.resizeTo(400, 500, 700, 700)">
+    <div class="report">
+    <div class="title">
+        <h3>신 고</h3>
+    </div>
+    <form id="reportReasonForm" th:action="@{/star/report}" method="post">
+    <div class="report_reason" >
+        <p>신고 사유</p>
+        <p><label for="reason"><input type="radio" name="reason" id="reason" value="관련 없는 내용">관련 없는 내용</label></p>
+        <p><label for="reason"><input type="radio" name="reason" id="reason" value="광고성">광고성</label></p>
+        <p><label for="reason"><input type="radio" name="reason" id="reason" value="욕설/비난">욕설/비난</label></p>
+        <p><label for="reason"><input type="radio" name="reason" id="reason" value="기타">기타</label></p>
+    </div>
+    <div class="form-group">
+            <!-- <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="option" name="option" class="custom-control-input" value="1" >
+                <label class="custom-control-label" for="option1">Option1</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="option" name="option" class="custom-control-input" value="2">
+                <label class="custom-control-label" for="option2">Option2</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" id="option" name="option" class="custom-control-input" value="3">
+                <label class="custom-control-label" for="option3">Option3</label>
+            </div> -->
+        </div>
+    <div class="check_btn">
+    <label for="cancel"><input type="button" name="cancel" id="cancel" value="Cancel" onclick="self.close();"></label>
+    
+    	<!-- 8/12 10:25 -->
+    	<!-- 버튼 태그에 a태그를 달아두었어서 get 매핑 에러가 떴던것으로 보임 -->
+    <!-- <a href=/star/report> -->
+    <!-- <label for="OK"><button type="submit" name="OK" id="OK" value="OK" onclick="moveClose();">OK</button></label> -->
+    <label for="OK"><button type="button" name="OK" id="OK" value="OK" onclick="transferReport()">OK</button></label>
+    <!-- </a> -->
+    </div>
+    </form> 
+</div>
+</body>
+</html>

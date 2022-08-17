@@ -1,15 +1,17 @@
 package com.star.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.star.domain.DustDTO;
 import com.star.domain.MailDTO;
 import com.star.domain.UserDTO;
 import com.star.service.UserService;
@@ -20,27 +22,42 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-//	메인 페이지
+	//	메인 페이지
 	@GetMapping(value = "/star/mainpage")
-	public String openUser(Model model) {
+	public String openUser(UserDTO userDTO) {
+//		System.out.println("mainpage로 잘왔음...");
 		return "star/main";
-	} 
+	}
+	
+//	메인 페이지
+	@PostMapping(value = "/star/mainpage")
+	public String openMain(UserDTO userDTO, RedirectAttributes rttr) {
+		
+		rttr.addFlashAttribute(userDTO);
+		
+		return "star/main";
+	}
 	
 	// ajax 중간 main
 	@GetMapping(value = "/star/main2")
 	public String openMap() {
 		return "star/main2";
+	}	
+	
+	// 메인페이지 ( with. 중간에 있는 테이블 )
+	@GetMapping(value = "/star/main3")
+	public String openPredictionList(DustDTO params, Model model) {
+		List<DustDTO> dustList = userService.getPrediction(params);
+		model.addAttribute("dustList", dustList); 
+		System.out.println(params);
+		 
+		System.out.println(dustList.get(0).getHumidity());
+
+		return "star/main3"; 
 	}
 
-//
-//	// 메일 
-//	public UserController(UserService userService) {
-//        this.userService = userService;
-//    }
-
-
 	@GetMapping(value = "/star/sendmail.do")
-	public String openMailPage(Model model) {
+	public String openMailPage() {
 		return "star/sendmail";
 
 	}
@@ -52,25 +69,21 @@ public class UserController {
         return "star/sendmail";
     }
     
-    // 로그인 페이지
+    // 로그인 페이지 (logIn안에 값은 임시적으로 네비바 띄우기 위해서 적어놓음)
     @GetMapping(value = "/star/login")
-    public String logIn(Model model) { 
-//    	UserDTO userdto = new UserDTO(); 
-//    	model.addAttribute("Account",userdto );
+    public String logIn(UserDTO userDTO) { 
+    	System.out.println("test!");
     	return "star/login";
     } 
     
-    // 로그인 체크  /star/logInCheck
+    // 로그인 체크
     @PostMapping(value = "/star/login") 
-    public String logInCheck(UserDTO userDTO, Model model) {
-
-//    	System.out.println(userDTO.toString());
-  	
-//    	여기에서 이제 service에 정의한 함수를 사용할거임
-//    	그거로 db에 있는 id,password와 일치하면 메인페이지로 이동시킬거임
-//    	근데 db에 접근해야 되니까 mapper.xml에도 관련 코드를 작성해줘야 됨
+    public String logInCheck(UserDTO userDTO, RedirectAttributes rttr) {
+    	
+    	System.out.println(userDTO);
     	
 		try {
+<<<<<<< HEAD
 
 			System.out.println("do action!"); 
 //	    	UserDTO userDto = userService.loginUser(userDTO);
@@ -83,6 +96,20 @@ public class UserController {
 			 
 			if (userDTO.getUserId() != null) {
 				return "star/main";
+=======
+			
+			System.out.println("do action!");
+	    	System.out.println(userDTO);
+			 
+	    	userDTO = userService.loginUser(userDTO);
+	    	
+	    	System.out.println(rttr.getFlashAttributes());
+	    	rttr.addFlashAttribute(userDTO);
+	    	System.out.println(rttr.getFlashAttributes());
+			 
+			if (userDTO.getUserId() != null) {
+		        return "redirect:/star/mainpage";
+>>>>>>> 6a6db1474b82e736e197636588d4e5df6985eb09
 			}else {
 				return "star/login";
 			}
@@ -91,25 +118,12 @@ public class UserController {
 		} catch (Exception e) {
 			return "star/login";  
 		}
-
-
-
-
-//    	if(userDto.getUserId() != null) {
-//    		return "star/findUser"; 
-//    	}
-//    	else if(userDto.getUserId() == null){
-//    		return "star/login"; 
-//    	}
-//    	else { 
-//    		return "star/sendmail";
-//    	} 
-    	
-    }    
+ 
+    };
     
     // 회원가입 페이지 (임시로 sendmail) -> (signUp으로 변경)
     @GetMapping(value = "/star/signup")
-    public String singUp(Model model) {
+    public String singUp(UserDTO userDTO) {
     	return "star/signUp";
 	}  
 
@@ -119,10 +133,10 @@ public class UserController {
     	return "star/findUser";
     }
 
-	
-	@RequestMapping(value = "/dataSend",method = RequestMethod.POST)
+    // 입력한 이메일로 메일 보내기
+	@PostMapping(value = "/mailSend")
 	@ResponseBody
-    public String[] dataSend(Model model,MailDTO mailDto){
+	public String[] dataSend(MailDTO mailDto){
 		
 		System.out.println("메일 전송 시작");
 		userService.sendSimpleMessage(mailDto);
@@ -136,9 +150,9 @@ public class UserController {
     };
     
     // 회원가입 기능
-    @RequestMapping(value = "/signup.do",method = RequestMethod.POST)
+    @PostMapping(value = "/signup.do")
     @ResponseBody
-    public String doSingUp(UserDTO userDTO, Model model) {
+    public String doSingUp(UserDTO userDTO) {
     	 
     	System.out.println(userDTO.toString());
     	
@@ -149,15 +163,14 @@ public class UserController {
     		return "fail";
     	}
     	
-    	
     	return "success";
 	};
 	
     
     // id 유일성 체크
-    @RequestMapping(value = "/inputIDCheck",method = RequestMethod.POST)
+    @PostMapping(value = "/inputIDCheck")
 	@ResponseBody
-    public String[] inputCheck(Model model,UserDTO userDto){
+    public String[] inputCheck(UserDTO userDto){
 		
         String[] returndata = userService.idCheck(userDto);
         
@@ -165,9 +178,9 @@ public class UserController {
     };
     
     // 닉네임 유일성 체크
-    @RequestMapping(value = "/inputNicknameCheck",method = RequestMethod.POST)
-	@ResponseBody
-    public String[] inputNicknameCheck(Model model,UserDTO userDto){
+    @PostMapping(value = "/inputNicknameCheck")
+    @ResponseBody
+    public String[] inputNicknameCheck(UserDTO userDto){
 		
         String[] returndata = userService.nicknameCheck(userDto);
         
@@ -175,31 +188,87 @@ public class UserController {
     };
     
     // 이메일 유일성 체크
-    @RequestMapping(value = "/inputEmailCheck",method = RequestMethod.POST)
-	@ResponseBody
-    public String[] inputEmailCheck(Model model,UserDTO userDto){
+    @PostMapping(value = "/inputEmailCheck")
+    @ResponseBody
+    public String[] inputEmailCheck(UserDTO userDto){
 		
 		String[] returndata = userService.emailCheck(userDto);
 		
         return returndata;
     };
     
-    @GetMapping(value = "/star/changeInfo")
-	public String changeInfo(UserDTO userDTO, Model model) {
-    	model.addAttribute("UserInfo",userDTO);
+    // 정보 변경 페이지 이동
+    @PostMapping(value = "/star/changeInfo")
+    public String changeInfoPage(UserDTO userDto, RedirectAttributes rttr) {
+    	
+    	rttr.addFlashAttribute(userDto);
+    	
 		return "star/changeInfo";
 	}
     
-    // 이메일 유일성 체크
-    @RequestMapping(value = "/changeInfo.do",method = RequestMethod.POST)
+    // 정보 변경 실행
+    @PostMapping(value = "/changeInfo.do")
+    public String changeInfo(UserDTO userDto, RedirectAttributes rttr){
+		
+		userService.changeInfo(userDto);
+		
+		rttr.addFlashAttribute(userDto);
+		
+        return "/star/main";
+    };
+    
+    
+    // 회원탈퇴
+    @PostMapping(value = "/star/signdown")
+    public String deleteUser(UserDTO userDto) {
+    	
+    	System.out.println("컨트롤러 확인");
+    	System.out.println(userDto);
+    	Long userNumber = userDto.getUserNumber();
+    	userService.pagedown(userNumber);
+    	
+    	System.out.println("회원탈퇴 완료됨!");
+    	
+    	return "redirect:/star/mainpage";
+    }
+    
+    // id 찾기
+    @PostMapping(value = "/findId")
 	@ResponseBody
-    public String changeInfo(Model model,UserDTO userDto){
+    public String findId(UserDTO userDTO){
 		
-		String returndata = userService.changeInfo(userDto);
-		
+        String returndata = userService.findId(userDTO);
+        
         return returndata;
     };
     
+    // 비밀번호 변경 페이지
+    @PostMapping(value = "/star/changePassword")
+    public String changePasswordPage(UserDTO userDto, RedirectAttributes rttr){
+		
+		rttr.addFlashAttribute(userDto);
+		System.out.println(rttr.getFlashAttributes());
+		
+        return "/star/changePassword";
+    };
+    
+    // 비밀번호 변경 실행
+    @PostMapping(value = "/changePassword.do")
+    public String changePassword(UserDTO userDTO){
+		
+		int result = userService.changePassword(userDTO);
+		System.out.println(result);
+		
+		return "redirect:/star/login";
+
+    };
+    
+    
+    // 네비
+    @GetMapping(value = "/star/navi")
+    public String goNavi() {
+    	return "fragments/body";
+    }
     
     
 }

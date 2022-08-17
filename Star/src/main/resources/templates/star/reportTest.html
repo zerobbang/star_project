@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--     <link href="/static/css/reportTest.css"> -->
+    <title>상세글 조회 페이지</title>
+	<style>
+	.temp3{
+            width:100px;
+            height:20px;
+            border:1px solid green;
+        }
+        .temp4{
+            width:480px;
+            height:100px;
+            border:1px solid blue;
+        }
+        .container {
+            width:1500px;
+            height:200px;
+
+            border:1px solid blue;
+            overflow: auto;
+        }
+	</style>
+	<!-- 신고 팝업창 -->
+	<script type="text/javascript">
+  function openPop(){
+    var popup = window.open('/star/userReport', '테스트'
+    						, 'width=500px,height=500px, top=100px, left=300px, scrollbars=no');
+  }
+	</script>
+</head>
+<body>
+    <!-- <div class="temp1"> 네비게이션 </div> -->
+    <div style="width:1450px; height:20px; padding:20px; border:2px solid blue;">네비</div>
+    
+      <!-- 신고하기 팝업 -->     
+  <div class="wrap">
+	<button type="button" onclick="openPop()">신고</button>
+ </div>
+ 
+ <!-- 상세글 조회 페이지 -->
+ 	<div>코천가여:</div>
+    <div>화려한 말머리 성운</div>
+    <div style="width:450px; height:400px; margin:0 auto; border:1px solid green;">
+        사진
+    </div>
+    <br>
+    <div>화려한 말머리 성운</div>
+    <br>
+    <div>오늘 날씨가 너무 좋다는 정보를 보고 얼른 장비 챙겨서 강원도로 가서 관측했습니다!</div>
+    <div>날씨가 좋으니 실력보다 더 잘 나온거 같아서 뿌듯하네요!</div>
+    <br>
+    <br>
+    <div>- 촬영 일시 : 2022.07.05</div>
+    <div>- 촬영 장소 : 강원도 홍천읍 방내리</div>
+    <div>- 적도의 : Garnet32(자작하모닉적도의), asiair pro</div>
+    <div>- 망원경 : 자작 12인치 F4 반사망원경(gso미러), sharpstar 1xmpcc</div>
+    <div>- 카메라 : asi294mm pro ( -20°c)</div>
+    <div>- 이미지처리 : pixlnsight</div>
+    <div>Antlia 3.0nm Ha 30장 / 2bin / gain 200 / 180 sec</div>
+    <div>Antlia 3.0nm O3 40장 / 2bin / gain 200 / 180 sec</div>
+    <div>Antlia 3.0nm S2 30장 / 2bin / gain 200 / 180 sec</div>
+    <br>
+    <br>
+    <button> ❤️좋아요!</button>
+    <br>
+    <br>
+    <br>
+    <input type="text" style="width: 80%; height: 40px; border-radius: 5px;"  placeholder="내용을 입력해주세요">
+    <br>
+    <br>
+    <div>서누족장      2022.07.08  14:50 </div>
+    <div>와~ 너무 잘 나왔습니다~</div>
+    <br>
+    <br>
+    <span>코천가여 </span> 
+    <span>
+        <button>삭제</button>
+    </span>
+    <span>  2022.07.08  14:50 </span>
+    <div>감사합니다~ 서누족장님 사진도 잘보고 잇어용!</div>    <br>
+    <br>
+    <div>헬스남친      2022.07.08  14:50 </div>
+    <div>와우!  디테일 엄청나네요!</div>
+</body>
+</html>

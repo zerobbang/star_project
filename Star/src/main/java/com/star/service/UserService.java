@@ -1,7 +1,12 @@
 package com.star.service;
 
 
+
+import java.util.List;
+
 import org.springframework.stereotype.Service;
+
+import com.star.domain.DustDTO;
 
 //import javax.servlet.http.HttpServletRequest;
 
@@ -14,6 +19,9 @@ public interface UserService {
 	public boolean registerUser(UserDTO params);
 	
 	public UserDTO getUser(Long userNumber);
+	
+	// 닉네임 조회
+	public String getNickname(Long userNumber);
 
 	public String sendSimpleMessage(MailDTO mailDto);
 	
@@ -28,5 +36,13 @@ public interface UserService {
 	public String[] emailCheck(UserDTO userDto);
 
 	public String changeInfo(UserDTO userDto);
+
+	public void pagedown(Long userNumber);
+	
+	public List<DustDTO> getPrediction(DustDTO params);
+
+	public String findId(UserDTO userDTO);
+
+	public int changePassword(UserDTO userDto);
 	
 }

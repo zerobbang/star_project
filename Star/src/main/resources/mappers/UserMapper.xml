@@ -16,22 +16,23 @@
 		, admin_yn
 	</sql>
 	
-		<insert id="insertUser" parameterType="UserDTO">
-		INSERT INTO users_table(
-			<include refid="userColumns"/>
-			) VALUES (
-				#{userNumber}
-				, #{userNickname}
-				, #{userId}
-				, #{userPassword}
-				, #{userEmail}
-				, #{userRegion}
-				, NOW()
-				, false
-				, NULL
-				, false
-			)
+	<insert id="insertUser" parameterType="UserDTO">
+	INSERT INTO users_table(
+		<include refid="userColumns"/>
+		) VALUES (
+			#{userNumber}
+			, #{userNickname}
+			, #{userId}
+			, #{userPassword}
+			, #{userEmail}
+			, #{userRegion}
+			, NOW()
+			, false
+			, NULL
+			, false
+		)
 	</insert> 
+	
 	
 	<select id="detailUser" parameterType="long" resultType="UserDTO">
 		SELECT <include refid="userColumns"/>
@@ -39,19 +40,23 @@
 		WHERE user_number = #{userNumber}
 	</select>
 	
-	<!-- 새로 작성한 -->
+	<!-- 닉네임만 가져온다 -->
+	<select id="getNickname" parameterType="long" resultType="String">
+		SELECT user_nickname
+		FROM users_table
+		WHERE user_number = #{userNumber}
+	</select>
+	
+	<!-- 로그인 가능 여부 체크 -->
     <select id="loginCheck" parameterType="UserDTO" resultType="UserDTO">
-<!-- 		SELECT user_id, user_password
-		FROM users_table 
-		WHERE user_id = #{userId} AND user_password = #{userPassword} -->
 		SELECT
-			<!-- user_number, user_id, user_password -->
 			*
 		FROM
 			users_table 
 		WHERE
 			user_id = #{userId} AND user_password = #{userPassword} AND withdrawal_yn = 0
 	</select>
+	
 	
 	
 
@@ -79,7 +84,7 @@
 		update users_table
 		set user_nickname = #{userNickname}
 			, user_region = #{userRegion}
-		where user_id = 'id1';
+		where user_id = #{userId};
 	</update>
 
 	<update id="updatePassNickRegion" parameterType="UserDTO">
@@ -87,8 +92,30 @@
 		set user_password = #{userPassword}
 			, user_nickname = #{userNickname}
 			, user_region = #{userRegion}
-		where user_id = 'id1';
+		where user_id = #{userId};
 	</update>
 
-
+	<!-- 마이페이지_회원탈퇴 -->
+	<update id="pagedown" parameterType="long">
+		update users_table 
+		set withdrawal_yn = 1
+			, withdrawal_date = now()
+		where user_number=#{userNumber};
+	</update>
+	
+	
+	<!-- 이메일 계정으로 아이디 찾기 -->
+	<select id="findIdFromEmail" parameterType="UserDTO" resultType="String">
+		select user_id 
+		from users_table
+		where user_email = #{userEmail};
+	</select>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="changePassword" parameterType="UserDTO">
+		update users_table 
+		set user_password = #{userPassword}
+		where user_id = #{userId};
+	</update>
+	
 </mapper>
