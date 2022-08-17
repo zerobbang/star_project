@@ -134,7 +134,7 @@ $(document).ready(function(){
         </table>
         
         <!-- 글쓰기 버튼 -->
-        <form th:action="@{/board/write}" method="post" >
+        <form th:if="${criteria.userNumber} != 0" th:action="@{/board/write}" method="post" >
 			<input type="text" id="pageNum" name="pageNum" th:value="${criteria.pageNum }">
 	        <input type="text" id="amount" name="amount" th:value="${criteria.amount }">
 	        <input type="text" id="category" name="category" th:value="${criteria.category }">

@@ -76,6 +76,9 @@
 </head>
 <body>
 	<script>
+	
+	
+	
 		// 지역, geojson 경로 ->db?
 		var region = new Array('서울','제주','부산','전국','광주','전남','세종','전북','경남','경북','경기','울산','대구','대전','충남','충북','강원','인천');
 		var geojsonUrl = new Array ('/geojson/seoul.geojson','/geojson/jeju.geojson','/geojson/busan.geojson','/geojson/korea.geojson','/geojson/gwangju.geojson','/geojson/jn.geojson','/geojson/sejong.geojson','/geojson/jb.geojson','/geojson/gn.geojson','/geojson/gb.geojson','/geojson/gg.geojson','/geojson/ulsan.geojson','/geojson/daegu.geojson','/geojson/daejeon.geojson','/geojson/cn.geojson','/geojson/cb.geojson','/geojson/gangwon.geojson','/geojson/incheon.geojson');
@@ -87,6 +90,10 @@
 	    var polygons=[] ;
 	
 	    $(document).ready(function(){
+	    	
+	    	var userNumber = document.getElementById("userNumber");
+	    	console.log(typeof userNumber);
+	    	
 	        $.ajax({
 	           url : "/star/main2",
 	           // data : {"userSelect":$("#selectedRegion")},

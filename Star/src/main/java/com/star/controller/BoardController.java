@@ -34,6 +34,7 @@ public class BoardController {
 	// 게시글 조회
 	@RequestMapping(value="/board/list")
 	public String listBoard(Criteria cri, Model model, BoardDTO boardDTO, RedirectAttributes rttr) {
+		
 		System.out.println("리스트 카테고리 : "+cri.getCategory());
 		
 		// 선택된 글 리스트 뽑기
@@ -61,6 +62,10 @@ public class BoardController {
 		
 		model.addAttribute("pageMaker", pageMake);
 		model.addAttribute("criteria",cri);
+		model.addAttribute("boardDTO",boardDTO);
+		
+		System.out.println("borad"+boardDTO);
+		System.out.println("cri"+cri);
 		
 		System.out.println(pageMake);
 		
