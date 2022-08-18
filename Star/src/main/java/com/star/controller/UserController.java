@@ -57,7 +57,7 @@ public class UserController {
 	// 메인페이지 ( with. 중간에 있는 테이블 )
 	@GetMapping(value = "/star/main3")
 	public String openPredictionList(DustDTO params, Model model) {
-		List<DustDTO> dustList = userService.getPrediction(params);
+		List<DustDTO> dustList = userService.getPrediction(params) ;
 		model.addAttribute("dustList", dustList); 
 		System.out.println(params);
 		 
@@ -94,10 +94,10 @@ public class UserController {
     	System.out.println("로그인 페이지로 이동");
     	
     	HttpSession session = request.getSession();
-//    	if (session.getAttribute("userDTO") != null) {
-//    		System.out.println("이미 로그인중입니다.");
-//    		return "redirect:/star/mainpage";
-//    	};
+    	if (session.getAttribute("userDTO") != null) {
+    		System.out.println("이미 로그인중입니다.");
+    		return "redirect:/star/mainpage";
+    	};
     	return "star/login";
     };
     
@@ -224,7 +224,6 @@ public class UserController {
     		System.out.println("로그인을 진행해주세요.");
     		return "redirect:/star/login";
     	};
-    
 		return "star/changeInfo";
 	}
     

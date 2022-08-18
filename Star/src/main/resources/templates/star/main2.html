@@ -1,10 +1,30 @@
-    <div id="map" style="width:70%;height:450px;"></div>
+<div id="map" style="width:70%;height:450px;"></div>
 
-    <script>
+    <script>    
+        // 지도 띄우기
+        var mapContainer = document.getElementById('map'),
+        mapOption = { 
+            // 지도의 중심좌표
+            center: new kakao.maps.LatLng(37.566826, 126.9786567), 
+            // 소수점 불가
+            level: 9
+        };
         
-        // 처음 보여줄 지도 > 전국으로 바꾸기
-        showMap("/geojson/korea.geojson");
+     	// 지도를 표시할 div와  지도 옵션으로  지도를 생성
+        var map = new kakao.maps.Map(mapContainer, mapOption); 
 
+     	var first = $("#selectedRegion").val();
+
+	   	for(i=0; i < region.length; i++){
+              if(first == regionData.region[i]){
+                  console.log("지역 데이터URL : ",regionData.geojsonUrl[i]);
+                  var userSelectRegionUrl = regionData.geojsonUrl[i];
+                  var userSelectRegionCenter = regionCenterData.regionCenter[i];
+              }
+          }
+	   	
+         setCenter(userSelectRegionCenter);
+         showMap(userSelectRegionUrl);
             
         // 지도 보여주기
         function showMap(userSelectRegionUrl){
@@ -100,15 +120,8 @@
             polygons = [];
         }
 
-        // 지도 띄우기
-        var mapContainer = document.getElementById('map'),
-        mapOption = { 
-            // 지도의 중심좌표
-            center: new kakao.maps.LatLng(37.566826, 126.9786567), 
-            // 소수점 불가
-            level: 10
-        };
-        // 지도를 표시할 div와  지도 옵션으로  지도를 생성
-        var map = new kakao.maps.Map(mapContainer, mapOption); 
+       
+        
 
     </script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b9125e70384813c29bb964a22bf69f75"></script>
