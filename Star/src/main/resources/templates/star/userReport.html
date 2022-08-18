@@ -39,16 +39,13 @@
         
         function transferReport(){
         	
-        	
-        	/*  강사님께서 시도하신 코드 
-        	alert("js함수 실행됨");
-			$('#reportReasonForm').submit();
-			alert("submit 실행됨");
- 			window.open("about:black", "_self").close();
- 			*/
  			var userInputReason = $('input[name="reason"]:checked').val();
+ 			var boardBno = sessionStorage.getItem("boardBno");
+ 			var userNumber = $("#userNumber").val();
  			
 			var boardDto = {
+				Bno:boardBno,
+				userNumber: userNumber,
 				reportContent:userInputReason
 			};
 			
@@ -57,7 +54,8 @@
     	        data: boardDto,
     	        type:"POST",
     	    }).done(function(returnData) {
-    	    	
+    	    	sessionStorage.removeItem("boardBno");
+    	    	alert("접수되었습니다")
     	    	self.close();
    	    	});
  			
@@ -95,12 +93,14 @@
             </div> -->
         </div>
     <div class="check_btn">
+    <input type="hidden" id="userNumber" th:value="${session.userDTO.userNumber}">
     <label for="cancel"><input type="button" name="cancel" id="cancel" value="Cancel" onclick="self.close();"></label>
     
     	<!-- 8/12 10:25 -->
     	<!-- 버튼 태그에 a태그를 달아두었어서 get 매핑 에러가 떴던것으로 보임 -->
     <!-- <a href=/star/report> -->
     <!-- <label for="OK"><button type="submit" name="OK" id="OK" value="OK" onclick="moveClose();">OK</button></label> -->
+    
     <label for="OK"><button type="button" name="OK" id="OK" value="OK" onclick="transferReport()">OK</button></label>
     <!-- </a> -->
     </div>

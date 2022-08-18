@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -42,11 +42,19 @@
 	</style>
 	
 	<!-- 신고 팝업창 -->
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script><script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript">
-  function openPop(){
-    var popup = window.open('/star/userReport', '신고사유'
-    						, 'width=500px,height=700px, top=100px, left=500px, scrollbars=no');
-  }
+		function openPop(){
+		  	var bno = $("#bno").val();
+		  	console.log("시작?");
+		  	console.log(bno);
+		  	sessionStorage.setItem("boardBno", bno);
+		  	console.log(sessionStorage.getItem("boardBno"));
+	  		console.log(sessionStorage.length);
+		  	
+			var popup = window.open('/star/userReport', '신고사유'
+	    						, 'width=500px,height=700px, top=100px, left=500px, scrollbars=no');
+		}
 	</script>
 </head>
 <body>
@@ -59,7 +67,7 @@
 		<i class="bi bi-exclamation-circle-fill"></i>신고
 	</button>
  </div>
-   
+   <input id="bno" type="hidden" th:value="${boardDTO.bno}">
  	<div>
 	 	작성자 :
 	 	<br>
