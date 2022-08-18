@@ -9,12 +9,15 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PageMakeDTO {
-	
+ 
+
+
 	@Override
 	public String toString() {
-		return "PageMakeDTO [startPage=" + startPage + ", endPage=" + endPage + ", prev=" + prev + ", next=" + next
-				+ ", total=" + total + ", cri=" + cri + "]";
+		return "PageMakeDTO [startPage=" + startPage + ", endPage=" + endPage + ", realEndPage=" + realEndPage
+				+ ", prev=" + prev + ", next=" + next + ", total=" + total + ", cri=" + cri + "]";
 	}
+
 
 	/* 시작 페이지 */
     private int startPage;
@@ -33,6 +36,7 @@ public class PageMakeDTO {
     
     /* 현재 페이지, 페이지당 게시물 표시수 정보 */
     private Criteria cri;
+   
     
     /* 생성자 */
     public PageMakeDTO(Criteria cri, int total) {

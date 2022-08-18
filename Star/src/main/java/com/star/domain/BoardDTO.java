@@ -19,6 +19,8 @@ public class BoardDTO  {
 	
 	private Long userNumber;		// 유저 테이블의 유저 넘버와 연결
 	
+	private String userNickname;
+
 //	private String writerNickname;	// 미리보기에서 필요 할 수 있어 첨부함. - wb
 	
 	private String title;
@@ -54,18 +56,8 @@ public class BoardDTO  {
 	private LocalDateTime cmtUpdate;
 	
 	private boolean cmtDeleteYn;
-	
-	// 이미지 테이블
-//	private int imgNumber;
-//	
-////	private int bno;		// 게시글 테이블의 bno와 연결 
-//	
-//	private String imgPath;
-//	
-//	private boolean imgShowYn;
 //	
 	private String imgName;
-	
 
 	@Override
 	public String toString() {

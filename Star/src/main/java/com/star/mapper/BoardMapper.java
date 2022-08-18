@@ -35,7 +35,7 @@ public interface BoardMapper {
 	public List<BoardDTO> selectList(Criteria cri);
 	
 	// 카테고리별 게시글 총 개수
-	public int getCount(String category);
+	public int getCount(Criteria cri);
 	
 	// 상세글 조회 신고하기	
 	public void report(BoardDTO boardDTO);
@@ -44,7 +44,7 @@ public interface BoardMapper {
 	public List<BoardDTO> getMyListBoard(Criteria cri);
 	
 	// 내가 쓴 글 게시글 총 수
-	public int getMyCount(Long userNumber);
+	public int getMyCount(Criteria cri);
 	
 	// 이미지 저장
 	public int insertImg(ImgDTO imgDTO);

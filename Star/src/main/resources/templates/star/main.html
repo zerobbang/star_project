@@ -194,27 +194,7 @@
     <input type="text" id="selectedRegion" value="전국"/>
     <div id="mapImg"></div>
     <h2>카카오 이미지 띄우기 비동기 처리(default 가 비동기)</h2>
-    
-    
-    <!-- 네브바 임시용 -->
-    <!-- 소통방의 default 값으로 설정해주기 -->
-    <!-- boardController에서 requestparam으로 받을 경우 -->
-    
-    <!-- <form th:action="@{/board/list}" method="post">
-    	<input type="text" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
-    	<input type="text" id="category" name="category" value="관측지">
-    	<input type="submit" value="관측지">
-    </form>
-    <form th:action="@{/board/list}" method="post">
-    	<input type="text" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
-    	<input type="text" id="category" name="category" value="작품전">
-    	<input type="submit" value="작품전">
-    </form>
-    <form th:action="@{/board/list}" method="post">
-    	<input type="text" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
-    	<input type="text" id="category" name="category" value="잡담">
-    	<input type="submit" value="소통방">
-    </form> -->
+ 
     
     <!-- 마이페이지 임시 -->
     <form th:action="@{/board/mypage}" method="post">
@@ -222,7 +202,7 @@
     	<input type="hidden" id="userNickname" name="userNickname" th:value="*{userDTO.userNickname}">
     	<input type="hidden" id="userRegion" name="userRegion" th:value="*{userDTO.userRegion}"/>
     	<input type="hidden" id="userId" name="userId" th:value="*{userDTO.userId}"/>
-					    	<input type="hidden" id="userpassword" name="userpassword" th:value="*{userDTO.userPassword}"/>
+		<input type="hidden" id="userpassword" name="userpassword" th:value="*{userDTO.userPassword}"/>
     	<input type="submit" value="마이페이지">
     </form>
 
@@ -233,7 +213,7 @@
     	<input type="hidden" id="userNickname" name="userNickname" th:value="*{userDTO.userNickname}">
     	<input type="hidden" id="userRegion" name="userRegion" th:value="*{userDTO.userRegion}"/>
     	<input type="hidden" id="userId" name="userId" th:value="*{userDTO.userId}"/>
-					    	<input type="hidden" id="userpassword" name="userpassword" th:value="*{userDTO.userPassword}"/>
+		<input type="hidden" id="userpassword" name="userpassword" th:value="*{userDTO.userPassword}"/>
     	<input type="submit" value="정보변경페이지">
     
     </form> 

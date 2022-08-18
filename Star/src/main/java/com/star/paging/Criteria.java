@@ -22,6 +22,12 @@ public class Criteria {
     /* 스킵 할 게시물 수( (pageNum-1) * amount ) */
     private int skip;
     
+	/* 검색 키워드 */
+    private String keyword;
+    
+	/* 검색 타입 */
+    private String searchType;
+    
     /* 기본 생성자 -> 기봅 세팅 : pageNum = 1, amount = 10 */
     public Criteria() {
         this(1,10);
@@ -48,8 +54,10 @@ public class Criteria {
 	@Override
 	public String toString() {
 		return "Criteria [category=" + category + ", userNumber=" + userNumber + ", pageNum=" + pageNum + ", amount="
-				+ amount + ", skip=" + skip + "]";
+				+ amount + ", skip=" + skip + ", keyword=" + keyword + ", searchType=" + searchType + "]";
 	}
+
+	
 
 
 }
