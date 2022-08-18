@@ -231,24 +231,12 @@
     
     <!-- 마이페이지 임시 -->
     <form th:action="@{/board/mypage}" method="post">
-    	<input type="hidden" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
-    	<input type="hidden" id="userNickname" name="userNickname" th:value="*{userDTO.userNickname}">
-    	<input type="hidden" id="userRegion" name="userRegion" th:value="*{userDTO.userRegion}"/>
-    	<input type="hidden" id="userId" name="userId" th:value="*{userDTO.userId}"/>
-		<input type="hidden" id="userpassword" name="userpassword" th:value="*{userDTO.userPassword}"/>
     	<input type="submit" value="마이페이지">
     </form>
 
     
     <form th:action="@{/star/changeInfo}" method="post">
-    
-    	<input type="hidden" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
-    	<input type="hidden" id="userNickname" name="userNickname" th:value="*{userDTO.userNickname}">
-    	<input type="hidden" id="userRegion" name="userRegion" th:value="*{userDTO.userRegion}"/>
-    	<input type="hidden" id="userId" name="userId" th:value="*{userDTO.userId}"/>
-		<input type="hidden" id="userpassword" name="userpassword" th:value="*{userDTO.userPassword}"/>
-    	<input type="submit" value="정보변경페이지">
-    
+    	<input type="submit" value="정보변경페이지">    
     </form> 
     
 <!-- 임시 이미지 불러오기 -->

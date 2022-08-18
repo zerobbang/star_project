@@ -94,10 +94,10 @@ public class UserController {
     	System.out.println("로그인 페이지로 이동");
     	
     	HttpSession session = request.getSession();
-    	if (session.getAttribute("userDTO") != null) {
-    		System.out.println("이미 로그인중입니다.");
-    		return "redirect:/star/mainpage";
-    	};
+//    	if (session.getAttribute("userDTO") != null) {
+//    		System.out.println("이미 로그인중입니다.");
+//    		return "redirect:/star/mainpage";
+//    	};
     	return "star/login";
     };
     
@@ -216,9 +216,16 @@ public class UserController {
     
     // 정보 변경 페이지 이동
     @PostMapping(value = "/star/changeInfo")
-    public String changeInfoPage(UserDTO userDto, RedirectAttributes rttr) {
+    public String changeInfoPage(HttpServletRequest request) {
     	
-    	rttr.addFlashAttribute(userDto);
+    	// 세션이 있으면 있는 세션 반환, 없으면 신규 세션 생성
+        HttpSession session = request.getSession();
+        
+        if (session.getAttribute("userDTO") == null) {
+    		System.out.println("로그인을 진행해주세요.");
+    		return "redirect:/star/login";
+    	};
+    
     	
 		return "star/changeInfo";
 	}
