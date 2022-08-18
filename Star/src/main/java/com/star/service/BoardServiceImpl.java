@@ -92,13 +92,13 @@ public class BoardServiceImpl implements BoardService{
 	public void report(BoardDTO boardDTO) {
 		// TODO Auto-generated method stub
 		
-		System.out.println("보드 impl 확인");
-		
-		System.out.println(boardDTO);
-		
-		boardMapper.report(boardDTO);
-		
-		System.out.println("서비스 끝!");
+		try {
+			boardMapper.report(boardDTO);
+		} catch (Exception e) {
+			// TODO: handle exception
+			
+			System.out.println("신고하는중에 에러 발생");
+		}
 		 	
 	}
 	

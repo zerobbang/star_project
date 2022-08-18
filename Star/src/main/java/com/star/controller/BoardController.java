@@ -1,8 +1,9 @@
 package com.star.controller;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,52 +39,40 @@ public class BoardController {
 	// 게시글 조회
 	@RequestMapping(value="/board/list")
 	public String listBoard(Criteria cri, Model model, BoardDTO boardDTO) {
-		System.out.println("리스트 카테고리 : "+cri.getCategory());
-		
-		System.out.println("------"+cri);
 		
 		// 선택된 글 리스트 뽑기
 		List<BoardDTO> boardList = boardService.getBoardList(cri);
-		System.out.println("길이는 : "+ boardList.size());
 		
 		for(BoardDTO board : boardList)
 		{
-			System.out.println("+++++++++++++++++++");
-			System.out.println(board.getBno());
+
+			System.out.println("bno: " + board.getBno());
 			
 			List<ImgDTO> img = boardService.getImgsFromBno(board.getBno());
-			System.out.println(img);
-//			System.out.println(img.get(0).getImgName());
+
 			String firstImg = "";
 			try {
 				firstImg = img.get(0).getImgName() ;
-				System.out.println("대표 이미지 O");
 			} catch (Exception e) {
-				System.out.println("대표 이미지 X");
 			}
-			
-			
-			
 			board.setImgName(firstImg);
 		}
-		System.out.println("---------------");
-		System.out.println(boardList);
+		
 		model.addAttribute("boardList", boardList);
-		System.out.println(boardList);
 		
 		// 페이징 처리
 		int total = boardService.getCount(cri);
-		
 		PageMakeDTO pageMake = new PageMakeDTO(cri,total);
 		
 		model.addAttribute("pageMaker", pageMake);
 		model.addAttribute("criteria",cri);
 		model.addAttribute("boardDTO",boardDTO);
 		
-		System.out.println("borad "+boardDTO);
-		System.out.println("cri"+cri);
-		
-		System.out.println(pageMake);
+		System.out.println("리스트 카테고리 : "+cri.getCategory());
+		System.out.println("cri: "+cri);
+		System.out.println("길이: "+ boardList.size());
+		System.out.println("borad: "+boardDTO);
+		System.out.println("pageMake: " + pageMake);
 		
 		System.out.println("--------------");
 		System.out.println(model);
@@ -96,7 +85,16 @@ public class BoardController {
 	
 	// 게시글 쓰기 화면으로 이동
 	@PostMapping(value="/board/write")
-	public String writeBoard(Model model,Criteria cri) {
+	public String writeBoard(Model model,Criteria cri
+			, HttpServletRequest request) {
+		
+        HttpSession session = request.getSession();
+        
+        if (session.getAttribute("userDTO") == null) {
+    		System.out.println("로그인을 진행해주세요.");
+    		return "redirect:/star/login";
+    	};
+        
 //		// 글 번호를 뷰에서 받아오는데
 //		if(bno==null) {
 //			// 새로 생성하는 글인 경우 새로운 보드 DTO 객체 생성
@@ -115,7 +113,6 @@ public class BoardController {
 		model.addAttribute("criteria", cri);
 		
 		Long userNumber = (long) cri.getUserNumber();
-		
 		
 		// 해당 user 정보 다 넘겨주기
 		// 로그인 된 유저의 닉네임 보여주기 위해
@@ -139,40 +136,23 @@ public class BoardController {
 		
 		return "redirect:/board/list" ;
 	}
-	
-    // 상세글조회 페이지
-//    @GetMapping(value = "/star/detailed_check")
-//    public String detailedCheck() {
-//    	return "/star/detailed_check";
-//    }
 
     // 상세글조회 페이지
     @GetMapping(value = "/star/detailed_check")
-    public String detailedCheck2(@RequestParam(value="bno",required=true) Long bno, UserDTO userDto, Model model) {
+    public String detailedCheck(@RequestParam(value="bno",required=true) Long bno, UserDTO userDto, Model model) {
     	
     	BoardDTO boardDto = boardService.getBoardDetail(bno);
-    	System.out.println(boardDto);
-    	
     	model.addAttribute(boardDto);
-    	System.out.println(model);
     	
     	Long writerNumber = boardDto.getUserNumber();
-    	System.out.println(writerNumber);
-    	
     	String writer = boardService.getWriter(writerNumber);
-    	System.out.println(writer);
-    	
     	model.addAttribute("writer", writer);
-    	System.out.println(model);
     	
     	Long boardBno = boardDto.getBno();
-    	System.out.println(boardBno);
-    	
     	List<ImgDTO> imgs = boardService.getImgsFromBno(boardBno);
     	model.addAttribute("imgDto", imgs);
     	
     	System.out.println(model);
-    	System.out.println("끝??");
     	
     	return "star/detailed_check";
     }
@@ -180,25 +160,36 @@ public class BoardController {
     
     // 신고사유 페이지
     @GetMapping(value = "/star/userReport")
-    public String reportpage() {
+    public String reportpage(HttpServletRequest request) {
+    	
+    	HttpSession session = request.getSession();
+    	System.out.println(session.getAttribute("userDTO"));
+    	
+    	if (session.getAttribute("userDTO") == null) {
+    		System.out.println("로그인을 진행해주세요.");
+    		
+    		return "redirect:/star/login";
+    	};
+    	
+    	
     	return "/star/userReport";
     }
 	
     // 신고하기
     @PostMapping(value = "/star/report")
     @ResponseBody
-    public String report(BoardDTO boardDTO) {
+    public String report(BoardDTO boardDTO
+    		, HttpServletRequest request) {
     	
-    	System.out.println("확인33");
     	System.out.println(boardDTO);
     	
-    	boardService.report(boardDTO); // 문제발생
+        HttpSession session = request.getSession();
+    	System.out.println(session.getAttribute("userDTO"));
     	
-    	System.out.println("컨트롤러 끝!");
-//    	
-//    	System.out.println("신고완료확인");
+    	boardService.report(boardDTO);
     	
-//    	return "star/detailed_check";
+    	System.out.println("접수되었습니다.");
+    	
     	return "good";
     }
     
