@@ -150,6 +150,15 @@ public class BoardServiceImpl implements BoardService{
 		
 		List<ImgDTO> resultData = boardMapper.findImgsFromBno(boardBno);
 		return resultData;
+	}
+
+	@Override
+	public void deleteBoard(BoardDTO boardDto) {
+		// TODO Auto-generated method stub
+		
+		Long boardBno = boardDto.getBno();
+		boardMapper.deleteBoardFromBno(boardBno);
+		
 	};
 	
 }

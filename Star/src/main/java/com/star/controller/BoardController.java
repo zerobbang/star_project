@@ -225,12 +225,40 @@ public class BoardController {
 		
 		return "board/mypage";
 	}
+	
+	// 게시글 삭제
+    @PostMapping(value = "/board/delete.do")
+    public String deleteBoard(BoardDTO boardDto) {
+    	
+    	boardService.deleteBoard(boardDto);
+    	
+    	// 끝나면 메인 페이지로 이동
+    	return "redirect:/star/mainpage";
+    };
     
-    // 상세글 테스트용 : get방식 채택 고려중  
-    @GetMapping(value = "/star/view.do")
-    public String viewContent() {
-    	return "/star/detailed_check";
-    }
+    // 게시글 수정 화면으로 이동
+ 	@PostMapping(value="/board/modify")
+ 	public String modifyBoard(Model model, BoardDTO boardDto
+ 			, HttpServletRequest request) {
+ 		
+ 		// 로그인 안된사람 탈출시키기
+         HttpSession session = request.getSession();
+         if (session.getAttribute("userDTO") == null) {
+     		System.out.println("로그인을 진행해주세요.");
+     		return "redirect:/star/login";
+     	};
+ 		
+ 		System.out.println("글수정 페이지 이동 ");
+ 		// 이전 값 존재
+ 		
+ 		boardDto = boardService.getBoardDetail(boardDto.getBno());
+ 		
+ 		model.addAttribute("boardDto", boardDto);
+ 		
+ 		System.out.println(model);
+ 		
+ 		return "/board/write";
+ 	}
     
     	
 }

@@ -122,8 +122,8 @@
 		                <br>
 		                <a th:href="@{/star/detailed_check(bno=${boardList[num].bno})}">
 		                	<input type="text" th:value="| ${nicknameList[num]}: ${boardList[num].title}">
-		                	<input type="text" id="bno" name="bno" th:value="${boardList[num].bno}">
-	                   		<input type="text" id="userNumber" name="userNumber" th:value="${criteria.userNumber }">
+		                	<!-- <input type="text" id="bno" name="bno" th:value="${boardList[num].bno}">
+	                   		<input type="text" id="userNumber" name="userNumber" th:value="${criteria.userNumber }"> -->
 	                	</a>
 		            </div>
 				</li>

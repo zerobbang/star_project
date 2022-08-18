@@ -269,4 +269,15 @@
 		4;
 </select>
 
+
+<update id="deleteBoardFromBno" parameterType="Long">
+	update
+		board_list 
+	set
+		delete_yn = 1
+	where
+		bno = #{boardBno};
+</update>
+
+
 </mapper>

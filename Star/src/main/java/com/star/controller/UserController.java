@@ -305,8 +305,7 @@ public class UserController {
         session.removeAttribute("userDTO");
     	
 		return "redirect:/star/mainpage";
-    }
-    
+    };
     
     // 테스트 할 때 쓰는 용도
     @GetMapping(value = "/star/woobin")
