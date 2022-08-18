@@ -26,6 +26,7 @@ import com.star.service.UserService;
 @Controller
 public class BoardController {
 	
+	
 	@Autowired
 	private BoardService boardService;
 	
@@ -37,8 +38,9 @@ public class BoardController {
 	// 게시글 조회
 	@RequestMapping(value="/board/list")
 	public String listBoard(Criteria cri, Model model, BoardDTO boardDTO) {
-		
 		System.out.println("리스트 카테고리 : "+cri.getCategory());
+		
+		System.out.println("------"+cri);
 		
 		// 선택된 글 리스트 뽑기
 		List<BoardDTO> boardList = boardService.getBoardList(cri);
@@ -67,28 +69,10 @@ public class BoardController {
 		System.out.println("---------------");
 		System.out.println(boardList);
 		model.addAttribute("boardList", boardList);
-		
-//		System.out.println(boardList.size());
-		
-//		List<BoardDTO> imgsList = boardService.getBoardList(cri);
-//		model.addAttribute("boardList", imgsList );
-		
-		// 각 게시글의 유저 넘버로 조회해서 해당 닉네임을 가져오고 list에 저장한다.
-		// > 우리 boardDTO에는 유저 번호가 있고 유저 닉네임이 없기 때문에
-		List<String> nicknameList = new ArrayList<>();
-		
-		Iterator<BoardDTO> list = boardList.iterator();
-
-		while(list.hasNext()) {
-			BoardDTO boardOne = list.next();
-			Long userNum = (long) boardOne.getUserNumber();
-			nicknameList.add(userService.getNickname(userNum));
-		}
-		
-		model.addAttribute("nicknameList", nicknameList);
+		System.out.println(boardList);
 		
 		// 페이징 처리
-		int total = boardService.getCount(cri.getCategory());
+		int total = boardService.getCount(cri);
 		
 		PageMakeDTO pageMake = new PageMakeDTO(cri,total);
 		
@@ -132,10 +116,6 @@ public class BoardController {
 		
 		Long userNumber = (long) cri.getUserNumber();
 		
-		// 로그인 유저만 가능
-		if (userNumber == null) {
-			return "redirect:/star/login";
-		}
 		
 		// 해당 user 정보 다 넘겨주기
 		// 로그인 된 유저의 닉네임 보여주기 위해
@@ -160,18 +140,6 @@ public class BoardController {
 		return "redirect:/board/list" ;
 	}
 	
-
-//	// 게시글 쓰기 화면으로 이동
-//	@GetMapping(value="/star/test")
-//	public String testBoard(Model model, UserDTO userDto) {
-//		
-//		userDto.setUserRegion("전국");
-//		
-//		model.addAttribute("region", userDto.getUserRegion());
-//		
-//		return "/star/test";
-//	}
-
     // 상세글조회 페이지
 //    @GetMapping(value = "/star/detailed_check")
 //    public String detailedCheck() {
@@ -237,25 +205,18 @@ public class BoardController {
     
 	// 마이 페이지
 	@RequestMapping(value="/board/mypage")
-	public String openMypage2(Criteria cri, Model model, BoardDTO boardDTO, RedirectAttributes rttr) {
+	public String openMypage2(Criteria cri, Model model, BoardDTO boardDTO, RedirectAttributes rttr, UserDTO userDTO) {
 		System.out.println("마이 페이지로 이동");
 		
 		// System.out.println(cri);
-		
-		// 유저 번호 추출
-		Long userNumber = (long) cri.getUserNumber();
 		
 		// 선택된 글 리스트 뽑기
 		List<BoardDTO> myList = boardService.getMyListBoard(cri);
     	model.addAttribute("myList", myList);
 		
-    	// 유저 닉네임
-    	String userNickname = userService.getNickname(userNumber);
-    	// System.out.println(userNickname);
-    	model.addAttribute("userNickname",userNickname);
 		
 		// 페이징 처리
-		int total = boardService.getMyCount(userNumber);
+		int total = boardService.getMyCount(cri);
 		
 		PageMakeDTO pageMake = new PageMakeDTO(cri,total);
 		

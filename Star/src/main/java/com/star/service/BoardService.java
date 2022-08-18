@@ -16,7 +16,7 @@ public interface BoardService {
 	public List<BoardDTO> getBoardList(Criteria cri);
 	
 	// 카테고리별 게시글 총 개수
-	public int getCount(String category);
+	public int getCount(Criteria cri);
 	
 	// 게시글 등록
 	public boolean registerBoard(BoardDTO params, List<MultipartFile> file) throws Exception;
@@ -30,13 +30,11 @@ public interface BoardService {
 	public List<BoardDTO> getMyListBoard(Criteria cri);
 	
 	// 내 글 총 수
-	public int getMyCount(Long userNumber);
+	public int getMyCount(Criteria cri);
 
 	public String getWriter(Long writerNumber);
 
 	public List<ImgDTO> getImgsFromBno(Long boardBno);
-	
-
 
 }
 

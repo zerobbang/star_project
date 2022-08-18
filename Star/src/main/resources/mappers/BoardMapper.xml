@@ -47,6 +47,39 @@
  	category
  </sql>
  
+ 
+  <sql id="search">
+        <!-- 검색 키워드가 있을 때 -->
+        <if test="keyword != null and keyword != ''">
+            <choose>
+                <!-- 검색 유형이 있을 때 -->
+                <when test="searchType != null and searchType != ''">
+                    <choose>
+                        <when test="'title'.equals( searchType )">
+                            AND a.title LIKE CONCAT('%', #{keyword}, '%')
+                        </when>
+                        <when test="'content'.equals( searchType )">
+                            AND a.content LIKE CONCAT('%', #{keyword}, '%')
+                        </when>
+                        <when test="'writer'.equals( searchType )">
+                            AND b.user_nickname LIKE CONCAT('%', #{keyword}, '%')
+                        </when>
+                         <!-- 전체 검색일 때 -->
+		                <when test="'all'.equals(searchType)">
+		                      AND (
+		                      	a.title LIKE CONCAT('%', #{keyword}, '%')
+		                      	OR a.content LIKE CONCAT('%', #{keyword}, '%')
+		                      	OR b.user_nickname LIKE CONCAT('%', #{keyword}, '%')
+		                      )
+		                </when>
+                    </choose>
+                </when>
+            </choose>
+        </if>
+    </sql>
+ 
+ 
+ 
  <!-- 게시글 조회 -->
  <select id="detailBoard" parameterType="BoardDTO" resultType="BoardDTO">
  	select <include refid="boardColumns"/>
@@ -125,15 +158,19 @@
  <!-- 게시글 리스트 조회 -->
  <select id="selectList" resultType="BoardDTO">
  	SELECT 
- 		<include refid="boardColumns"/>
+ 		a.*, b.user_nickname
 	FROM 
-		board_list
+		 board_list a
+	INNER JOIN 
+		users_table b
+    	ON a.user_number  = b.user_number
 	WHERE 
-		delete_yn = 0
+		a.delete_yn = 0
 	AND 
-		category = #{category}
-	ORDER BY
-		bno DESC 
+		a.category = #{category}
+		<include refid="search" />
+ 	ORDER BY
+		a.bno DESC
 	LIMIT 
 		#{skip},#{amount}
  </select>
@@ -142,40 +179,51 @@
 <!-- 마이 페이지 글 조회 -->
  <select id="getMyListBoard" resultType="BoardDTO">
  	SELECT 
- 		<include refid="boardColumns"/>
+ 		a.*, b.user_nickname
 	FROM 
-		board_list
+		 board_list a
+	INNER JOIN 
+		users_table b
+    	ON a.user_number  = b.user_number
 	WHERE 
-		delete_yn = 0
+		a.delete_yn = 0
 	AND 
-		user_number = #{userNumber}
+		a.user_number = #{userNumber}
 	ORDER BY
-		bno DESC 
+		a.bno DESC 
 	LIMIT 
 		#{skip},#{amount}
 </select>
 
 
 <!-- 총 게시글 수 출력 -->
-<select id="getCount" parameterType="String" resultType="int">
-	SELECT 
+<select id="getCount" resultType="int">
+ 	SELECT 
  		count(*)
 	FROM 
-		board_list
+		 board_list a
+	INNER JOIN 
+		users_table b
+    	ON a.user_number  = b.user_number
 	WHERE 
-		delete_yn = 0
-		AND category = #{category}
+		a.delete_yn = 0
+		<include refid="search" />
+	AND a.category = #{category}
 </select>
 
 <!-- 총 마이 페이지 수 출력 -->
-<select id="getMyCount" parameterType="Long" resultType="int">
-	SELECT 
+<select id="getMyCount"  resultType="int">
+ 	SELECT 
  		count(*)
 	FROM 
-		board_list
+		 board_list a
+	INNER JOIN 
+		users_table b
+    	ON a.user_number  = b.user_number
 	WHERE 
-		delete_yn = 0
-		AND user_number = #{userNumber}
+		a.delete_yn = 0
+	AND 
+		a.user_number = #{userNumber}
 </select>
 
 <!-- 이미지 저장 -->

@@ -207,5 +207,10 @@ public class UserServiceImpl implements UserService{
 		String result = userMapper.getNickname(userNumber);
 		return result;
 	}
+
+	@Override
+	public long getUserNumber(String userNickname) {
+		return userMapper.getUserNumber(userNickname);
+	}
 	
 }

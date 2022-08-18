@@ -125,14 +125,14 @@ public class BoardServiceImpl implements BoardService{
 
 	// 카테고리별 총 게시글 개수
 	@Override
-	public int getCount(String category) {
-		return boardMapper.getCount(category);
+	public int getCount(Criteria cri) {
+		return boardMapper.getCount(cri);
 	}
 
 	// 내 글 총 수
 	@Override
-	public int getMyCount(Long userNumber) {
-		return boardMapper.getMyCount(userNumber);
+	public int getMyCount(Criteria cri) {
+		return boardMapper.getMyCount(cri);
 	}
 	
 	public String getWriter(Long writerNumber) {

@@ -118,4 +118,11 @@
 		where user_id = #{userId};
 	</update>
 	
+	<!-- userNumber 얻기 -->
+	<select id="getUserNumber" parameterType="String" resultType="long">
+		select user_number
+		from users_table
+		where user_nickname = #{userNickname};
+	</select>
+	
 </mapper>
