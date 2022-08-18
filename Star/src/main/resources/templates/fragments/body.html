@@ -68,7 +68,7 @@
 		    	<!-- 회원번호가 있을 때 -->
 		    	<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search"
 		    		th:if= "${session.userDTO != null}">
-	                <button type="button" onclick="location.href='/star/mainpage' ">Logout</button>
+	                <button type="button" onclick="location.href='/star/logout.do'">Logout</button>
 	                <input type="button" th:value="*{session.userDTO.userNickname}">
 	            </form>    
 		        <!-- <input th:value="${session.userDTO}"/> -->

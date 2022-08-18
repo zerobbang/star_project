@@ -242,18 +242,14 @@ public class UserController {
     @PostMapping(value = "/star/signdown")
     public String deleteUser(UserDTO userDto, HttpServletRequest request) {
     	
-    	System.out.println("컨트롤러 확인");
     	System.out.println(userDto);
+    	
     	Long userNumber = userDto.getUserNumber();
     	userService.pagedown(userNumber);
     	
-        HttpSession session = request.getSession();
-    	
+        HttpSession session = request.getSession();    	
         session.removeAttribute("userDTO");
-    	
-        System.out.println("~~~~~~~~~~~~~~~~~");
-        System.out.println(session.getAttribute("userDTO"));
-        System.out.println("~~~~~~~~~~~~~~~~~");
+
     	System.out.println("회원탈퇴 완료됨!");
     	
     	return "redirect:/star/mainpage";
@@ -301,6 +297,17 @@ public class UserController {
 //		return result;
 //    };
         
+    // 로그아웃
+    @GetMapping(value = "/star/logout.do")
+    public String doLogout(HttpServletRequest request) {
+        
+        HttpSession session = request.getSession();
+        
+        session.removeAttribute("userDTO");
+    	
+		return "redirect:/star/mainpage";
+    }
+    
     
     // 테스트 할 때 쓰는 용도
     @GetMapping(value = "/star/woobin")
@@ -317,5 +324,8 @@ public class UserController {
     	
     	return "redirect:/star/login";
     }
+    
+    
+    
     
 }

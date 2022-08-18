@@ -1,5 +1,6 @@
 package com.star.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +42,7 @@ public class BoardController {
 	public String listBoard(Criteria cri, Model model, BoardDTO boardDTO) {
 		
 		// 선택된 글 리스트 뽑기
+		List<String> nicknameList = new ArrayList<>();
 		List<BoardDTO> boardList = boardService.getBoardList(cri);
 		
 		for(BoardDTO board : boardList)
@@ -50,14 +52,19 @@ public class BoardController {
 			
 			List<ImgDTO> img = boardService.getImgsFromBno(board.getBno());
 
+			Long userNum = (long) board.getUserNumber();
+			nicknameList.add(userService.getNickname(userNum));
+			
 			String firstImg = "";
 			try {
 				firstImg = img.get(0).getImgName() ;
 			} catch (Exception e) {
 			}
 			board.setImgName(firstImg);
+			
 		}
 		
+		model.addAttribute("nicknameList", nicknameList);
 		model.addAttribute("boardList", boardList);
 		
 		// 페이징 처리
