@@ -146,13 +146,9 @@ public class BoardServiceImpl implements BoardService{
 	};
 	
 	
-	public ImgDTO[] getImgsFromBno(Long boardBno) {
+	public List<ImgDTO> getImgsFromBno(Long boardBno) {
 		
-		ImgDTO[] resultData = boardMapper.findImgsFromBno(boardBno);
-		System.out.println("----------------------");
-		System.out.println(resultData);
-		System.out.println("----------------------");
-		
+		List<ImgDTO> resultData = boardMapper.findImgsFromBno(boardBno);
 		return resultData;
 	};
 	

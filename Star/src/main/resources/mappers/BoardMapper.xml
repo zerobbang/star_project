@@ -205,4 +205,20 @@
 		user_number = #{writerNumber};
 </select>
 
+<select id="findImgsFromBno" parameterType="Long" resultType="ImgDTO">
+	select 
+		<include refid="imgColumns"/>
+	from 
+		img_table
+	where 
+		bno = #{boardBno}
+	and 
+		img_show_yn = 1
+	order by 
+		img_number 
+	asc 
+	limit 
+		4;
+</select>
+
 </mapper>

@@ -19,6 +19,8 @@ public class BoardDTO  {
 	
 	private Long userNumber;		// 유저 테이블의 유저 넘버와 연결
 	
+//	private String writerNickname;	// 미리보기에서 필요 할 수 있어 첨부함. - wb
+	
 	private String title;
 	
 	private String content;
@@ -52,15 +54,6 @@ public class BoardDTO  {
 	private LocalDateTime cmtUpdate;
 	
 	private boolean cmtDeleteYn;
-
-	@Override
-	public String toString() {
-		return "BoardDTO [category=" + category + ", bno=" + bno + ", userNumber=" + userNumber + ", title=" + title
-				+ ", content=" + content + ", regDate=" + regDate + ", updateDate=" + updateDate + ", deleteYn="
-				+ deleteYn + ", reportContent=" + reportContent + ", manageYn=" + manageYn + ", cmtNum=" + cmtNum
-				+ ", cmtContent=" + cmtContent + ", writeDate=" + writeDate + ", cmtUpdate=" + cmtUpdate
-				+ ", cmtDeleteYn=" + cmtDeleteYn + "]";
-	}
 	
 	// 이미지 테이블
 //	private int imgNumber;
@@ -71,8 +64,19 @@ public class BoardDTO  {
 //	
 //	private boolean imgShowYn;
 //	
-//	private String imgName;
+	private String imgName;
+	
 
+	@Override
+	public String toString() {
+		return "BoardDTO [category=" + category + ", bno=" + bno + ", userNumber=" + userNumber + ", title=" + title
+				+ ", content=" + content + ", regDate=" + regDate + ", updateDate=" + updateDate + ", deleteYn="
+				+ deleteYn + ", reportContent=" + reportContent + ", manageYn=" + manageYn + ", cmtNum=" + cmtNum
+				+ ", cmtContent=" + cmtContent + ", writeDate=" + writeDate + ", cmtUpdate=" + cmtUpdate
+				+ ", cmtDeleteYn=" + cmtDeleteYn + ", imgName=" + imgName + "]";
+	}
+	
+	
 	
 
 }

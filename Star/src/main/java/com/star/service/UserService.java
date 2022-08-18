@@ -45,7 +45,5 @@ public interface UserService {
 	public String findId(UserDTO userDTO);
 
 	public int changePassword(UserDTO userDto);
-
-	public ImgDTO[] getImgsFromBno(Long boardBno);
 	
 }

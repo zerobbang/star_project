@@ -42,7 +42,36 @@ public class BoardController {
 		
 		// 선택된 글 리스트 뽑기
 		List<BoardDTO> boardList = boardService.getBoardList(cri);
+		System.out.println("길이는 : "+ boardList.size());
+		
+		for(BoardDTO board : boardList)
+		{
+			System.out.println("+++++++++++++++++++");
+			System.out.println(board.getBno());
+			
+			List<ImgDTO> img = boardService.getImgsFromBno(board.getBno());
+			System.out.println(img);
+//			System.out.println(img.get(0).getImgName());
+			String firstImg = "";
+			try {
+				firstImg = img.get(0).getImgName() ;
+				System.out.println("대표 이미지 O");
+			} catch (Exception e) {
+				System.out.println("대표 이미지 X");
+			}
+			
+			
+			
+			board.setImgName(firstImg);
+		}
+		System.out.println("---------------");
+		System.out.println(boardList);
 		model.addAttribute("boardList", boardList);
+		
+//		System.out.println(boardList.size());
+		
+//		List<BoardDTO> imgsList = boardService.getBoardList(cri);
+//		model.addAttribute("boardList", imgsList );
 		
 		// 각 게시글의 유저 넘버로 조회해서 해당 닉네임을 가져오고 list에 저장한다.
 		// > 우리 boardDTO에는 유저 번호가 있고 유저 닉네임이 없기 때문에
@@ -67,10 +96,14 @@ public class BoardController {
 		model.addAttribute("criteria",cri);
 		model.addAttribute("boardDTO",boardDTO);
 		
-		System.out.println("borad"+boardDTO);
+		System.out.println("borad "+boardDTO);
 		System.out.println("cri"+cri);
 		
 		System.out.println(pageMake);
+		
+		System.out.println("--------------");
+		System.out.println(model);
+		System.out.println("--------------");
 		
 		return "board/list";
 	}
@@ -166,12 +199,12 @@ public class BoardController {
     	
     	Long boardBno = boardDto.getBno();
     	System.out.println(boardBno);
-//    	ImgDTO[] imgs = new ImgDTO[];
-    	ImgDTO[] imgs = userService.getImgsFromBno(boardBno);
     	
+    	List<ImgDTO> imgs = boardService.getImgsFromBno(boardBno);
+    	model.addAttribute("imgDto", imgs);
     	
-    	
-    	System.out.println("끝!!");
+    	System.out.println(model);
+    	System.out.println("끝??");
     	
     	return "star/detailed_check";
     }

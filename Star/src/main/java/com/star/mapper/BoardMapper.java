@@ -54,6 +54,6 @@ public interface BoardMapper {
 
 	public String findWriterFromUserNumber(Long writerNumber);
 
-	public ImgDTO[] findImgsFromBno(Long boardBno);
+	public List<ImgDTO> findImgsFromBno(Long boardBno);
 	
 }

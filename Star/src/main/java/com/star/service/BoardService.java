@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.star.domain.BoardDTO;
+import com.star.domain.ImgDTO;
 import com.star.paging.Criteria;
 
 @Service
@@ -32,6 +33,8 @@ public interface BoardService {
 	public int getMyCount(Long userNumber);
 
 	public String getWriter(Long writerNumber);
+
+	public List<ImgDTO> getImgsFromBno(Long boardBno);
 	
 
 

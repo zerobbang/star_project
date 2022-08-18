@@ -82,51 +82,12 @@
     	<textarea rows="10" cols="30" th:text="${boardDTO.content}"></textarea>
     </div>
     
+    <div th:if="${#lists.size(imgDto)} > 0"  th:each="img : ${imgDto}">
+    	<input type="image" id="imgPath" name="imgPath" th:src="'/imgfiles/' + ${img.imgName}" 
+    		style="width:450px; height:400px; margin:0 auto; border:1px solid green;">
+   		<br>
+   		<input type="text" id="imgName" name="imgName" th:value="${#strings.substring(img.imgName,37)}">
+    </div>
     
-    <!-- <div style="width:450px; height:400px; margin:0 auto; border:1px solid green;">
-        사진
-    </div> -->
-    
-    
-    
-    <!-- <div>화려한 말머리 성운</div>
-    <br>
-    <div>오늘 날씨가 너무 좋다는 정보를 보고 얼른 장비 챙겨서 강원도로 가서 관측했습니다!</div>
-    <div>날씨가 좋으니 실력보다 더 잘 나온거 같아서 뿌듯하네요!</div>
-    <br>
-    <br>
-    <div>- 촬영 일시 : 2022.07.05</div>
-    <div>- 촬영 장소 : 강원도 홍천읍 방내리</div>
-    <div>- 적도의 : Garnet32(자작하모닉적도의), asiair pro</div>
-    <div>- 망원경 : 자작 12인치 F4 반사망원경(gso미러), sharpstar 1xmpcc</div>
-    <div>- 카메라 : asi294mm pro ( -20°c)</div>
-    <div>- 이미지처리 : pixlnsight</div>
-    <div>Antlia 3.0nm Ha 30장 / 2bin / gain 200 / 180 sec</div>
-    <div>Antlia 3.0nm O3 40장 / 2bin / gain 200 / 180 sec</div>
-    <div>Antlia 3.0nm S2 30장 / 2bin / gain 200 / 180 sec</div>
-    <br>
-    <br> -->
-    <!-- 좋아요는 음 뺄 것 같은데요,,? ERD에 기능이 없는 것 같다. - JM  -->
-<!--     <button> ❤️좋아요!</button> -->
-    <!-- <button type="button" class="btn btn-success"> ❤️좋아요!</button> -->
-    <br>
-    <br>
-    <br>
-    <input type="text" style="width: 80%; height: 40px; border-radius: 5px;"  placeholder="내용을 입력해주세요">
-    <br>
-    <br>
-    <div>서누족장      2022.07.08  14:50 </div>
-    <div>와~ 너무 잘 나왔습니다~</div>
-    <br>
-    <br>
-    <span>코천가여 </span> 
-    <span>
-        <button>삭제</button>
-    </span>
-    <span>  2022.07.08  14:50 </span>
-    <div>감사합니다~ 서누족장님 사진도 잘보고 잇어용!</div>    <br>
-    <br>
-    <div>헬스남친      2022.07.08  14:50 </div>
-    <div>와우!  디테일 엄청나네요!</div>
 </body>
 </html>
