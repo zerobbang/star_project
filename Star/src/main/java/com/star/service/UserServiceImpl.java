@@ -208,9 +208,4 @@ public class UserServiceImpl implements UserService{
 		return result;
 	}
 
-//	@Override
-//	public long getUserNumber(String userNickname) {
-//		return userMapper.getUserNumber(userNickname);
-//	}
-//	
 }

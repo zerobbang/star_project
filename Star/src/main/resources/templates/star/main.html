@@ -72,15 +72,13 @@
     </style>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b9125e70384813c29bb964a22bf69f75"></script>
-	<div th:replace="fragments/body :: main-css"></div>
+	
 </head>
 <body>
+<div th:replace="fragments/body :: main-css"></div>
 	<script>
-	
-	
-	
 		// 지역, geojson 경로 ->db?
-		var region = new Array('서울','제주','부산','전국','광주','전남','세종','전북','경남','경북','경기','울산','대구','대전','충남','충북','강원','인천');
+		var region = new Array('서울','제주','부산','전국','광주','전라남도','세종','전라북도','경상남도','경상북도','경기도','울산','대구','대전','충청남도','충청북도','강원도','인천');
 		var geojsonUrl = new Array ('/geojson/seoul.geojson','/geojson/jeju.geojson','/geojson/busan.geojson','/geojson/korea.geojson','/geojson/gwangju.geojson','/geojson/jn.geojson','/geojson/sejong.geojson','/geojson/jb.geojson','/geojson/gn.geojson','/geojson/gb.geojson','/geojson/gg.geojson','/geojson/ulsan.geojson','/geojson/daegu.geojson','/geojson/daejeon.geojson','/geojson/cn.geojson','/geojson/cb.geojson','/geojson/gangwon.geojson','/geojson/incheon.geojson');
 		var regionCenter = new Array([37.566826, 126.9786567],[33.400, 126.5000],[35.1379222,129.05562775],[36.6,127.5],[35.1,126.8],[35.1,126.8],[36.504,127.249],[35.824,127.147],[35.15,128.15],[36.15,128.45],[37.3,127.15],[35.5,129.184],[35.8,128.46],[36.37,127.33],[36.6,127],[36.6,127.5],[37.8,128.2],[37.2722,126.425]);
 		var regionData = {region, geojsonUrl};
@@ -90,9 +88,8 @@
 	    var polygons=[] ;
 	
 	    $(document).ready(function(){
-	    	
-	    	var userNumber = document.getElementById("userNumber");
-	    	console.log(typeof userNumber);
+/* 	    	var userNumber = document.getElementById("userNumber");
+	    	console.log(typeof userNumber); */
 	    	
 	        $.ajax({
 	           url : "/star/main2",
@@ -104,6 +101,7 @@
 	           },
 	           error: function (){alert("지도 실패");}
 	        });
+	    	
 	        console.log("--------------------1");
 	        $.ajax({
 		        url : "/star/main3",
@@ -112,13 +110,11 @@
 		        success: function(data) {
 		        	$('#weather').html(data);
 		        },
-		        error: function (){alert("기상조건 테이블 실패");}
-		        
+		        error: function (){alert("기상조건 테이블 실패");}		        
 		    });
 	        
 	        
 	        $("select").on('focus',function(){
-	
 	        	var previous = this.value;
 	        	console.log("현재값 : ",previous);
 	        }).change(function(){
@@ -141,11 +137,14 @@
 	                    var userSelectRegionCenter = regionCenterData.regionCenter[i];
 	                }
 	            }
+	            
 	            setCenter(userSelectRegionCenter);
 	            showMap(userSelectRegionUrl);
+	            
 	            console.log("--------------------");
 	            console.log(next);
 	            console.log("--------------------");
+	            
 	            // 메인페이지 테이블
 	            var dustDto={
 	            		region:next
@@ -244,7 +243,7 @@
     
     <br><br><br>
     <div>
-	        <!-- 스위치 버튼 -->
+	<!-- 스위치 버튼 -->
 	    <div id="container">
 		  <div class="toggle-switch">
 		    <input type="checkbox" id="chkTog">

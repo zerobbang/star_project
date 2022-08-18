@@ -37,10 +37,5 @@ public interface UserMapper {
 	public String findIdFromEmail(UserDTO userDTO);
 
 	public int changePassword(UserDTO userDto);
-	
-	// 닉네임으로 번호 찾기
-	public long getUserNumber(String userNickname);
-
-	
 
 } 

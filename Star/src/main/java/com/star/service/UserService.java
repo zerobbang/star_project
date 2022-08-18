@@ -45,9 +45,6 @@ public interface UserService {
 	public String findId(UserDTO userDTO);
 
 	public int changePassword(UserDTO userDto);
-	
-//	// 닉네임으로 회원번호 찾기
-//	public long getUserNumber(String userNickname);
-	
+		
 	
 }
