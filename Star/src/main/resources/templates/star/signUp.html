@@ -12,7 +12,7 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 
 <title>회원가입</title>
-<!-- 필요항목? -->
+<!-- 네브바 가져올 때 같이 가져옴 -->
 <!-- <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
 	type="text/javascript"></script>
@@ -20,7 +20,7 @@
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b9125e70384813c29bb964a22bf69f75"></script>
 <div th:replace="fragments/body :: main-css"></div> -->
 
-<script src="http://code.jquery.com/jquery-latest.min.js"></script> 
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <script>
 	// 사용자가 입력한 데이터
@@ -476,172 +476,184 @@
 </script>
 
 <style>
-	/* 이미지 위치 */
-	.title {
-		text-align: center;
-		margin-top: 10%;
-		margin-bottom: 1%;
-	}
-	/* 라벨 위치 조정 */
-	label {
-	text-align:right;
+/* 이미지 위치 */
+.title {
+	text-align: center;
+	margin-top: 10%;
+	margin-bottom: 1%;
+}
+/* 라벨 위치 조정 */
+label {
+	text-align: right;
 	white-space: nowrap;
 	width: 100%;
-/*     text-overflow: ellipsis; */		
+	/*     text-overflow: ellipsis; */
 }
-	/* 폼태그 전체폼 크기 조정 */
-	form {
-		width: 50%;
-	}
-	/* 비번 눈 아이콘 위치 조정 */
-	 .input-icon i {
-        position: absolute;
-        color: gray;
-        margin-left: 26%;
-        margin-top: -30px;
+/* 폼태그 전체폼 크기 조정 */
+form {
+	width: 50%;
+}
+/* error css */
+div .error {
+	color: red;
+	font-size: 12px;
+}
+
+/* 비번 눈 아이콘 위치 조정 */
+.input-icon i {
+	position: absolute;
+	color: gray;
+	margin-left: 26%;
+	margin-top: -30px;
 }
 /* 관측 희망 지역 드롭바 다른 인풋과 간격 맞춤 */
-	.signUp{
-		padding-left: 6px;
-	}
+.signUp {
+	padding-left: 6px;
+}
 </style>
 </head>
 <body>
 	<!-- 네브바 -->
 	<!-- <div th:replace="fragments/body :: main-nav"></div> -->
 	<!-- 별별 이미지 화면설계서 기준으로는 회원가입이라는 글이 없어서 주석 처리해놓음 -->
-	<div class="wrapper">
-		<div class="title">
-		<img alt="logo" src="../img/Logo.png">
-<!-- 			<h4>회원 가입</h4> -->
-		</div>
-	</div>
-	<!-- 아이디, 비번 등 폼 -->
-	<div class="d-flex justify-content-center">
-		<form th:action="@{/signupCheck}" method="post">
-	
-			<!-- 아이디 -->
-			<div class="ID">
-				<div class="row mb-4">
-					<label for="userId" class="col-sm-3 col-form-label">아이디</label>
-					<div class="col-sm-7">
-						<input type="text" class="form-control" id="userId" name="userId"
-							placeholder="영어(대소문자 구분 가능)+숫자">
-					</div>
-					<div id="IDerror" class="error"></div>
-				</div>
-			</div>
-			<!-- 비밀번호 -->
-			<div id="password">
-				<div class="row mb-4">
-					<label for="userPassword" class="col-sm-3 col-form-label">비밀번호</label>
-					<div class="col-sm-7">
-						<div class="input-icon">
-						<input type="password" class="form-control" id="userPassword" name="userPassword"
-							placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리" 
-							aria-label="userPassword" aria-describedby="basic-addon2" style="width: 100%;">
-							<i class="bi bi-eye-fill"></i>
-						</div>
-					</div>
-						<div id="PasswordError" class="error"></div>
-					</div>
-				</div>
-			
-			<!-- 비밀번호 재확인 -->
-			<div id="password2">
-				<div class="row mb-4">
-					<label for="passwordCheck" class="col-sm-3 col-form-label">비밀번호 재확인</label>
-					 <div class="col-sm-7">
-					<div class="input-icon">
-						<input type="password" class="form-control" id="passwordCheck" name="passwordCheck"
-							placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리" 
-							aria-label="passwordCheck" aria-describedby="basic-addon2" style="width: 100%;">
-							<i class="bi bi-eye-fill"></i>
-					</div>
-					</div>
-						<div id="PasswordCheckError" class="error"></div>
-					</div>
-				</div>
-			<!-- 닉네임 -->
-			<div id="nick">
-				<div class="row mb-4">
-					<label for="userNickname" class="col-sm-3 col-form-label">닉네임</label>
-					<div class="col-sm-7">
-						<input type="text" class="form-control" id="userNickname"
-							name="userNickname" placeholder="닉네임을 입력해주세요.">
 
-						<div id="nicknameError" class="error"></div>
-					</div>
-				</div>
-			</div>
-			<!-- 이메일 주소 -->
-			<div id="email">
-				<div class="row mb-4">
-					<label for="userEmail" class="col-sm-3 col-form-label">메일 주소</label>
-					<div class="col-sm-7">
-						<div class="input-group">
-							<input type="email" class="form-control" id="userEmail" name="userEmail"
-								placeholder="star1234@star.com" style="">
-							<input class="btn btn-secondary btn-sm" type="button" value="메일 발송" onclick="mailSend()">
-						</div>
-					</div>
-					<div id="emailError" class="error"></div>
-				</div>
-			</div>
-			<!-- 이메일 인증 번호 -->
-			<div id="certify">
-				<div class="row mb-4">
-					<label for="certify_id" class="col-sm-3 col-form-label">인증번호</label>
-					<div class="col-sm-7">
-						<div class="input-group">
-							<input type="text" class="form-control" id="certify_id" name="certify_id"
-								placeholder="인증번호 입력"><input class="btn btn-secondary btn-sm" type="button" value="인증 하기" 
-								onclick="check_certify()">
+	<div class="sign_wrapper">
+		<!-- 회원가입 전체 폼 -->
+		<div class="title">
+			<img alt="logo" src="../img/Logo.png">
+			<!-- <h4><strong>회원 가입</strong></h4> -->
+		</div>
+
+		<!-- 아이디, 비번 등 폼 -->
+		<div class="d-flex justify-content-center">
+			<form th:action="@{/signupCheck}" method="post">
+
+				<!-- 아이디 -->
+				<div class="ID">
+					<div class="row mb-2">
+						<label for="userId" class="col-sm-3 col-form-label">아이디</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" id="userId" name="userId"
+								placeholder="영어(대소문자 구분 가능)+숫자">
+							<div id="IDerror" class="error"></div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<!-- 관측 희망 지역 -->
-			<div id="region">
-				<div class="row mb-4">
-					<label for="userRegion" class="col-sm-3 col-form-label">관측 희망 지역</label>
+				<!-- 비밀번호 -->
+				<div id="password">
+					<div class="row mb-2">
+						<label for="userPassword" class="col-sm-3 col-form-label">비밀번호</label>
+						<div class="col-sm-7">
+							<div class="input-icon">
+								<input type="password" class="form-control" id="userPassword"
+									name="userPassword" placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리"
+									aria-label="userPassword" aria-describedby="basic-addon2"
+									style="width: 100%;"> <i class="bi bi-eye-fill"></i>
+								<div id="PasswordError" class="error"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 비밀번호 재확인 -->
+				<div id="password2">
+					<div class="row mb-2">
+						<label for="passwordCheck" class="col-sm-3 col-form-label">비밀번호
+							재확인</label>
+						<div class="col-sm-7">
+							<div class="input-icon">
+								<input type="password" class="form-control" id="passwordCheck"
+									name="passwordCheck" placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리"
+									style="width: 100%;"> <i class="bi bi-eye-fill"></i>
+								<div id="PasswordCheckError" class="error"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 닉네임 -->
+				<div id="nick">
+					<div class="row mb-2">
+						<label for="userNickname" class="col-sm-3 col-form-label">닉네임</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" id="userNickname"
+								name="userNickname" placeholder="닉네임을 입력해주세요.">
+							<div id="nicknameError" class="error"></div>
+						</div>
+					</div>
+				</div>
+				<!-- 이메일 주소 -->
+				<div id="email">
+					<div class="row mb-2">
+						<label for="userEmail" class="col-sm-3 col-form-label">메일
+							주소</label>
+						<div class="col-sm-7">
+							<div class="input-group">
+								<input type="email" class="form-control" id="userEmail"
+									name="userEmail" placeholder="star1234@star.com" style="">
+								<input class="btn btn-secondary btn-sm" type="button"
+									value="메일 발송" onclick="mailSend()">
+							</div>
+							<div id="emailError" class="error"></div>
+						</div>
+					</div>
+				</div>
+				<!-- 이메일 인증 번호 -->
+				<div id="certify">
+					<div class="row mb-2">
+						<label for="certify_id" class="col-sm-3 col-form-label">인증번호</label>
+						<div class="col-sm-7">
+							<div class="input-group">
+								<input type="text" class="form-control" id="certify_id"
+									name="certify_id" placeholder="인증번호 입력"><input
+									class="btn btn-secondary btn-sm" type="button" value="인증 하기"
+									onclick="check_certify()">
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 관측 희망 지역 -->
+				<div id="region">
+					<div class="row mb-2">
+						<label for="userRegion" class="col-sm-3 col-form-label">관측
+							희망 지역</label>
 						<div class="col-sm-7">
 							<div class="input-group">
 								<select class="form-select" id="userRegion" name="userRegion"
-								style="text-align: center; width: 50%">
-							<option value="전국">전국</option>
-							<option value="서울">서울</option>
-							<option value="부산">부산</option>
-							<option value="대구">대구</option>
-							<option value="인천">인천</option>
-							<option value="광주">광주</option>
-							<option value="대전">대전</option>
-							<option value="울산">울산</option>
-							<option value="세종">세종</option>
-							<option value="경기도">경기도</option>
-							<option value="강원도">강원도</option>
-							<option value="충청북도">충청북도</option>
-							<option value="충청남도">충청남도</option>
-							<option value="전라북도">전라북도</option>
-							<option value="전라남도">전라남도</option>
-							<option value="경상북도">경상북도</option>
-							<option value="경상남도">경상남도</option>
-							<option value="제주도">제주도</option>
-						</select>
-						<div id="regionError" class="error"></div>
+									style="text-align: center; width: 50%">
+									<option value="전국">전국</option>
+									<option value="서울">서울</option>
+									<option value="부산">부산</option>
+									<option value="대구">대구</option>
+									<option value="인천">인천</option>
+									<option value="광주">광주</option>
+									<option value="대전">대전</option>
+									<option value="울산">울산</option>
+									<option value="세종">세종</option>
+									<option value="경기도">경기도</option>
+									<option value="강원도">강원도</option>
+									<option value="충청북도">충청북도</option>
+									<option value="충청남도">충청남도</option>
+									<option value="전라북도">전라북도</option>
+									<option value="전라남도">전라남도</option>
+									<option value="경상북도">경상북도</option>
+									<option value="경상남도">경상남도</option>
+									<option value="제주도">제주도</option>
+								</select>
+								<div id="regionError" class="error"></div>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="signUp">
-				<div class="d-grid gap-2 col-6 mx-auto">
-					<input class="btn btn-secondary" type="button" 
-						value="가입하기" onclick="doSignup()">
+				<div class="signUp">
+					<div class="d-grid gap-2 col-6 mx-auto">
+						<input class="btn btn-secondary" type="button" value="가입하기"
+							onclick="doSignup()">
+					</div>
 				</div>
-			</div>	
-		</form>
+			</form>
+		</div>
 	</div>
-	
+
 	<!-- 원래 초기에 있던 것 -->
 	<!--  <div class="ID">
 	       		<label for="userId">아이디</label>
@@ -681,10 +693,10 @@
 	        <input type="text" id="certify_id" placeholder="인증번호 입력">
 	        <input type="button" onclick="check_certify()" value="인증하기">
 	        </div> -->
-	    
-	     <!-- </form> -->	
-	
-	   <!--  <div class="region">
+
+	<!-- </form> -->
+
+	<!--  <div class="region">
 	    
 	    	<span>관측 희망 지역</span> 기본 지역 선택
 	        <select id="userRegion" name="userRegion">
