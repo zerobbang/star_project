@@ -46,8 +46,8 @@ public interface UserService {
 
 	public int changePassword(UserDTO userDto);
 	
-	// 닉네임으로 회원번호 찾기
-	public long getUserNumber(String userNickname);
+//	// 닉네임으로 회원번호 찾기
+//	public long getUserNumber(String userNickname);
 	
 	
 }

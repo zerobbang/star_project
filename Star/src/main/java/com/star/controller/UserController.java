@@ -280,15 +280,15 @@ public class UserController {
 
     };
     
-    // 유저 닉네임
-    @ResponseBody
-    @PostMapping(value = "/star/getUserNumber")
-    public long getusernumber(UserDTO userDTO){
-    	// System.out.println("userDTO : "+userDTO);
-		long result = userService.getUserNumber(userDTO.getUserNickname());
-		System.out.println("검색 한 닉네임의 유저 번호 : "+result);
-		return result;
-    };
+//    // 유저 닉네임
+//    @ResponseBody
+//    @PostMapping(value = "/star/getUserNumber")
+//    public long getusernumber(UserDTO userDTO){
+//    	// System.out.println("userDTO : "+userDTO);
+//		long result = userService.getUserNumber(userDTO.getUserNickname());
+//		System.out.println("검색 한 닉네임의 유저 번호 : "+result);
+//		return result;
+//    };
         
     
     // 네비
