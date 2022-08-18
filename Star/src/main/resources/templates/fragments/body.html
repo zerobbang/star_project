@@ -29,23 +29,12 @@
 		        
 		            <li>
 		            	<form class="nav-link px-2 link-secondary" th:action="@{/star/mainpage}" method="post">
-					    	<input type="hidden" id="userNumber" name="userNumber" th:value="*{userDTO.userNumber}">
-					    	<input type="hidden" id="userNickname" name="userNickname" th:value="*{userDTO.userNickname}">
-					    	<input type="hidden" id="userRegion" name="userRegion" th:value="*{userDTO.userRegion}"/>
-					    	<input type="hidden" id="userId" name="userId" th:value="*{userDTO.userId}"/>
-					    	<input type="hidden" id="userpassword" name="userpassword" th:value="*{userDTO.userPassword}"/>
 					    	<input type="submit" value="Home">
 					    </form>
 		            </li>
 		            
 		            <li>
 			            <form class="nav-link px-2 link-dark" th:action="@{/board/list}" method="post">
-					    	<input th:if= "${userDTO.userNumber != null}" type="hidden" id="userNumber" name="userNumber" th:value="${userDTO.userNumber}">
-                     		<input th:if= "${userDTO.userNumber == null}" type="hidden" id="userNumber" name="userNumber" th:value=0>
-					    	<input type="hidden" id="userNickname" name="userNickname" th:value="*{userDTO.userNickname}">
-					    	<input type="hidden" id="userRegion" name="userRegion" th:value="*{userDTO.userRegion}"/>
-					    	<input type="hidden" id="userId" name="userId" th:value="*{userDTO.userId}"/>
-					    	<input type="hidden" id="userpassword" name="userpassword" th:value="*{userDTO.userPassword}"/>
 					    	<input type="hidden" id="category" name="category" value="관측지">
 					    	<input type="submit" value="관측지">
 					    </form>
@@ -53,12 +42,6 @@
 		            
 		            <li>
 			            <form class="nav-link px-2 link-dark" th:action="@{/board/list}" method="post">
-					    	<input th:if= "${userDTO.userNumber != null}" type="hidden" id="userNumber" name="userNumber" th:value="${userDTO.userNumber}">
-                     		<input th:if= "${userDTO.userNumber == null}" type="hidden" id="userNumber" name="userNumber" th:value=0>
-					    	<input type="hidden" id="userNickname" name="userNickname" th:value="*{userDTO.userNickname}">
-					    	<input type="hidden" id="userRegion" name="userRegion" th:value="*{userDTO.userRegion}"/>
-					    	<input type="hidden" id="userId" name="userId" th:value="*{userDTO.userId}"/>
-					    	<input type="hidden" id="userpassword" name="userpassword" th:value="*{userDTO.userPassword}"/>
 					    	<input type="hidden" id="category" name="category" value="작품전">
 					    	<input type="submit" value="작품전">
 					    </form>
@@ -66,12 +49,6 @@
 		            
 		            <li>
 			            <form class="nav-link px-2 link-dark" th:action="@{/board/list}" method="post">
-					    	<input th:if= "${userDTO.userNumber != null}" type="hidden" id="userNumber" name="userNumber" th:value="${userDTO.userNumber}">
-                     		<input th:if= "${userDTO.userNumber == null}" type="hidden" id="userNumber" name="userNumber" th:value=0>
-					    	<input type="hidden" id="userNickname" name="userNickname" th:value="*{userDTO.userNickname}">
-					    	<input type="hidden" id="userRegion" name="userRegion" th:value="*{userDTO.userRegion}"/>
-					    	<input type="hidden" id="userId" name="userId" th:value="*{userDTO.userId}"/>
-					    	<input type="hidden" id="userpassword" name="userpassword" th:value="*{userDTO.userPassword}"/>
 					    	<input type="hidden" id="category" name="category" value="잡담">
 					    	<input type="submit" value="소통방">
 					    </form>
