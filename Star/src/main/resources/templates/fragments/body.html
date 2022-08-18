@@ -83,18 +83,18 @@
 		    	
 		    	<!-- 회원번호가 없을 때 -->
 		    	<form id="login-signup"
-		    		th:if= "${userDTO.userNumber == null}">
+		    		th:if= "${session.userDTO == null}">
 		    		<!-- 버튼 태그에 페이지 이동을 달아두는거 재밌어보여서 써봄 ㅎ -->
 			        <button class="btn btn-secondary" type="button" onclick="location.href='/star/login' ">Login</button>
 			        <button class="btn btn-primary" type="button" onclick="location.href='/star/signup' ">회원 가입</button>
 		       	</form>
 		    	<!-- 회원번호가 있을 때 -->
 		    	<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search"
-		    		th:if= "${userDTO.userNumber != null}">
+		    		th:if= "${session.userDTO != null}">
 	                <button type="button" onclick="location.href='/star/mainpage' ">Logout</button>
-	                <input type="button" th:value="*{userDTO.userNickname}">
+	                <input type="button" th:value="*{session.userDTO.userNickname}">
 	            </form>    
-		        
+		        <!-- <input th:value="${session.userDTO}"/> -->
 		    </div>
 	    </header>
 	

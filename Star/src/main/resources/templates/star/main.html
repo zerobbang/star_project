@@ -171,30 +171,66 @@
 
 	<div th:replace="fragments/body :: main-nav"></div>	
     <h1>안녕하세요</h1>
-    <select id="selectRegion">
-        <option value="전국">전국</option>
-        <option value="강원">강원</option>
-        <option value="경기">경기</option>
-        <option value="경남">경남</option>
-        <option value="경북">경북</option>
-        <option value="전남">전남</option>
-        <option value="전북">전북</option>
-        <option value="충남">충남</option>
-        <option value="충북">충북</option>
-        <option value="광주">광주</option>
-        <option value="대구">대구</option>
-        <option value="대전">대전</option>
-        <option value="부산">부산</option>
-        <option value="서울">서울</option>
-        <option value="세종">세종</option>
-        <option value="울산">울산</option>
-        <option value="인천">인천</option>
-        <option value="제주">제주</option>
-    </select>
-    <input type="text" id="selectedRegion" value="전국"/>
+    
+    <th:block th:if="${session.userDTO} != null">
+	    <select id="userRegion" name="userRegion" required>
+	        <option value="전국" th:selected="${session.userDTO.userRegion}== '전국' ">전국</option>
+	        <option value="서울" th:selected="${session.userDTO.userRegion}== '서울' ">서울</option>
+	        <option value="부산" th:selected="${session.userDTO.userRegion}== '부산' ">부산</option>
+	        <option value="대구" th:selected="${session.userDTO.userRegion}== '대구' ">대구</option>
+	        <option value="인천" th:selected="${session.userDTO.userRegion}== '인천' ">인천</option>
+	        <option value="광주" th:selected="${session.userDTO.userRegion}== '광주' ">광주</option>
+	        <option value="대전" th:selected="${session.userDTO.userRegion}== '대전' ">대전</option>
+	        <option value="울산" th:selected="${session.userDTO.userRegion}== '울산' ">울산</option>
+	        <option value="세종" th:selected="${session.userDTO.userRegion}== '세종' ">세종</option>
+	        <option value="경기도" th:selected="${session.userDTO.userRegion}== '경기도' ">경기도</option>
+	        <option value="강원도" th:selected="${session.userDTO.userRegion}== '강원도' ">강원도</option>
+	        <option value="충청북도" th:selected="${session.userDTO.userRegion}== '충청북도' ">충청북도</option>
+	        <option value="충청남도" th:selected="${session.userDTO.userRegion}== '충청남도' ">충청남도</option>
+	        <option value="전라북도" th:selected="${session.userDTO.userRegion}== '전라북도' ">전라북도</option>
+	        <option value="전라남도" th:selected="${session.userDTO.userRegion}== '전라남도' ">전라남도</option>
+	        <option value="경상북도" th:selected="${session.userDTO.userRegion}== '경상북도' ">경상북도</option>
+	        <option value="경상남도" th:selected="${session.userDTO.userRegion}== '경상남도' ">경상남도</option>
+	        <option value="제주도" th:selected="${session.userDTO.userRegion}== '제주도' ">제주도</option>
+	    </select>
+	    
+	    <input type="text" id="selectedRegion" th:value="${session.userDTO.userRegion}"/>
+	</th:block>
+	
+	
+	<th:block th:if="${session.userDTO} == null">
+	    <select id="userRegion" name="userRegion" required>
+	        <option value="전국">전국</option>
+	        <option value="서울">서울</option>
+	        <option value="부산">부산</option>
+	        <option value="대구">대구</option>
+	        <option value="인천">인천</option>
+	        <option value="광주">광주</option>
+	        <option value="대전">대전</option>
+	        <option value="세종">세종</option>
+	        <option value="울산">울산</option>
+	        <option value="경기도">경기도</option>
+	        <option value="강원도">강원도</option>
+	        <option value="충청북도">충청북도</option>
+	        <option value="충청남도">충청남도</option>
+	        <option value="전라북도">전라북도</option>
+	        <option value="전라남도">전라남도</option>
+	        <option value="경상북도">경상북도</option>
+	        <option value="경상남도">경상남도</option>
+	        <option value="제주도">제주도</option>
+	    </select>
+	    
+	    <input type="text" id="selectedRegion" th:value="전국"/>
+	</th:block>
+    
+    
+    
+    
     <div id="mapImg"></div>
     <h2>카카오 이미지 띄우기 비동기 처리(default 가 비동기)</h2>
     
+    <!-- 세션값 받아오는 예시 -->
+    <!-- <input type="text" th:value="${session.userDTO}"> -->
     
     <!-- 네브바 임시용 -->
     <!-- 소통방의 default 값으로 설정해주기 -->

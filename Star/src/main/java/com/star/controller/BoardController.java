@@ -36,7 +36,7 @@ public class BoardController {
 	
 	// 게시글 조회
 	@RequestMapping(value="/board/list")
-	public String listBoard(Criteria cri, Model model, BoardDTO boardDTO, RedirectAttributes rttr) {
+	public String listBoard(Criteria cri, Model model, BoardDTO boardDTO) {
 		
 		System.out.println("리스트 카테고리 : "+cri.getCategory());
 		

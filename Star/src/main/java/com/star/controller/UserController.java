@@ -2,6 +2,9 @@ package com.star.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
@@ -24,19 +27,26 @@ public class UserController {
 
 	//	메인 페이지
 	@GetMapping(value = "/star/mainpage")
-	public String openUser(UserDTO userDTO) {
-//		System.out.println("mainpage로 잘왔음...");
+	public String openUser(){ 
+		
 		return "star/main";
 	}
 	
 //	메인 페이지
-	@PostMapping(value = "/star/mainpage")
-	public String openMain(UserDTO userDTO, RedirectAttributes rttr) {
-		
-		rttr.addFlashAttribute(userDTO);
-		
-		return "star/main";
-	}
+//	@PostMapping(value = "/star/mainpage")
+//	public String openMain(UserDTO userDTO, RedirectAttributes rttr
+//			, HttpServletRequest request) {
+//		
+//		rttr.addFlashAttribute(userDTO);
+//		
+//		HttpSession session = request.getSession();
+//		System.out.println("세션 테스트");
+//        System.out.println(session.getAttribute("loginUser"));
+//        
+//        System.out.println("세션 테스트끝!@");
+//		
+//		return "star/main";
+//	}
 	
 	// ajax 중간 main
 	@GetMapping(value = "/star/main2")
@@ -62,69 +72,7 @@ public class UserController {
 
 	}
  
-    @PostMapping("/mail/send")
-    public String sendMail(MailDTO mailDto) {
-        userService.sendSimpleMessage(mailDto);
-        System.out.println("메일 전송 완료");
-        return "star/sendmail";
-    }
-    
-    // 로그인 페이지 (logIn안에 값은 임시적으로 네비바 띄우기 위해서 적어놓음)
-    @GetMapping(value = "/star/login")
-    public String logIn(UserDTO userDTO) { 
-    	System.out.println("test!");
-    	return "star/login";
-    } 
-    
-    // 로그인 체크
-    @PostMapping(value = "/star/login") 
-    public String logInCheck(UserDTO userDTO, RedirectAttributes rttr) {
-    	
-    	System.out.println(userDTO);
-    	
-		try {
-			
-			System.out.println("do action!");
-	    	System.out.println(userDTO);
-			 
-	    	userDTO = userService.loginUser(userDTO);
-	    	
-//	    	System.out.println(rttr.getFlashAttributes());
-	    	rttr.addFlashAttribute(userDTO);
-//	    	rttr.addAttribute("ID", userDTO.getUserId());
-//	    	rttr.addAttribute("ID", userDTO);
-	    	System.out.println(rttr.getFlashAttributes());
-			 
-			if (userDTO.getUserId() != null) {
-				System.out.println("로그인 성공!");
-		        return "redirect:/star/mainpage";
-			}else {
-				System.out.println("로그인 실패1...");
-				return "star/login";
-			}
-		} catch (DataAccessException e) {
-			System.out.println("로그인 실패2...");
-			return "star/login"; 
-		} catch (Exception e) {
-			System.out.println("로그인 실패3...");
-			return "star/login";  
-		}
- 
-    };
-    
-    // 회원가입 페이지 (임시로 sendmail) -> (signUp으로 변경)
-    @GetMapping(value = "/star/signup")
-    public String singUp(UserDTO userDTO) {
-    	return "star/signUp";
-	}  
-
-    // 계정찾기 페이지
-    @GetMapping(value = "/star/findUser")
-    public String findAccount() {
-    	return "star/findUser";
-    }
-
-    // 입력한 이메일로 메일 보내기
+	// 입력한 이메일로 메일 보내기
 	@PostMapping(value = "/mailSend")
 	@ResponseBody
 	public String[] dataSend(MailDTO mailDto){
@@ -139,6 +87,84 @@ public class UserController {
         String[] returndata = {certifyNum};
         return returndata;
     };
+    
+    // 로그인 페이지 (logIn안에 값은 임시적으로 네비바 띄우기 위해서 적어놓음)
+    @GetMapping(value = "/star/login")
+    public String logIn(HttpServletRequest request) { 
+    	System.out.println("로그인 페이지로 이동");
+    	
+    	HttpSession session = request.getSession();
+    	if (session.getAttribute("userDTO") != null) {
+    		System.out.println("이미 로그인중입니다.");
+    		return "redirect:/star/mainpage";
+    	};
+    	return "star/login";
+    };
+    
+    // 로그인 체크
+    @PostMapping(value = "/star/login") 
+    public String logInCheck(UserDTO userDTO
+    		, HttpServletRequest request) {
+    	
+    	System.out.println(userDTO);
+    	
+		try {
+			
+			System.out.println("do action!");
+	    	System.out.println(userDTO);
+			 
+	    	userDTO = userService.loginUser(userDTO);
+	    	 
+	    	// 로그인 여부 처리
+			if (userDTO.getUserId() != null) {
+				
+                // 세션이 있으면 있는 세션 반환, 없으면 신규 세션 생성
+                HttpSession session = request.getSession();
+                // 세션에 로그인 회원 정보 보관
+                session.setAttribute("userDTO", userDTO);
+
+				System.out.println("로그인 성공!");
+		        return "redirect:/star/mainpage";
+			}else {
+				System.out.println("로그인 실패1...");
+				return "star/login";
+			}
+		} catch (DataAccessException e) {
+			System.out.println("로그인 실패2...");
+			return "star/login"; 
+		} catch (Exception e) {
+			System.out.println("로그인 실패3...");
+			return "star/login";  
+		}
+    };
+    
+    // 회원가입 페이지
+    @GetMapping(value = "/star/signup")
+    public String singUp() {
+    	return "star/signUp";
+	}  
+
+    // 계정찾기 페이지
+    @GetMapping(value = "/star/findUser")
+    public String findAccount() {
+    	return "star/findUser";
+    }
+
+//    // 입력한 이메일로 메일 보내기
+//	@PostMapping(value = "/mailSend")
+//	@ResponseBody
+//	public String[] dataSend(MailDTO mailDto){
+//		
+//		System.out.println("메일 전송 시작");
+//		userService.sendSimpleMessage(mailDto);
+//		System.out.println("메일 전송 완료");
+//		String certifyNum = mailDto.getContent();
+//		
+//		System.out.println(certifyNum);
+//		 
+//        String[] returndata = {certifyNum};
+//        return returndata;
+//    };
     
     // 회원가입 기능
     @PostMapping(value = "/signup.do")
