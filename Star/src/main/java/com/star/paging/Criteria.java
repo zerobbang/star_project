@@ -28,10 +28,13 @@ public class Criteria {
 	/* 검색 타입 */
     private String searchType;
     
+    private String ajaxYn;
+    
     /* 기본 생성자 -> 기봅 세팅 : pageNum = 1, amount = 10 */
     public Criteria() {
         this(1,10);
         this.skip = 0;
+        this.ajaxYn = "n";
     }
     
     /* 생성자 => 원하는 pageNum, 원하는 amount */
