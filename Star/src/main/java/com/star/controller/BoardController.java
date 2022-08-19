@@ -196,7 +196,7 @@ public class BoardController {
     
 	// 마이 페이지
 	@RequestMapping(value="/board/mypage")
-	public String openMypage2(Criteria cri, Model model, BoardDTO boardDTO, RedirectAttributes rttr, UserDTO userDTO) {
+	public String openMypage2(Criteria cri, Model model, BoardDTO boardDTO) {
 		System.out.println("마이 페이지로 이동");
 		
 		// System.out.println(cri);
@@ -204,7 +204,7 @@ public class BoardController {
 		// 선택된 글 리스트 뽑기
 		List<BoardDTO> myList = boardService.getMyListBoard(cri);
     	model.addAttribute("myList", myList);
-		
+		System.out.println(myList);
 		
 		// 페이징 처리
 		int total = boardService.getMyCount(cri);
