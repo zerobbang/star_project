@@ -95,7 +95,7 @@
                     <td th:text="${list.bno}"></td>
                     
                     <td class="title">	                   	
-	                   	<a th:href="@{/star/detailed_check(bno=${list.bno})}"
+	                   	<a th:href="@{/board/detailed_check(bno=${list.bno})}"
 	                   		th:text="${list.title}">
 	                   	</a>   	
                    	</td>
@@ -138,14 +138,13 @@
 			<input type="text" id="pageNum" name="pageNum" th:value="${criteria.pageNum }"> 
 			<input type="text" id="amount" name="amount" th:value="${criteria.amount }">
 			<input type="text" id="category" name="category" th:value="${criteria.category }">
-			<input type="text" id="userNumber" name="userNumber" th:value="${criteria.userNumber }">
 			<input type="text" id="total" name="total"th:value="${pageMaker.total}">
 			<input type="submit" value="글쓰기" />
 		</form>
 
 
-		<input type="text" th:value="${pageMaker.startPage}"> <input
-			type="text" th:value="${pageMaker.endPage}">
+		<input type="text" th:value="${pageMaker.startPage}"> 
+		<input type="text" th:value="${pageMaker.endPage}">
 		<div class="pageInfo_wrap">
 			<div class="pageInfo_area">
 				<ul id="pgaeInfo" class="pageInfo">
@@ -172,8 +171,6 @@
 			</div>
 		</div>
 
-
-<!-- 	  	<form id="searchForm" class="form-horizontal" onsubmit="return false;" autocomplete="off"> -->
          <div class="form-group">
              <label for="searchType">검색 유형</label>
              <select id="searchType" name="searchType" class="form-control">
@@ -190,7 +187,6 @@
              <input type="text" id="inputSearchType" name="searchType" class="form-control" th:value="${pageMaker.cri.searchType}" />
          </div>
           <button type="button" class="btn btn-primary" onclick="searchResult();">제출버튼</button> 
- <!--     </form>   -->
  
        </div>
     </th:block>
@@ -201,7 +197,7 @@
 			url : "/board/list",
 			type : "post",
 			data : {"category" : $("#category").val(),
-					"userNumber" : $("#userNumber").val(),
+					/* "userNumber" : $("#userNumber").val(), */
 					"pageNum" : 1,
 					"amount" : $("#amount").val(),
 					"keyword" : $("#keyword").val(),
@@ -255,9 +251,9 @@
 			
 			$.ajax({
 				url : "/board/list",
-				type : "post",
+				type : "get",
 				data : {"category" : $("#category").val(),
-						"userNumber" : $("#userNumber").val(),
+						/* "userNumber" : $("#userNumber").val(), */
 						"pageNum" : pageNum,
 						"amount" : $("#amount").val(),
 						"keyword" : $("#inputKeyword").val(),

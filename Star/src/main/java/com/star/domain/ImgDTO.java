@@ -18,4 +18,12 @@ public class ImgDTO {
 	
 	private String imgName;
 
+	@Override
+	public String toString() {
+		return "ImgDTO [imgNumber=" + imgNumber + ", bno=" + bno + ", imgPath=" + imgPath + ", imgShowYn=" + imgShowYn
+				+ ", imgName=" + imgName + "]";
+	}
+	
+	
+
 }

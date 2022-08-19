@@ -33,50 +33,47 @@ public class BoardServiceImpl implements BoardService{
 			System.out.println("글 정상적으로 저장 실패."+queryResult);
 		}
 		
+		// 사진 첨부가 없으면
+		if(fileList == null ) {
+			// 글 저장 종료
+			return (queryResult == 1) ? true:false ;
+		}else {
+			Iterator<MultipartFile> files = fileList.iterator();
 			
-		Iterator<MultipartFile> files = fileList.iterator();
-		
-		while(files.hasNext()) {
-			MultipartFile file = files.next();
-
-			// 이미지 저장
-			String filePath = System.getProperty("user.dir")+"/src/main/resources/static/imgfiles";
-			// 이미지 고유 번호 생성
-			UUID uuid = UUID.randomUUID();
-			// 이미지 이름 = UUID_파일원래이름
-			String fileName = uuid+"_"+ file.getOriginalFilename();
-			// 이미지 저장한다.
-			File saveFile = new File(filePath,fileName);
-			file.transferTo(saveFile);
-			
-			BoardDTO newBoard = boardMapper.getLastBoard();
-			System.out.println("저장한 게시글의 글 번호 : "+newBoard.getBno());
-			System.out.println("저장한 게시글의 정보 : "+newBoard);
-			
-			ImgDTO imgDTO = new ImgDTO();
-			
-			imgDTO.setImgName(fileName);
-			imgDTO.setImgPath(filePath);
-			imgDTO.setBno(newBoard.getBno());
-			
-			int imgResult = boardMapper.insertImg(imgDTO);
-			
-			if(imgResult == 1) {
-				System.out.println("글 이미지 정상적으로 저장 성공."+imgResult);
-			}else {
-				System.out.println("글 이미지 정상적으로 저장 실패."+imgResult);
-			}
-			
-		}	
-		
-//		// 글 번호가 널값이면 새로 글을 생성
-//		if(params.getBno() == null) {
-//			queryResult = boardMapper.insertBoard(params);
-//		}else {
-////			queryResult = boardMapper.insertBoard(params);
-//		}
-		
+			while(files.hasNext()) {
+				MultipartFile file = files.next();
+	
+				// 이미지 저장
+				String filePath = System.getProperty("user.dir")+"/src/main/resources/static/imgfiles";
+				// 이미지 고유 번호 생성
+				UUID uuid = UUID.randomUUID();
+				// 이미지 이름 = UUID_파일원래이름
+				String fileName = uuid+"_"+ file.getOriginalFilename();
+				// 이미지 저장한다.
+				File saveFile = new File(filePath,fileName);
+				file.transferTo(saveFile);
+				
+				BoardDTO newBoard = boardMapper.getLastBoard();
+				System.out.println("저장한 게시글의 글 번호 : "+newBoard.getBno());
+				System.out.println("저장한 게시글의 정보 : "+newBoard);
+				
+				ImgDTO imgDTO = new ImgDTO();
+				
+				imgDTO.setImgName(fileName);
+				imgDTO.setImgPath(filePath);
+				imgDTO.setBno(newBoard.getBno());
+				
+				int imgResult = boardMapper.insertImg(imgDTO);
+				
+				if(imgResult == 1) {
+					System.out.println("글 이미지 정상적으로 저장 성공."+imgResult);
+				}else {
+					System.out.println("글 이미지 정상적으로 저장 실패."+imgResult);
+				}
+				
+			}		
 		return (queryResult == 1) ? true:false ;
+		}
 	}
 
 	// 게시글 상세 조회
