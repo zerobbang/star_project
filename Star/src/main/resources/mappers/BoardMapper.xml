@@ -253,7 +253,7 @@
 		user_number = #{writerNumber};
 </select>
 
-<select id="findRepresentImgFromBno" parameterType="Long" resultType="ImgDTO">
+<select id="findImgsFromBno" parameterType="Long" resultType="ImgDTO">
 	select 
 		<include refid="imgColumns"/>
 	from 

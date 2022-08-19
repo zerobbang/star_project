@@ -41,8 +41,11 @@ public class BoardController {
 	@RequestMapping(value="/board/list")
 	public String listBoard(Criteria cri, Model model, BoardDTO boardDTO) {
 		
-		// 선택된 글 리스트 뽑기
+		if (cri.getCategory() == null) {
+			cri.setCategory("관측지");
+		}
 		
+		// 선택된 글 리스트 뽑기
 		List<BoardDTO> boardList = boardService.getBoardList(cri);
 		
 		for(BoardDTO board : boardList)
