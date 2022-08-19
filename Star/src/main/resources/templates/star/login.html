@@ -153,7 +153,7 @@ body {
 									<input type="password" class="form-control" id="userPassword"
 										name="userPassword" value=""
 										placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리">
-									<button id="open_eye" class="btn btn-secondary">
+									<button id="open_eye" class="btn btn-secondary" type="button" onclick="changePwView()">
 										<i class="bi bi-eye-slash-fill" style="color: white;"></i>
 									</button>
 								</div>
@@ -164,22 +164,10 @@ body {
 						</div>
 					</div>
 				</div>
-		</div>
-
-		<!-- 원래 있던 코드 id, name 변경 없음 -->
-		<!--<div>
-	        	<label for="userId">아이디</label>
-				<input type="text" class="text-field" id="userId" name="userId" value="zerobbang" placeholder="아이디를 입력하세요">
-				 th:field="*{userId}"
-			</div>
-			<div>
-	        	<label for="userPassword">비밀번호</label>
-				<input type="password" class="text-field"  id="userPassword" name="userPassword" value="01022223333" placeholder="비밀번호를 입력하세요">	 
-				th:field="*{userPassword}"
-			</div> -->
-
-		<div class="d-grid gap-2 col-2 mx-auto" th:object="${params}">
-			<button type="submit" class="btn btn-secondary">로그인</button>
+				<div class="d-grid gap-2 col-2 mx-auto" th:object="${params}">
+					<button type="submit" class="btn btn-secondary">로그인</button>
+				</div>
+			</form>
 		</div>
 		<div>
 			<ul class="find_wrap">
@@ -187,7 +175,20 @@ body {
 				<li><a href="findUser" class="find_text">계정 찾기</a></li>
 			</ul>
 		</div>
-		</form>
+		
 	</div>
+	<script type="text/javascript">
+	
+		function changePwView(){
+			var inputPw = document.getElementById("userPassword");
+			
+			if (inputPw.getAttribute('type') == "password"){
+				inputPw.setAttribute('type', 'text');
+			} else {
+				inputPw.setAttribute('type', 'password');
+			}
+		}
+	
+	</script>
 </body>
 </html>

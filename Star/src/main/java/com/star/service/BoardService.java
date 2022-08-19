@@ -28,13 +28,13 @@ public interface BoardService {
 	public void report(BoardDTO boardDTO);
 	
 	// 내 글 조회
-	public List<BoardDTO> getMyListBoard(Criteria cri);
+	public List<BoardDTO> getMyListBoard(Criteria cri,Long userNumber);
 	
 	// 댓글 조회
-	public List<CommentDTO> getCommentList(Criteria cri); 
+	public List<CommentDTO> getCommentList(Long bno); 
 	
 	// 내 글 총 수
-	public int getMyCount(Criteria cri);
+	public int getMyCount(Long userNumber);
 	
 	// 댓글 수
 	public int getCommentCount(Criteria cri);

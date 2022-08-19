@@ -2,8 +2,10 @@ package com.star.service;
 
 import java.io.File;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,20 +115,37 @@ public class BoardServiceImpl implements BoardService{
 
 	// 내 글 조회
 	@Override
-	public List<BoardDTO> getMyListBoard(Criteria cri) {
+	public List<BoardDTO> getMyListBoard(Criteria cri,Long userNumber) {
+		
 		List<BoardDTO> myList = Collections.emptyList();
 		
-		myList = boardMapper.getMyListBoard(cri);
+//		Map<Criteria, Long> map = new HashMap<Criteria,Long>();
+		Map map = new HashMap<>();
+		
+		System.out.println("서비스 hashMap Before : "+map);
+		
+//		map.put(cri,userNumber);
+		int skip = cri.getSkip();
+		int amount = cri.getAmount();
+		
+		map.put("skip", skip);
+		map.put("amount", amount);
+		map.put("userNumber", userNumber);
+		
+		System.out.println("서비스 hashMap After : "+map);
+		
+		// myList = boardMapper.getMyListBoard(cri);
+		myList = boardMapper.getMyListBoard(map);
 		
 		return myList;
 	}
 	
 	// 댓글 조회
 	@Override
-	public List<CommentDTO> getCommentList(Criteria cri) {
+	public List<CommentDTO> getCommentList(Long bno) {
 		List<CommentDTO> commentList = Collections.emptyList();
 		
-		commentList = boardMapper.getCommentList(cri);
+		commentList = boardMapper.getCommentList(bno);
 		
 		return commentList;
 	}
@@ -139,8 +158,8 @@ public class BoardServiceImpl implements BoardService{
 
 	// 내 글 총 수
 	@Override
-	public int getMyCount(Criteria cri) {
-		return boardMapper.getMyCount(cri);
+	public int getMyCount(Long userNumber) {
+		return boardMapper.getMyCount(userNumber);
 	}
 	
 	// 내 글 총 수

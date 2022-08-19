@@ -223,10 +223,10 @@ public class BoardController {
 //		 System.out.println(cri);
 		
     	System.out.println("-----------------");
-    	System.out.println(cri.getBno());
+    	
     	System.out.println("-----------------");
 		// 선택된 글의 댓글 리스트 뽑기
-		List<CommentDTO> commentList = boardService.getCommentList(cri);
+		List<CommentDTO> commentList = boardService.getCommentList(bno);
 		System.out.println("-----------------");
     	System.out.println(commentList);
     	System.out.println("-----------------");
@@ -283,18 +283,19 @@ public class BoardController {
 		System.out.println(session.getAttribute("userDTO"));
 		
 		UserDTO user = (UserDTO) session.getAttribute("userDTO");
+		Long userNumber = user.getUserNumber();
 		
 		// cri.setUserNumber(user.getUserNumber());
 		
 		 System.out.println(cri);
 		
 		// 선택된 글 리스트 뽑기
-		List<BoardDTO> myList = boardService.getMyListBoard(cri);
+		List<BoardDTO> myList = boardService.getMyListBoard(cri, userNumber);
     	model.addAttribute("myList", myList);
 		
 		
 		// 페이징 처리
-		int total = boardService.getMyCount(cri);
+		int total = boardService.getMyCount(userNumber);
 		
 		PageMakeDTO pageMake = new PageMakeDTO(cri,total);
 		

@@ -36,7 +36,7 @@ public interface UserService {
 	
 	public String[] emailCheck(UserDTO userDto);
 
-	public String changeInfo(UserDTO userDto);
+	public UserDTO changeInfo(UserDTO userDto);
 
 	public void pagedown(Long userNumber);
 	

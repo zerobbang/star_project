@@ -232,9 +232,36 @@ public class UserController {
     
     // 정보 변경 실행
     @PostMapping(value = "/changeInfo.do")
-    public String changeInfo(UserDTO userDto){
+    public String changeInfo(UserDTO userDto
+    		, HttpServletRequest request){
 		
-		userService.changeInfo(userDto);
+    	System.out.println("aaaaaa"+userDto);
+    	HttpSession session = request.getSession();
+    	
+    	UserDTO user = (UserDTO) session.getAttribute("userDTO");
+    	String Id = user.getUserId();
+    	
+    	String Pw;
+    	if (userDto.getUserPassword() == "") {
+    		Pw = user.getUserPassword(); 
+    	}else {
+    		Pw = userDto.getUserPassword();
+    	}
+    	
+    	System.out.println("지우기 전 : "+Id);
+    	System.out.println("지우기 전 비밀번호 486 : "+Pw);
+    	
+    	session.removeAttribute("userDTO");
+    	userDto.setUserId(Id);
+    	userDto.setUserPassword(Pw);
+    	
+    	System.out.println("지운 후 : "+Id);
+    	System.out.println("지운 후 비밀 번호 : "+Pw);
+    	
+    	userDto = userService.changeInfo(userDto);
+		
+		session.setAttribute("userDTO", userDto);
+		System.out.println("컨트롤러 유저 정보 변경 "+session.getAttribute("userDTO"));
 		
 		return "redirect:/star/mainpage";
     };

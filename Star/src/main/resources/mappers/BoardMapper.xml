@@ -183,7 +183,7 @@
 	
 	
 <!-- 마이 페이지 글 조회 -->
- <select id="getMyListBoard" resultType="BoardDTO">
+ <select id="getMyListBoard" parameterType="map" resultType="BoardDTO">
  	SELECT 
  		a.*, b.user_nickname
 	FROM 
@@ -202,17 +202,15 @@
 </select>
 
 <!-- 댓글 조회 -->
- <select id="getCommentList" parameterType="CommentDTO" resultType="CommentDTO">
+ <select id="getCommentList" parameterType="Long" resultType="CommentDTO">
  	SELECT 
  		*
-	FROM 
+	FROM `
 		 comment_table
 	WHERE 
 		cmt_delete_yn = 0
   	AND 
-		bno = #{bno}  
-<!-- 	LIMIT 
-		#{skip},#{amount} -->
+		bno = #{bno};
 </select>
 
 
