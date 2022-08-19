@@ -28,6 +28,7 @@
 	text-align: center;
 	margin-top: 15%;
 	margin-bottom: 2%;
+	color: white;
 }
 
 /* 라벨 위치 조정 */
@@ -35,6 +36,7 @@ label {
 	text-align: right;
 	white-space: nowrap;
 	width: 100%;
+	color: white;
 }
 
 /* 폼태그 전체폼 크기 조정 */
@@ -47,12 +49,12 @@ form {
 		color: red;
 		font-size: 12px;
 	} */
-
+	
 /* 아이디 아이콘 */
 #icon_id input {
 	background-image: url("../img/person-fill.svg");
 	background-position: 5px center;
-	padding-left: 40px;
+	padding-left: 30px;
 	background-repeat: no-repeat;
 }
 
@@ -60,8 +62,13 @@ form {
 #icon_pw input {
 	background-image: url("../img/key-fill.svg");
 	background-position: 5px center;
-	padding-left: 40px;
+	padding-left: 30px;
 	background-repeat: no-repeat;
+}
+
+/* 로그인 버튼 사이즈 */
+.d-grid gap-2 col-3 mx-auto button {
+	padding-left: 10%;
 }
 
 /* 회원가입, 계정찾기 css */
@@ -92,11 +99,18 @@ form {
 
 .find_wrap .find_text {
 	display: inline-block;
-	font-size: 14px;
+	font-size: 15px;
 	line-height: 17px;
 	text-decoration: none;
-	color: rgb(90, 87, 87);
+	color: white;
 	font-weight: bold;
+}
+
+body {
+    background-position: 50% 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url(../img/starpage.jpg);
 }
 </style>
 </head>
