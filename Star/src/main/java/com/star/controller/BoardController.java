@@ -1,5 +1,6 @@
 package com.star.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +42,7 @@ public class BoardController {
 	public String listBoard(Criteria cri, Model model, BoardDTO boardDTO) {
 		
 		// 선택된 글 리스트 뽑기
+		List<String> nicknameList = new ArrayList<>();
 		List<BoardDTO> boardList = boardService.getBoardList(cri);
 		
 		for(BoardDTO board : boardList)
@@ -50,14 +52,19 @@ public class BoardController {
 			
 			List<ImgDTO> img = boardService.getImgsFromBno(board.getBno());
 
+			Long userNum = (long) board.getUserNumber();
+			nicknameList.add(userService.getNickname(userNum));
+			
 			String firstImg = "";
 			try {
 				firstImg = img.get(0).getImgName() ;
 			} catch (Exception e) {
 			}
 			board.setImgName(firstImg);
+			
 		}
 		
+		model.addAttribute("nicknameList", nicknameList);
 		model.addAttribute("boardList", boardList);
 		
 		// 페이징 처리
@@ -147,10 +154,12 @@ public class BoardController {
     	Long writerNumber = boardDto.getUserNumber();
     	String writer = boardService.getWriter(writerNumber);
     	model.addAttribute("writer", writer);
+    	System.out.println(writer);
     	
     	Long boardBno = boardDto.getBno();
     	List<ImgDTO> imgs = boardService.getImgsFromBno(boardBno);
     	model.addAttribute("imgDto", imgs);
+    	System.out.println(imgs);
     	
     	System.out.println(model);
     	
@@ -196,15 +205,22 @@ public class BoardController {
     
 	// 마이 페이지
 	@RequestMapping(value="/board/mypage")
-	public String openMypage2(Criteria cri, Model model, BoardDTO boardDTO) {
+	public String openMypage(Criteria cri, Model model, BoardDTO boardDTO, HttpServletRequest request, UserDTO userDTO) {
 		System.out.println("마이 페이지로 이동");
 		
-		// System.out.println(cri);
+		HttpSession session = request.getSession();
+		System.out.println(session.getAttribute("userDTO"));
+		
+		UserDTO user = (UserDTO) session.getAttribute("userDTO");
+		
+		cri.setUserNumber(user.getUserNumber());
+		
+		 System.out.println(cri);
 		
 		// 선택된 글 리스트 뽑기
 		List<BoardDTO> myList = boardService.getMyListBoard(cri);
     	model.addAttribute("myList", myList);
-		System.out.println(myList);
+		
 		
 		// 페이징 처리
 		int total = boardService.getMyCount(cri);
@@ -218,12 +234,40 @@ public class BoardController {
 		
 		return "board/mypage";
 	}
+	
+	// 게시글 삭제
+    @PostMapping(value = "/board/delete.do")
+    public String deleteBoard(BoardDTO boardDto) {
+    	
+    	boardService.deleteBoard(boardDto);
+    	
+    	// 끝나면 메인 페이지로 이동
+    	return "redirect:/star/mainpage";
+    };
     
-    // 상세글 테스트용 : get방식 채택 고려중  
-    @GetMapping(value = "/star/view.do")
-    public String viewContent() {
-    	return "/star/detailed_check";
-    }
+    // 게시글 수정 화면으로 이동
+ 	@PostMapping(value="/board/modify")
+ 	public String modifyBoard(Model model, BoardDTO boardDto
+ 			, HttpServletRequest request) {
+ 		
+ 		// 로그인 안된사람 탈출시키기
+         HttpSession session = request.getSession();
+         if (session.getAttribute("userDTO") == null) {
+     		System.out.println("로그인을 진행해주세요.");
+     		return "redirect:/star/login";
+     	};
+ 		
+ 		System.out.println("글수정 페이지 이동 ");
+ 		// 이전 값 존재
+ 		
+ 		boardDto = boardService.getBoardDetail(boardDto.getBno());
+ 		
+ 		model.addAttribute("boardDto", boardDto);
+ 		
+ 		System.out.println(model);
+ 		
+ 		return "/board/write";
+ 	}
     
     	
 }

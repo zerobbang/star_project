@@ -499,13 +499,19 @@ div .error {
 	font-size: 12px;
 }
 
-/* 비번 눈 아이콘 위치 조정 */
-.input-icon i {
-	position: absolute;
-	color: gray;
-	margin-left: 26%;
-	margin-top: -30px;
+/* 비밀번호 아이콘 */
+#icon_pw input{
+	background-image: url("../img/eye-slash-fill.svg");
+	background-position: 95% center;
+	background-repeat: no-repeat;
 }
+
+#icon_pw2 input{
+	background-image: url("../img/eye-slash-fill.svg");
+	background-position: 95% center;
+	background-repeat: no-repeat;
+}
+
 /* 관측 희망 지역 드롭바 다른 인풋과 간격 맞춤 */
 .signUp {
 	padding-left: 6px;
@@ -544,11 +550,9 @@ div .error {
 					<div class="row mb-2">
 						<label for="userPassword" class="col-sm-3 col-form-label">비밀번호</label>
 						<div class="col-sm-7">
-							<div class="input-icon">
+							<div id="icon_pw">
 								<input type="password" class="form-control" id="userPassword"
-									name="userPassword" placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리"
-									aria-label="userPassword" aria-describedby="basic-addon2"
-									style="width: 100%;"> <i class="bi bi-eye-fill"></i>
+									name="userPassword" placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리">
 								<div id="PasswordError" class="error"></div>
 							</div>
 						</div>
@@ -561,10 +565,9 @@ div .error {
 						<label for="passwordCheck" class="col-sm-3 col-form-label">비밀번호
 							재확인</label>
 						<div class="col-sm-7">
-							<div class="input-icon">
+							<div id="icon_pw2">
 								<input type="password" class="form-control" id="passwordCheck"
-									name="passwordCheck" placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리"
-									style="width: 100%;"> <i class="bi bi-eye-fill"></i>
+									name="passwordCheck" placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리">
 								<div id="PasswordCheckError" class="error"></div>
 							</div>
 						</div>

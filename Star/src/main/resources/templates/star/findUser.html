@@ -3,162 +3,275 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
 <meta charset="UTF-8">
+<!-- 부트스트랩 -->
+<link rel="stylesheet" href="../css/bootstrap.css">
+<link rel="stylesheet" href="../js/bootstrap.js">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <title>계정 찾기 페이지</title>
-<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<style>
+/* 이미지 위치 */
+.title {
+	text-align: center;
+	margin-top: 10%;
+	margin-bottom: 2%;
+}
+/* 라벨 위치 조정 */
+label {
+	text-align: right;
+	white-space: nowrap;
+	width: 100%;
+	/*     text-overflow: ellipsis; */
+}
+
+/* 폼태그 전체폼 크기 조정 */
+form {
+	width: 50%;
+}
+
+/* 에러 색상, 폰트 */
+div .error {
+	color: red;
+	font-size: 12px;
+}
+/* 로그인 버튼 */
+.find_btn a {
+	color: white;
+	padding-left: 18%;
+	text-decoration: none;
+}
+</style>
 </head>
 <body>
-    <script>
-    	
-    	var userInputEmail;
-    	var certify;
-    	
-    	var emailCheck = false;
-    	var certifyCheck = false;
-    	
-    	var emailRegex= /[a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z-.]+/;
-    	
-    	function mailSend() {			
-    		
-    		if (emailCheck == false){
-    			return;
-    		}
-    		
-    	    userInputEmail = $("#userEmail").val();
-			
-    	    var mailDto={
-    	        address:userInputEmail
-    	    };
-			
-    	    $.ajax({
-    	        url: "/mailSend",
-    	        data: mailDto,
-    	        type:"POST",
-    	    }).done(function (fragments) {
-    	    	certify = fragments[0];
-    	    	console.log(certify);
-    	    	
-    	        $("#emailError").replaceWith("<div id=emailError>메일을 확인해주세요!</div>");
-    	    });
+	<script>
+		var userInputEmail;
+		var certify;
+
+		var emailCheck = false;
+		var certifyCheck = false;
+
+		var emailRegex = /[a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z-.]+/;
+
+		function mailSend() {
+
+			if (emailCheck == false) {
+				return;
+			}
+
+			userInputEmail = $("#userEmail").val();
+
+			var mailDto = {
+				address : userInputEmail
+			};
+
+			$.ajax({
+				url : "/mailSend",
+				data : mailDto,
+				type : "POST",
+			}).done(
+					function(fragments) {
+						certify = fragments[0];
+						console.log(certify);
+
+						$("#emailError").replaceWith(
+								"<div id=emailError style='color:green; font-size: 13px;'>메일을 확인해주세요!</div>");
+					});
 		}
-    	
-    	// 인증번호 체크하기
-    	function check_certify(){
-    		var input_data = $("#certify_id").val();
-    		console.log(input_data);
-    		console.log(certify);
-    		
-    		// 인증이 성공한경우
-    		if (input_data == certify){
-    			certifyCheck = true;
-    			
-        	    var userDto={
-        	        userEmail:userInputEmail
-        	    };
-    			
-        	    $.ajax({
-        	        url: "/findId",
-        	        data: userDto,
-        	        type:"POST",
-        	    }).done(function (userId) {
-        	    	/* var userId = userId; */
-        	    	
-        	    	console.log(userId);
-        	    	alert("1차 테스트");
-        	    	
-        	        if (userId == null){
-        	        	certifyCheck = false;
-        	        	$("#resultDiv").replaceWith('<div id="resultDiv">'+'</div>');
-        	        	console.log("samesame")
-        	        } else {
-        	        	certifyCheck = true;
-        	        	
-        	        	$("#resultDiv").replaceWith(
-        	        			'<div id="resultDiv">' +
-        	        				'<form action="/star/changePassword" method=post>' +
-	        	        				'<div>' +
-	        	        					'당신의 아이디는 ' + userId +'입니다' +  
-	       	        					'</div>' +
-	       	        					'<input type="text" id="userId" name="userId" value="' + userId + '"/>' +
-	       	        					'<button type="submit">비밀번호 변경하러 가기</button> ' +
-       	        					'</form>' +
-    	        				'</div>');
-        	        }
-        	    });
-        	    
-    			/* alert("인증 성공") */
-    			$("#emailError").replaceWith("<div id=emailError></div>");
-    			$("#userEmail").replaceWith('<input type="text" name="userEmail" id="userEmail" readonly="readonly" value='+ userInputEmail +'>' );
-    			
-    			
-    			
-    			
-    		} else {
-    			alert("인증 실패")
-    		}
-    		console.log(certifyCheck);
-    	}
-    	
-    	
-    	
-    	/* 이메일 유효성 체크 */
-    	$( document ).ready( function() {
-            
-            // 모든 텍스트의 변경에 반응합니다.
-            $("#userEmail").change("change keyup paste", function() {
-            	
-            	// 현재 변경된 데이터 셋팅
-                var newValue = $(this).val();
-            	var rule = "";
-            	
-            	// 표현식에 부합하는지 체크
-            	try{
-            		rule = newValue.match(emailRegex)[0];
-	                console.log(rule);
-            	} catch(e){
-            		console.log("fail")
-            	};
-            	
-            	// 바뀐 칸이 빈칸이라면
-            	if (newValue==""){
-            		$("#emailError").replaceWith('<div id="emailError" class="error">' + '이메일 계정을 입력해주세요.' + '</div>');
-            		return;
-            	}
-            	
-            	// 정규식과 일치하는게 없거나 그 외의 입력값이 있을경우
-                if(rule != newValue || rule == ""){
-                	$("#emailError").replaceWith('<div id="emailError" class="error">' + 'e-mail형식으로 작성해주세요.' + '</div>');
-                	emailCheck = false;
-                	return;
-                }
-                
-                //json 형태로 전송
-        	    var userDto={
-        	        userEmail:newValue
-        	    };
-    			
-        	    $.ajax({
-        	        url: "/inputEmailCheck",
-        	        data: userDto,
-        	        type:"POST",
-        	    }).done(function (fragments) {
-        	    	
-        	    	var uniqueResult = fragments[0];
-        	    	
-        	        if (uniqueResult == "이미 사용중입니다."){
-        	        	emailCheck = true;
-        	        	$("#emailError").replaceWith('<div id="emailError" ' + '</div>');
-       	        	} else {
-        	        	emailCheck = false;
-        	        	$("#emailError").replaceWith('<div id="emailError" class="error"> ' + '해당 이메일로 등록된 계정이 없습니다.' + '<br><a href="/star/signup">회원가입</a>을 진행해주세요.' +'</div>');
-        	        }
-        	    });
-            });
-    	});
-    </script>
-    
-    
-    <form>
-   		<div class="emailAddress">
+
+		// 인증번호 체크하기
+		function check_certify() {
+			var input_data = $("#certify_id").val();
+			console.log(input_data);
+			console.log(certify);
+
+			// 인증이 성공한경우
+			if (input_data == certify) {
+				certifyCheck = true;
+
+				var userDto = {
+					userEmail : userInputEmail
+				};
+
+				$
+						.ajax({
+							url : "/findId",
+							data : userDto,
+							type : "POST",
+						})
+						.done(
+								function(userId) {
+									/* var userId = userId; */
+
+									console.log(userId);
+									alert("1차 테스트");
+
+									if (userId == null) {
+										certifyCheck = false;
+										$("#resultDiv").replaceWith(
+												'<div id="resultDiv">'
+														+ '</div>');
+										console.log("samesame")
+									} else {
+										certifyCheck = true;
+
+										$("#resultDiv")
+												.replaceWith(
+														'<div id="resultDiv">'
+																+ '<form action="/star/changePassword" method=post style="width: 100%;">'
+																+ '<div style="font-size: 15px; text-align: center; margin: 2%;" color:gray;>'
+																+ '당신의 아이디는 ' + '<strong>' + userId + '</strong>' + '입니다'
+																+ '</div>'
+																+ '<div class="input-group">'
+																+ '<input class="form-control" type="text" id="userId" name="userId" value="' + userId + '"/>'
+																+ '<button class="btn btn-secondary btn-sm" type="submit" style="font-size:13px;">비밀번호 변경 하기</button> '
+																+ '</div>'
+																+ '</form>'
+																+ '</div>');
+									}
+								});
+
+				/* alert("인증 성공") */
+				$("#emailError").replaceWith("<div id=emailError></div>");
+				$("#userEmail")
+						.replaceWith(
+								'<input class="form-control" type="text" name="userEmail" id="userEmail" readonly="readonly" value='+ userInputEmail +'>');
+
+			} else {
+				alert("인증 실패")
+			}
+			console.log(certifyCheck);
+		}
+
+		/* 이메일 유효성 체크 */
+		$(document)
+				.ready(
+						function() {
+
+							// 모든 텍스트의 변경에 반응합니다.
+							$("#userEmail")
+									.change(
+											"change keyup paste",
+											function() {
+
+												// 현재 변경된 데이터 셋팅
+												var newValue = $(this).val();
+												var rule = "";
+
+												// 표현식에 부합하는지 체크
+												try {
+													rule = newValue
+															.match(emailRegex)[0];
+													console.log(rule);
+												} catch (e) {
+													console.log("fail")
+												}
+												;
+
+												// 바뀐 칸이 빈칸이라면
+												if (newValue == "") {
+													$("#emailError")
+															.replaceWith(
+																	'<div id="emailError" class="error" style="color: red;">'
+																			+ '이메일 계정을 입력해주세요.'
+																			+ '</div>');
+													return;
+												}
+
+												// 정규식과 일치하는게 없거나 그 외의 입력값이 있을경우
+												if (rule != newValue
+														|| rule == "") {
+													$("#emailError")
+															.replaceWith(
+																	'<div id="emailError" class="error" style="color: red;">'
+																			+ 'e-mail형식으로 작성해주세요.'
+																			+ '</div>');
+													emailCheck = false;
+													return;
+												}
+
+												//json 형태로 전송
+												var userDto = {
+													userEmail : newValue
+												};
+
+												$
+														.ajax(
+																{
+																	url : "/inputEmailCheck",
+																	data : userDto,
+																	type : "POST",
+																})
+														.done(
+																function(
+																		fragments) {
+
+																	var uniqueResult = fragments[0];
+
+																	if (uniqueResult == "이미 사용중입니다.") {
+																		emailCheck = true;
+																		$(
+																				"#emailError")
+																				.replaceWith(
+																						'<div id="emailError" '
+																								+ '</div>');
+																	} else {
+																		emailCheck = false;
+																		$(
+																				"#emailError")
+																				.replaceWith(
+																						'<div id="emailError" class="error"> '
+																								+ '해당 이메일로 등록된 계정이 없습니다.'
+																								+ '<br><a href="/star/signup" style="color: blue; text-decoration: none;">회원가입</a>을 진행해주세요.'
+																								+ '</div>');
+																	}
+																});
+											});
+						});
+	</script>
+
+	<!-- 계정 찾기 전체 폼 -->
+	<div class="finduser_wrapper">
+		<div class="title">
+			<img alt="logo" src="../img/Logo.png">
+			<h5 style="margin-top: 10px;">
+				<strong>내계정 찾기</strong>
+			</h5>
+		</div>
+		<!-- 아이디, 비번 등 폼 -->
+		<div class="d-flex justify-content-center">
+			<form>
+				<!-- 이메일 주소 -->
+				<div id="email">
+					<div class="row mb-3">
+						<label for="userEmail" class="col-sm-4 col-form-label">메일 주소</label>
+						<div class="col-sm-6">
+							<div class="input-group">
+								<input type="email" class="form-control" id="userEmail"
+									name="userEmail" placeholder="이메일 주소를 입력해주세요" style="font-size: 14px;">
+									<input class="btn btn-secondary btn-sm" type="button" value="메일 발송" onclick="mailSend()">
+							</div>
+							<div id="emailError" class="error"></div>
+						</div>
+					</div>
+				</div>
+				<!-- 이메일 인증 번호 -->
+				<div id="certify">
+					<div class="row mb-3">
+						<label for="certify_id" class="col-sm-4 col-form-label">인증 번호</label>
+						<div class="col-sm-6">
+							<div class="input-group">
+								<input type="text" class="form-control" id="certify_id"
+									name="certify_id" placeholder="인증번호를 입력 입력해주세요" style="font-size: 14px;">
+									<input class="btn btn-secondary btn-sm" type="button" value="인증 하기" onclick="check_certify()">
+									<div id="resultDiv"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 기존 코드 -->
+				<!-- <div class="emailAddress">
     		<span>메일 주소</span>
             <input type="text" id="userEmail" name="userEmail" placeholder="이메일 주소를 입력하세요">
             
@@ -169,10 +282,16 @@
        	인증 번호
         <input type="text" id="certify_id" placeholder="인증번호 입력">
         <input type="button" onclick="check_certify()" value="인증하기">
-        <div id="resultDiv"></div>
-     </form>
-    
-    <a href="/star/login"><input type = "button" value="로그인"></a>
+        <div id="resultDiv"></div> -->
 
+					
+					<div class="find_btn">
+					<a href="/star/login" class="d-grid gap-2 col-8 mx-auto">
+					<input class="btn btn-secondary" type="button" value="로그인">
+					</a>
+					</div>
+			</form>
+		</div>
+	</div>
 </body>
 </html>

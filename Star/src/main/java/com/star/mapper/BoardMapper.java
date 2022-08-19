@@ -55,5 +55,7 @@ public interface BoardMapper {
 	public String findWriterFromUserNumber(Long writerNumber);
 
 	public List<ImgDTO> findImgsFromBno(Long boardBno);
+
+	public void deleteBoardFromBno(Long boardBno);
 	
 }

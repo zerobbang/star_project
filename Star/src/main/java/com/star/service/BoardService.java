@@ -36,5 +36,7 @@ public interface BoardService {
 
 	public List<ImgDTO> getImgsFromBno(Long boardBno);
 
+	public void deleteBoard(BoardDTO boardDto);
+
 }
 

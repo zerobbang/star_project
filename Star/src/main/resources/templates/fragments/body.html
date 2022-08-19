@@ -69,8 +69,9 @@
 			        <button class="btn btn-primary" type="button" onclick="location.href='/star/signup' ">회원 가입</button>
 		       	</form>
 		    	<!-- 회원번호가 있을 때 -->
-		    	<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" th:if="${session.userDTO != null}">
-	                <button type="button" onclick="location.href='/star/mainpage' ">Logout</button>
+		    	<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search"
+		    		th:if= "${session.userDTO != null}">
+	                <button type="button" onclick="location.href='/star/logout.do'">Logout</button>
 	                <input type="button" th:value="*{session.userDTO.userNickname}">
 	                <!-- 드롭 다운 테스트 진행 중 -->
 	                <div class="userDropDown">

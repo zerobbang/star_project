@@ -55,7 +55,7 @@
 				<option value="사고팔아요" th:selected="${boardDTO.category}=='사고팔아요'">사고팔아요</option>
 			</select>
 		</div>
-		<table class="board_list">
+		<table class="board_list" th:if="${boardDTO.category != '작품전'}">
 			<colgroup>
 				<col width="15%" />
 				<col width="*" />
@@ -94,22 +94,10 @@
 					<!-- 고유 글의 번호를 출력 해 주는 것이 아닐 카테고리 별로 최신 순부터 1번으로 보여준다. -->
                     <td th:text="${list.bno}"></td>
                     
-                    <td class="title">
-	                    <!-- <form
-	                    	th:action="@{/star/detailed_check}" 
-	                    	method="get">
-	                   		<input type="hidden" id="bno" name="bno" th:value="${list.bno}">
-	                   		<input type="hidden" id="userNumber" name="userNumber" th:value="${criteria.userNumber }">
-	                   		css처리가 절실한 부분...
-	                   		<button type="submit" th:text="${list.title}"></button>
-	                   	</form> -->
-	                   	
+                    <td class="title">	                   	
 	                   	<a th:href="@{/star/detailed_check(bno=${list.bno})}"
-	                   		th:text="${list.title}"
-	                   		>
-	                   	
-	                   	</a>
-	                   	
+	                   		th:text="${list.title}">
+	                   	</a>   	
                    	</td>
                     
                     <td class="writer" th:text="${list.userNickname}"></td>
@@ -128,12 +116,12 @@
 	        <ul th:if="${boardDTO.category == '작품전'}">
 	        	<li th:if="${#lists.size(boardList)} > 0"  th:each="num : ${#numbers.sequence(0,#lists.size(boardList)-1)}">
 		            <div>
-		                <img th:src="@{/imgfiles/} + ${boardList[num].getImgName()}">
+		                <img th:src="@{/imgfiles/} + ${boardList[num].imgName}">
 		                <br>
 		                <a th:href="@{/star/detailed_check(bno=${boardList[num].bno})}">
-		                	<input th:value="| ${nicknameList[num]}: ${boardList[num].title}">
-		                	<input type="text" id="bno" name="bno" th:value="${boardList[num].bno}">
-	                   		<input type="text" id="userNumber" name="userNumber" th:value="${criteria.userNumber }">
+		                	<input type="text" th:value="| ${boardList[num].userNickname}: ${boardList[num].title}">
+		                	<!-- <input type="text" id="bno" name="bno" th:value="${boardList[num].bno}">
+	                   		<input type="text" id="userNumber" name="userNumber" th:value="${criteria.userNumber }"> -->
 	                	</a>
 		            </div>
 				</li>
