@@ -42,7 +42,7 @@ public class BoardController {
 	public String listBoard(Criteria cri, Model model, BoardDTO boardDTO) {
 		
 		// 선택된 글 리스트 뽑기
-		List<String> nicknameList = new ArrayList<>();
+		
 		List<BoardDTO> boardList = boardService.getBoardList(cri);
 		
 		for(BoardDTO board : boardList)
@@ -51,9 +51,6 @@ public class BoardController {
 			System.out.println("bno: " + board.getBno());
 			
 			List<ImgDTO> img = boardService.getImgsFromBno(board.getBno());
-
-			Long userNum = (long) board.getUserNumber();
-			nicknameList.add(userService.getNickname(userNum));
 			
 			String firstImg = "";
 			try {
@@ -64,7 +61,6 @@ public class BoardController {
 			
 		}
 		
-		model.addAttribute("nicknameList", nicknameList);
 		model.addAttribute("boardList", boardList);
 		
 		// 페이징 처리

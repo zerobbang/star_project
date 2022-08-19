@@ -253,7 +253,7 @@
 		user_number = #{writerNumber};
 </select>
 
-<select id="findImgsFromBno" parameterType="Long" resultType="ImgDTO">
+<select id="findRepresentImgFromBno" parameterType="Long" resultType="ImgDTO">
 	select 
 		<include refid="imgColumns"/>
 	from 
@@ -264,9 +264,7 @@
 		img_show_yn = 1
 	order by 
 		img_number 
-	asc 
-	limit 
-		4;
+	asc;
 </select>
 
 
