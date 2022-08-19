@@ -275,9 +275,7 @@
 		img_show_yn = 1
 	order by 
 		img_number 
-	asc 
-	limit 
-		4;
+	asc;
 </select>
 
 

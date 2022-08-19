@@ -39,7 +39,15 @@ public class BoardController {
 	
 	// 게시글 조회
 	@RequestMapping(value="/board/list")
+<<<<<<< HEAD
 	public String listBoard(Criteria cri, Model model, BoardDTO boardDTO, HttpServletRequest request) {
+=======
+	public String listBoard(Criteria cri,  Model model, BoardDTO boardDTO) {
+		
+		if (cri.getCategory() == null) {
+			cri.setCategory("관측지");
+		}
+>>>>>>> e88cfb07f006fef4d250b55f4edf23f3b98c2acb
 		
 		System.out.println("빠밤..!");
 		System.out.println(model);
