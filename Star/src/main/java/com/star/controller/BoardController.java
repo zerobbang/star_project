@@ -154,10 +154,12 @@ public class BoardController {
     	Long writerNumber = boardDto.getUserNumber();
     	String writer = boardService.getWriter(writerNumber);
     	model.addAttribute("writer", writer);
+    	System.out.println(writer);
     	
     	Long boardBno = boardDto.getBno();
     	List<ImgDTO> imgs = boardService.getImgsFromBno(boardBno);
     	model.addAttribute("imgDto", imgs);
+    	System.out.println(imgs);
     	
     	System.out.println(model);
     	
@@ -203,10 +205,17 @@ public class BoardController {
     
 	// 마이 페이지
 	@RequestMapping(value="/board/mypage")
-	public String openMypage2(Criteria cri, Model model, BoardDTO boardDTO, RedirectAttributes rttr, UserDTO userDTO) {
+	public String openMypage(Criteria cri, Model model, BoardDTO boardDTO, HttpServletRequest request, UserDTO userDTO) {
 		System.out.println("마이 페이지로 이동");
 		
-		// System.out.println(cri);
+		HttpSession session = request.getSession();
+		System.out.println(session.getAttribute("userDTO"));
+		
+		UserDTO user = (UserDTO) session.getAttribute("userDTO");
+		
+		cri.setUserNumber(user.getUserNumber());
+		
+		 System.out.println(cri);
 		
 		// 선택된 글 리스트 뽑기
 		List<BoardDTO> myList = boardService.getMyListBoard(cri);

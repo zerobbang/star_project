@@ -96,10 +96,8 @@
                     
                     <td class="title">	                   	
 	                   	<a th:href="@{/star/detailed_check(bno=${list.bno})}"
-	                   		th:text="${list.title}"
-	                   		>
-	                   	</a>
-	                   	
+	                   		th:text="${list.title}">
+	                   	</a>   	
                    	</td>
                     
                     <td class="writer" th:text="${list.userNickname}"></td>
@@ -118,10 +116,10 @@
 	        <ul th:if="${boardDTO.category == '작품전'}">
 	        	<li th:if="${#lists.size(boardList)} > 0"  th:each="num : ${#numbers.sequence(0,#lists.size(boardList)-1)}">
 		            <div>
-		                <img th:src="@{/imgfiles/} + ${boardList[num].getImgName()}">
+		                <img th:src="@{/imgfiles/} + ${boardList[num].imgName}">
 		                <br>
 		                <a th:href="@{/star/detailed_check(bno=${boardList[num].bno})}">
-		                	<input type="text" th:value="| ${nicknameList[num]}: ${boardList[num].title}">
+		                	<input type="text" th:value="| ${boardList[num].userNickname}: ${boardList[num].title}">
 		                	<!-- <input type="text" id="bno" name="bno" th:value="${boardList[num].bno}">
 	                   		<input type="text" id="userNumber" name="userNumber" th:value="${criteria.userNumber }"> -->
 	                	</a>

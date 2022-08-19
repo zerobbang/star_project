@@ -108,7 +108,12 @@ $(document).ready(function(){
                     <td th:text="${list.bno}"></td>
                     <!-- <td th:text="${listStat.count}"></td> -->
                     <td th:text="${list.category}"></td>
-                    <td class="title" th:text="${list.title}"></td>
+                    <!-- <td class="title" th:text="${list.title}"></td> -->
+                    <td class="title">	                   	
+	                   	<a th:href="@{/star/detailed_check(bno=${list.bno})}"
+	                   		th:text="${list.title}">
+	                   	</a>  	
+                   	</td>
                     <td class="writer" th:text="${list.userNickname}"></td>
                     <!-- 보여지는 날짜 형식 여기서 변경 가능 -->
                     <td class="regDate" th:text="${#temporals.format(list.regDate, 'dd-MM-yyyy HH:mm')}"></td>
