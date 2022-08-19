@@ -28,6 +28,9 @@ public class Criteria {
 	/* 검색 타입 */
     private String searchType;
     
+	/* 회원 번호 */
+	private int bno;
+    
     /* 기본 생성자 -> 기봅 세팅 : pageNum = 1, amount = 10 */
     public Criteria() {
         this(1,10);
@@ -54,10 +57,9 @@ public class Criteria {
 	@Override
 	public String toString() {
 		return "Criteria [category=" + category + ", userNumber=" + userNumber + ", pageNum=" + pageNum + ", amount="
-				+ amount + ", skip=" + skip + ", keyword=" + keyword + ", searchType=" + searchType + "]";
+				+ amount + ", skip=" + skip + ", keyword=" + keyword + ", searchType=" + searchType + ", bno=" + bno
+				+ "]";
 	}
-
-	
 
 
 }

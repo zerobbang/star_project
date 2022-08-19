@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.star.domain.BoardDTO;
+import com.star.domain.CommentDTO;
 import com.star.domain.ImgDTO;
 import com.star.domain.PageMakeDTO;
 import com.star.domain.UserDTO;
@@ -146,11 +147,11 @@ public class BoardController {
 
     // 상세글조회 페이지
     @GetMapping(value = "/star/detailed_check")
-    public String detailedCheck(@RequestParam(value="bno",required=true) Long bno, UserDTO userDto, Model model) {
+    public String detailedCheck(@RequestParam(value="bno",required=true) Long bno, UserDTO userDto, Model model, Criteria cri, HttpServletRequest request) {
     	
     	BoardDTO boardDto = boardService.getBoardDetail(bno);
     	model.addAttribute(boardDto);
-    	
+
     	Long writerNumber = boardDto.getUserNumber();
     	String writer = boardService.getWriter(writerNumber);
     	model.addAttribute("writer", writer);
@@ -159,10 +160,30 @@ public class BoardController {
     	Long boardBno = boardDto.getBno();
     	List<ImgDTO> imgs = boardService.getImgsFromBno(boardBno);
     	model.addAttribute("imgDto", imgs);
-    	System.out.println(imgs);
+
     	
-    	System.out.println(model);
-    	
+//    	댓글
+//		HttpSession session = request.getSession();
+//		System.out.println(session.getAttribute("userDTO"));
+		
+//		UserDTO user = (UserDTO) session.getAttribute("userDTO");
+		
+//		cri.setUserNumber(user.getUserNumber());
+		
+//		 System.out.println(cri);
+		
+    	System.out.println("-----------------");
+    	System.out.println(cri.getBno());
+    	System.out.println("-----------------");
+		// 선택된 글의 댓글 리스트 뽑기
+		List<CommentDTO> commentList = boardService.getCommentList(cri);
+		System.out.println("-----------------");
+    	System.out.println(commentList);
+    	System.out.println("-----------------");
+		
+    	model.addAttribute("commentList", commentList);
+		
+		    	
     	return "star/detailed_check";
     }
     
