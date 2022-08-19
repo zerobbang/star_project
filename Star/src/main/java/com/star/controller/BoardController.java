@@ -131,14 +131,17 @@ public class BoardController {
 	
 	// 게시글 쓰기가 완료 되면
 	@PostMapping(value="/board/registerBoard")
-	public String registerBoard(BoardDTO boardDTO, Criteria cri, @RequestParam(value="img",required=false) List<MultipartFile> file, RedirectAttributes rttr) throws Exception {
+	public String registerBoard(BoardDTO boardDTO, Criteria cri, @RequestParam(value="img",required=false) List<MultipartFile> file
+//			, RedirectAttributes rttr
+			, Model model) throws Exception {
 		// 글 등록
 		System.out.println("file 여러개로가져오면   "+file);
 		boardService.registerBoard(boardDTO,file);
 		
 		// 글 쓰기 전 cri 값 잘 받아 왔나 확인
-		// System.out.println(cri);
-		rttr.addFlashAttribute("criteria",cri);	
+		System.out.println(cri);
+//		rttr.addFlashAttribute("criteria",cri);
+		model.addAttribute(cri);
 		
 		return "redirect:/board/list" ;
 	}
