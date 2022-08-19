@@ -82,13 +82,13 @@
 
 				<li >
 					<form class="nav-link px-2 link-secondary"
-						th:action="@{/star/mainpage}" method="post">
+						th:action="@{/star/mainpage}" method="get">
 						<input class="menu" type="submit" value="Home">
 					</form>
 				</li>
 				<li >
 					<form class="nav-link px-2 link-dark" th:action="@{/board/list}"
-						method="post">
+						method="get">
 						<input type="hidden" id="category" name="category" value="관측지">
 						<input class="menu" type="submit" value="관측지">
 					</form>
@@ -96,7 +96,7 @@
 
 				<li>
 					<form class="nav-link px-2 link-dark" th:action="@{/board/list}"
-						method="post">
+						method="get">
 						<input type="hidden" id="category" name="category" value="작품전">
 						<input class="menu" type="submit" value="작품전">
 					</form>
@@ -104,7 +104,7 @@
 
 				<li>
 					<form class="nav-link px-2 link-dark" th:action="@{/board/list}"
-						method="post">
+						method="get">
 						<input type="hidden" id="category" name="category" value="잡담">
 						<input class="menu" type="submit" value="소통방">
 					</form>
