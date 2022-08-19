@@ -40,32 +40,37 @@ public class BoardController {
 	
 	// 게시글 조회
 	@RequestMapping(value="/board/list")
-	public String listBoard(Criteria cri, Model model, BoardDTO boardDTO) {
+	public String listBoard(Criteria cri, Model model, BoardDTO boardDTO, HttpServletRequest request) {
+
 		
+		if (cri.getCategory() == null) {
+			cri.setCategory("관측지");
+		}
+		
+		System.out.println("빠밤..!");
+		System.out.println(model);
+		
+		System.out.println(cri);
+		System.out.println("빠밤..!");
+		
+
 		// 선택된 글 리스트 뽑기
-		List<String> nicknameList = new ArrayList<>();
 		List<BoardDTO> boardList = boardService.getBoardList(cri);
 		
 		for(BoardDTO board : boardList)
 		{
-
 			System.out.println("bno: " + board.getBno());
 			
 			List<ImgDTO> img = boardService.getImgsFromBno(board.getBno());
-
-			Long userNum = (long) board.getUserNumber();
-			nicknameList.add(userService.getNickname(userNum));
 			
 			String firstImg = "";
 			try {
 				firstImg = img.get(0).getImgName() ;
 			} catch (Exception e) {
 			}
-			board.setImgName(firstImg);
-			
+			board.setImgName(firstImg);	
 		}
 		
-		model.addAttribute("nicknameList", nicknameList);
 		model.addAttribute("boardList", boardList);
 		
 		// 페이징 처리
@@ -73,7 +78,7 @@ public class BoardController {
 		PageMakeDTO pageMake = new PageMakeDTO(cri,total);
 		
 		model.addAttribute("pageMaker", pageMake);
-		model.addAttribute("criteria",cri);
+		model.addAttribute("criteria", cri);
 		model.addAttribute("boardDTO",boardDTO);
 		
 		System.out.println("리스트 카테고리 : "+cri.getCategory());
@@ -96,6 +101,9 @@ public class BoardController {
 	public String writeBoard(Model model,Criteria cri
 			, HttpServletRequest request) {
 		
+		System.out.println("글쓰기 페이지 이동 ");
+		
+		// 유저 정보 받아옴
         HttpSession session = request.getSession();
         
         if (session.getAttribute("userDTO") == null) {
@@ -103,29 +111,8 @@ public class BoardController {
     		return "redirect:/star/login";
     	};
         
-//		// 글 번호를 뷰에서 받아오는데
-//		if(bno==null) {
-//			// 새로 생성하는 글인 경우 새로운 보드 DTO 객체 생성
-//			model.addAttribute("board", new BoardDTO());
-//		} else {
-//			// 기존에 존재하는 글인 경우 해당 글의 글 번호 bno를 넘겨받아 상세 조회
-//			BoardDTO boardDTO = boardService.getBoardDetail(bno);
-//			// 만약 글 번호를 통해 넘겨받은 boardDTO가 없다면? -?> 해야하나? > 나중
-//			
-//			// service를 통해 실행된 mapper 결과값을 "board" 속성?에 저장
-//			model.addAttribute("board", boardDTO);
-//		}
-		
-		System.out.println("글쓰기 페이지 이동 ");
 		// 이전 값 존재
 		model.addAttribute("criteria", cri);
-		
-		Long userNumber = (long) cri.getUserNumber();
-		
-		// 해당 user 정보 다 넘겨주기
-		// 로그인 된 유저의 닉네임 보여주기 위해
-		UserDTO userDTO = userService.getUser(userNumber);
-		model.addAttribute("userDTO", userDTO);;
 		
 		return "/board/write";
 	}
@@ -133,31 +120,51 @@ public class BoardController {
 	
 	// 게시글 쓰기가 완료 되면
 	@PostMapping(value="/board/registerBoard")
-	public String registerBoard(BoardDTO boardDTO, Criteria cri, @RequestParam(value="img",required=false) List<MultipartFile> file, RedirectAttributes rttr) throws Exception {
+	public String registerBoard(BoardDTO boardDTO, Criteria cri, @RequestParam(value="img",required=false) List<MultipartFile> file
+//			, RedirectAttributes rttr
+			, Model model) throws Exception {
 		// 글 등록
 		System.out.println("file 여러개로가져오면   "+file);
+		
+//		// 이미지가 없는 글일 경우
+//		if(file == null) {
+//			
+//		}
 		boardService.registerBoard(boardDTO,file);
 		
+//		HttpSession session = request.getSession();
+//		session.setAttribute("criteria", cri);
+		
 		// 글 쓰기 전 cri 값 잘 받아 왔나 확인
-		// System.out.println(cri);
-		rttr.addFlashAttribute("criteria",cri);	
+		System.out.println(cri);
+//		rttr.addFlashAttribute("criteria",cri);
+		model.addAttribute(cri);
+//		 model.addAttribute("criteria",cri);
 		
 		return "redirect:/board/list" ;
 	}
 
     // 상세글조회 페이지
+
     @GetMapping(value = "/star/detailed_check")
     public String detailedCheck(@RequestParam(value="bno",required=true) Long bno, UserDTO userDto, Model model, Criteria cri, HttpServletRequest request) {
+
+    	
+    	System.out.println("상세 조회로 이동");
+    	// .out.println(cri);
     	
     	BoardDTO boardDto = boardService.getBoardDetail(bno);
     	model.addAttribute(boardDto);
+    	
+    	// mapper 수정해서 닉네임 바로 가능
+//    	Long writerNumber = boardDto.getUserNumber();
+//    	String writer = boardService.getWriter(writerNumber);
+//    	model.addAttribute("writer", writer);
+//    	System.out.println(writer);
 
-    	Long writerNumber = boardDto.getUserNumber();
-    	String writer = boardService.getWriter(writerNumber);
-    	model.addAttribute("writer", writer);
-    	System.out.println(writer);
     	
     	Long boardBno = boardDto.getBno();
+    	System.out.println("상세 조회할 글 번호 : "+boardBno);
     	List<ImgDTO> imgs = boardService.getImgsFromBno(boardBno);
     	model.addAttribute("imgDto", imgs);
 
@@ -234,7 +241,7 @@ public class BoardController {
 		
 		UserDTO user = (UserDTO) session.getAttribute("userDTO");
 		
-		cri.setUserNumber(user.getUserNumber());
+		// cri.setUserNumber(user.getUserNumber());
 		
 		 System.out.println(cri);
 		
@@ -272,7 +279,7 @@ public class BoardController {
  			, HttpServletRequest request) {
  		
  		// 로그인 안된사람 탈출시키기
-         HttpSession session = request.getSession();
+		HttpSession session = request.getSession();
          if (session.getAttribute("userDTO") == null) {
      		System.out.println("로그인을 진행해주세요.");
      		return "redirect:/star/login";

@@ -131,12 +131,23 @@
  
  
  <!-- 상세 조회 -->
- <select id="selectDetail" parameterType="long" resultType="BoardDTO">
+<!--  <select id="selectDetail" parameterType="long" resultType="BoardDTO">
  	select 
  		<include refid="boardColumns"/>
  	from board_list
  	where bno = #{bno}
  	AND delete_yn = 0
+ </select> -->
+  <select id="selectDetail" parameterType="long" resultType="BoardDTO">
+ 	SELECT 
+ 		a.*, b.user_nickname
+	FROM 
+		 board_list a
+	INNER JOIN 
+		users_table b
+    	ON a.user_number  = b.user_number
+ 	where a.bno = #{bno}
+ 	AND a.delete_yn = 0
  </select>
  
   <!-- 신고하기 -->
@@ -295,9 +306,7 @@
 		img_show_yn = 1
 	order by 
 		img_number 
-	asc 
-	limit 
-		4;
+	asc;
 </select>
 
 

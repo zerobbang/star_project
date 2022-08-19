@@ -22,12 +22,12 @@ label {
 	text-align: right;
 	white-space: nowrap;
 	width: 100%;
-	/*     text-overflow: ellipsis; */
 }
 
 /* 폼태그 전체폼 크기 조정 */
 form {
-	width: 50%;
+	width: 58%;
+	padding-left: 3%;
 }
 
 /* 에러 색상, 폰트 */
@@ -38,8 +38,10 @@ div .error {
 /* 로그인 버튼 */
 .find_btn a {
 	color: white;
-	padding-left: 18%;
+	padding-left: 9%;
+	padding-right: 9%;
 	text-decoration: none;
+	border-color: transparent;
 }
 </style>
 </head>
@@ -124,7 +126,7 @@ div .error {
 																+ '</div>'
 																+ '<div class="input-group">'
 																+ '<input class="form-control" type="text" id="userId" name="userId" value="' + userId + '"/>'
-																+ '<button class="btn btn-secondary btn-sm" type="submit" style="font-size:13px;">비밀번호 변경 하기</button> '
+																+ '<button class="btn btn-secondary btn-sm" type="submit" style="font-size:13px;">비밀번호 변경</button> '
 																+ '</div>'
 																+ '</form>'
 																+ '</div>');
@@ -235,7 +237,7 @@ div .error {
 		<div class="title">
 			<img alt="logo" src="../img/Logo.png">
 			<h5 style="margin-top: 10px;">
-				<strong>내계정 찾기</strong>
+				<strong>계정 찾기</strong>
 			</h5>
 		</div>
 		<!-- 아이디, 비번 등 폼 -->
@@ -244,7 +246,7 @@ div .error {
 				<!-- 이메일 주소 -->
 				<div id="email">
 					<div class="row mb-3">
-						<label for="userEmail" class="col-sm-4 col-form-label">메일 주소</label>
+						<label for="userEmail" class="col-sm-3 col-form-label">메일 주소</label>
 						<div class="col-sm-6">
 							<div class="input-group">
 								<input type="email" class="form-control" id="userEmail"
@@ -258,7 +260,7 @@ div .error {
 				<!-- 이메일 인증 번호 -->
 				<div id="certify">
 					<div class="row mb-3">
-						<label for="certify_id" class="col-sm-4 col-form-label">인증 번호</label>
+						<label for="certify_id" class="col-sm-3 col-form-label">인증 번호</label>
 						<div class="col-sm-6">
 							<div class="input-group">
 								<input type="text" class="form-control" id="certify_id"

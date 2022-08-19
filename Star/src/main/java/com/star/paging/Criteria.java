@@ -11,7 +11,7 @@ public class Criteria {
 	private String category;
 	
 	// 유저 넘버
-	private long userNumber;
+	// private long userNumber;
 	
 	/* 현제 페이지 */
 	private int pageNum;
@@ -56,10 +56,10 @@ public class Criteria {
 
 	@Override
 	public String toString() {
-		return "Criteria [category=" + category + ", userNumber=" + userNumber + ", pageNum=" + pageNum + ", amount="
-				+ amount + ", skip=" + skip + ", keyword=" + keyword + ", searchType=" + searchType + ", bno=" + bno
-				+ "]";
+		return "Criteria [category=" + category + ", pageNum=" + pageNum + ", amount=" + amount + ", skip=" + skip
+				+ ", keyword=" + keyword + ", searchType=" + searchType + ", bno=" + bno + "]";
 	}
+
 
 
 }

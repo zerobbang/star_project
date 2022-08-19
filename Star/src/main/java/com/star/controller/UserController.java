@@ -56,6 +56,10 @@ public class UserController {
 	// 메인페이지 ( with. 중간에 있는 테이블 )
 	@GetMapping(value = "/star/main3")
 	public String openPredictionList(DustDTO params, Model model) {
+		
+		// 임시로 일단 서울만 계속 보여주도록
+		params.setRegion("서울");
+		
 		List<DustDTO> dustList = userService.getPrediction(params) ;
 		model.addAttribute("dustList", dustList); 
 		System.out.println(params);
