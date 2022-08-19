@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.star.domain.BoardDTO;
+import com.star.domain.CommentDTO; 
 import com.star.domain.ImgDTO;
 import com.star.paging.Criteria;
 
@@ -29,8 +30,14 @@ public interface BoardService {
 	// 내 글 조회
 	public List<BoardDTO> getMyListBoard(Criteria cri);
 	
+	// 댓글 조회
+	public List<CommentDTO> getCommentList(Criteria cri); 
+	
 	// 내 글 총 수
 	public int getMyCount(Criteria cri);
+	
+	// 댓글 수
+	public int getCommentCount(Criteria cri);
 
 	public String getWriter(Long writerNumber);
 

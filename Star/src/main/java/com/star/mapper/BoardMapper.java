@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.star.domain.BoardDTO;
+import com.star.domain.CommentDTO;
 import com.star.domain.ImgDTO;
 import com.star.paging.Criteria;
 
@@ -43,8 +44,14 @@ public interface BoardMapper {
 	// 내 글 조회
 	public List<BoardDTO> getMyListBoard(Criteria cri);
 	
+	// 댓글 조회
+	public List<CommentDTO> getCommentList(Criteria cri);
+	
 	// 내가 쓴 글 게시글 총 수
 	public int getMyCount(Criteria cri);
+	
+	// 댓글 총 수
+	public int getCommentCount(Criteria cri);
 	
 	// 이미지 저장
 	public int insertImg(ImgDTO imgDTO);

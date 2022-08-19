@@ -43,32 +43,29 @@ public class BoardDTO  {
 	private boolean manageYn;
 	
 	// 댓글 테이블
-	private int cmtNum;
-	
-//	private int bno;		// 게시글 테이블의 bno와 연결 
-	
-//	private int userNumber;		// 유저 테이블의 유저 넘버와 연결
-	
-	private String cmtContent;
-	
-	private LocalDateTime writeDate;
-	
-	private LocalDateTime cmtUpdate;
-	
-	private boolean cmtDeleteYn;
+//	private int cmtNum;
+//	
+////	private int bno;		// 게시글 테이블의 bno와 연결 
+//	
+////	private int userNumber;		// 유저 테이블의 유저 넘버와 연결
+//	
+//	private String cmtContent;
+//	
+//	private LocalDateTime writeDate;
+//	
+//	private LocalDateTime cmtUpdate;
+//	
+//	private boolean cmtDeleteYn;
 //	
 	private String imgName;
 
 	@Override
 	public String toString() {
-		return "BoardDTO [category=" + category + ", bno=" + bno + ", userNumber=" + userNumber + ", title=" + title
-				+ ", content=" + content + ", regDate=" + regDate + ", updateDate=" + updateDate + ", deleteYn="
-				+ deleteYn + ", reportContent=" + reportContent + ", manageYn=" + manageYn + ", cmtNum=" + cmtNum
-				+ ", cmtContent=" + cmtContent + ", writeDate=" + writeDate + ", cmtUpdate=" + cmtUpdate
-				+ ", cmtDeleteYn=" + cmtDeleteYn + ", imgName=" + imgName + "]";
+		return "BoardDTO [category=" + category + ", bno=" + bno + ", userNumber=" + userNumber + ", userNickname="
+				+ userNickname + ", title=" + title + ", content=" + content + ", regDate=" + regDate + ", updateDate="
+				+ updateDate + ", deleteYn=" + deleteYn + ", reportContent=" + reportContent + ", manageYn=" + manageYn
+				+ ", imgName=" + imgName + "]";
 	}
-	
-	
-	
+
 
 }

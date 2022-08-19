@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.star.domain.BoardDTO;
+import com.star.domain.CommentDTO;
 import com.star.domain.ImgDTO;
 import com.star.mapper.BoardMapper;
 import com.star.paging.Criteria;
@@ -119,6 +120,16 @@ public class BoardServiceImpl implements BoardService{
 		
 		return myList;
 	}
+	
+	// 댓글 조회
+	@Override
+	public List<CommentDTO> getCommentList(Criteria cri) {
+		List<CommentDTO> commentList = Collections.emptyList();
+		
+		commentList = boardMapper.getCommentList(cri);
+		
+		return commentList;
+	}
 
 	// 카테고리별 총 게시글 개수
 	@Override
@@ -130,6 +141,12 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int getMyCount(Criteria cri) {
 		return boardMapper.getMyCount(cri);
+	}
+	
+	// 내 글 총 수
+	@Override
+	public int getCommentCount(Criteria cri) {
+		return boardMapper.getCommentCount(cri);
 	}
 	
 	public String getWriter(Long writerNumber) {
@@ -156,6 +173,7 @@ public class BoardServiceImpl implements BoardService{
 		Long boardBno = boardDto.getBno();
 		boardMapper.deleteBoardFromBno(boardBno);
 		
-	};
+	}
+
 	
 }
