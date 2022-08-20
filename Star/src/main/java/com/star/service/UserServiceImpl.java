@@ -145,21 +145,26 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public String changeInfo(UserDTO userDto) {
+	public UserDTO changeInfo(UserDTO userDto) {
 		// TODO Auto-generated method stub
 		
 		String userPassword = userDto.getUserPassword();
-		System.out.println(userPassword);
+		System.out.println("마마마마"+userPassword);
 		try {
 			if (userPassword == "") {
 				userMapper.updateNickRegion(userDto);
 			} else {
 				userMapper.updatePassNickRegion(userDto);
 			}
-			return "success";
 		}catch (Exception e) {
-			return "fail";
+			// TODO: handle exception
+			System.out.println("ㅠㅠ...");
 		}
+		
+		userDto = userMapper.loginCheck(userDto);
+		
+		return userDto ;
+		
 	}
 
 	// 회원탈퇴

@@ -1,6 +1,8 @@
 package com.star.mapper;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -42,13 +44,13 @@ public interface BoardMapper {
 	public void report(BoardDTO boardDTO);
 	
 	// 내 글 조회
-	public List<BoardDTO> getMyListBoard(Criteria cri);
+	public List<BoardDTO> getMyListBoard(Map map);
 	
 	// 댓글 조회
-	public List<CommentDTO> getCommentList(Criteria cri);
+	public List<CommentDTO> getCommentList(Long bno);
 	
 	// 내가 쓴 글 게시글 총 수
-	public int getMyCount(Criteria cri);
+	public int getMyCount(Long userNumber);
 	
 	// 댓글 총 수
 	public int getCommentCount(Criteria cri);

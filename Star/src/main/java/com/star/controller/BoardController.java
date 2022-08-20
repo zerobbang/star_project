@@ -33,27 +33,78 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
-	@Autowired
-	private UserService userService;
-	
-	
-	
 	// 게시글 조회
 	@RequestMapping(value="/board/list")
 	public String listBoard(Criteria cri, Model model, BoardDTO boardDTO, HttpServletRequest request) {
-
 		
-		if (cri.getCategory() == null) {
-			cri.setCategory("관측지");
+		System.out.println("cri는요 : "+ cri.getPageNum());
+		
+		// 유저 정보 받아옴
+        HttpSession session = request.getSession();
+        
+		if (cri.getAjaxYn().equals("y")) {
+			session.removeAttribute("criteria");
+			
+		} else {
+			// 페이지로 그냥 넘어오는 경우
+			
+			try {
+				Criteria prevCri = (Criteria) session.getAttribute("criteria");
+				System.out.println("bbbbbbbbbb");
+				System.out.println(cri.getCategory());
+				System.out.println(prevCri.getCategory());
+				System.out.println("cccccccccccc");
+				try {
+					if (cri.getCategory().equals(prevCri.getCategory()) == false) {
+						System.out.println("카테고리가 변경됐네요222");
+						
+						System.out.println("해드렸을겁니다~");
+						
+					}
+				} catch (Exception e) {
+					if (cri.getCategory() != (prevCri.getCategory())) {
+						System.out.println("카테고리가 변경됐네요333");
+
+						System.out.println("aaaaaaaa");
+						cri.setCategory(prevCri.getCategory());
+						cri.setPageNum(prevCri.getPageNum());
+						cri.setAmount(prevCri.getAmount());
+						System.out.println("해드렸습니다~");
+						
+					}
+				}
+				
+					
+//				}
+				
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("안해드렸습니다~");
+			}
+			
+			
+			// 세션 제거
+			session.removeAttribute("criteria");
+			System.out.println("third");
+			System.out.println(session.getAttribute("criteria"));
+			
+			System.out.println("!!!!...");
+			
 		}
 		
-		System.out.println("빠밤..!");
-		System.out.println(model);
+		// 페이징 처리
+		int total = boardService.getCount(cri);
+		PageMakeDTO pageMake = new PageMakeDTO(cri,total);
 		
-		System.out.println(cri);
-		System.out.println("빠밤..!");
+		model.addAttribute("pageMaker", pageMake);
+		System.out.println("pageMake: " + pageMake);
 		
-
+		// 세션에 다시 저장
+		session.setAttribute("criteria", cri);
+		System.out.println("fourth");
+		System.out.println(session.getAttribute("criteria"));
+		
 		// 선택된 글 리스트 뽑기
 		List<BoardDTO> boardList = boardService.getBoardList(cri);
 		
@@ -73,19 +124,19 @@ public class BoardController {
 		
 		model.addAttribute("boardList", boardList);
 		
-		// 페이징 처리
-		int total = boardService.getCount(cri);
-		PageMakeDTO pageMake = new PageMakeDTO(cri,total);
-		
-		model.addAttribute("pageMaker", pageMake);
-		model.addAttribute("criteria", cri);
+//		// 페이징 처리
+//		int total = boardService.getCount(cri);
+//		PageMakeDTO pageMake = new PageMakeDTO(cri,total);
+//		
+//		model.addAttribute("pageMaker", pageMake);
+		// model.addAttribute("criteria", cri);
 		model.addAttribute("boardDTO",boardDTO);
 		
 		System.out.println("리스트 카테고리 : "+cri.getCategory());
 		System.out.println("cri: "+cri);
 		System.out.println("길이: "+ boardList.size());
 		System.out.println("borad: "+boardDTO);
-		System.out.println("pageMake: " + pageMake);
+		// System.out.println("pageMake: " + pageMake);
 		
 		System.out.println("--------------");
 		System.out.println(model);
@@ -120,47 +171,39 @@ public class BoardController {
 	
 	// 게시글 쓰기가 완료 되면
 	@PostMapping(value="/board/registerBoard")
-	public String registerBoard(BoardDTO boardDTO, Criteria cri, @RequestParam(value="img",required=false) List<MultipartFile> file
+	public String registerBoard(BoardDTO boardDTO, Criteria cri
+			, @RequestParam(value="img",required=false) List<MultipartFile> file
 //			, RedirectAttributes rttr
 			, Model model) throws Exception {
 		// 글 등록
 		System.out.println("file 여러개로가져오면   "+file);
 		
-//		// 이미지가 없는 글일 경우
-//		if(file == null) {
-//			
-//		}
 		boardService.registerBoard(boardDTO,file);
 		
 //		HttpSession session = request.getSession();
 //		session.setAttribute("criteria", cri);
 		
 		// 글 쓰기 전 cri 값 잘 받아 왔나 확인
+		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 		System.out.println(cri);
+		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 //		rttr.addFlashAttribute("criteria",cri);
 		model.addAttribute(cri);
 //		 model.addAttribute("criteria",cri);
+		
 		
 		return "redirect:/board/list" ;
 	}
 
     // 상세글조회 페이지
-
-    @GetMapping(value = "/star/detailed_check")
-    public String detailedCheck(@RequestParam(value="bno",required=true) Long bno, UserDTO userDto, Model model, Criteria cri, HttpServletRequest request) {
-
+    @GetMapping(value = "/board/detailed_check")
+    public String detailedCheck(@RequestParam(value="bno",required=true) Long bno, Model model) {
     	
     	System.out.println("상세 조회로 이동");
     	// .out.println(cri);
     	
     	BoardDTO boardDto = boardService.getBoardDetail(bno);
     	model.addAttribute(boardDto);
-    	
-    	// mapper 수정해서 닉네임 바로 가능
-//    	Long writerNumber = boardDto.getUserNumber();
-//    	String writer = boardService.getWriter(writerNumber);
-//    	model.addAttribute("writer", writer);
-//    	System.out.println(writer);
 
     	
     	Long boardBno = boardDto.getBno();
@@ -180,10 +223,10 @@ public class BoardController {
 //		 System.out.println(cri);
 		
     	System.out.println("-----------------");
-    	System.out.println(cri.getBno());
+    	
     	System.out.println("-----------------");
 		// 선택된 글의 댓글 리스트 뽑기
-		List<CommentDTO> commentList = boardService.getCommentList(cri);
+		List<CommentDTO> commentList = boardService.getCommentList(bno);
 		System.out.println("-----------------");
     	System.out.println(commentList);
     	System.out.println("-----------------");
@@ -240,18 +283,19 @@ public class BoardController {
 		System.out.println(session.getAttribute("userDTO"));
 		
 		UserDTO user = (UserDTO) session.getAttribute("userDTO");
+		Long userNumber = user.getUserNumber();
 		
 		// cri.setUserNumber(user.getUserNumber());
 		
 		 System.out.println(cri);
 		
 		// 선택된 글 리스트 뽑기
-		List<BoardDTO> myList = boardService.getMyListBoard(cri);
+		List<BoardDTO> myList = boardService.getMyListBoard(cri, userNumber);
     	model.addAttribute("myList", myList);
 		
 		
 		// 페이징 처리
-		int total = boardService.getMyCount(cri);
+		int total = boardService.getMyCount(userNumber);
 		
 		PageMakeDTO pageMake = new PageMakeDTO(cri,total);
 		

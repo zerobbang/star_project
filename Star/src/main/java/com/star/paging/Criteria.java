@@ -28,6 +28,9 @@ public class Criteria {
 	/* 검색 타입 */
     private String searchType;
     
+    /* ajax 사용 여부 확인 */
+    private String ajaxYn;
+
 	/* 회원 번호 */
 	private int bno;
     
@@ -35,6 +38,7 @@ public class Criteria {
     public Criteria() {
         this(1,10);
         this.skip = 0;
+        this.ajaxYn = "n";
     }
     
     /* 생성자 => 원하는 pageNum, 원하는 amount */

@@ -48,11 +48,11 @@
 		<div th:replace="fragments/body :: main-nav"></div>
 		<h2>게시글 목록</h2>
 		<!-- 소통방일 경우에만 활성화 -->
-		<div id="selectCategory">
-			<select id="category"
-				th:if="${boardDTO.category}=='잡담' or ${boardDTO.category}=='사고팔아요'">
-				<option value="잡담" th:selected="${boardDTO.category}=='잡담'">잡담</option>
-				<option value="사고팔아요" th:selected="${boardDTO.category}=='사고팔아요'">사고팔아요</option>
+		<div id="divSelectCategory">
+			<select id="selectCategory"
+				th:if="${session.criteria.category}=='잡담' or ${session.criteria.category}=='사고팔아요'">
+				<option value="잡담" th:selected="${session.criteria.category}=='잡담'">잡담</option>
+				<option value="사고팔아요" th:selected="${session.criteria.category}=='사고팔아요'">사고팔아요</option>
 			</select>
 		</div>
 		<table class="board_list" th:if="${boardDTO.category != '작품전'}">
@@ -68,27 +68,8 @@
 					<th scope="col">제목</th>
 					<th scope="col">작성자</th>
 					<th scope="col">작성일</th>
-					<!-- <th scope="col">조회수</th> -->
 				</tr>
 			</thead>
-			<!-- <tbody>
-				<tr th:if="${#lists.size(boardList)} > 0"
-					th:each="list : ${boardList}">
-					고유 글의 번호를 출력 해 주는 것이 아닐 카테고리 별로 최신 순부터 1번으로 보여준다.
-					<td th:text="${list.bno}"></td>
-					<td th:text="${listStat.count}"></td>
-					<td class="title" th:text="${list.title}"></td>
-					보드 리스트의 인덱스 값과 userNickname의 인덱스 값이 같은 경우에만 출력한다.
-					<td class="writer" th:text="${list.userNickname}"></td>
-					보여지는 날짜 형식 여기서 변경 가능
-					<td class="regDate"
-						th:text="${#temporals.format(list.regDate, 'dd-MM-yyyy HH:mm')}"></td>
-				</tr>
-				<tr th:unless="${#lists.size(boardList)} > 0">
-					<td colspan="4">조회된 결과가 없습니다.</td>
-				</tr>
-			</tbody>
-		</table> -->
 		 <tbody>
                 <tr th:if="${#lists.size(boardList)} > 0"  th:each="list : ${boardList}">
 					<!-- 고유 글의 번호를 출력 해 주는 것이 아닐 카테고리 별로 최신 순부터 1번으로 보여준다. -->
@@ -135,9 +116,9 @@
 
 		<!-- 글쓰기 버튼 -->
 		<form th:action="@{/board/write}" method="post">
-			<input type="text" id="pageNum" name="pageNum" th:value="${criteria.pageNum }"> 
-			<input type="text" id="amount" name="amount" th:value="${criteria.amount }">
-			<input type="text" id="category" name="category" th:value="${criteria.category }">
+			<input type="text" id="pageNum" name="pageNum" th:value="${session.criteria.pageNum }"> 
+			<input type="text" id="amount" name="amount" th:value="${session.criteria.amount }">
+			<input type="text" id="category" name="category" th:value="${session.criteria.category }">
 			<input type="text" id="total" name="total"th:value="${pageMaker.total}">
 			<input type="submit" value="글쓰기" />
 		</form>
@@ -195,13 +176,14 @@
 	function searchResult(){	
  		$.ajax({
 			url : "/board/list",
-			type : "post",
+			type : "get",
 			data : {"category" : $("#category").val(),
 					/* "userNumber" : $("#userNumber").val(), */
 					"pageNum" : 1,
 					"amount" : $("#amount").val(),
 					"keyword" : $("#keyword").val(),
-					"searchType" : $("#searchType").val()},
+					"searchType" : $("#searchType").val(),
+					"ajaxYn" : "y"},
 			success : function(data){
 				alert("완료");
 				$("#list").html(data);
@@ -217,12 +199,13 @@
 
 	
 	$(document).ready(function(){
-		$("#selectCategory").on("change",function(){		
+		$("#selectCategory").on("change",function(){
+			
 			$.ajax({
 				url : "/board/list",
-				type : "post",
+				type : "get",
 				data : {"category" : this.value,
-						"userNumber" : $("#userNumber").val()},
+						"ajaxYn": "y"},
 				success : function(data){
 					$("#list").html(data);
 				},
@@ -234,8 +217,6 @@
 		});
 		
 	 	$(".pageInfo a").on("click", function(){
-			alert("클릭"+this.text); 
-			alert($("#keyword").val());
 			
 			if(this.text === ">"){
 				var pageNum = /*[[${pageMaker.endPage+1}]]*/;
@@ -248,25 +229,25 @@
 			}else{
 				var pageNum = this.text;
 			}
+
 			
 			$.ajax({
 				url : "/board/list",
 				type : "get",
 				data : {"category" : $("#category").val(),
-						/* "userNumber" : $("#userNumber").val(), */
 						"pageNum" : pageNum,
 						"amount" : $("#amount").val(),
 						"keyword" : $("#inputKeyword").val(),
-						"searchType" : $("#inputSearchType").val()},
+						"searchType" : $("#inputSearchType").val(),
+						"ajaxYn" : "y"},
 				success : function(data){
-					alert("완료");
+					
 					$("#list").html(data);
 				},
 				error : function (error){
 					alert("페이지 이동 실패");
 					console.log(error);
 				}
-			
 			});
 			
 		});
