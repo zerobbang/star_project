@@ -67,7 +67,12 @@
  </div>
  
  <!-- 글 상세 조회 -->
-   <input id="bno" type="hidden" th:value="${boardDTO.bno}">
+   <!-- <input id="bno" name="bno" type="hidden" th:value="${boardDTO.bno}"> -->
+   <div>
+   	카테고리 : 
+   	<br>
+   	<input type="text" id="category" name="category" th:value="${session.criteria.category}">
+   </div>
  	<div>
 	 	작성자 :
 	 	<br>
@@ -102,6 +107,7 @@
     <th:block th:if="${session.userDTO != null}">
 			<!-- 수정 버튼 -->            
             <form th:action="@{/board/modify}" method="post">
+            <input id="bno" name="bno" type="text" th:value="${boardDTO.bno}">
             	<!-- <input type="text" id="pageNum" name="pageNum" th:value="${criteria.pageNum }"> 
 				<input type="text" id="amount" name="amount" th:value="${criteria.amount }">
 				<input type="text" id="category" name="category" th:value="${criteria.category }">

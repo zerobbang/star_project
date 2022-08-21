@@ -1,13 +1,12 @@
 package com.star.mapper;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.star.domain.BoardDTO;
-//import com.star.domain.CommentDTO;
+import com.star.domain.CommentDTO;
 import com.star.domain.ImgDTO;
 import com.star.paging.Criteria;
 
@@ -47,7 +46,7 @@ public interface BoardMapper {
 	public List<BoardDTO> getMyListBoard(Map map);
 	
 	// 댓글 조회
-	// public List<CommentDTO> getCommentList(Long bno);
+	public List<CommentDTO> getCommentList(Long bno);
 	
 	// 내가 쓴 글 게시글 총 수
 	public int getMyCount(Long userNumber);
@@ -66,5 +65,8 @@ public interface BoardMapper {
 	public List<ImgDTO> findImgsFromBno(Long boardBno);
 
 	public void deleteBoardFromBno(Long boardBno);
+
+	// 게시글 수정 
+	public int updateBoard(BoardDTO boardDTO);
 	
 }
