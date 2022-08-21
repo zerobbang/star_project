@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.star.domain.BoardDTO;
-import com.star.domain.CommentDTO; 
+// import com.star.domain.CommentDTO; 
 import com.star.domain.ImgDTO;
 import com.star.paging.Criteria;
 
@@ -31,7 +31,7 @@ public interface BoardService {
 	public List<BoardDTO> getMyListBoard(Criteria cri,Long userNumber);
 	
 	// 댓글 조회
-	public List<CommentDTO> getCommentList(Long bno); 
+	// public List<CommentDTO> getCommentList(Long bno); 
 	
 	// 내 글 총 수
 	public int getMyCount(Long userNumber);

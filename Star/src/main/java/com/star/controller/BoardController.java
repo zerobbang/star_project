@@ -1,6 +1,5 @@
 package com.star.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,16 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.star.domain.BoardDTO;
-import com.star.domain.CommentDTO;
+//import com.star.domain.CommentDTO;
 import com.star.domain.ImgDTO;
 import com.star.domain.PageMakeDTO;
 import com.star.domain.UserDTO;
 import com.star.paging.Criteria;
 import com.star.service.BoardService;
-import com.star.service.UserService;
 
 @Controller
 public class BoardController {
@@ -226,12 +223,12 @@ public class BoardController {
     	
     	System.out.println("-----------------");
 		// 선택된 글의 댓글 리스트 뽑기
-		List<CommentDTO> commentList = boardService.getCommentList(bno);
-		System.out.println("-----------------");
-    	System.out.println(commentList);
-    	System.out.println("-----------------");
-		
-    	model.addAttribute("commentList", commentList);
+//		List<CommentDTO> commentList = boardService.getCommentList(bno);
+//		System.out.println("-----------------");
+//    	System.out.println(commentList);
+//    	System.out.println("-----------------");
+//		
+//    	model.addAttribute("commentList", commentList);
 		
 		    	
     	return "star/detailed_check";
@@ -338,7 +335,7 @@ public class BoardController {
  		
  		System.out.println(model);
  		
- 		return "/board/write";
+ 		return "/board/update";
  	}
     
     	

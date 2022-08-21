@@ -202,7 +202,7 @@
 </select>
 
 <!-- 댓글 조회 -->
- <select id="getCommentList" parameterType="Long" resultType="CommentDTO">
+<!--  <select id="getCommentList" parameterType="Long" resultType="CommentDTO">
  	SELECT 
  		*
 	FROM `
@@ -211,7 +211,7 @@
 		cmt_delete_yn = 0
   	AND 
 		bno = #{bno};
-</select>
+</select> -->
 
 
 <!-- 총 게시글 수 출력 -->
@@ -245,7 +245,7 @@
 </select>
 
 <!-- 댓글 수 출력 -->
-<select id="getCommentCount"  resultType="int">
+<!-- <select id="getCommentCount"  resultType="int">
  	SELECT 
  		count(*)
 	FROM 
@@ -259,7 +259,7 @@
 		a.user_number = #{userNumber}
 	limit 
 		5;
-</select>
+</select> -->
 
 <!-- 이미지 저장 -->
 <insert id="insertImg" parameterType="BoardDTO">

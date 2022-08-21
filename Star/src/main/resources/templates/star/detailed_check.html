@@ -106,7 +106,7 @@
 				<input type="text" id="amount" name="amount" th:value="${criteria.amount }">
 				<input type="text" id="category" name="category" th:value="${criteria.category }">
 				<input type="text" id="userNumber" name="userNumber" th:value="${criteria.userNumber }"> -->
-				<input type="text" id="total" name="total"th:value="${pageMaker.total}">
+				<!-- <input type="text" id="total" name="total"th:value="${pageMaker.total}"> -->
                 <button type="submit">수정 하기</button>
             </form>
     	
@@ -127,14 +127,16 @@
          <div>
 	         <input type="text" id="inputCmtContent" name="cmtContent" placeholder="댓글를 입력해 주세요." />
  	         <input type="text" id="inputBno" name="bno" th:value="${boardDTO.bno}" />
-  	         <input type="text" id="inputUserNumber" name="userNumber" th:value="${session.userDTO.userNumber}" /> 
-	          
+ 	         <!-- 회원이 아닌 경우 생각해줘야 할 듯! -->
+ 	         <th:block th:if="session.userDTO != null">
+  	         	<!-- <input type="text" id="inputUserNumber" name="userNumber" th:value="${session.userDTO.userNumber}" />  -->
+	          </th:block>
 	         <button type="button" onclick="writeComment();">댓글저장</button> 
          </div>
      	
      
      
-        <table class="board_list">
+<!--         <table class="board_list">
             <colgroup>
                 <col width="15%"/>
                 <col width="*"/>
@@ -162,7 +164,7 @@
                     <td colspan="4">조회된 결과가 없습니다.</td> 
                </tr>
             </tbody>
-        </table>
+        </table> -->
 </div>
 
 <script th:inline="javascript">

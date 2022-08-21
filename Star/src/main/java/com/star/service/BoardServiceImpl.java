@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.star.domain.BoardDTO;
-import com.star.domain.CommentDTO;
+// import com.star.domain.CommentDTO;
 import com.star.domain.ImgDTO;
 import com.star.mapper.BoardMapper;
 import com.star.paging.Criteria;
@@ -141,14 +141,14 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	// 댓글 조회
-	@Override
-	public List<CommentDTO> getCommentList(Long bno) {
-		List<CommentDTO> commentList = Collections.emptyList();
-		
-		commentList = boardMapper.getCommentList(bno);
-		
-		return commentList;
-	}
+//	@Override
+//	public List<CommentDTO> getCommentList(Long bno) {
+//		List<CommentDTO> commentList = Collections.emptyList();
+//		
+//		commentList = boardMapper.getCommentList(bno);
+//		
+//		return commentList;
+//	}
 
 	// 카테고리별 총 게시글 개수
 	@Override
