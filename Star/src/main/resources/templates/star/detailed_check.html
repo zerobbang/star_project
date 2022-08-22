@@ -103,7 +103,7 @@
    		<!-- <input type="text" id="imgName" name="imgName" th:value="${#strings.substring(img.imgName,37)}" readonly="readonly"> -->
     </div> 
     
-    
+     
     <th:block th:if="${session.userDTO != null}">
 			<!-- 수정 버튼 -->            
             <form th:action="@{/board/modify}" method="post">
@@ -139,10 +139,10 @@
 	          </th:block>
 	         <button type="button" onclick="writeComment();">댓글저장</button> 
          </div>
-     	
-     
-     
-<!--         <table class="board_list">
+     	 
+     	 
+     	 
+         <table class="board_list">
             <colgroup>
                 <col width="15%"/>
                 <col width="*"/>
@@ -170,7 +170,7 @@
                     <td colspan="4">조회된 결과가 없습니다.</td> 
                </tr>
             </tbody>
-        </table> -->
+        </table>
 </div>
 
 <script th:inline="javascript">
