@@ -33,7 +33,7 @@ public class BoardController {
 	
 	// 게시글 조회
 	@RequestMapping(value="/board/list")
-	public String listBoard(Criteria cri, Model model, BoardDTO boardDTO, HttpServletRequest request) {
+	public String listBoard(Criteria cri, Model model, HttpServletRequest request) {
 		
 		System.out.println("cri는요 : "+ cri.getPageNum());
 		
@@ -41,7 +41,18 @@ public class BoardController {
         HttpSession session = request.getSession();
         
 		if (cri.getAjaxYn().equals("y")) {
+			// session.removeAttribute("criteria");
+			// 페이징 처리 시 카테고리가 변경되는 오류 처리
+			System.out.println("페이징 처리나 검색했을 경우"+session.getAttribute("criteria"));
+			System.out.println("그냥 크리 "+cri);
+			Criteria prevCri = (Criteria) session.getAttribute("criteria");
 			session.removeAttribute("criteria");
+			session.setAttribute("criteria", prevCri);
+			cri.setCategory(prevCri.getCategory());
+			System.out.println("----------------------------------");
+			System.out.println("페이징 처리나 검색했을 경우"+session.getAttribute("criteria"));
+			System.out.println("그냥 크리 "+cri);
+			
 			
 		} else {
 			// 페이지로 그냥 넘어오는 경우
@@ -70,12 +81,7 @@ public class BoardController {
 						System.out.println("해드렸습니다~");
 						
 					}
-				}
-				
-					
-//				}
-				
-				
+				}								
 			} catch (Exception e) {
 				// TODO: handle exception
 				System.out.println("안해드렸습니다~");
@@ -92,11 +98,18 @@ public class BoardController {
 		}
 		
 		// 페이징 처리
+		if(cri.getCategory().equals("작품전")){
+			// 한 페이지 보여줄 amount 수정
+			cri.setAmount(9);
+		}
+		
 		int total = boardService.getCount(cri);
 		PageMakeDTO pageMake = new PageMakeDTO(cri,total);
 		
 		model.addAttribute("pageMaker", pageMake);
 		System.out.println("pageMake: " + pageMake);
+		
+		System.out.println("아아아아아ㅏ아아아아아아 cri : "+cri);
 		
 		// 세션에 다시 저장
 		session.setAttribute("criteria", cri);
@@ -121,19 +134,12 @@ public class BoardController {
 		}
 		
 		model.addAttribute("boardList", boardList);
-		
-//		// 페이징 처리
-//		int total = boardService.getCount(cri);
-//		PageMakeDTO pageMake = new PageMakeDTO(cri,total);
-//		
-//		model.addAttribute("pageMaker", pageMake);
-		// model.addAttribute("criteria", cri);
-		model.addAttribute("boardDTO",boardDTO);
+		// model.addAttribute("boardDTO",boardDTO);
 		
 		System.out.println("리스트 카테고리 : "+cri.getCategory());
 		System.out.println("cri: "+cri);
 		System.out.println("길이: "+ boardList.size());
-		System.out.println("borad: "+boardDTO);
+		// System.out.println("borad: "+boardDTO);
 		// System.out.println("pageMake: " + pageMake);
 		
 		System.out.println("--------------");
@@ -213,6 +219,7 @@ public class BoardController {
     	System.out.println("상세 조회할 글 번호 : "+boardBno);
     	List<ImgDTO> imgs = boardService.getImgsFromBno(boardBno);
     	model.addAttribute("imgDto", imgs);
+    	System.out.println(imgs);
 
     	
 //    	댓글	

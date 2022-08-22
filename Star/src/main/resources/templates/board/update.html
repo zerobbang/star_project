@@ -73,6 +73,7 @@
        		var i = document.createElement('input');
        		i.setAttribute("type","file");
        		i.setAttribute("name","img");
+       		i.setAttribute("required","");
        		i.setAttribute("accept",".jpg, .gif, .png, .bmp, .webp, .heif");
        		
        		var j = document.createElement('input');	
@@ -101,13 +102,7 @@
         var contentRegex = /\S/;
         
         function checkNull(){
-        	// console.log(titleRegex.test($("#title").val()));
-        	
-        	// 첨부 이미지 첫번째 값
-        	// console.log(imgList[0].files[0]);
-        	
-        	var imgList = Array.from(document.querySelectorAll("#imgList input"));
-        	
+        	var imgList = Array.from(document.querySelectorAll("#imgList input"));      	
         	var imgListLength = imgList.length;
         	
          	console.log(imgList);
