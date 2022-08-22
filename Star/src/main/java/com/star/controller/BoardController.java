@@ -1,6 +1,8 @@
 package com.star.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -40,6 +42,7 @@ public class BoardController {
 		// 유저 정보 받아옴
         HttpSession session = request.getSession();
         
+        // ajax를 사용하여 페이지 이동을 한 경우
 		if (cri.getAjaxYn().equals("y")) {
 			// session.removeAttribute("criteria");
 			// 페이징 처리 시 카테고리가 변경되는 오류 처리
@@ -64,6 +67,7 @@ public class BoardController {
 				System.out.println(prevCri.getCategory());
 				System.out.println("cccccccccccc");
 				try {
+					// 새로 들어온 카테고리가 이전 카테고리와 다른 문자일경우
 					if (cri.getCategory().equals(prevCri.getCategory()) == false) {
 						System.out.println("카테고리가 변경됐네요222");
 						
@@ -71,6 +75,7 @@ public class BoardController {
 						
 					}
 				} catch (Exception e) {
+					// 새로 들어온 카테고리가 null인경우
 					if (cri.getCategory() != (prevCri.getCategory())) {
 						System.out.println("카테고리가 변경됐네요333");
 
@@ -134,13 +139,10 @@ public class BoardController {
 		}
 		
 		model.addAttribute("boardList", boardList);
-		// model.addAttribute("boardDTO",boardDTO);
 		
 		System.out.println("리스트 카테고리 : "+cri.getCategory());
 		System.out.println("cri: "+cri);
 		System.out.println("길이: "+ boardList.size());
-		// System.out.println("borad: "+boardDTO);
-		// System.out.println("pageMake: " + pageMake);
 		
 		System.out.println("--------------");
 		System.out.println(model);
@@ -338,14 +340,22 @@ public class BoardController {
  		
  		model.addAttribute("boardDto", boardDto);
  		
- 		System.out.println(model);
+ 		List<ImgDTO> imgs = boardService.getImgsFromBno(bno);
+    	model.addAttribute("imgDto", imgs);
  		
+ 		System.out.println(model);
+
  		return "/board/update";
  	}
  	
  	// 게시글 수정하기
  	@PostMapping(value="/board/updateBoard")
- 	public String updateBoard(@RequestParam(value="bno",required=true) Long bno, BoardDTO boardDTO, RedirectAttributes re) {
+ 	public String updateBoard(@RequestParam(value="bno",required=true) Long bno, BoardDTO boardDTO
+ 			, RedirectAttributes re
+ 			, @RequestParam(value="imgNumber",required=false) List<Integer> imgNumList
+ 			, @RequestParam(value="imgShowYn",required=false) List<String> imgShowList
+ 			, @RequestParam(value="img",required=false) List<MultipartFile> file)throws Exception  {
+ 		
  		System.out.println("게시글 수정 시작");
  		System.out.println("수정할 게시글 내용"+boardDTO);
  		
@@ -356,6 +366,33 @@ public class BoardController {
  		}else {
  			System.out.println("게시글 수정 실패");
  		}
+ 		
+ 		// 이미지도 수정하기
+ 		System.out.println(imgNumList);
+ 		System.out.println(imgShowList);
+ 		
+ 		Map map = new HashMap<>();
+ 		for(int i=0;i<imgNumList.size();i++) {
+ 			if(imgShowList.get(i).equals("false")) {
+		 		map.put("imgNumber", imgNumList.get(i));
+		 		map.put("imgShowYn", imgShowList.get(i));
+		 		System.out.println(map);
+		 		
+		 		int result2 = boardService.updateImg(map);
+		 		
+		 		if(result2 == 1) {
+		 			System.out.println("이미지 수정 완료");
+		 		}else {
+		 			System.out.println("이미지 수정 실패");
+		 		}
+ 			}
+ 		}
+ 		
+ 		// 추가된 이미지는 DB에 추가
+ 		
+ 		System.out.println("추가된 이미지 : "+file);	
+ 		
+ 		boardService.addImgList(file,bno);
  		
  		re.addAttribute("bno", boardDTO.getBno());
  		
@@ -378,5 +415,54 @@ public class BoardController {
 	}
 	
     
+ 	
+ 	// 관리자 페이지
+ 	@RequestMapping(value="/board/managerpage")
+ 	public String managerpage(Model model, BoardDTO boardDTO, HttpServletRequest request, UserDTO userDTO) {
+ 		System.out.println("마이 페이지로 이동");
+ 		
+ 		HttpSession session = request.getSession();
+ 		UserDTO userDto = (UserDTO) session.getAttribute("userDTO");
+ 		try {
+ 			if (userDto.isAdminYn()==true){
+ 	 			System.out.println("hello admin!");
+ 	 		} else {
+ 	 			System.out.println("you are member!");
+ 	 			return "redirect:/star/mainpage";
+ 	 		}
+		} catch (Exception e) {
+			// TODO: handle exception
+ 			System.out.println("you are guest!");
+ 			return "redirect:/star/mainpage";
+		}
+ 		
+ 		List<BoardDTO> reportList = boardService.getReportBoard();
+ 		System.out.println(reportList);
+ 		
+ 		model.addAttribute("reportList", reportList);
+ 		
+ 		return "board/managerpage";
+ 	}
+ 	
+	// 관리자 - 게시글 삭제 판단
+    @PostMapping(value = "/manage/delete.do")
+    public String managerDeleteBoard(BoardDTO boardDto) {
+    	
+    	boardService.deleteBoard(boardDto);
+    	boardService.managingComplete(boardDto);
+    	
+    	// 끝나면 메인 페이지로 이동
+    	return "redirect:/board/managerpage";
+    };
+ 	
+	// 관리자 - 게시글 통과 판단
+    @PostMapping(value = "/manage/pass.do")
+    public String managerPassBoard(BoardDTO boardDto) {
+    	
+    	boardService.managingComplete(boardDto);
+    	
+    	// 끝나면 메인 페이지로 이동
+    	return "redirect:/board/managerpage";
+    };    
     	
 }

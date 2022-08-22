@@ -301,6 +301,7 @@ AND
 	delete_yn = 0
 </update>
 
+
 <!-- 댓글 조회 -->
 <select id="getCommentList" parameterType="long" resultType="CommentDTO">
  	SELECT 
@@ -346,5 +347,51 @@ AND
 	limit 
 		5;
 </select>
+
+<!-- 이미지 수정 여부 -->
+<update id="updateImg" parameterType="map">
+UPDATE
+	img_table
+SET
+	img_show_yn = 0
+WHERE
+	img_number = #{imgNumber}
+</update>
+
+
+<select id="getReportBoardList"  resultType="BoardDTO">
+
+	select 
+		rt.bno 
+		, bl.title 
+		, rt.user_number 
+		, ut.user_nickname 
+		, rt.report_content 
+	from 
+		report_table rt 
+	inner join 
+		users_table ut 
+	on 
+		rt.user_number = ut.user_number
+	inner join 
+		board_list bl 
+	on 
+		rt.bno = bl.bno
+	where 
+		rt.manage_yn = 0
+	and 
+		bl.delete_yn = 0;
+
+</select>
+
+<update id="managingComplete" parameterType="Long">
+	update 
+		report_table 
+	set 
+		manage_yn = 1
+	where 
+		bno = #{bno};
+</update>
+
 
 </mapper>

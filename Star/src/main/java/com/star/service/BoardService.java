@@ -1,6 +1,7 @@
 package com.star.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,6 +52,17 @@ public interface BoardService {
 	
 	// 댓글 수
 	public int getCommentCount(Criteria cri);
+
+	// 이미지 수정
+	public int updateImg(Map map);
+	
+	// 이미지 추가
+	public boolean addImgList(List<MultipartFile> file, Long bno) throws Exception;
+
+	public List<BoardDTO> getReportBoard();
+
+	public void managingComplete(BoardDTO boardDto);
+
 
 }
 
