@@ -202,15 +202,15 @@
 </select>
 
 <!-- 댓글 조회 -->
- <select id="getCommentList" parameterType="Long" resultType="CommentDTO">
+<select id="getCommentList" parameterType="long" resultType="CommentDTO">
  	SELECT 
  		*
-	FROM `
+	FROM
 		 comment_table
 	WHERE 
 		cmt_delete_yn = 0
   	AND 
-		bno = #{bno};
+		bno = #{bno}
 </select>
 
 
@@ -314,7 +314,21 @@
 	set
 		delete_yn = 1
 	where
-		bno = #{boardBno};
+		bno = #{bno};
+</update>
+
+<!-- 게시글 수정 -->
+<update id="updateBoard" parameterType="boardDTO">
+UPDATE
+	board_list
+SET
+	title = #{title}
+	, content = #{content}
+	, update_date = now()
+WHERE
+	bno = #{bno}
+AND
+	delete_yn = 0
 </update>
 
 

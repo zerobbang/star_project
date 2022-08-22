@@ -1,6 +1,5 @@
 package com.star.mapper;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,5 +65,8 @@ public interface BoardMapper {
 	public List<ImgDTO> findImgsFromBno(Long boardBno);
 
 	public void deleteBoardFromBno(Long boardBno);
+
+	// 게시글 수정 
+	public int updateBoard(BoardDTO boardDTO);
 	
 }

@@ -41,8 +41,9 @@
         padding: 35px 40px 35px 0;
    }
 </style>
-<div th:replace="fragments/body :: main-css"></div>
+
 </head>
+<div th:replace="fragments/body :: main-css"></div>
 <body>
 	<div id="list" class="container">
 		<div th:replace="fragments/body :: main-nav"></div>
@@ -178,7 +179,6 @@
 			url : "/board/list",
 			type : "get",
 			data : {"category" : $("#category").val(),
-					/* "userNumber" : $("#userNumber").val(), */
 					"pageNum" : 1,
 					"amount" : $("#amount").val(),
 					"keyword" : $("#keyword").val(),

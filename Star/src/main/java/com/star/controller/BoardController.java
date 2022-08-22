@@ -1,6 +1,5 @@
 package com.star.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +23,6 @@ import com.star.domain.PageMakeDTO;
 import com.star.domain.UserDTO;
 import com.star.paging.Criteria;
 import com.star.service.BoardService;
-import com.star.service.UserService;
 
 @Controller
 public class BoardController {
@@ -197,10 +195,15 @@ public class BoardController {
 
     // 상세글조회 페이지
     @GetMapping(value = "/board/detailed_check")
-    public String detailedCheck(@RequestParam(value="bno",required=true) Long bno, Model model, CommentDTO commentDTO) {
+    public String detailedCheck(@RequestParam(value="bno",required=false) Long bno, Model model,HttpServletRequest request) {
+    	
+    	HttpSession session = request.getSession();
+    	System.out.println(session.getAttribute("criteria"));
     	
     	System.out.println("상세 조회로 이동");
     	// .out.println(cri);
+    	
+    	System.out.println(bno);
     	
     	BoardDTO boardDto = boardService.getBoardDetail(bno);
     	model.addAttribute(boardDto);
@@ -215,23 +218,23 @@ public class BoardController {
 //    	댓글
 //		HttpSession session = request.getSession();
 //		System.out.println(session.getAttribute("userDTO"));
-		
+//		
 //		UserDTO user = (UserDTO) session.getAttribute("userDTO");
-		
+//		
 //		cri.setUserNumber(user.getUserNumber());
 		
-//		 System.out.println(cri);
+//		System.out.println(cri);
 		
     	System.out.println("-----------------");
     	
     	System.out.println("-----------------");
 		// 선택된 글의 댓글 리스트 뽑기
-		List<CommentDTO> commentList = boardService.getCommentList(bno);
+		List<CommentDTO> commentList = boardService.getCommentList(boardBno);
 		System.out.println("-----------------");
     	System.out.println(commentList);
     	System.out.println("-----------------");
 		
-		model.addAttribute("commentList", commentList);
+    	model.addAttribute("commentList", commentList);
 		
 		    	
     	return "star/detailed_check";
@@ -319,7 +322,7 @@ public class BoardController {
     
     // 게시글 수정 화면으로 이동
  	@PostMapping(value="/board/modify")
- 	public String modifyBoard(Model model, BoardDTO boardDto
+ 	public String modifyBoard(@RequestParam(value="bno",required=true) Long bno, Model model, BoardDTO boardDto
  			, HttpServletRequest request) {
  		
  		// 로그인 안된사람 탈출시키기
@@ -332,13 +335,32 @@ public class BoardController {
  		System.out.println("글수정 페이지 이동 ");
  		// 이전 값 존재
  		
- 		boardDto = boardService.getBoardDetail(boardDto.getBno());
+ 		boardDto = boardService.getBoardDetail(bno);
  		
  		model.addAttribute("boardDto", boardDto);
  		
  		System.out.println(model);
  		
- 		return "/board/write";
+ 		return "/board/update";
+ 	}
+ 	
+ 	// 게시글 수정하기
+ 	@PostMapping(value="/board/updateBoard")
+ 	public String updateBoard(@RequestParam(value="bno",required=true) Long bno, BoardDTO boardDTO, RedirectAttributes re) {
+ 		System.out.println("게시글 수정 시작");
+ 		System.out.println("수정할 게시글 내용"+boardDTO);
+ 		
+ 		int result = boardService.updateBoard(boardDTO);
+ 		
+ 		if(result == 1) {
+ 			System.out.println("게시글 수정 완료");
+ 		}else {
+ 			System.out.println("게시글 수정 실패");
+ 		}
+ 		
+ 		re.addAttribute("bno", boardDTO.getBno());
+ 		
+ 		return "redirect:/board/detailed_check";
  	}
     
     	

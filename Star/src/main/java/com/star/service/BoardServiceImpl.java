@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.star.domain.BoardDTO;
 import com.star.domain.CommentDTO;
+// import com.star.domain.CommentDTO;
 import com.star.domain.ImgDTO;
 import com.star.mapper.BoardMapper;
 import com.star.paging.Criteria;
@@ -192,6 +193,12 @@ public class BoardServiceImpl implements BoardService{
 		Long boardBno = boardDto.getBno();
 		boardMapper.deleteBoardFromBno(boardBno);
 		
+	}
+
+	// 게시글 수정
+	@Override
+	public int updateBoard(BoardDTO boardDTO) {
+		return boardMapper.updateBoard(boardDTO);
 	}
 
 	

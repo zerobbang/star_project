@@ -42,7 +42,7 @@
 	</style>
 	
 	<!-- 신고 팝업창 -->
- 	<script src="http://code.jquery.com/jquery-latest.min.js"></script><script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script><script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript">
 		function openPop(){
 		  	var bno = $("#bno").val();
@@ -53,26 +53,30 @@
 			var popup = window.open('/star/userReport', '신고사유'
 	    						, 'width=500px,height=700px, top=100px, left=500px, scrollbars=no');
 		}
-	</script> 
+	</script>
 </head>
 <body>
-ddd
-    <div class="temp1"> 네비게이션 </div>
+    <!-- <div class="temp1"> 네비게이션 </div> -->
     <div style="width:1450px; height:20px; padding:20px; border:1px solid blue;">네비</div>
     
-    신고하기 버튼     
+    <!-- 신고하기 버튼 -->     
   <div class="wrap">
 	<button type="button" onclick="openPop()">
 		<i class="bi bi-exclamation-circle-fill"></i>신고
 	</button>
  </div>
  
- 글 상세 조회
-   <input id="bno" type="hidden" th:value="${boardDTO.bno}">
+ <!-- 글 상세 조회 -->
+   <!-- <input id="bno" name="bno" type="hidden" th:value="${boardDTO.bno}"> -->
+   <div>
+   	카테고리 : 
+   	<br>
+   	<input type="text" id="category" name="category" th:value="${session.criteria.category}">
+   </div>
  	<div>
 	 	작성자 :
 	 	<br>
- 		<input type="text" id="writer" name="writer" th:value="${writer}" readonly="readonly">
+ 		<!-- <input type="text" id="writer" name="writer" th:value="${writer}" readonly="readonly"> -->
  		<input type="text" id="writer" name="writer" th:value="${boardDTO.userNickname}" readonly="readonly">
  	</div>
  	
@@ -96,18 +100,19 @@ ddd
     	<input type="image" id="imgPath" name="imgPath" th:src="'/imgfiles/' + ${img.imgName}" 
     		style="width:450px; height:400px; margin:0 auto; border:1px solid green;">
    		<br>
-   		<input type="text" id="imgName" name="imgName" th:value="${#strings.substring(img.imgName,37)}" readonly="readonly">
+   		<!-- <input type="text" id="imgName" name="imgName" th:value="${#strings.substring(img.imgName,37)}" readonly="readonly"> -->
     </div> 
     
     
     <th:block th:if="${session.userDTO != null}">
-			수정 버튼            
+			<!-- 수정 버튼 -->            
             <form th:action="@{/board/modify}" method="post">
-            	<input type="text" id="pageNum" name="pageNum" th:value="${criteria.pageNum }"> 
+            <input id="bno" name="bno" type="text" th:value="${boardDTO.bno}">
+            	<!-- <input type="text" id="pageNum" name="pageNum" th:value="${criteria.pageNum }"> 
 				<input type="text" id="amount" name="amount" th:value="${criteria.amount }">
 				<input type="text" id="category" name="category" th:value="${criteria.category }">
-				<input type="text" id="userNumber" name="userNumber" th:value="${criteria.userNumber }">
-				<input type="text" id="total" name="total"th:value="${pageMaker.total}">
+				<input type="text" id="userNumber" name="userNumber" th:value="${criteria.userNumber }"> -->
+				<!-- <input type="text" id="total" name="total"th:value="${pageMaker.total}"> -->
                 <button type="submit">수정 하기</button>
             </form>
     	
@@ -120,7 +125,7 @@ ddd
 	
 	
 	
-<!-- 
+
 <div id="Comment" class="container">
 	<h2>댓글</h2>
 	
@@ -128,14 +133,16 @@ ddd
          <div>
 	         <input type="text" id="inputCmtContent" name="cmtContent" placeholder="댓글를 입력해 주세요." />
  	         <input type="text" id="inputBno" name="bno" th:value="${boardDTO.bno}" />
-  	         <input type="text" id="inputUserNumber" name="userNumber" th:value="${session.userDTO.userNumber}" /> 
-	          
+ 	         <!-- 회원이 아닌 경우 생각해줘야 할 듯! -->
+ 	         <th:block th:if="session.userDTO != null">
+  	         	<!-- <input type="text" id="inputUserNumber" name="userNumber" th:value="${session.userDTO.userNumber}" />  -->
+	          </th:block>
 	         <button type="button" onclick="writeComment();">댓글저장</button> 
          </div>
      	
      
      
-        <table class="board_list">
+<!--         <table class="board_list">
             <colgroup>
                 <col width="15%"/>
                 <col width="*"/>
@@ -163,8 +170,8 @@ ddd
                     <td colspan="4">조회된 결과가 없습니다.</td> 
                </tr>
             </tbody>
-        </table>
-</div> -->
+        </table> -->
+</div>
 
 <script th:inline="javascript">
 

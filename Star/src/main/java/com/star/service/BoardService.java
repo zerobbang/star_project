@@ -6,7 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.star.domain.BoardDTO;
-import com.star.domain.CommentDTO; 
+import com.star.domain.CommentDTO;
+// import com.star.domain.CommentDTO; 
 import com.star.domain.ImgDTO;
 import com.star.paging.Criteria;
 
@@ -44,6 +45,9 @@ public interface BoardService {
 	public List<ImgDTO> getImgsFromBno(Long boardBno);
 
 	public void deleteBoard(BoardDTO boardDto);
+	
+	// 게시글 수정
+	public int updateBoard(BoardDTO boardDTO);
 
 }
 
