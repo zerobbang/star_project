@@ -402,19 +402,16 @@ public class BoardController {
  		HttpSession session = request.getSession();
  		UserDTO userDto = (UserDTO) session.getAttribute("userDTO");
  		try {
- 			System.out.println(userDto.isAdminYn());
  			if (userDto.isAdminYn()==true){
  	 			System.out.println("hello admin!");
  	 		} else {
  	 			System.out.println("you are member!");
  	 			return "redirect:/star/mainpage";
  	 		}
- 			
 		} catch (Exception e) {
 			// TODO: handle exception
  			System.out.println("you are guest!");
  			return "redirect:/star/mainpage";
- 		
 		}
  		
  		List<BoardDTO> reportList = boardService.getReportBoard();
@@ -425,7 +422,7 @@ public class BoardController {
  		return "board/managerpage";
  	}
  	
-	// 게시글 삭제
+	// 관리자 - 게시글 삭제 판단
     @PostMapping(value = "/manage/delete.do")
     public String managerDeleteBoard(BoardDTO boardDto) {
     	
@@ -436,7 +433,7 @@ public class BoardController {
     	return "redirect:/board/managerpage";
     };
  	
-	// 게시글 삭제
+	// 관리자 - 게시글 통과 판단
     @PostMapping(value = "/manage/pass.do")
     public String managerPassBoard(BoardDTO boardDto) {
     	
