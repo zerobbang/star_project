@@ -38,6 +38,7 @@ public class BoardController {
 	public String listBoard(Criteria cri, Model model, HttpServletRequest request) {
 		
 		System.out.println("cri는요 : "+ cri.getPageNum());
+		System.out.println("cri는요 : "+ cri);
 		
 		// 유저 정보 받아옴
         HttpSession session = request.getSession();
@@ -46,15 +47,15 @@ public class BoardController {
 		if (cri.getAjaxYn().equals("y")) {
 			// session.removeAttribute("criteria");
 			// 페이징 처리 시 카테고리가 변경되는 오류 처리
-			System.out.println("페이징 처리나 검색했을 경우"+session.getAttribute("criteria"));
-			System.out.println("그냥 크리 "+cri);
-			Criteria prevCri = (Criteria) session.getAttribute("criteria");
+//			System.out.println("페이징 처리나 검색했을 경우"+session.getAttribute("criteria"));
+//			System.out.println("그냥 크리 "+cri);
+//			Criteria prevCri = (Criteria) session.getAttribute("criteria");
 			session.removeAttribute("criteria");
-			session.setAttribute("criteria", prevCri);
-			cri.setCategory(prevCri.getCategory());
-			System.out.println("----------------------------------");
-			System.out.println("페이징 처리나 검색했을 경우"+session.getAttribute("criteria"));
-			System.out.println("그냥 크리 "+cri);
+//			session.setAttribute("criteria", prevCri);
+//			cri.setCategory(prevCri.getCategory());
+//			System.out.println("----------------------------------");
+//			System.out.println("페이징 처리나 검색했을 경우"+session.getAttribute("criteria"));
+//			System.out.println("그냥 크리 "+cri);
 			
 			
 		} else {
@@ -230,7 +231,7 @@ public class BoardController {
 //		System.out.println(cri);
 		
 		// 선택된 글의 댓글 리스트 뽑기
-		List<CommentDTO> commentList = boardService.getCommentList(boardBno);
+		List<CommentDTO> commentList = boardService.getCommentList(bno);
 		System.out.println("-----------------");
     	System.out.println(commentList);
     	System.out.println("-----------------");
@@ -392,40 +393,28 @@ public class BoardController {
  		
  		System.out.println("추가된 이미지 : "+file);	
  		
- 		boardService.addImgList(file,bno);
+ 		boardService.addImgList(file, bno);
  		
  		re.addAttribute("bno", boardDTO.getBno());
  		
  		return "redirect:/board/detailed_check";
  	}
  	
- 	
 	// 댓글 입력
-	@PostMapping(value="/star/writeComment")
-	public String writeComment(BoardDTO boardDTO, Criteria cri
-			, @RequestParam(value="img",required=false) List<MultipartFile> file
-//			, RedirectAttributes rttr
-			, Model model) throws Exception {
-		// 글 등록
-		System.out.println("file 여러개로가져오면   "+file);
+	@PostMapping(value="/board/commentTable")
+	public List<CommentDTO> CommentTable(@RequestParam(value="bno",required=false)Long bno, BoardDTO boardDTO, CommentDTO commentDTO, Model model) {
 		
-		boardService.registerBoard(boardDTO,file);
+		boardService.insertComment(commentDTO);
+		List<CommentDTO> commentList = boardService.getCommentList(bno);
 		
-//		HttpSession session = request.getSession();
-//		session.setAttribute("criteria", cri);
+		System.out.println("-----------------");
+    	System.out.println(commentList);
+    	System.out.println("-----------------");
 		
-		// 글 쓰기 전 cri 값 잘 받아 왔나 확인
-		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-		System.out.println(cri);
-		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-//		rttr.addFlashAttribute("criteria",cri);
-		model.addAttribute(cri);
-//		 model.addAttribute("criteria",cri);
-		
-		
-		return "redirect:/board/detailed_check" ;
+    	model.addAttribute("commentList", commentList);
+		return commentList;  
 	}
- 	
+	
     
  	
  	// 관리자 페이지

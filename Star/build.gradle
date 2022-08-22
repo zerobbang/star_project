@@ -25,6 +25,7 @@ dependencies {
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect' /* Thymeleaf Layout */
+<<<<<<< HEAD
 	// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
 	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-json
@@ -32,6 +33,9 @@ dependencies {
 	
 	
 	compile "org.springframework.boot:spring-boot-devtools"
+=======
+	compileOnly 'org.springframework.boot:spring-boot-devtools'
+>>>>>>> 9c7e1aab88c22f347bda9241edb220d120cb4817
 	
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -39,7 +43,14 @@ dependencies {
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'	
+	
+	// json-simple
+	// compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1' >
+	// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+	// implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1' 
+	
 }
 
 tasks.named('test') {

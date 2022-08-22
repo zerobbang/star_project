@@ -32,14 +32,8 @@ public interface BoardService {
 	// 내 글 조회
 	public List<BoardDTO> getMyListBoard(Criteria cri,Long userNumber);
 	
-	// 댓글 조회
-	public List<CommentDTO> getCommentList(Long bno); 
-	
 	// 내 글 총 수
 	public int getMyCount(Long userNumber);
-	
-	// 댓글 수
-	public int getCommentCount(Criteria cri);
 
 	public String getWriter(Long writerNumber);
 
@@ -50,6 +44,15 @@ public interface BoardService {
 	// 게시글 수정
 	public int updateBoard(BoardDTO boardDTO);
 	
+	// 댓글 조회
+	public List<CommentDTO> getCommentList(Long bno); 
+	
+	// 댓글 작성
+	public void insertComment(CommentDTO commentDTO);
+	
+	// 댓글 수
+	public int getCommentCount(Criteria cri);
+
 	// 이미지 수정
 	public int updateImg(Map map);
 	
@@ -59,6 +62,7 @@ public interface BoardService {
 	public List<BoardDTO> getReportBoard();
 
 	public void managingComplete(BoardDTO boardDto);
+
 
 }
 
