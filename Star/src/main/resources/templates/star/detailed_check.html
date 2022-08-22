@@ -56,11 +56,11 @@
 	</script>
 </head>
 <body>
-    <!-- <div class="temp1"> 네비게이션 </div> -->
-    <div style="width:1450px; height:20px; padding:20px; border:1px solid blue;">네비</div>
+	<div th:replace="fragments/body :: main-css"></div>
+	<div th:replace="fragments/body :: main-nav"></div>
     
     <!-- 신고하기 버튼 -->     
-  <div class="wrap">
+  	<div class="wrap">
 	<button type="button" onclick="openPop()">
 		<i class="bi bi-exclamation-circle-fill"></i>신고
 	</button>
@@ -105,7 +105,7 @@
          
     <th:block th:if="${session.userDTO != null}">
 			<!-- 수정 버튼 -->            
-            <form th:action="@{/board/updateBoard}" method="post">
+            <form th:action="@{/board/modify}" method="post">
             	<input id="bno" name="bno" type="text" th:value="${boardDTO.bno}">
                 <button type="submit">수정 하기</button>
             </form>
