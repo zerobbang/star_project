@@ -88,9 +88,9 @@ public class UserController {
         rd.close();
         conn.disconnect();
         // 1. 문자열 형태의 JSON을 파싱하기 위한 JSONParser 객체 생성.
-//        JSONParser parser = new JSONParser();
+        JSONParser parser = new JSONParser();
 //        // 2. 문자열을 JSON 형태로 JSONObject 객체에 저장. 	
-//        JSONObject obj = (JSONObject)parser.parse();
+        JSONObject obj = (JSONObject)parser.parse(sb);
 //        // 3. 필요한 리스트 데이터 부분만 가져와 JSONArray로 저장.
 //        JSONArray dataArr = (JSONArray) obj.get("response");
         // 4. model에 담아준다.
@@ -98,7 +98,7 @@ public class UserController {
         System.out.println(sb.toString());
         System.out.println(sb);
         String data = sb.toString();
-        // JSONParser parser = new JSONParser();
+//        JSONParser parser = new JSONParser();
 //        // JSONObject obj = (JSONObject) parser.parse(data);
 //        JSONObject objData = (JSONObject)new JSONParser().parse(data);
 //        JSONObject result = (JSONObject) new JSONParser().parse(sb.toString());
