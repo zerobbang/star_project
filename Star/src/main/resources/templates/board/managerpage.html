@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>마이 페이지</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<style>
+/* 페이지 버튼 간단한 css */
+  .pageInfo{
+      list-style : none;
+      display: inline-block;
+    margin: 50px 0 0 100px;      
+  }
+  .pageInfo li{
+      float: left;
+    font-size: 20px;
+    margin-left: 18px;
+    padding: 7px;
+    font-weight: 500;
+  }
+  .active{
+      background-color: #cdd5ec;
+  }
+ a:link {color:black; text-decoration: none;}
+ a:visited {color:black; text-decoration: none;}
+ a:hover {color:black; text-decoration: underline;}
+</style>
+<div th:replace="fragments/body :: main-css"></div>
+</head>
+<body>
+<div th:replace="fragments/body :: main-nav"></div>
+
+
+<div id="list" class="container">
+	<h2>관리자 페이지</h2>
+    <table class="board_list">
+        <colgroup>
+            <col width="15%"/>
+            <col width="*"/>
+            <col width="15%"/>
+            <col width="20%"/>
+        </colgroup>
+        <thead>
+            <tr>
+                <th scope="col">글번호</th>
+                <th scope="col">제목</th>
+                <th scope="col">신고자</th>
+                <th scope="col">신고내용</th>
+                <th scope="col">처리여부</th>
+            </tr>
+        </thead>
+        
+        
+        <tbody>
+        	<tr th:if="${#lists.size(reportList)} > 0"  th:each="list : ${reportList}">
+        		
+        		<td th:text="${list.bno}"></td>
+        		<td>
+        			<a th:href="@{/board/detailed_check(bno=${list.bno})}"
+                		th:text="${list.title}">
+        			</a>
+        		</td >
+        		<td th:text="| ${list.userNumber}: ${list.userNickname} |"></td>
+        		<td th:text="${list.reportContent}"></td>
+        		<td>
+        			<form action="/manage/delete.do" method="post" style="display: inline-block;">
+        				<input type="hidden" name="bno" th:value="${list.bno}">
+         			<button type="submit">삭제</button>
+       				</form>
+       				<form action="/manage/pass.do" method="post" style="display: inline-block;">
+       					<input type="hidden" name="bno" th:value="${list.bno}">
+        				<button type="submit">통과</button>
+        			</form>
+        		</td>
+        	</tr>
+        </tbody>
+    </table>
+        
+</div>
+
+</body>
+</html>

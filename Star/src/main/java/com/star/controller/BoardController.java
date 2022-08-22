@@ -42,6 +42,7 @@ public class BoardController {
 		// 유저 정보 받아옴
         HttpSession session = request.getSession();
         
+        // ajax를 사용하여 페이지 이동을 한 경우
 		if (cri.getAjaxYn().equals("y")) {
 			// session.removeAttribute("criteria");
 			// 페이징 처리 시 카테고리가 변경되는 오류 처리
@@ -66,6 +67,7 @@ public class BoardController {
 				System.out.println(prevCri.getCategory());
 				System.out.println("cccccccccccc");
 				try {
+					// 새로 들어온 카테고리가 이전 카테고리와 다른 문자일경우
 					if (cri.getCategory().equals(prevCri.getCategory()) == false) {
 						System.out.println("카테고리가 변경됐네요222");
 						
@@ -73,6 +75,7 @@ public class BoardController {
 						
 					}
 				} catch (Exception e) {
+					// 새로 들어온 카테고리가 null인경우
 					if (cri.getCategory() != (prevCri.getCategory())) {
 						System.out.println("카테고리가 변경됐네요333");
 
@@ -221,19 +224,11 @@ public class BoardController {
     	System.out.println(imgs);
 
     	
-//    	댓글
-//		HttpSession session = request.getSession();
-//		System.out.println(session.getAttribute("userDTO"));
-//		
+//    	댓글	
 //		UserDTO user = (UserDTO) session.getAttribute("userDTO");
-//		
 //		cri.setUserNumber(user.getUserNumber());
-		
 //		System.out.println(cri);
 		
-    	System.out.println("-----------------");
-    	
-    	System.out.println("-----------------");
 		// 선택된 글의 댓글 리스트 뽑기
 		List<CommentDTO> commentList = boardService.getCommentList(boardBno);
 		System.out.println("-----------------");
@@ -403,6 +398,86 @@ public class BoardController {
  		
  		return "redirect:/board/detailed_check";
  	}
+ 	
+ 	
+	// 댓글 입력
+	@PostMapping(value="/star/writeComment")
+	public String writeComment(BoardDTO boardDTO, Criteria cri
+			, @RequestParam(value="img",required=false) List<MultipartFile> file
+//			, RedirectAttributes rttr
+			, Model model) throws Exception {
+		// 글 등록
+		System.out.println("file 여러개로가져오면   "+file);
+		
+		boardService.registerBoard(boardDTO,file);
+		
+//		HttpSession session = request.getSession();
+//		session.setAttribute("criteria", cri);
+		
+		// 글 쓰기 전 cri 값 잘 받아 왔나 확인
+		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+		System.out.println(cri);
+		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+//		rttr.addFlashAttribute("criteria",cri);
+		model.addAttribute(cri);
+//		 model.addAttribute("criteria",cri);
+		
+		
+		return "redirect:/board/detailed_check" ;
+	}
+ 	
     
+ 	
+ 	// 관리자 페이지
+ 	@RequestMapping(value="/board/managerpage")
+ 	public String managerpage(Model model, BoardDTO boardDTO, HttpServletRequest request, UserDTO userDTO) {
+ 		System.out.println("마이 페이지로 이동");
+ 		
+ 		HttpSession session = request.getSession();
+ 		UserDTO userDto = (UserDTO) session.getAttribute("userDTO");
+ 		try {
+ 			System.out.println(userDto.isAdminYn());
+ 			if (userDto.isAdminYn()==true){
+ 	 			System.out.println("hello admin!");
+ 	 		} else {
+ 	 			System.out.println("you are member!");
+ 	 			return "redirect:/star/mainpage";
+ 	 		}
+ 			
+		} catch (Exception e) {
+			// TODO: handle exception
+ 			System.out.println("you are guest!");
+ 			return "redirect:/star/mainpage";
+ 		
+		}
+ 		
+ 		List<BoardDTO> reportList = boardService.getReportBoard();
+ 		System.out.println(reportList);
+ 		
+ 		model.addAttribute("reportList", reportList);
+ 		
+ 		return "board/managerpage";
+ 	}
+ 	
+	// 게시글 삭제
+    @PostMapping(value = "/manage/delete.do")
+    public String managerDeleteBoard(BoardDTO boardDto) {
+    	
+    	boardService.deleteBoard(boardDto);
+    	boardService.managingComplete(boardDto);
+    	
+    	// 끝나면 메인 페이지로 이동
+    	return "redirect:/board/managerpage";
+    };
+ 	
+	// 게시글 삭제
+    @PostMapping(value = "/manage/pass.do")
+    public String managerPassBoard(BoardDTO boardDto) {
+    	
+    	boardService.managingComplete(boardDto);
+    	
+    	// 끝나면 메인 페이지로 이동
+    	return "redirect:/board/managerpage";
+    };    
     	
 }

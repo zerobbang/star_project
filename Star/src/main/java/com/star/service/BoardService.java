@@ -56,5 +56,9 @@ public interface BoardService {
 	// 이미지 추가
 	public boolean addImgList(List<MultipartFile> file) throws Exception;
 
+	public List<BoardDTO> getReportBoard();
+
+	public void managingComplete(BoardDTO boardDto);
+
 }
 

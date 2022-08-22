@@ -201,6 +201,7 @@ public class BoardServiceImpl implements BoardService{
 		return boardMapper.updateBoard(boardDTO);
 	}
 
+
 	// 이미지 수정
 	@Override
 	public int updateImg(Map map) {
@@ -256,4 +257,25 @@ public class BoardServiceImpl implements BoardService{
 			queryResult = 1;;
 			}
 			return (queryResult == 1) ? true:false ;
-	}}
+	}
+
+	@Override
+	public List<BoardDTO> getReportBoard() {
+		// TODO Auto-generated method stub
+		List<BoardDTO> boardDto = boardMapper.getReportBoardList();
+		
+		return boardDto;
+	}
+	
+	
+	@Override
+	public void managingComplete(BoardDTO boardDto) {
+		// TODO Auto-generated method stub
+		
+		Long boardBno = boardDto.getBno();
+		
+		boardMapper.managingComplete(boardBno);
+		
+	}
+	
+}

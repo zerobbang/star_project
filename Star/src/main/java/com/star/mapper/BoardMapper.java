@@ -68,6 +68,10 @@ public interface BoardMapper {
 
 	// 게시글 수정 
 	public int updateBoard(BoardDTO boardDTO);
+
+	public List<BoardDTO> getReportBoardList();
+
+	public void managingComplete(Long boardBno);
 	
 	// 이미지 수정
 	public int updateImg(Map map);
