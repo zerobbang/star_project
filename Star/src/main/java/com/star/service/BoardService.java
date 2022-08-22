@@ -1,6 +1,7 @@
 package com.star.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,6 +49,12 @@ public interface BoardService {
 	
 	// 게시글 수정
 	public int updateBoard(BoardDTO boardDTO);
+	
+	// 이미지 수정
+	public int updateImg(Map map);
+	
+	// 이미지 추가
+	public boolean addImgList(List<MultipartFile> file) throws Exception;
 
 }
 

@@ -69,4 +69,7 @@ public interface BoardMapper {
 	// 게시글 수정 
 	public int updateBoard(BoardDTO boardDTO);
 	
+	// 이미지 수정
+	public int updateImg(Map map);
+	
 }
