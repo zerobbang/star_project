@@ -201,19 +201,6 @@
 		#{skip},#{amount}
 </select>
 
-<!-- 댓글 조회 -->
-<select id="getCommentList" parameterType="long" resultType="CommentDTO">
- 	SELECT 
- 		*
-	FROM
-		 comment_table
-	WHERE 
-		cmt_delete_yn = 0
-  	AND 
-		bno = #{bno}
-</select>
-
-
 <!-- 총 게시글 수 출력 -->
 <select id="getCount" resultType="int">
  	SELECT 
@@ -242,23 +229,6 @@
 		a.delete_yn = 0
 	AND 
 		a.user_number = #{userNumber}
-</select>
-
-<!-- 댓글 수 출력 -->
-<select id="getCommentCount"  resultType="int">
- 	SELECT 
- 		count(*)
-	FROM 
-		 board_list a 
-	INNER JOIN 
-		users_table b
-    	ON a.user_number  = b.user_number
-	WHERE 
-		a.delete_yn = 0
-	AND 
-		a.user_number = #{userNumber}
-	limit 
-		5;
 </select>
 
 <!-- 이미지 저장 -->
@@ -331,5 +301,50 @@ AND
 	delete_yn = 0
 </update>
 
+<!-- 댓글 조회 -->
+<select id="getCommentList" parameterType="long" resultType="CommentDTO">
+ 	SELECT 
+ 		*
+	FROM
+		 comment_table
+	WHERE 
+		cmt_delete_yn = 0
+  	AND 
+		bno = #{bno}
+	ORDER BY
+		cmt_num DESC;
+</select>
+
+<!-- 댓글 작성 -->
+<insert id="insertComment" parameterType="CommentDTO">
+	INSERT INTO comment_table(
+		<include refid="commentColumns"/>
+	) VALUES (
+		#{cmtNum}
+		,#{bno} 
+		,#{userNumber}
+		,#{cmtContent}
+		,now()
+		,null
+		,0
+		)
+</insert>
+
+<!-- 댓글 수 출력 -->
+<select id="getCommentCount"  resultType="int">
+ 	SELECT 
+ 		count(*)
+	FROM 
+		 board_list a 
+	INNER JOIN 
+		users_table b
+    	ON a.user_number  = b.user_number
+	WHERE 
+		a.delete_yn = 0
+	AND 
+		a.user_number = #{userNumber}
+	limit 
+		5;
+</select>
 
 </mapper>

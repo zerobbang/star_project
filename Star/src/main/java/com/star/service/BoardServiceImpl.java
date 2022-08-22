@@ -140,16 +140,6 @@ public class BoardServiceImpl implements BoardService{
 		
 		return myList;
 	}
-	
-	// 댓글 조회
-	@Override
-	public List<CommentDTO> getCommentList(Long bno) {
-		List<CommentDTO> commentList = Collections.emptyList();
-		
-		commentList = boardMapper.getCommentList(bno);
-		
-		return commentList;
-	}
 
 	// 카테고리별 총 게시글 개수
 	@Override
@@ -199,6 +189,37 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int updateBoard(BoardDTO boardDTO) {
 		return boardMapper.updateBoard(boardDTO);
+	}
+	
+	// 댓글 조회
+	@Override
+	public List<CommentDTO> getCommentList(Long bno) {
+		List<CommentDTO> commentList = Collections.emptyList();
+		
+		commentList = boardMapper.getCommentList(bno);
+		
+		return commentList;
+	}
+	
+//	댓글작성
+	@Override
+	public void insertComment(CommentDTO commentDTO) {
+		// TODO Auto-generated method stub
+		System.out.println("ㅡㅡ ㅡㅡ ㅡㅡ ㅡㅡㅡ");
+		System.out.println(commentDTO.getBno());
+		System.out.println(commentDTO.getUserNumber()); 
+		System.out.println(commentDTO.getCmtContent());
+		System.out.println("ㅡㅡ ㅡㅡ ㅡㅡ ㅡㅡㅡ");
+		
+		try {
+			boardMapper.insertComment(commentDTO);
+		} catch (Exception e) {
+			// TODO: handle exception
+			
+			System.out.println("댓글 작성 중에 에러 발생");
+			System.out.println(e);
+		}
+		 	
 	}
 
 	

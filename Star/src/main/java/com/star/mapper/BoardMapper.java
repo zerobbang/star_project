@@ -45,14 +45,8 @@ public interface BoardMapper {
 	// 내 글 조회
 	public List<BoardDTO> getMyListBoard(Map map);
 	
-	// 댓글 조회
-	public List<CommentDTO> getCommentList(Long bno);
-	
 	// 내가 쓴 글 게시글 총 수
 	public int getMyCount(Long userNumber);
-	
-	// 댓글 총 수
-	public int getCommentCount(Criteria cri);
 	
 	// 이미지 저장
 	public int insertImg(ImgDTO imgDTO);
@@ -68,5 +62,15 @@ public interface BoardMapper {
 
 	// 게시글 수정 
 	public int updateBoard(BoardDTO boardDTO);
+	
+	// 댓글 조회
+	public List<CommentDTO> getCommentList(Long bno);
+	
+	// 댓글 작성
+	public void insertComment(CommentDTO commentDTO);
+	
+	// 댓글 총 수
+	public int getCommentCount(Criteria cri);
+
 	
 }
