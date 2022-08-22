@@ -201,5 +201,23 @@ public class BoardServiceImpl implements BoardService{
 		return boardMapper.updateBoard(boardDTO);
 	}
 
+	@Override
+	public List<BoardDTO> getReportBoard() {
+		// TODO Auto-generated method stub
+		List<BoardDTO> boardDto = boardMapper.getReportBoardList();
+		
+		return boardDto;
+	}
+	
+	@Override
+	public void managingComplete(BoardDTO boardDto) {
+		// TODO Auto-generated method stub
+		
+		Long boardBno = boardDto.getBno();
+		
+		boardMapper.managingComplete(boardBno);
+		
+	}
+
 	
 }

@@ -331,5 +331,40 @@ AND
 	delete_yn = 0
 </update>
 
+<select id="getReportBoardList"  resultType="BoardDTO">
+
+	select 
+		rt.bno 
+		, bl.title 
+		, rt.user_number 
+		, ut.user_nickname 
+		, rt.report_content 
+	from 
+		report_table rt 
+	inner join 
+		users_table ut 
+	on 
+		rt.user_number = ut.user_number
+	inner join 
+		board_list bl 
+	on 
+		rt.bno = bl.bno
+	where 
+		rt.manage_yn = 0
+	and 
+		bl.delete_yn = 0;
+
+</select>
+
+<update id="managingComplete" parameterType="Long">
+	update 
+		report_table 
+	set 
+		manage_yn = 1
+	where 
+		bno = #{bno};
+</update>
+
+
 
 </mapper>

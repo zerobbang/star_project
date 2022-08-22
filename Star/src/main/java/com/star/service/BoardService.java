@@ -49,5 +49,9 @@ public interface BoardService {
 	// 게시글 수정
 	public int updateBoard(BoardDTO boardDTO);
 
+	public List<BoardDTO> getReportBoard();
+
+	public void managingComplete(BoardDTO boardDto);
+
 }
 
