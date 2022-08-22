@@ -197,7 +197,7 @@ public class BoardController {
 
     // 상세글조회 페이지
     @GetMapping(value = "/board/detailed_check")
-    public String detailedCheck(@RequestParam(value="bno",required=true) Long bno, Model model) {
+    public String detailedCheck(@RequestParam(value="bno",required=true) Long bno, Model model, CommentDTO commentDTO) {
     	
     	System.out.println("상세 조회로 이동");
     	// .out.println(cri);
@@ -231,7 +231,7 @@ public class BoardController {
     	System.out.println(commentList);
     	System.out.println("-----------------");
 		
-    	model.addAttribute("commentList", commentList);
+		model.addAttribute("commentList", commentList);
 		
 		    	
     	return "star/detailed_check";
