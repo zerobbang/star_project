@@ -1,6 +1,8 @@
 package com.star.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -137,13 +139,10 @@ public class BoardController {
 		}
 		
 		model.addAttribute("boardList", boardList);
-		// model.addAttribute("boardDTO",boardDTO);
 		
 		System.out.println("리스트 카테고리 : "+cri.getCategory());
 		System.out.println("cri: "+cri);
 		System.out.println("길이: "+ boardList.size());
-		// System.out.println("borad: "+boardDTO);
-		// System.out.println("pageMake: " + pageMake);
 		
 		System.out.println("--------------");
 		System.out.println(model);
@@ -341,14 +340,22 @@ public class BoardController {
  		
  		model.addAttribute("boardDto", boardDto);
  		
- 		System.out.println(model);
+ 		List<ImgDTO> imgs = boardService.getImgsFromBno(bno);
+    	model.addAttribute("imgDto", imgs);
  		
+ 		System.out.println(model);
+
  		return "/board/update";
  	}
  	
  	// 게시글 수정하기
  	@PostMapping(value="/board/updateBoard")
- 	public String updateBoard(@RequestParam(value="bno",required=true) Long bno, BoardDTO boardDTO, RedirectAttributes re) {
+ 	public String updateBoard(@RequestParam(value="bno",required=true) Long bno, BoardDTO boardDTO
+ 			, RedirectAttributes re
+ 			, @RequestParam(value="imgNumber",required=false) List<Integer> imgNumList
+ 			, @RequestParam(value="imgShowYn",required=false) List<String> imgShowList
+ 			, @RequestParam(value="img",required=false) List<MultipartFile> file)throws Exception  {
+ 		
  		System.out.println("게시글 수정 시작");
  		System.out.println("수정할 게시글 내용"+boardDTO);
  		
@@ -359,6 +366,33 @@ public class BoardController {
  		}else {
  			System.out.println("게시글 수정 실패");
  		}
+ 		
+ 		// 이미지도 수정하기
+ 		System.out.println(imgNumList);
+ 		System.out.println(imgShowList);
+ 		
+ 		Map map = new HashMap<>();
+ 		for(int i=0;i<imgNumList.size();i++) {
+ 			if(imgShowList.get(i).equals("false")) {
+		 		map.put("imgNumber", imgNumList.get(i));
+		 		map.put("imgShowYn", imgShowList.get(i));
+		 		System.out.println(map);
+		 		
+		 		int result2 = boardService.updateImg(map);
+		 		
+		 		if(result2 == 1) {
+		 			System.out.println("이미지 수정 완료");
+		 		}else {
+		 			System.out.println("이미지 수정 실패");
+		 		}
+ 			}
+ 		}
+ 		
+ 		// 추가된 이미지는 DB에 추가
+ 		
+ 		System.out.println("추가된 이미지 : "+file);	
+ 		
+ 		boardService.addImgList(file);
  		
  		re.addAttribute("bno", boardDTO.getBno());
  		

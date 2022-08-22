@@ -331,6 +331,17 @@ AND
 	delete_yn = 0
 </update>
 
+<!-- 이미지 수정 여부 -->
+<update id="updateImg" parameterType="map">
+UPDATE
+	img_table
+SET
+	img_show_yn = 0
+WHERE
+	img_number = #{imgNumber}
+</update>
+
+
 <select id="getReportBoardList"  resultType="BoardDTO">
 
 	select 
@@ -364,7 +375,5 @@ AND
 	where 
 		bno = #{bno};
 </update>
-
-
 
 </mapper>

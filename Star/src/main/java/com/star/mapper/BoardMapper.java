@@ -73,4 +73,7 @@ public interface BoardMapper {
 
 	public void managingComplete(Long boardBno);
 	
+	// 이미지 수정
+	public int updateImg(Map map);
+	
 }
