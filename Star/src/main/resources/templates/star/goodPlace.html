@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<!-- 부트스트랩 css, js, icon -->
+<link rel="stylesheet" href="../css/bootstrap.css">
+<link rel="stylesheet" href="../js/bootstrap.js">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<title>지역 추천</title>
+<style type="text/css">
+/* html, body {
+	height: 100%;
+} */
+/* row d-flex justify-content-center align-items-center */
+
+.regin_title {
+	padding-left: 5%;
+}
+
+div.card-body {
+	padding: 5%;
+	text-align: center;
+	overflow: auto;
+	
+}
+
+/* 카드 제목 */
+.card-title {
+	text-align: center;
+}
+
+/* .card-text {
+	flex-direction: row;
+	font-size: 14px;
+}
+.card-text2 {
+	float: right;
+	width: 40%;
+	font-size: 13px;
+} */
+
+/* 카드 외곽선 */
+.card {
+	width: 100%;
+	height: 100%;
+	border:1px solid gray;	
+	display: inline-block;
+}
+/* 카드 이미지 사이즈 */
+.card-img-top {
+	height: 6rem;
+	width: 100%;
+}
+/* 카드 안 테이블 */
+.table {
+	border-bottom: transparent;
+	font-size: 13px;
+}
+/* 스크롤 */
+.scrollMenu {
+	display: flex;
+	flex-wrap: nowrap;
+	width:100%;
+	height:25%;
+	overflow-x: auto;
+	overflow-y: hidden;
+	white-space: nowrap;
+/* 	padding-top: 5%; */
+	padding-bottom: 2%;
+}
+
+/* 카드에 마우스 올렸을 때 효과 */
+/* div.scrollMenu div.card-body:hover {
+ background-color: rgb(229 204 255);
+} */
+</style>
+</head>
+<body>
+	<!-- 부트스트랩 -->
+	<div class="regin_title">
+		<h3><strong>Seoul</strong></h3>
+	</div>
+	<!-- 미먼 수치 '좋음'에 따른 지역 추천 카드 -->
+		<div class="row d-flex justify-content-center align-items-center">
+		<div class="scrollMenu row row-cols-md-5 g-4">
+			<!-- 서울 1 -->
+			<div class="col">
+				<div class="card">
+					<img src="../img/seoul_1.png" class="card-img-top" alt="과학동아천문대">
+					<div class="card-body">
+						<h6 class="card-title">
+							<strong>과학동아천문대</strong>
+						</h6>
+						<!-- 테이블 적용 줄바끔일 때 -->
+						<!-- 				<table class="table">
+						<thead>
+							<tr>
+								<th scope="row">미세먼지농도</th>
+							</tr>
+							<tr>
+							<th scope="row" style="padding: 2%;">좋음💗</th>
+							</tr>
+						</thead>
+					</table> -->
+
+						<!-- p 태그 줄바끔 적용했을 때 -->
+						<!-- <p class="card-text">미세먼지농도</p>
+					<p class="card-text2">매우 좋음</p> -->
+
+						<!-- 테이블 적용 한줄일 때 -->
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">미세먼지농도</th>
+									<th scope="col">좋음💗</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- 서울 2 -->
+			<div class="col">
+				<div class="card">
+					<img src="../img/seoul_2.png" class="card-img-top" alt="노원천문우주과학관">
+					<div class="card-body">
+						<h6 class="card-title">
+							<strong>노원천문우주과학관</strong>
+						</h6>
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">미세먼지농도</th>
+									<th scope="col">좋음💗</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- 서울 3 -->
+			<div class="col">
+				<div class="card">
+					<img src="../img/seoul_3.png" class="card-img-top" alt="시립서울천문대">
+					<div class="card-body">
+						<h6 class="card-title">
+							<strong>시립서울천문대</strong>
+						</h6>
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">미세먼지농도</th>
+									<th scope="col">보통☁︎</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- 서울 4 -->
+			<div class="col">
+				<div class="card">
+					<img src="../img/seoul_4.png" class="card-img-top" alt="대성사">
+					<div class="card-body">
+						<h6 class="card-title">
+							<strong>대성사</strong>
+						</h6>
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">미세먼지농도</th>
+									<th scope="col">좋음💗</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- 서울 5 -->
+			<div class="col">
+				<div class="card">
+					<img src="../img/seoul_5.png" class="card-img-top" alt="북악산 팔각정">
+					<div class="card-body">
+						<h6 class="card-title">
+							<strong>북악산 팔각정</strong>
+						</h6>
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">미세먼지농도</th>
+									<th scope="col">좋음💗</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- 서울 6 -->
+			 <div class="col">
+				<div class="card">
+					<img src="../img/seoul_8.png" class="card-img-top" alt="서울특별시교육청과학전시관">
+					<div class="card-body">
+						<h6 class="card-title">
+							<strong>서울특별시교육청과학전시관</strong>
+						</h6>
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">미세먼지농도</th>
+									<th scope="col">좋음💗</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- 서울 7 -->
+			 <div class="col">
+				<div class="card">
+					<img src="../img/seoul_6.png" class="card-img-top" alt="서달산 팔각정자 전망대">
+					<div class="card-body">
+						<h6 class="card-title">
+							<strong>서달산 팔각정자 전망대</strong>
+						</h6>
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">미세먼지농도</th>
+									<th scope="col">좋음💗</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!--서울 9
+			<div class="col">
+				<div class="card">
+					<img src="../img/seoul_9.png" class="card-img-top" alt="은평정">
+					<div class="card-body">
+						<h6 class="card-title">
+							<strong>백련산 은평정</strong>
+						</h6>
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">미세먼지농도</th>
+									<th scope="col">좋음💗</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+			서울 7
+			<div class="col">
+				<div class="card">
+					<img src="../img/seoul_.png" class="card-img-top" alt="">
+					<div class="card-body">
+						<h6 class="card-title">
+							<strong></strong>
+						</h6>
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">미세먼지농도</th>
+									<th scope="col">좋음💗</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+			서울 7
+			<div class="col">
+				<div class="card">
+					<img src="../img/seoul_.png" class="card-img-top" alt="">
+					<div class="card-body">
+						<h6 class="card-title">
+							<strong></strong>
+						</h6>
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">미세먼지농도</th>
+									<th scope="col">좋음💗</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+			서울 7
+			<div class="col">
+				<div class="card">
+					<img src="../img/seoul_.png" class="card-img-top" alt="">
+					<div class="card-body">
+						<h6 class="card-title">
+							<strong></strong>
+						</h6>
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">미세먼지농도</th>
+									<th scope="col">좋음💗</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+			서울 7
+			<div class="col">
+				<div class="card">
+					<img src="../img/seoul_.png" class="card-img-top" alt="">
+					<div class="card-body">
+						<h6 class="card-title">
+							<strong></strong>
+						</h6>
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">미세먼지농도</th>
+									<th scope="col">좋음💗</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+			서울 7
+			<div class="col">
+				<div class="card">
+					<img src="../img/seoul_.png" class="card-img-top" alt="">
+					<div class="card-body">
+						<h6 class="card-title">
+							<strong></strong>
+						</h6>
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">미세먼지농도</th>
+									<th scope="col">좋음💗</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div> 카드 col size, 가운데 정렬 디브
+		</div> 스크롤 디브 -->
+</body>
+</html>
