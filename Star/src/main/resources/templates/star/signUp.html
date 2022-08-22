@@ -63,17 +63,20 @@
 			address : userInputEmail
 		};
 
-		$.ajax({
-			url : "/mailSend",
-			data : mailDto,
-			type : "POST",
-		}).done(
-				function(fragments) {
-					certify = fragments[0];
+		$
+				.ajax({
+					url : "/mailSend",
+					data : mailDto,
+					type : "POST",
+				})
+				.done(
+						function(fragments) {
+							certify = fragments[0];
 
-					$("#emailError").replaceWith(
-							"<div id=emailError style='color: green;'>메일을 확인해주세요!</div>");
-				});
+							$("#emailError")
+									.replaceWith(
+											"<div id=emailError style='color: green;'>메일을 확인해주세요!</div>");
+						});
 	}
 
 	/* 인증번호 체크하기 */
@@ -499,13 +502,13 @@ div .error {
 }
 
 /* 비밀번호 아이콘 */
-#icon_pw input{
+#icon_pw input {
 	background-image: url("../img/eye-slash-fill.svg");
 	background-position: 95% center;
 	background-repeat: no-repeat;
 }
 
-#icon_pw2 input{
+#icon_pw2 input {
 	background-image: url("../img/eye-slash-fill.svg");
 	background-position: 95% center;
 	background-repeat: no-repeat;
@@ -516,6 +519,7 @@ div .error {
 	padding-left: 12%;
 	padding-right: 3%;
 }
+
 </style>
 </head>
 <body>
@@ -735,25 +739,6 @@ div .error {
  	
  	</form>
  	</div> -->
- 	
- 	<!-- 임시로 메인 지역추천 테이블을 여기에 만들겠다. -->
- 	
- <br>
-<br>
- 		
 
- 	 	<div class="recruitment_list__notice_container">
- 	 	<div mode="recruitment" class="sc-hKMtZM jwaFrS">
- 	 	<div class="recruit_card__profile">
- 	 	<img alt="과학동아천문대" src="../img/seoul_1.png" width="15%" height="8%">
- 	 	<div class="recruit_card__description">
- 	 	<p>과학동아천문대</p>
- 	 	<p>미세먼지농도 좋아용~</p>
- 	 	</div>
- 	 	</div>
- 	 	</div>
- 	 	</div>
-
- 	 	
 </body>
 </html>
