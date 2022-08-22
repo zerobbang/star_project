@@ -38,6 +38,7 @@ public class BoardController {
 	public String listBoard(Criteria cri, Model model, HttpServletRequest request) {
 		
 		System.out.println("cri는요 : "+ cri.getPageNum());
+		System.out.println("cri는요 : "+ cri);
 		
 		// 유저 정보 받아옴
         HttpSession session = request.getSession();
@@ -46,15 +47,15 @@ public class BoardController {
 		if (cri.getAjaxYn().equals("y")) {
 			// session.removeAttribute("criteria");
 			// 페이징 처리 시 카테고리가 변경되는 오류 처리
-			System.out.println("페이징 처리나 검색했을 경우"+session.getAttribute("criteria"));
-			System.out.println("그냥 크리 "+cri);
-			Criteria prevCri = (Criteria) session.getAttribute("criteria");
+//			System.out.println("페이징 처리나 검색했을 경우"+session.getAttribute("criteria"));
+//			System.out.println("그냥 크리 "+cri);
+//			Criteria prevCri = (Criteria) session.getAttribute("criteria");
 			session.removeAttribute("criteria");
-			session.setAttribute("criteria", prevCri);
-			cri.setCategory(prevCri.getCategory());
-			System.out.println("----------------------------------");
-			System.out.println("페이징 처리나 검색했을 경우"+session.getAttribute("criteria"));
-			System.out.println("그냥 크리 "+cri);
+//			session.setAttribute("criteria", prevCri);
+//			cri.setCategory(prevCri.getCategory());
+//			System.out.println("----------------------------------");
+//			System.out.println("페이징 처리나 검색했을 경우"+session.getAttribute("criteria"));
+//			System.out.println("그냥 크리 "+cri);
 			
 			
 		} else {
@@ -392,7 +393,7 @@ public class BoardController {
  		
  		System.out.println("추가된 이미지 : "+file);	
  		
- 		boardService.addImgList(file,bno);
+ 		boardService.addImgList(file, bno);
  		
  		re.addAttribute("bno", boardDTO.getBno());
  		
