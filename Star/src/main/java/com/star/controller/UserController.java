@@ -409,6 +409,14 @@ public class UserController {
     	return "redirect:/star/login";
     }
     
+ // 지역 추천 페이지(서울)
+    @GetMapping(value = "/star/goodPlaces")
+    public String goodPlaces(){
+		
+		System.out.println();
+		
+        return "/star/goodPlace";
+    };
     
     
     
