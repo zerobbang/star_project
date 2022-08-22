@@ -231,7 +231,7 @@ public class BoardController {
 //		System.out.println(cri);
 		
 		// 선택된 글의 댓글 리스트 뽑기
-		List<CommentDTO> commentList = boardService.getCommentList(boardBno);
+		List<CommentDTO> commentList = boardService.getCommentList(bno);
 		System.out.println("-----------------");
     	System.out.println(commentList);
     	System.out.println("-----------------");
@@ -400,33 +400,21 @@ public class BoardController {
  		return "redirect:/board/detailed_check";
  	}
  	
- 	
 	// 댓글 입력
-	@PostMapping(value="/star/writeComment")
-	public String writeComment(BoardDTO boardDTO, Criteria cri
-			, @RequestParam(value="img",required=false) List<MultipartFile> file
-//			, RedirectAttributes rttr
-			, Model model) throws Exception {
-		// 글 등록
-		System.out.println("file 여러개로가져오면   "+file);
+	@PostMapping(value="/board/commentTable")
+	public List<CommentDTO> CommentTable(@RequestParam(value="bno",required=false)Long bno, BoardDTO boardDTO, CommentDTO commentDTO, Model model) {
 		
-		boardService.registerBoard(boardDTO,file);
+		boardService.insertComment(commentDTO);
+		List<CommentDTO> commentList = boardService.getCommentList(bno);
 		
-//		HttpSession session = request.getSession();
-//		session.setAttribute("criteria", cri);
+		System.out.println("-----------------");
+    	System.out.println(commentList);
+    	System.out.println("-----------------");
 		
-		// 글 쓰기 전 cri 값 잘 받아 왔나 확인
-		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-		System.out.println(cri);
-		System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-//		rttr.addFlashAttribute("criteria",cri);
-		model.addAttribute(cri);
-//		 model.addAttribute("criteria",cri);
-		
-		
-		return "redirect:/board/detailed_check" ;
+    	model.addAttribute("commentList", commentList);
+		return commentList;  
 	}
- 	
+	
     
  	
  	// 관리자 페이지
