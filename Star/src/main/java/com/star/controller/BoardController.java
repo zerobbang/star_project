@@ -407,11 +407,13 @@ public class BoardController {
  	 			System.out.println("hello admin!");
  	 		} else {
  	 			System.out.println("you are member!");
+ 	 			return "redirect:/star/mainpage";
  	 		}
  			
 		} catch (Exception e) {
 			// TODO: handle exception
  			System.out.println("you are guest!");
+ 			return "redirect:/star/mainpage";
  		
 		}
  		

@@ -124,16 +124,19 @@
 					<button class="dropdown-toggle" id="dropdownMenuButtonWithIcon"
 						data-bs-toggle="dropdown" aria-expanded="false">
 						<input class="nick_user" type="button" th:value="*{session.userDTO.userNickname}">
-						 <i class="bi bi-gear-fill"></i>>
+						 <i class="bi bi-gear-fill"></i>
 					</button>
 					<div class="dropdown-menu"
 						aria-labelledby="dropdownMenuButtonWithIcon">
-						<a class="dropdown-item" href="/board/mypage" method="post">
+						<a class="dropdown-item" href="/board/mypage">
 						 <i class="bi bi-person-circle dropdown-item-icon"></i> 마이페이지
-						</a> <a class="dropdown-item" href="/star/changeInfo" method="post">
-						<i class="bi bi-person-rolodex dropdown-item-icon"></i> 정보변경
-						</a> <a class="dropdown-item" href="#"> <i
-							class="bi bi-person-badge-fill dropdown-item-icon"></i> 관리자 페이지
+						</a>
+						<a class="dropdown-item" href="/star/changeInfo">
+							<i class="bi bi-person-rolodex dropdown-item-icon"></i> 정보변경
+						</a>
+						<a class="dropdown-item" href="/board/managerpage" 
+							th:if="${session.userDTO.adminYn == true}"> 
+							<i class="bi bi-person-badge-fill dropdown-item-icon"></i> 관리자 페이지
 						</a>
 					</div>
 				</div>
