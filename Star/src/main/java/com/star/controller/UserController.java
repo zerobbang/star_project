@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.json.JSONParser;
+import org.apache.tomcat.util.json.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.dao.DataAccessException;
@@ -88,17 +89,33 @@ public class UserController {
         rd.close();
         conn.disconnect();
         // 1. 문자열 형태의 JSON을 파싱하기 위한 JSONParser 객체 생성.
-//        JSONParser parser = new JSONParser();
+<<<<<<< HEAD
+        JSONParser parser = new JSONParser();
 //        // 2. 문자열을 JSON 형태로 JSONObject 객체에 저장. 	
-//        JSONObject obj = (JSONObject)parser.parse();
+        JSONObject obj = (JSONObject)parser.parse(sb);
+=======
+        JSONParser parser;
+//        근데 보통 파싱을
+//        JSONParser parser = new JSONParser();
+//        JSONObject obj = (JSONObject)parser.parse(인자들어감);
+//        이런 형식이더라고 근데 어쨌든 둘중 하나에 sb가 들어가야 할것같은데 돌다 안됌...끝
+//        // 2. 문자열을 JSON 형태로 JSONObject 객체에 저장. 	
+        try {
+			JSONObject obj = (JSONObject)parser.parse;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+>>>>>>> 9c7e1aab88c22f347bda9241edb220d120cb4817
 //        // 3. 필요한 리스트 데이터 부분만 가져와 JSONArray로 저장.
 //        JSONArray dataArr = (JSONArray) obj.get("response");
         // 4. model에 담아준다.
         // model.addAttribute("data",dataArr);
         System.out.println(sb.toString());
-        System.out.println(sb);
+//        > 이게 sb가 우리가 받아오는 값인데 type인 stringBuilder고 이걸 json이랑 파싱해야하거든??
+        System.out.println(sb); 
         String data = sb.toString();
-        // JSONParser parser = new JSONParser();
+//        JSONParser parser = new JSONParser();
 //        // JSONObject obj = (JSONObject) parser.parse(data);
 //        JSONObject objData = (JSONObject)new JSONParser().parse(data);
 //        JSONObject result = (JSONObject) new JSONParser().parse(sb.toString());

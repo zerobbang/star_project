@@ -79,7 +79,7 @@ input::placeholder {
 </head>
 <div th:replace="fragments/body :: main-css"></div>
 <body>
-	<div th:replace="fragments/body :: main-nav"></div>
+<input type="hidden" id="category" name="category" th:value="${session.criteria.category }">
 	<div id="list" class="container">
 		<h2>
 			<strong>게시글 목록</strong>
@@ -147,22 +147,20 @@ input::placeholder {
 					</div>
 				</li>
 				<li th:unless="${#lists.size(boardList)} > 0">
-					<div>조회된 결과가 없습니다.</div>
-				</li>
-			</ul>
-		</div>
-
-		<br>
-
+	                    <div>조회된 결과가 없습니다.</div>
+	            </li>
+	        </ul>
+        </div>
+        
+        <br>
+        
 		<!-- 글쓰기 버튼 -->
 		<form th:action="@{/board/write}" method="post">
-			<input type="hidden" id="pageNum" name="pageNum"
-				th:value="${session.criteria.pageNum }"> <input type="text"
-				id="amount" name="amount" th:value="${session.criteria.amount }">
-			<input type="hidden" id="category" name="category"
-				th:value="${session.criteria.category }"> <input type="text"
-				id="total" name="total" th:value="${pageMaker.total}"> <input
-				type="submit" value="글쓰기" />
+			<!-- <input type="text" id="pageNum" name="pageNum" th:value="${session.criteria.pageNum }"> 
+			<input type="text" id="amount" name="amount" th:value="${session.criteria.amount }">
+			<input type="text" id="category" name="category" th:value="${session.criteria.category }">
+			<input type="text" id="total" name="total"th:value="${pageMaker.total}"> -->
+			<input type="submit" value="글쓰기" />
 		</form>
 
 
