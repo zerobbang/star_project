@@ -212,7 +212,7 @@ public class BoardServiceImpl implements BoardService{
 
 	// 이미지 추가
 	@Override
-	public boolean addImgList(List<MultipartFile> fileList) throws Exception {
+	public boolean addImgList(List<MultipartFile> fileList, Long bno) throws Exception {
 		int queryResult = 0;
 		
 		// 사진 첨부가 없으면
@@ -234,16 +234,14 @@ public class BoardServiceImpl implements BoardService{
 				// 이미지 저장한다.
 				File saveFile = new File(filePath,fileName);
 				file.transferTo(saveFile);
-				
-				BoardDTO newBoard = boardMapper.getLastBoard();
-				System.out.println("저장한 게시글의 글 번호 : "+newBoard.getBno());
-				System.out.println("저장한 게시글의 정보 : "+newBoard);
+
+				System.out.println("저장한 게시글의 정보 : "+bno);
 				
 				ImgDTO imgDTO = new ImgDTO();
 				
 				imgDTO.setImgName(fileName);
 				imgDTO.setImgPath(filePath);
-				imgDTO.setBno(newBoard.getBno());
+				imgDTO.setBno(bno);
 				
 				int imgResult = boardMapper.insertImg(imgDTO);
 				

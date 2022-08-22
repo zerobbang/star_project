@@ -54,7 +54,7 @@ public interface BoardService {
 	public int updateImg(Map map);
 	
 	// 이미지 추가
-	public boolean addImgList(List<MultipartFile> file) throws Exception;
+	public boolean addImgList(List<MultipartFile> file, Long bno) throws Exception;
 
 	public List<BoardDTO> getReportBoard();
 

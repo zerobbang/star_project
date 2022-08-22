@@ -143,7 +143,7 @@
         	}else if(contentRegex.test($("#content").val()) == false){
         		alert("내용을 입력해주세요.");
         		return false;
-        	}else if( cnt == 0 && $("#category").val() == "작품전"){
+        	}else if( (cnt == 0 && imgListLength == 0 ) && $("#category").val() == "작품전"){
         		alert("작품전은 최소 1개 이상의 사진이 필요합니다.");
         		return false;
         	}else{
@@ -163,4 +163,3 @@
     </th:block>
 </body>
 </html>
-

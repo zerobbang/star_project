@@ -392,7 +392,7 @@ public class BoardController {
  		
  		System.out.println("추가된 이미지 : "+file);	
  		
- 		boardService.addImgList(file);
+ 		boardService.addImgList(file,bno);
  		
  		re.addAttribute("bno", boardDTO.getBno());
  		
