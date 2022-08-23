@@ -12,15 +12,17 @@
 .pageInfo {
 	list-style: none;
 	display: inline-block;
-	margin: 50px 0 0 100px;
+	margin: 50px 0 10px 0;
+	text-align: center;
 }
 
-.pageInfo li {
-	float: left;
+.pageInfo a {
+	/* float: left; */
 	font-size: 20px;
-	margin-left: 18px;
+	/* margin-left: 18px; */
 	padding: 7px;
 	font-weight: 500;
+	display: inline-block;
 }
 
 .active {
@@ -51,7 +53,8 @@ ol, ul {
 	list-style-type: none;
 }
 
-li {
+/* li로 하면 네비게이션 css와 충돌이 생김. */
+.li_class {
 	float: left;
 	/* position: relative; */
 	padding: 35px 40px 35px 0;
@@ -78,14 +81,36 @@ input::placeholder {
 	padding-left: 30px;
 	background-repeat: no-repeat;
 }
+
+/* 글쓰기 */
+.write_class{
+	text-align: right;
+	margin-right: 150px;	
+}
+table{
+	width: 90%;
+	margin: auto;
+	font-size: 25px;
+}
+.tr_class{
+	border-bottom: 1px solid black;
+}
+
+h2{
+	margin-left: 50px;
+}
+.pageInfo_wrap{
+	text-align: center;
+}
+
 </style>
 </head>
-<body>
-	<input type="hidden" id="category" name="category"
-		th:value="${session.criteria.category }">
-	<div id="list" class="container">
-		<div th:replace="fragments/body :: main-css"></div>
-		<div th:replace="fragments/body :: main-nav"></div>
+<div th:replace="fragments/body :: main-css"></div>
+<div th:replace="fragments/body :: main-nav"></div>
+<body id="list" class="container">
+<!-- <body id="list" class=""> -->
+	<input type="hidden" id="category" name="category" th:value="${session.criteria.category }">
+	<div>
 		<h2>
 			<strong>게시글 목록</strong>
 		</h2>
@@ -126,7 +151,7 @@ input::placeholder {
 			</thead>
 			<tbody class="table-group-divider">
 				<tr th:if="${#lists.size(boardList)} > 0"
-					th:each="list : ${boardList}">
+					th:each="list : ${boardList}" class="tr_class">
 					<!-- 고유 글의 번호를 출력 해 주는 것이 아닐 카테고리 별로 최신 순부터 1번으로 보여준다. -->
 					<td th:text="${list.bno}"></td>
 
@@ -148,9 +173,9 @@ input::placeholder {
 		</table>
 
 		<div class="board_list">
-			<ul th:if="${session.criteria.category} == '작품전'">
+			<ul th:if="${session.criteria.category} == '작품전'" class="ul_class">
 				<li th:if="${#lists.size(boardList)} > 0"
-					th:each="num : ${#numbers.sequence(0,#lists.size(boardList)-1)}">
+					th:each="num : ${#numbers.sequence(0,#lists.size(boardList)-1)}" class="li_class">
 					<div>
 						<img th:src="'/imgfiles/' + ${boardList[num].imgName}"> <br>
 						<a th:href="@{/board/detailed_check(bno=${boardList[num].bno})}">
@@ -162,13 +187,22 @@ input::placeholder {
 					</div>
 				</li>
 				<li th:unless="${#lists.size(boardList)} > 0">
-					<div>조회된 결과가 없습니다.</div>
-				</li>
-			</ul>
-		</div>
+	                    <div>조회된 결과가 없습니다.</div>
+	            </li>
+	        </ul>
+        </div>
+        
+        <br>
+        
+		<!-- 글쓰기 버튼 -->
+		<form th:action="@{/board/write}" method="post" class="write_class">
+			<input type="submit" value="글쓰기" />
+		</form>
 
-		<input type="hidden" th:value="${pageMaker.startPage}"> <input
-			type="hidden" th:value="${pageMaker.endPage}">
+
+		<input type="hidden" th:value="${pageMaker.startPage}">
+		<input type="hidden" th:value="${pageMaker.endPage}">
+		
 		<div class="pageInfo_wrap">
 			<div class="pageInfo_area">
 				<!-- <ul id="pgaeInfo" class="pageInfo"> -->
