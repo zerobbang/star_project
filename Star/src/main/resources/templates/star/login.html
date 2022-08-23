@@ -5,11 +5,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- 부트스트랩 css, js, icon -->
-<link rel="stylesheet" href="../css/bootstrap.css">
-<link rel="stylesheet" href="../js/bootstrap.js">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
 <title>로그인</title>
 
 <!-- 네브바 관련으로 같이 가져옴 -->
@@ -24,15 +20,14 @@
 <style>
 
 /* 전체 배경 적용 */
-body {
-    background-position: 0 0;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-image: url(../img/starpage.jpg);
-    height: 100%;
-    margin: 18% 0 19% 0;
-    background-color: black;
-    overflow-y: hidden;
+html, body {
+ 	background-position: 0 0;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-image: url(../img/starpage.jpg);
+	height: 100%;
+	background-color: black;
+	overflow: hidden;
 }
 /* 이미지 위치 */
 .title {
@@ -46,11 +41,11 @@ body {
 .login_wrap {
 	border: 1px solid;
 	box-sizing: border-box;
-	margin: 0 31% 0 30%;
+	margin: 10% 31% 0 30%;
 	width: 40%;
 	background-color: rgba(0, 0, 0, 0.5);
 	border-radius: 5%;
-	padding-left: 3%;
+	padding-left: 2%;
 }
 
 /* 라벨 위치 조정 */
@@ -75,7 +70,7 @@ input::placeholder {
 		color: red;
 		font-size: 12px;
 	} */
-	
+
 /* 아이디 아이콘 */
 #icon_id input {
 	background-image: url("../img/person-fill.svg");
@@ -98,25 +93,21 @@ input::placeholder {
 
 /* 회원가입, 계정찾기 css */
 .find_wrap {
-	
-	padding: 20px 0 2%;
-	text-align: center;
-}
+	padding-top: 1%;
+	padding-left: 0;
+	padding-right: 7%;
+} 
 
 /* .find_wrap li {
 	position: relative;
-	display: inline-block;
-} */
-
-/* .find_wrap li+li {
-	padding-left: 28px;
+ 	display: inline-block;
 }
-
+/* 가운데 바 위치 조정 */
 .find_wrap li+li::before {
 	content: '';
 	position: absolute;
-	top: 4px;
-	left: 12px;
+	margin-left: -18%;
+	top: 50%;
 	width: 1px;
 	height: 17px;
 	border-radius: 0.5px;
@@ -124,23 +115,21 @@ input::placeholder {
 }  */
 
 .find_wrap .find_text {
-	display: inline-block;
 	font-size: 15px;
 	line-height: 17px;
 	text-decoration: none;
 	color: white;
 	font-weight: bold;
-	padding-left: 20px;
-	padding-right: 20px;
+	text-align: center;
 }
 </style>
 </head>
 <body>
 	<!-- 네브바  인데 로그인과 회원가입에는 필요 하지 않을 것 같아 주석처리함 -->
-	<!-- <div th:replace="fragments/body :: main-css"></div> -->
-	<!-- <div th:replace="fragments/body :: main-nav"></div> -->
+	<div th:replace="fragments/body :: main-css"></div>
+	<div th:replace="fragments/body :: main-nav"></div>
 
-<!-- 로그인 전체 폼 -->
+	<!-- 로그인 전체 폼 -->
 	<div class="login_wrap">
 		<div class="title">
 			<img alt="logo" src="../img/Logo.png">
@@ -174,7 +163,8 @@ input::placeholder {
 									<input type="password" class="form-control" id="userPassword"
 										name="userPassword" value=""
 										placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리">
-									<button id="open_eye" class="btn btn-secondary" type="button" onclick="changePwView()">
+									<button id="open_eye" class="btn btn-secondary" type="button"
+										onclick="changePwView()">
 										<i class="bi bi-eye-slash-fill" style="color: white;"></i>
 									</button>
 								</div>
@@ -184,37 +174,29 @@ input::placeholder {
 						</div>
 					</div>
 				</div>
-				<div class="login_btn d-grid gap-2 col-9 mx-auto" th:object="${params}">
+				<div class="login_btn d-grid gap-2 col-9 mx-auto"
+					th:object="${params}">
 					<button type="submit" class="btn btn-secondary">로그인</button>
+				</div>
+				<div class="">
+					<ul class="find_wrap d-flex justify-content-center">
+						<li><a href="signup" class="find_text">회원 가입</a></li>
+						<li><a href="findUser" class="find_text">계정 찾기</a></li>
+					</ul>
 				</div>
 			</form>
 		</div>
-		<!-- <div>
-			<ul class="find_wrap">
-				<li><a href="signup" class="find_text">회원 가입</a></li>
-				<li><a href="findUser" class="find_text">계정 찾기</a></li>
-			</ul>
-		</div> -->
-		<div class="find_wrap">
-			
-				<a href="signup" class="find_text">회원 가입</a>
-				<a href="findUser" class="find_text">계정 찾기</a>
-			
-		</div>
-		
 	</div>
 	<script type="text/javascript">
-	
-		function changePwView(){
+		function changePwView() {
 			var inputPw = document.getElementById("userPassword");
-			
-			if (inputPw.getAttribute('type') == "password"){
+
+			if (inputPw.getAttribute('type') == "password") {
 				inputPw.setAttribute('type', 'text');
 			} else {
 				inputPw.setAttribute('type', 'password');
 			}
 		}
-	
 	</script>
 </body>
 </html>
