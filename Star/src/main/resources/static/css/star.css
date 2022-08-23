@@ -26,9 +26,9 @@ body {
 	font-family: 'Raleway', Calibri, Arial, sans-serif;
 }
 
-a, button {
+/* a {
 	outline: none;
-}
+} */
 
 a {
 	color: #566473;
@@ -299,6 +299,9 @@ p.ref {
 .main-title .thin {
 	font-weight: 200;
 }
+/* h1{
+	animation: typing 2s steps(22), blink .5s step-end infinite alternate;
+} */
 
 @media only screen and (max-width : 768px) {
 	.demo-1 .main-title, 
@@ -311,3 +314,15 @@ p.ref {
 		font-size: 4em;
 	}
 }
+
+/* @keyframes typing {
+  from {
+    width: 0
+  }
+}
+    
+@keyframes blink {
+  50% {
+    border-color: transparent
+  }
+} */
