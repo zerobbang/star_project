@@ -98,8 +98,7 @@ div .error {
 			}).done(
 					function(fragments) {
 						certify = fragments[0];
-						console.log(certify);
-
+						
 						$("#emailError").replaceWith(
 								"<div id=emailError style='color:green; font-size: 13px; font-weight: bold;'>메일을 확인해주세요!</div>");
 					});
@@ -108,9 +107,7 @@ div .error {
 		// 인증번호 체크하기
 		function check_certify() {
 			var input_data = $("#certify_id").val();
-			console.log(input_data);
-			console.log(certify);
-
+			
 			// 인증이 성공한경우
 			if (input_data == certify) {
 				certifyCheck = true;
@@ -129,15 +126,15 @@ div .error {
 								function(userId) {
 									/* var userId = userId; */
 
-									console.log(userId);
-									alert("1차 테스트");
+									/* console.log(userId); */
+									/* alert("1차 테스트"); */
 
 									if (userId == null) {
 										certifyCheck = false;
 										$("#resultDiv").replaceWith(
 												'<div id="resultDiv">'
 														+ '</div>');
-										console.log("samesame")
+										
 									} else {
 										certifyCheck = true;
 
@@ -166,7 +163,7 @@ div .error {
 			} else {
 				alert("인증 실패")
 			}
-			console.log(certifyCheck);
+			/* console.log(certifyCheck); */
 		}
 
 		/* 이메일 유효성 체크 */
@@ -188,9 +185,9 @@ div .error {
 												try {
 													rule = newValue
 															.match(emailRegex)[0];
-													console.log(rule);
+													/* console.log(rule); */
 												} catch (e) {
-													console.log("fail")
+													/* console.log("fail") */
 												}
 												;
 
