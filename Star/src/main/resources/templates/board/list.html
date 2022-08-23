@@ -9,37 +9,71 @@
 	type="text/javascript"></script>
 <style>
 /* 페이지 버튼 간단한 css */
-  .pageInfo{
-      list-style : none;
-      display: inline-block;
-    margin: 50px 0 0 100px;      
-  }
-  .pageInfo li{
-      float: left;
-    font-size: 20px;
-    margin-left: 18px;
-    padding: 7px;
-    font-weight: 500;
-  }
-  .active{
-      background-color: #cdd5ec;
-  }
- a:link {color:black; text-decoration: none;}
- a:visited {color:black; text-decoration: none;}
- a:hover {color:black; text-decoration: underline;}
- 	
- 	img{
-        width: 250px;
-        height: 180px;
-    }
-    ol, ul {
-        list-style-type: none;
-    }
-    li {
-        float: left;
-        /* position: relative; */
-        padding: 35px 40px 35px 0;
-   }
+.pageInfo {
+	list-style: none;
+	display: inline-block;
+	margin: 50px 0 0 100px;
+}
+
+.pageInfo li {
+	float: left;
+	font-size: 20px;
+	margin-left: 18px;
+	padding: 7px;
+	font-weight: 500;
+}
+
+.active {
+	background-color: #cdd5ec;
+}
+
+a:link {
+	color: black;
+	text-decoration: none;
+}
+
+a:visited {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	color: black;
+	text-decoration: underline;
+}
+
+img {
+	width: 250px;
+	height: 180px;
+}
+
+ol, ul {
+	list-style-type: none;
+}
+
+li {
+	float: left;
+	/* position: relative; */
+	padding: 35px 40px 35px 0;
+}
+
+label {
+	text-align: right;
+	white-space: nowrap;
+	width: 100%;
+}
+
+input::placeholder {
+	font-size: 14px;
+}
+
+/* 검색 아이콘 */
+#icon_search input {
+	background-image: url("../img/search.svg");
+	background-position: 5px center;
+	padding-left: 30px;
+	background-repeat: no-repeat;
+}
 </style>
 
 </head>
@@ -47,17 +81,20 @@
 <body>
 <input type="hidden" id="category" name="category" th:value="${session.criteria.category }">
 	<div id="list" class="container">
-		<div th:replace="fragments/body :: main-nav"></div>
-		<h2>게시글 목록</h2>
+		<h2>
+			<strong>게시글 목록</strong>
+		</h2>
 		<!-- 소통방일 경우에만 활성화 -->
 		<div id="divSelectCategory">
 			<select id="selectCategory"
 				th:if="${session.criteria.category}=='잡담' or ${session.criteria.category}=='사고팔아요'">
 				<option value="잡담" th:selected="${session.criteria.category}=='잡담'">잡담</option>
-				<option value="사고팔아요" th:selected="${session.criteria.category}=='사고팔아요'">사고팔아요</option>
+				<option value="사고팔아요"
+					th:selected="${session.criteria.category}=='사고팔아요'">사고팔아요</option>
 			</select>
 		</div>
-		<table class="board_list" th:if="${session.criteria.category} != '작품전'">
+		<table class="board_list"
+			th:if="${session.criteria.category} != '작품전'">
 			<colgroup>
 				<col width="15%" />
 				<col width="*" />
@@ -72,41 +109,42 @@
 					<th scope="col">작성일</th>
 				</tr>
 			</thead>
-		 <tbody>
-                <tr th:if="${#lists.size(boardList)} > 0"  th:each="list : ${boardList}">
+			<tbody>
+				<tr th:if="${#lists.size(boardList)} > 0"
+					th:each="list : ${boardList}">
 					<!-- 고유 글의 번호를 출력 해 주는 것이 아닐 카테고리 별로 최신 순부터 1번으로 보여준다. -->
-                    <td th:text="${list.bno}"></td>
-                    
-                    <td class="title">	                   	
-	                   	<a th:href="@{/board/detailed_check(bno=${list.bno})}"
-	                   		th:text="${list.title}">
-	                   	</a>   	
-                   	</td>
-                    
-                    <td class="writer" th:text="${list.userNickname}"></td>
-                    
-                    <!-- 보여지는 날짜 형식 여기서 변경 가능 -->
-                    <td class="regDate" th:text="${#temporals.format(list.regDate, 'dd-MM-yyyy HH:mm')}"></td>
-                </tr>
-                 
-               <tr th:unless="${#lists.size(boardList)} > 0">
-                    <td colspan="4">조회된 결과가 없습니다.</td>
-               </tr>
-            </tbody>
-        </table>
-        
-        <div class="board_list">
-	        <ul th:if="${session.criteria.category} == '작품전'">
-	        	<li th:if="${#lists.size(boardList)} > 0"  th:each="num : ${#numbers.sequence(0,#lists.size(boardList)-1)}">
-		            <div>
-		                <img th:src="'/imgfiles/' + ${boardList[num].imgName}">
-		                <br>
-		                <a th:href="@{/board/detailed_check(bno=${boardList[num].bno})}">
-		                	<input type="text" th:value="| ${boardList[num].userNickname}: ${boardList[num].title}">
-		                	<!-- <input type="text" id="bno" name="bno" th:value="${boardList[num].bno}">
+					<td th:text="${list.bno}"></td>
+
+					<td class="title"><a
+						th:href="@{/board/detailed_check(bno=${list.bno})}"
+						th:text="${list.title}"> </a></td>
+
+					<td class="writer" th:text="${list.userNickname}"></td>
+
+					<!-- 보여지는 날짜 형식 여기서 변경 가능 -->
+					<td class="regDate"
+						th:text="${#temporals.format(list.regDate, 'dd-MM-yyyy HH:mm')}"></td>
+				</tr>
+
+				<tr th:unless="${#lists.size(boardList)} > 0">
+					<td colspan="4">조회된 결과가 없습니다.</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="board_list">
+			<ul th:if="${session.criteria.category} == '작품전'">
+				<li th:if="${#lists.size(boardList)} > 0"
+					th:each="num : ${#numbers.sequence(0,#lists.size(boardList)-1)}">
+					<div>
+						<img th:src="'/imgfiles/' + ${boardList[num].imgName}"> <br>
+						<a th:href="@{/board/detailed_check(bno=${boardList[num].bno})}">
+							<input type="text"
+							th:value="| ${boardList[num].userNickname}: ${boardList[num].title}">
+							<!-- <input type="text" id="bno" name="bno" th:value="${boardList[num].bno}">
 	                   		<input type="text" id="userNumber" name="userNumber" th:value="${criteria.userNumber }"> -->
-	                	</a>
-		            </div>
+						</a>
+					</div>
 				</li>
 				<li th:unless="${#lists.size(boardList)} > 0">
 	                    <div>조회된 결과가 없습니다.</div>
@@ -126,54 +164,80 @@
 		</form>
 
 
-		<input type="text" th:value="${pageMaker.startPage}"> 
-		<input type="text" th:value="${pageMaker.endPage}">
+		<input type="text" th:value="${pageMaker.startPage}"> <input
+			type="text" th:value="${pageMaker.endPage}">
 		<div class="pageInfo_wrap">
 			<div class="pageInfo_area">
 				<ul id="pgaeInfo" class="pageInfo">
 
-		    		<!-- 이전 페이지 -->
-		    		<th:block th:if="${pageMaker.prev}">
-		    			<li class="pageInfo_btn previous"><a href="javascript:;" th:value="${1}">&lt;&lt;</a></li>
-		    			<li class="pageInfo_btn previous"><a href="javascript:;" th:value="${pageMaker.startPage-1}">&lt;</a></li>
-		    		</th:block>
+					<!-- 이전 페이지 -->
+					<th:block th:if="${pageMaker.prev}">
+						<li class="pageInfo_btn previous"><a href="javascript:;"
+							th:value="${1}">&lt;&lt;</a></li>
+						<li class="pageInfo_btn previous"><a href="javascript:;"
+							th:value="${pageMaker.startPage-1}">&lt;</a></li>
+					</th:block>
 
-		    		<!-- 페이지 버튼 -->
-		    		<th:block th:each="num : ${#numbers.sequence(__${pageMaker.startPage}__,__${pageMaker.endPage}__)}">
-		    			<!-- <li class="pageInfo_btn"><a href="javascript:;" th:text="${num}"></a></li> -->
-		    			<li th:if="${pageMaker.cri.pageNum} == ${num}" class="pageInfo_btn active"><a href="javascript:;" th:text="${num}"></a></li>
-		    			<li th:unless="${pageMaker.cri.pageNum} == ${num}" class="pageInfo_btn"><a href="javascript:;" th:text="${num}"></a></li>
-		    		</th:block>
+					<!-- 페이지 버튼 -->
+					<th:block
+						th:each="num : ${#numbers.sequence(__${pageMaker.startPage}__,__${pageMaker.endPage}__)}">
+						<!-- <li class="pageInfo_btn"><a href="javascript:;" th:text="${num}"></a></li> -->
+						<li th:if="${pageMaker.cri.pageNum} == ${num}"
+							class="pageInfo_btn active"><a href="javascript:;"
+							th:text="${num}"></a></li>
+						<li th:unless="${pageMaker.cri.pageNum} == ${num}"
+							class="pageInfo_btn"><a href="javascript:;" th:text="${num}"></a></li>
+					</th:block>
 
-		    		<!-- 다음 페이지 -->
-		    		<th:block th:if="${pageMaker.next}">
-		    			<li class="pageInfo_btn next"><a href="javascript:;" th:value="${pageMaker.endPage+1}">&gt;</a></li>
-		    			<li class="pageInfo_btn next"><a href="javascript:;" th:value="${pageMaker.realEndPage}">&gt;&gt;</a></li>
-		    		</th:block>
+					<!-- 다음 페이지 -->
+					<th:block th:if="${pageMaker.next}">
+						<li class="pageInfo_btn next"><a href="javascript:;"
+							th:value="${pageMaker.endPage+1}">&gt;</a></li>
+						<li class="pageInfo_btn next"><a href="javascript:;"
+							th:value="${pageMaker.realEndPage}">&gt;&gt;</a></li>
+					</th:block>
 				</ul>
 			</div>
 		</div>
 
-         <div class="form-group">
-             <label for="searchType">검색 유형</label>
-             <select id="searchType" name="searchType" class="form-control">
-                 <option value="all">전체</option>
-                 <option value="title">제목</option>
-                 <option value="content">내용</option>
-                 <option value="writer">작성자</option>
-             </select>
-         </div>
-         <div class="form-group">
-             <label for="keyword">키워드</label>
-             <input type="search" id="keyword" name="keyword" class="form-control" placeholder="키워드를 입력해 주세요." />
-             <input type="text" id="inputKeyword" name="keyword" class="form-control" th:value="${pageMaker.cri.keyword}" />
-             <input type="text" id="inputSearchType" name="searchType" class="form-control" th:value="${pageMaker.cri.searchType}" />
-         </div>
-          <button type="button" class="btn btn-primary" onclick="searchResult();">제출버튼</button> 
- 
-       </div>
-    </th:block>
-<script  th:inline="javascript">
+		<!-- 검색 기능 -->
+		<div class="form-group">
+			<div class="row mb-1 d-flex justify-content-center">
+				<!-- 				<label for="searchType" class="col-sm-1 col-form-label">검색</label> -->
+				<div class="input-group d-flex justify-content-center">
+				<div class="col-sm-1">
+					<select id="searchType" name="searchType" class="form-select"
+						style="text-align: center;">
+						<option value="none" selected disabled>분류</option>
+						<option value="all">전체</option>
+						<option value="title">제목</option>
+						<option value="content">내용</option>
+						<option value="writer">작성자</option>
+					</select>
+				</div>
+				<div class="col-sm-3">
+					<div id="icon_search">
+						<input type="search" class="form-control" id="keyword"
+							name="keyword" placeholder="키워드를 입력해 주세요.">
+						<!-- 				<label for="keyword">키워드</label> <input type="search" id="keyword"
+					name="keyword" class="form-control" placeholder="키워드를 입력해 주세요." /> -->
+						<input type="hidden" id="inputKeyword" name="keyword"
+							class="form-control" th:value="${pageMaker.cri.keyword}" />
+							<input type="hidden" id="inputSearchType" name="searchType"
+							class="form-control" th:value="${pageMaker.cri.searchType}" />
+					</div>
+				</div>
+				
+			<div class="d-grid col-1">
+			<button type="button" class="btn btn-secondary"
+				onclick="searchResult();">검색</button>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</th:block>
+	<script th:inline="javascript">
 /*<![CDATA[*/
 	function searchResult(){	
  		$.ajax({
