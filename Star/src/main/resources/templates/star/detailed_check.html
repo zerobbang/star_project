@@ -46,8 +46,8 @@
 	<script type="text/javascript">
 		function openPop(){
 		  	var bno = $("#bno").val();
-		  	console.log("시작?");
 		  	console.log(bno);
+		  	
 		  	sessionStorage.setItem("boardBno", bno);
 		  	
 			var popup = window.open('/star/userReport', '신고사유'
@@ -124,7 +124,8 @@
  	         <input type="text" id="inputBno" name="bno" th:value="${boardDTO.bno}" />
  	         <!-- 회원이 아닌 경우 생각해줘야 할 듯! -->
  	         <th:block th:if="session.userDTO != null">
-  	         	 <input type="text" id="inputUserNumber" name="userNumber" th:value="${session.userDTO.userNumber}" />
+  	         	 <input th:if="${session.userDTO == null}" type="hidden" id="inputUserNumber" name="userNumber" value="" />
+  	         	 <input th:if="${session.userDTO != null}" type="hidden" id="inputUserNumber" name="userNumber" th:value="${session.userDTO.userNumber}" />
 	          </th:block>
 	         <button type="button" onclick="writeComment();">댓글저장</button> 
          </div>
@@ -167,11 +168,19 @@
 function writeComment(){
 	alert($("#inputCmtContent").val());
 	
+	var userNumber = $("#inputUserNumber").val();
+	console.log("first")
+	console.log(userNumber)
+	if (userNumber == ""){
+		alert("로그인을 해주세요")
+		return;
+	}
+	console.log("first")
   	$.ajax({
 		url : "/board/commentTable",
 		type : "post",
 		data : {"bno" : $("#inputBno").val(),
-				"userNumber" : $("#inputUserNumber").val(),
+				"userNumber" : userNumber,
 				"cmtContent" : $("#inputCmtContent").val()
 				},
 		success : function(data){
