@@ -76,6 +76,9 @@ public interface BoardMapper {
 	// 댓글 작성
 	public void insertComment(CommentDTO commentDTO);
 	
+	// 댓글 삭제
+	public void removeComment(CommentDTO commentDTO);
+	
 	// 댓글 총 수
 	public int getCommentCount(Criteria cri);
 

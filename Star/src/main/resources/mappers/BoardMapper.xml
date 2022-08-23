@@ -331,6 +331,16 @@ AND
 		)
 </insert>
 
+<!-- 댓글 삭제 -->
+<update id="removeComment" parameterType="CommentDTO">
+	UPDATE
+		comment_table
+	SET
+		cmt_delete_yn = 1
+	WHERE
+		cmt_num = #{cmtNum}
+</update>
+
 <!-- 댓글 수 출력 -->
 <select id="getCommentCount"  resultType="int">
  	SELECT 
@@ -360,7 +370,6 @@ WHERE
 
 
 <select id="getReportBoardList"  resultType="BoardDTO">
-
 	select 
 		rt.bno 
 		, bl.title 
