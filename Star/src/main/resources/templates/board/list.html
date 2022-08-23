@@ -84,6 +84,16 @@ input::placeholder {
 		<h2>
 			<strong>게시글 목록</strong>
 		</h2>
+		<!-- 글쓰기 버튼 -->
+		<form th:action="@{/board/write}" method="post">
+			<div class="d-md-flex justify-content-md-end">
+			<!-- <input type="text" id="pageNum" name="pageNum" th:value="${session.criteria.pageNum }"> 
+			<input type="text" id="amount" name="amount" th:value="${session.criteria.amount }">
+			<input type="text" id="category" name="category" th:value="${session.criteria.category }">
+			<input type="text" id="total" name="total"th:value="${pageMaker.total}"> -->
+			<input type="submit" class="btn btn-secondary btn-sm" value="글쓰기" />
+			</div>
+		</form>
 		<!-- 소통방일 경우에만 활성화 -->
 		<div id="divSelectCategory">
 			<select id="selectCategory"
@@ -93,7 +103,7 @@ input::placeholder {
 					th:selected="${session.criteria.category}=='사고팔아요'">사고팔아요</option>
 			</select>
 		</div>
-		<table class="board_list"
+		<table class="board_list table"
 			th:if="${session.criteria.category} != '작품전'">
 			<colgroup>
 				<col width="15%" />
@@ -109,7 +119,7 @@ input::placeholder {
 					<th scope="col">작성일</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="table-group-divider">
 				<tr th:if="${#lists.size(boardList)} > 0"
 					th:each="list : ${boardList}">
 					<!-- 고유 글의 번호를 출력 해 주는 것이 아닐 카테고리 별로 최신 순부터 1번으로 보여준다. -->
@@ -152,19 +162,7 @@ input::placeholder {
 	        </ul>
         </div>
         
-        <br>
-        
-		<!-- 글쓰기 버튼 -->
-		<form th:action="@{/board/write}" method="post">
-			<!-- <input type="text" id="pageNum" name="pageNum" th:value="${session.criteria.pageNum }"> 
-			<input type="text" id="amount" name="amount" th:value="${session.criteria.amount }">
-			<input type="text" id="category" name="category" th:value="${session.criteria.category }">
-			<input type="text" id="total" name="total"th:value="${pageMaker.total}"> -->
-			<input type="submit" value="글쓰기" />
-		</form>
-
-
-		<input type="text" th:value="${pageMaker.startPage}"> <input
+   		<input type="text" th:value="${pageMaker.startPage}"> <input
 			type="text" th:value="${pageMaker.endPage}">
 		<div class="pageInfo_wrap">
 			<div class="pageInfo_area">
