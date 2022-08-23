@@ -198,7 +198,7 @@
 	        <option value="제주도" th:selected="${session.userDTO.userRegion}== '제주도' ">제주도</option>
 	    </select>
 	    
-	    <input type="text" id="selectedRegion" th:value="${session.userDTO.userRegion}"/>
+	    <input type="hidden" id="selectedRegion" th:value="${session.userDTO.userRegion}"/>
 	</th:block>
 	
 	
@@ -224,7 +224,7 @@
 	        <option value="제주도">제주도</option>
 	    </select>
 	    
-	    <input type="text" id="selectedRegion" th:value="전국"/>
+	    <input type="hidden" id="selectedRegion" th:value="전국"/>
 	</th:block>
     
     
@@ -233,19 +233,9 @@
     <div id="mapImg"></div>
     <h2>카카오 이미지 띄우기 비동기 처리(default 가 비동기)</h2>
     
-    <!-- 마이페이지 임시 -->
-    <form th:action="@{/board/mypage}" method="get">
-    	<input type="submit" value="마이페이지">
-    </form>
-
-    
-    <form th:action="@{/star/changeInfo}" method="get">
-    	<input type="submit" value="정보변경페이지">    
-    </form> 
-    
     <br><br><br>
     <div>
-	<!-- 스위치 버튼 -->
+		<!-- 스위치 버튼 -->
 	    <div id="container">
 		  <div class="toggle-switch">
 		    <input type="checkbox" id="chkTog">
@@ -253,7 +243,8 @@
 		      <span class="toggle-track"></span>
 		    </label>
 		  </div>
-		</div><br><br>
+		</div>
+	<br><br>
     
     <!-- 지역별 미세번지 테이블 -->	
    	<div id="weather"  style="overflow:scroll;"></div>

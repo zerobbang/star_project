@@ -46,8 +46,8 @@
 	<script type="text/javascript">
 		function openPop(){
 		  	var bno = $("#bno").val();
-		  	console.log("시작?");
 		  	console.log(bno);
+		  	
 		  	sessionStorage.setItem("boardBno", bno);
 		  	
 			var popup = window.open('/star/userReport', '신고사유'
@@ -124,7 +124,8 @@
  	         <input type="text" id="inputBno" name="bno" th:value="${boardDTO.bno}" />
  	         <!-- 회원이 아닌 경우 생각해줘야 할 듯! -->
  	         <th:block th:if="session.userDTO != null">
-  	         	 <input type="text" id="inputUserNumber" name="userNumber" th:value="${session.userDTO.userNumber}" />
+  	         	 <input th:if="${session.userDTO == null}" type="hidden" id="inputUserNumber" name="userNumber" value="" />
+  	         	 <input th:if="${session.userDTO != null}" type="hidden" id="inputUserNumber" name="userNumber" th:value="${session.userDTO.userNumber}" />
 	          </th:block>
 	         <button type="button" onclick="writeComment();">댓글저장</button> 
          </div>
@@ -133,10 +134,11 @@
      	 
          <table class="board_list">
             <colgroup>
-                <col width="15%"/>
+                <col width="10%"/>
+                <col width="10%"/>
                 <col width="*"/>
-                <col width="15%"/>
                 <col width="20%"/>
+                <col width="0%"/>
             </colgroup>
             <thead>
                 <tr>
@@ -144,17 +146,23 @@
                     <th scope="col">회원번호</th>
                     <th scope="col">내용</th>
                     <th scope="col">작성일</th>
+       
                 </tr>
             </thead>
             <tbody>
-                <tr th:if="${#lists.size(commentList)} > 0"  th:each="list : ${commentList}">
+                <tr th:if="${#lists.size(commentList)} > 0"  th:each="list,index : ${commentList}">
 		
                     <td th:text="${list.bno}"></td>
                     <td th:text="${list.userNumber}"></td>
                     <td th:text="${list.cmtContent}"></td>                 
                     <td class="writeDate" th:text="${#temporals.format(list.writeDate, 'dd-MM-yyyy HH:mm')}"></td>
-                
-                </tr> 
+       				
+       				<td th:if="${list.userNumber} == ${session.userDTO.userNumber}">
+						<button type="button"  th:id="${index.index}" name="cmtNum" th:value="${list.cmtNum}" onclick="deleteComment(this.value);">x</button></td>
+       				<td>
+       				</td>
+       				<!--        				<input type="button" th:id="${index.index}" name="cmtNum" th:value="${list.cmtNum}" onclick="deleteComment(this.value);"/> -->
+                 </tr> 
                <tr th:unless="${#lists.size(commentList)} > 0">
                     <td colspan="4">조회된 결과가 없습니다.</td> 
                </tr>
@@ -167,16 +175,45 @@
 function writeComment(){
 	alert($("#inputCmtContent").val());
 	
+	var userNumber = $("#inputUserNumber").val();
+	console.log("first")
+	console.log(userNumber)
+	if (userNumber == ""){
+		alert("로그인을 해주세요")
+		return;
+	}
+	console.log("first")
   	$.ajax({
-		url : "/board/commentTable",
+		url : "/board/commentWrite",
 		type : "post",
 		data : {"bno" : $("#inputBno").val(),
-				"userNumber" : $("#inputUserNumber").val(),
+				"userNumber" : userNumber,
 				"cmtContent" : $("#inputCmtContent").val()
 				},
 		success : function(data){
 			console.log(data);
-			 /* $("#Comment").html(data); */
+			  /* $("#Comment").html(data);  */
+			  window.location.reload();  
+		}, 
+		error : function (error){
+			alert("ddd 실패");
+			console.log(error); 
+		}
+	}); 
+		
+} 
+	
+function deleteComment(clicked_id){ 
+	alert(clicked_id);
+	
+  	$.ajax({
+		url : "/board/commentDelete",
+		type : "post",
+		data : {"cmtNum" : clicked_id
+				},
+		success : function(data){
+			console.log(data);
+			 /* $("#Comment").html(data); */ 
 			 window.location.reload(); 
 		}, 
 		error : function (error){
@@ -185,8 +222,8 @@ function writeComment(){
 		}
 	}); 
 		
-	} 
-
+} 
+ 
 </script>
 
 
