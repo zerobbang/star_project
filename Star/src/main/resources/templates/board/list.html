@@ -42,7 +42,7 @@ a:hover {
 	text-decoration: underline;
 }
 
-img {
+div > img {
 	width: 250px;
 	height: 180px;
 }
@@ -75,12 +75,12 @@ input::placeholder {
 	background-repeat: no-repeat;
 }
 </style>
-
 </head>
-<div th:replace="fragments/body :: main-css"></div>
 <body>
 <input type="hidden" id="category" name="category" th:value="${session.criteria.category }">
 	<div id="list" class="container">
+		<div th:replace="fragments/body :: main-css"></div>
+		<div th:replace="fragments/body :: main-nav"></div>
 		<h2>
 			<strong>게시글 목록</strong>
 		</h2>
