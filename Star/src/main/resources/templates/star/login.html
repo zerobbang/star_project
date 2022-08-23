@@ -92,13 +92,13 @@ input::placeholder {
 }
 
 /* 회원가입, 계정찾기 css */
- .find_wrap {
+.find_wrap {
 	padding-top: 1%;
 	padding-left: 0;
 	padding-right: 7%;
 } 
 
-.find_wrap li {
+/* .find_wrap li {
 	position: relative;
  	display: inline-block;
 }
@@ -112,10 +112,9 @@ input::placeholder {
 	height: 17px;
 	border-radius: 0.5px;
 	background-color: #8a8888;
-}
+}  */
 
 .find_wrap .find_text {
-/* 	display: inline-block; */
 	font-size: 15px;
 	line-height: 17px;
 	text-decoration: none;
@@ -147,9 +146,8 @@ input::placeholder {
 						<div class="col-sm-9">
 							<div id="icon_id">
 								<input type="text" class="form-control" id="userId"
-									name="userId" value="zerobbang" placeholder="영어(대소문자 구분 가능)+숫자">
+									name="userId" placeholder="영어(대소문자 구분 가능)+숫자">
 								<!-- 엇? 이게 뭐지? -->
-								<!-- th:field="*{userId}" -->
 								<div id="IDerror" class="error"></div>
 							</div>
 						</div>
@@ -171,7 +169,6 @@ input::placeholder {
 									</button>
 								</div>
 								<!-- 엇? 이게 뭐지? -->
-								<!-- th:field="*{userPassword}" -->
 								<div id="PasswordError" class="error"></div>
 							</div>
 						</div>
