@@ -70,43 +70,47 @@ public class UserController {
         urlBuilder.append("&" + URLEncoder.encode("nx","UTF-8") + "=" + URLEncoder.encode("59", "UTF-8")); /*예보지점의 X 좌표값*/
         urlBuilder.append("&" + URLEncoder.encode("ny","UTF-8") + "=" + URLEncoder.encode("127", "UTF-8")); /*예보지점의 Y 좌표값*/
         
+        // URL 객체 생성
         URL url = new URL(urlBuilder.toString());
+        // 연결
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
         System.out.println("Response code: " + conn.getResponseCode());
+        
         BufferedReader rd;
+        // 서버 연결 코드에 상관없이 rd로 데이터를 받아온다.
         if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
             rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         } else {
             rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
         }
+        
+        // StringBuilder로 생성
         StringBuilder sb = new StringBuilder();
         String line;
+        // 서버로부터 받아온 데이터 rd를 line으로 변수명 지정
+        // 널값이 아니면 stringbuilder에 데이터 추가
         while ((line = rd.readLine()) != null) {
             sb.append(line);
         }
+        // 연결 종료
         rd.close();
         conn.disconnect();
         // 1. 문자열 형태의 JSON을 파싱하기 위한 JSONParser 객체 생성.
-<<<<<<< HEAD
-        JSONParser parser = new JSONParser();
-//        // 2. 문자열을 JSON 형태로 JSONObject 객체에 저장. 	
-        JSONObject obj = (JSONObject)parser.parse(sb);
-=======
-        JSONParser parser;
+//        JSONParser parser = new JSONParser();;
 //        근데 보통 파싱을
 //        JSONParser parser = new JSONParser();
 //        JSONObject obj = (JSONObject)parser.parse(인자들어감);
 //        이런 형식이더라고 근데 어쨌든 둘중 하나에 sb가 들어가야 할것같은데 돌다 안됌...끝
 //        // 2. 문자열을 JSON 형태로 JSONObject 객체에 저장. 	
-        try {
-			JSONObject obj = (JSONObject)parser.parse;
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
->>>>>>> 9c7e1aab88c22f347bda9241edb220d120cb4817
+//        try {
+//			JSONObject obj = (JSONObject)parser.parse(sb.toString());
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+
 //        // 3. 필요한 리스트 데이터 부분만 가져와 JSONArray로 저장.
 //        JSONArray dataArr = (JSONArray) obj.get("response");
         // 4. model에 담아준다.

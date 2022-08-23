@@ -33,6 +33,12 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
+	//웅장한 디자인 test
+	@GetMapping(value="/board/wow")
+	public String test() {
+		return "/star/connect";
+	}
+	
 	// 게시글 조회
 	@RequestMapping(value="/board/list")
 	public String listBoard(Criteria cri, Model model, HttpServletRequest request) {
