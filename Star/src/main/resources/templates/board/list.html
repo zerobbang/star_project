@@ -40,6 +40,7 @@ div table {
 }
 
 /* 페이지 버튼 간단한 css */
+
  .pageInfo {
 	list-style: none;
 	display: inline-block;
@@ -47,6 +48,7 @@ div table {
 /* 	text-align: center; */
 }
 
+<<<<<<< HEAD
 
 .pageInfo li {
 	float: left;
@@ -160,7 +162,7 @@ input::placeholder {
 				<col width="20%" />
 			</colgroup>
 			<thead>
-				<tr >
+				<tr>
 					<th scope="col">글번호</th>
 					<th scope="col">제목</th>
 					<th scope="col">작성자</th>
@@ -218,6 +220,7 @@ input::placeholder {
 
 		<div class="pageInfo_wrap">
 			<div class="pageInfo_area">
+
 				<nav aria-label="Page navigation">
 					<ul id="pgaeInfo"
 						class="pageInfo pagination justify-content-center">
@@ -226,7 +229,7 @@ input::placeholder {
 						<th:block th:if="${pageMaker.prev}">
 							<li class="pageInfo_btn previous page-item"><a
 								class="page-link" aria-label="Previous" href="javascript:;"
-								th:value="${1}">&laquo;</a></li>
+								th:value="1">&lt;&lt;</a></li>
 							<li class="pageInfo_btn previous page-item"><a href="javascript:;"
 								class="page-link" th:value="${pageMaker.startPage-1}">&lt;</a></li>
 						</th:block>
@@ -344,9 +347,9 @@ input::placeholder {
 				var pageNum = /*[[${pageMaker.endPage+1}]]*/;
 			}else if(this.text === "<"){
 				var pageNum = /*[[${pageMaker.startPage-1}]]*/;
-			}else if(this.text == ">>"){
+			}else if(this.text === ">>"){
 				var pageNum = /*[[${pageMaker.realEndPage}]]*/;
-			}else if(this.text == "<<"){
+			}else if(this.text === "<<"){
 				var pageNum = 1;
 			}else{
 				var pageNum = this.text;
