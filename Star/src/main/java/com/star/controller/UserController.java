@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +31,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
 import com.star.domain.DustDTO;
 import com.star.domain.MailDTO;
 import com.star.domain.UserDTO;
@@ -87,37 +87,35 @@ public class UserController {
 		ArrayList<Integer> gulogu = new ArrayList<Integer>(Arrays.asList(58,125));
 		
 		weather.put("종로구", jonglogu);
-//		weather.put("중구", jonglogu);
-//		weather.put("용산구", yongsangu);
-//		weather.put("성동구", seongdonggu);
-//		weather.put("광진구", gwangjingu);
-//		weather.put("동대문구", dongdaemongu);
-//		weather.put("중랑구", junglanggu);
-//		weather.put("성북구", seongdonggu);
-//		weather.put("강북구", dongdaemongu);
-//		weather.put("도봉구", dobonggu);
-//		weather.put("노원구", dobonggu);
-//		weather.put("은평구", mapogu);
-//		weather.put("서대문구", mapogu);
-//		weather.put("마포구", mapogu);
-//		weather.put("양천구", gangseogu);
-//		weather.put("강서구", gangseogu);
-//		weather.put("구로구", gulogu);
-//		weather.put("금천구", geumcheongu);
-//		weather.put("영등포구", gangseogu);
-//		weather.put("동작구", dongjakgu);
-//		weather.put("관악구", dongjakgu);
-//		weather.put("서초구", seochogu);
-//		weather.put("강남구", gangnamgu);
-//		weather.put("송파구", gwangjingu);
-//		weather.put("강동구", gwangjingu);
+		weather.put("중구", jonglogu);
+		weather.put("용산구", yongsangu);
+		weather.put("성동구", seongdonggu);
+		weather.put("광진구", gwangjingu);
+		weather.put("동대문구", dongdaemongu);
+		weather.put("중랑구", junglanggu);
+		weather.put("성북구", seongdonggu);
+		weather.put("강북구", dongdaemongu);
+		weather.put("도봉구", dobonggu);
+		weather.put("노원구", dobonggu);
+		weather.put("은평구", mapogu);
+		weather.put("서대문구", mapogu);
+		weather.put("마포구", mapogu);
+		weather.put("양천구", gangseogu);
+		weather.put("강서구", gangseogu);
+		weather.put("구로구", gulogu);
+		weather.put("금천구", geumcheongu);
+		weather.put("영등포구", gangseogu);
+		weather.put("동작구", dongjakgu);
+		weather.put("관악구", dongjakgu);
+		weather.put("서초구", seochogu);
+		weather.put("강남구", gangnamgu);
+		weather.put("송파구", gwangjingu);
+		weather.put("강동구", gwangjingu);
 		
 		// 현재 날짜
 		LocalDate now = LocalDate.now();
 		String formatedNow = "";
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-//		String formatedNow = now.format(formatter);
-//		System.out.println(formatedNow);
 		
 		// 현재 시간
 		LocalTime nowTime = LocalTime.now();
@@ -128,36 +126,39 @@ public class UserController {
 		// - API 제공 시간(~이후) : 02:10, 05:10, 08:10, 11:10, 14:10, 17:10, 20:10, 23:10
 		
 		ArrayList<Integer> baseTime = new ArrayList<>(Arrays.asList(2,5,8,11,14,17,20,23));	
-		
 		// 시간 비교하기
-		for(int i : baseTime) {
-			LocalTime criTime = LocalTime.of(i, 10, 30);
-			if(nowTime.isAfter(criTime) == true) {
-				// DateTimeFormatter formatterTime = DateTimeFormatter.ofPattern("HHmm");
-				// String formatedNowTime = nowTime.format(formatterTime);
-				if(i<10) {
+		for(int i = 0; i<baseTime.size(); i++) {
+			int criTime = baseTime.get(i);
+			if( criTime > nowTime.getHour() || (criTime == nowTime.getHour() && nowTime.getMinute() <= 10 )) {
+				if(criTime==2) {
+					// 이전 날 23시
+					formatedNow = now.minusDays(1).format(formatter);
+					formatedNowTime = "2300";
+					break;
+				}else if(criTime<11) {
+					int preTime = baseTime.get(i-1);
 					formatedNow = now.format(formatter);
-					formatedNowTime = "0"+i+"00";
+					formatedNowTime = "0"+preTime+"00";
 					break;
 				}else {
+					int preTime = baseTime.get(i-1);
 					formatedNow = now.format(formatter);
-					formatedNowTime = i+"00";
+					formatedNowTime = preTime+"00";
 					break;
-				}					
+				}
 			}else {
-				// 23시 이후인 경우
-				formatedNow = now.minusDays(1).format(formatter);
+				// 23시 이후 ~ 24시 이전
+				formatedNow = now.format(formatter);
 				formatedNowTime = "2300";
-				break;
 			}
 		}
-		
+
 		// 람다식을 사용할 때 로컬 변수를 사용하려면 final 특성이어야 한다. (불가변성)  > 그래서 재 선언
 		String formatedNowFinal = formatedNow;
 		String formatedNowTimeFinal = formatedNowTime;
-//		System.out.println(formatedNowFinal);
-//		System.out.println(formatedNowTimeFinal);
-			
+		// System.out.println(formatedNowFinal);
+		// System.out.println(formatedNowTimeFinal);
+		
 		// 메인 페이지로 넘겨줄 list data
 		Map<String,List> mapWeather = new HashMap<>();
 		
@@ -184,7 +185,7 @@ public class UserController {
 		        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		        conn.setRequestMethod("GET");
 		        conn.setRequestProperty("Content-type", "application/json");
-		        System.out.println("Response code: " + conn.getResponseCode());
+		        // System.out.println("Response code: " + conn.getResponseCode());
 		        
 		        BufferedReader rd;
 		        // 서버 연결 코드에 상관없이 rd로 데이터를 받아온다.
@@ -212,63 +213,42 @@ public class UserController {
 		        // 2. 문자열을 JSON 형태로 JSONObject 객체에 저장. 	
 		        try {
 					JSONObject obj = (JSONObject)parser.parse(data);
+					System.out.println(obj);
 					JSONObject response = (JSONObject) obj.get("response");
 					JSONObject body = (JSONObject) response.get("body");
 					JSONObject items = (JSONObject) body.get("items");
 					JSONArray item = (JSONArray) items.get("item");
 					// System.out.println(item.size());
-					Map<String,Float> air = new HashMap<>();
+					Map<String,Object> air = new HashMap<>();
 					ArrayList<Map> airList = new ArrayList<>();
 					for(int i=0;i<item.size();i++) {
-						System.out.println(i);
-						
 						JSONObject itemList = (JSONObject) item.get(i);
 						String category = (String) itemList.get("category");
 						if(category.equals("PTY") || category.equals("SKY") || category.equals("TMP")) {
-							System.out.println(category);
+							// System.out.println(category);
 							// System.out.println(String.valueOf(itemList.get("fcstValue")));
 							float airVal = Float.parseFloat(String.valueOf(itemList.get("fcstValue")));
 							// System.out.println("airVal"+airVal);
-							System.out.println(itemList);
+							// System.out.println(itemList);
 							air.put(category,airVal);
-							System.out.println("-"+air);
-
-							
-						}
-						// 예보시간
-						// air.put("fcstTime", (Float) itemList.get("fcstTime"));
-						// air.put("fcstDate", (Float) itemList.get("fcstDate"));
-//						airList.add(air);
-//						System.out.println(air.size());
-//						System.out.println("아");
-//						if(air.size()==3) {
-//							System.out.println("한시간 지남");
-//							
-//							air.clear();
-//						}
-						if(air.size()==3) {
-							System.out.println("한시간 지남");
-							System.out.println(air);
-							airList.add(air);
-							System.out.println(airList);
-							air.clear();
-						}
-						
-						
-						
+							// System.out.println("-"+air);
+							if(air.size() == 3) {
+								air.put("fcstDate", itemList.get("fcstDate"));
+								air.put("fcstTime", itemList.get("fcstTime"));
+								// 새로운 Map 객체 airClone을 air 사이즈가 3일 때마다 생성 (덮어씌우기) > 주소가 매번 달라짐.
+								// air는 for문 밖에 존재하기 때문에 값이 덮어씌우기가 안된다. 그래서 add(air)하면 같은 주소값만 들어감.
+								// add는 주소값 저장
+								// clone은 public 메소드가 아니어서? 형변환 하고 clone해야 한다.
+								Map<String,Object> airClone = new HashMap<>(air);
+								//a로 바꿔도 air바뀌고    air로 바꿔도 a바뀐다.
+								// System.out.println("air : "+air);
+								// System.out.println("airClone : "+airClone);
+								airList.add(airClone);	//air를 쓰면 마지막 air만 반복해서 들어간다.
+								air.clear();
+							}							
+						}						
 					}
-					
-					
-					System.out.println("-----"+airList);
 					mapWeather.put(key, airList);
-					System.out.println(mapWeather);
-					
-					// System.out.println(cate);
-//					System.out.println(item);
-//					JSONObject tempData = (JSONObject) item.get(3);
-//					float temp = Float.parseFloat(String.valueOf(tempData.get("obsrValue")));
-//					mapWeather.put(key, temp);
-					
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
