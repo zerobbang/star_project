@@ -68,17 +68,13 @@
 		  content:'주';
 		  left: 5px;
 		}
-		
-		.label {margin-bottom: 96px;}
-		.label * {display: inline-block;vertical-align: top;}
-		.label .left {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_l.png") no-repeat;display: inline-block;height: 24px;overflow: hidden;vertical-align: top;width: 7px;}
-		.label .center {background: url(https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_bg.png) repeat-x;display: inline-block;height: 24px;font-size: 12px;line-height: 24px;}
-		.label .right {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_r.png") -1px 0  no-repeat;display: inline-block;height: 24px;overflow: hidden;width: 6px;}
 
 .userregion {
 	padding-left: 15%;
 	padding-bottom: 1%;
 }
+
+
     </style>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b9125e70384813c29bb964a22bf69f75"></script>
@@ -96,6 +92,8 @@
 		
 		// 이전에 생성한 폴리곤들을 지우기 위해 
 	    var polygons=[] ;
+		
+	    $body = $("body");
 	
 	    $(document).ready(function(){
 /* 	    	var userNumber = document.getElementById("userNumber");
@@ -107,6 +105,13 @@
 	           type: "get",
 	           success: function(data) {
 	           	$('#mapImg').html(data);
+	           },
+	           beforeSend:function(){
+	        	   /* 로드 되기 전 */
+	        	   $('.wrap-loading').removeClass('display-none');
+	           },
+	           complete:function(){
+	        	   $('.wrap-loading').addClass('display-none');
 	           },
 	           error: function (){alert("지도 실패");}
 	        });
@@ -184,6 +189,13 @@
 	        
 	    });
 	    
+	   
+
+	    $(document).on({
+	        ajaxStart: function() { $body.addClass("loading");    },
+	         ajaxStop: function() { $body.removeClass("loading"); }    
+	    });
+	    
 	</script>
 
 	<div th:replace="fragments/body :: main-nav"></div>	
@@ -242,13 +254,12 @@
 	    <input type="hidden" id="selectedRegion" th:value="전국"/>
 	</th:block>
 	</div>
-    
-    
-    
+       
     <div class="map_border">
-    <div id="mapImg" class="d-flex justify-content-center"></div>
+	    <div id="mapImg" class="d-flex justify-content-center">
+	    <div class="wrap-loading display-none"><div><img src="../img/loading.jpg" /></div></div> 
+	    </div> 
     </div>
-    <h2>카카오 이미지 띄우기 비동기 처리(default 가 비동기)</h2>
     
     <br><br><br>
     <div>
@@ -268,10 +279,19 @@
 
 	</div>
 	
+
 	<br><br>
 	
    	<div id="best"></div>
 
+
+
+	<!-- 관측지 지역 추천(서울) 다른 html에 작성-->
+	<a href="/star/goodPlaces">
+	<input type="button" value="지역추천">
+	</a>
+	
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 </body>
 </html>

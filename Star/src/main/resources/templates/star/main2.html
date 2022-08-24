@@ -2,8 +2,8 @@
 <div id="map" style="width:70%;height:450px;"></div>
     <script th:inline="javascript">    
   
-    // 서울 온도 값
-    	var a = /*[[${mapWeather}]]*/null;
+    // 서울 대기 값
+    var a = /*[[${mapWeather}]]*/null;
     
     // 서울 중심 좌표 값
     var seoulKey = new Array('강남구','강동구','강북구','강서구','관악구','광진구','구로구','금천구','노원구','도봉구','동대문구',
@@ -147,17 +147,44 @@
         var index = 0;
       	for(key in a){
     		console.log(key,a[key]);
-    		// console.log(index);
             // 커스텀 오버레이에 표시할 내용입니다     
             
-
+			// 현재 초단기 예보
             for(let i=0;i<seoulKey.length;i++){
             	if(seoulData.seoulKey[i] == key){
-            		var content = '<div class ="label"><span class="left"></span><span class="center">'+key+'</span><span class="right"></span></div>';
+            		if(a[key][0]['SKY'] == 4){
+            			
+            			/*var content = '<div class="card" style="width: 18rem;"><div class="card-body"><h5 class="card-title">구이름</h5><p class="card-text">이미지</p><h6>온도</h6></div></div>';*/
+                		/* var content = '<div class ="label"><span class="left"></span><span class="center">'+key+'<br>흐림</span><span class="right"></span>'
+                		+'<lottie-player src="../lottie/sun.json" background="transparent" style="width: 50px; height: 30px;" speed="1" loop autoplay></lottie-player>'+'</div>'; */
+						/*var content = '<div class="card" style="width: 18rem;"><img src="..." class="card-img-top" alt="..."><div class="card-body"><h5 class="card-title">Card title</h5><p class="card-text">Some quick example text to build on the card title and make up the bulk of the card content.</p><a href="#" class="btn btn-primary">Go somewhere</a></div></div>'*/
+            		}
+            		
+            		
+            		/* var content = '<div class ="label"><span class="left"></span><span class="center">'+key+'</span><span class="right"></span>'
+            		+'<lottie-player src="../lottie/sun.json" background="transparent" style="width: 50px; height: 30px;" speed="1" loop autoplay></lottie-player>'+'</div>';
+  */          		
+/*             		<div style="position:absolute; top: calc(50vh - 112.5px); left: calc(50vw - 150px);">
+            	    <lottie-player src="../lottie/paper-airplane.json" background="transparent" style="width: 300px; height: 225px;" speed="1" loop autoplay>
+            	    </lottie-player>
+            		</div> */
+
+
+            		var content = 
+            		'<link href="../css/weatherMap_info.css" rel="stylesheet">'
+            		+'<div class="weathermap_info"><div class="row d-flex justify-content-center align-items-center">'
+            		+'<div class="card border"><div class="card-header">'+key+'</div>'
+            		+'<div class="card-body text-danger">'
+            		+'<img src="../img/sunny_icon.png" alt="" width="13" height="13">'
+            		+'<p class="card-text">30º</p></div></div>'
+            		
+            		// var content = '<div class ="label"><span class="left"></span><span class="center">'+key+'</span><span class="right"></span></div>';
+
             		// console.log("일치!",seoulData.seoulKey[i]);
             		// console.log(seoulData.seoulCenter[i][0]);
             		// 커스텀 오버레이가 표시될 위치입니다 
-            		// console.log(i);
+
+            		console.log(a[key][0]['SKY']);
                     var position = new kakao.maps.LatLng(seoulData.seoulCenter[i][0],seoulData.seoulCenter[i][1]);  
 
                     // 커스텀 오버레이를 생성합니다
