@@ -23,6 +23,7 @@
 
 html, body {
 	font-family: 'Gowun Dodum', sans-serif;
+	font-weight: bold;
 }
 
 /* 전체 배경 적용 */
@@ -38,6 +39,7 @@ html, body {
 	
 header {
     background-color: navy;
+    padding-right: 2%;
 }
 h1 {
 	color: white;
@@ -62,14 +64,10 @@ h1 {
 	background-color: transparent;
 	color: white;
 	padding: 16px;
-	font-size: 16px;
+	font-size: 13px;
 	border: none;
 	cursor: pointer;
 	width: 40%;
-}
-
-.dropdown-toggle i {
-	color: white;
 }
 
 .nick_user {
@@ -87,7 +85,7 @@ h1 {
 	border: none;
 	font-size: 20px;
 	color: white;
-	background-color: transparent;;
+	background-color: transparent;
 }
 
 /* .category_part {
@@ -105,9 +103,8 @@ li {
 	font-size: 20px;
 } */
 
-.btn {
-	margin-right: 1%;
-	font-size: 20px;
+ .btn {
+	font-size: 13px;
 }
 </style>
 
@@ -162,17 +159,17 @@ li {
 					</form>
 				</li>
 			</ul>
-			</div>
 		
 		<div class="userButton">
-
 			<!-- 회원번번호가 없을 때 -->
 			<form id="login-signup" th:if="${session.userDTO == null}">
 				<!-- 버튼 태그에 페이지 이동을 달아두는거 재밌어보여서 써봄 ㅎ -->
-				<button class="btn btn-secondary btn-sm" type="button"
+				<div class="d-grid gap-2 d-md-flex justify-content-sm-end">
+				<button class="btn btn-secondary me-sm-1" type="button"
 					onclick="location.href='/star/login' ">Login</button>
 				<button class="btn btn-primary btn-sm" type="button"
 					onclick="location.href='/star/signup' ">회원 가입</button>
+					</div>
 			</form>
 			<!-- 회원번호가 있을 때 -->
 			<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search"
@@ -184,7 +181,7 @@ li {
 					<button class="dropdown-toggle" id="dropdownMenuButtonWithIcon"
 						data-bs-toggle="dropdown" aria-expanded="false">
 						<input class="nick_user" type="button" th:value="*{session.userDTO.userNickname}">
-						<i class="bi bi-gear-fill"></i>
+						<!-- <i class="bi bi-gear-fill" style="color: white;"></i> -->
 					</button>
 					<div class="dropdown-menu"
 						aria-labelledby="dropdownMenuButtonWithIcon">
