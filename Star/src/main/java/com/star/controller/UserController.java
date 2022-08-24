@@ -261,7 +261,7 @@ public class UserController {
 		model.addAttribute("mapWeather", mapWeather);
 		
 		//System.out.println(model);
-        
+         
 		return "star/main2";
 	}	
 	
