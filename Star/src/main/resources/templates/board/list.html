@@ -14,6 +14,7 @@
 	border: none;
 	text-align: center;
 	margin-top: 7%;
+	margin-left: 7%;
 	font-size: 25px;
 	font-weight: bold;
 	color: black;
@@ -22,6 +23,7 @@
 /* 글쓰기 */
 .write_class {
 	text-align: right;
+	padding-right: 8%;
 }
 
 button .btn btn-primary btn-sm {
@@ -121,7 +123,7 @@ input::placeholder {
 <body>
 	<!-- <body id="list" class=""> -->
 	<!-- <input type="text" id="targetCategory" name="targetCategory" th:value="${session.criteria.category }" size="5" disabled> -->
-	<div id="list" class="container">
+	<div id="list">
 	<div class="d-flex flex-row mb-3 align-items-end">
 		<input type="text" id="targetCategory" name="targetCategory"
 			th:value="${session.criteria.category }" size="5" disabled>
@@ -137,7 +139,7 @@ input::placeholder {
 		</div>
 	
 		<form th:action="@{/board/write}" method="post" class="write_class">
-			<div class="justify-content-end">
+			<div class="d-flex justify-content-end">
 				<!-- <input type="text" id="pageNum" name="pageNum" th:value="${session.criteria.pageNum }"> 
 			<input type="text" id="amount" name="amount" th:value="${session.criteria.amount }">
 			<input type="text" id="category" name="category" th:value="${session.criteria.category }">
@@ -148,7 +150,7 @@ input::placeholder {
 		
 		<!-- 관측지, 소통방 -->
 		<table class="board_list table"
-			th:if="${session.criteria.category} != '작품전'">
+			th:if="${session.criteria.category} != '작품전'"  style="width: 85%">
 			<colgroup>
 				<col width="15%" />
 				<col width="*" />
