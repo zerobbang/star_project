@@ -135,32 +135,34 @@
          <table class="board_list">
             <colgroup>
                 <col width="10%"/>
-                <col width="10%"/>
                 <col width="*"/>
                 <col width="20%"/>
-                <col width="0%"/>
+                <col width="5%"/>
+                <col width="5%"/>
             </colgroup>
             <thead>
-                <tr>
-                    <th scope="col">글번호</th>
+                <tr>                   
                     <th scope="col">회원번호</th>
                     <th scope="col">내용</th>
                     <th scope="col">작성일</th>
+
        
                 </tr>
             </thead>
             <tbody>
                 <tr th:if="${#lists.size(commentList)} > 0"  th:each="list,index : ${commentList}">
 		
-                    <td th:text="${list.bno}"></td>
+                    <!-- <td th:text="${list.bno}"></td> -->
                     <td th:text="${list.userNumber}"></td>
                     <td th:text="${list.cmtContent}"></td>                 
                     <td class="writeDate" th:text="${#temporals.format(list.writeDate, 'dd-MM-yyyy HH:mm')}"></td>
        				
        				<td th:if="${list.userNumber} == ${session.userDTO.userNumber}">
-						<button type="button"  th:id="${index.index}" name="cmtNum" th:value="${list.cmtNum}" onclick="deleteComment(this.value);">x</button></td>
-       				<td>
-       				</td>
+						<button type="button"  th:id="${index.index}" name="cmtNum" th:value="${list.cmtNum}" onclick="deleteComment(this.value);">✖</button>
+					</td>
+					<td th:if="${list.userNumber} == ${session.userDTO.userNumber}">
+						<button type="button"  th:id="${index.index}" name="cmtNum" th:value="${list.cmtNum}" onclick="changeComment(this.value);">✏️</button>
+					</td>
        				<!--        				<input type="button" th:id="${index.index}" name="cmtNum" th:value="${list.cmtNum}" onclick="deleteComment(this.value);"/> -->
                  </tr> 
                <tr th:unless="${#lists.size(commentList)} > 0">
@@ -221,6 +223,12 @@ function deleteComment(clicked_id){
 			console.log(error);
 		}
 	}); 
+		
+}
+
+function changeComment(clicked_id){ 
+	alert(clicked_id);
+	
 		
 } 
  
