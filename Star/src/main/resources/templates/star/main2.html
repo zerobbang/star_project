@@ -153,7 +153,15 @@
 
             for(let i=0;i<seoulKey.length;i++){
             	if(seoulData.seoulKey[i] == key){
-            		var content = '<div class ="label"><span class="left"></span><span class="center">'+key+'</span><span class="right"></span></div>';
+            		var content = 
+            		'<link href="../css/weatherMap_info.css" rel="stylesheet">'
+            		+'<div class="weathermap_info"><div class="row d-flex justify-content-center align-items-center">'
+            		+'<div class="card border"><div class="card-header">'+key+'</div>'
+            		+'<div class="card-body text-danger">'
+            		+'<img src="../img/sunny_icon.png" alt="" width="13" height="13">'
+            		+'<p class="card-text">30º</p></div></div>'
+            		
+            		// var content = '<div class ="label"><span class="left"></span><span class="center">'+key+'</span><span class="right"></span></div>';
             		// console.log("일치!",seoulData.seoulKey[i]);
             		// console.log(seoulData.seoulCenter[i][0]);
             		// 커스텀 오버레이가 표시될 위치입니다 

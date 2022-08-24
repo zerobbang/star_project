@@ -8,6 +8,38 @@
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
 	type="text/javascript"></script>
 <style>
+/* 게시판 카테고리별 제목 */
+#targetCategory {
+	background-color: transparent;
+	border: none;
+	text-align: center;
+	margin-left: 6%;
+	margin-top: 7%;
+	font-size: 25px;
+	font-weight: bold;
+}
+
+/* 글쓰기 */
+.write_class {
+	text-align: right;
+	margin-right: 8%;
+}
+
+button .btn btn-primary btn-sm {
+	font-size: 20px;
+	font-weight: bolder;
+}
+
+div table {
+	margin: auto;
+	font-size: 15px;
+	text-align: center;
+}
+
+.tr_class {
+	border-bottom: 1px solid black;
+}
+
 /* 페이지 버튼 간단한 css */
 .pageInfo {
 	list-style: none;
@@ -82,53 +114,24 @@ input::placeholder {
 	background-repeat: no-repeat;
 }
 
-/* 글쓰기 */
-.write_class{
-	text-align: right;
-	margin-right: 150px;	
-}
-button .btn btn-secondary btn-sm {
-	font-size: 20px;
-}
-
-div table {
- 	width: 70%;
-	margin: auto;
-	/* font-size: 25px; */
-}
-.tr_class{
-	border-bottom: 1px solid black;
-}
-
-h4 {
+/* h4 {
 	margin-left: 3%;
 	padding-top: 7%;
-}
-.pageInfo_wrap{
+} */
+.pageInfo_wrap {
 	text-align: center;
 }
-
 </style>
 </head>
 <div th:replace="fragments/body :: main-css"></div>
 <div th:replace="fragments/body :: main-nav"></div>
 <body id="list">
-<!-- <body id="list" class=""> -->
-	<input type="text" id="targetCategory" name="targetCategory" th:value="${session.criteria.category }">
+	<!-- <body id="list" class=""> -->
+	<!-- <input type="text" id="targetCategory" name="targetCategory" th:value="${session.criteria.category }" size="5" disabled> -->
 	<div>
-		<h4>
-			<strong>게시글 목록</strong>
-		</h4>
-				
-		<form th:action="@{/board/write}" method="post" class="write_class">
-			<div class="justify-content-md-end ">
-				<!-- <input type="text" id="pageNum" name="pageNum" th:value="${session.criteria.pageNum }"> 
-			<input type="text" id="amount" name="amount" th:value="${session.criteria.amount }">
-			<input type="text" id="category" name="category" th:value="${session.criteria.category }">
-			<input type="text" id="total" name="total"th:value="${pageMaker.total}"> -->
-				<button type="submit" class="btn btn-secondary btn-sm">글쓰기</button>
-			</div>
-		</form>
+	<div class="d-flex flex-row mb-3 align-items-end">
+		<input type="text" id="targetCategory" name="targetCategory"
+			th:value="${session.criteria.category }" size="5" disabled>
 		<!-- 소통방일 경우에만 활성화 -->
 		<div id="divSelectCategory">
 			<select id="selectCategory"
@@ -138,8 +141,24 @@ h4 {
 					th:selected="${session.criteria.category}=='사고팔아요'">사고팔아요</option>
 			</select>
 		</div>
+		</div>
+		<!-- <h4>
+			<strong>게시글 목록</strong>
+		</h4> -->
+
+		<form th:action="@{/board/write}" method="post" class="write_class">
+			<div class="justify-content-end ">
+				<!-- <input type="text" id="pageNum" name="pageNum" th:value="${session.criteria.pageNum }"> 
+			<input type="text" id="amount" name="amount" th:value="${session.criteria.amount }">
+			<input type="text" id="category" name="category" th:value="${session.criteria.category }">
+			<input type="text" id="total" name="total"th:value="${pageMaker.total}"> -->
+				<button type="submit" class="btn btn-primary btn-sm">글쓰기</button>
+			</div>
+		</form>
+		
+		<!-- 관측지, 소통방 -->
 		<table class="board_list table"
-			th:if="${session.criteria.category} != '작품전'">
+			th:if="${session.criteria.category} != '작품전'" style="width: 85%;">
 			<colgroup>
 				<col width="15%" />
 				<col width="*" />
@@ -147,7 +166,7 @@ h4 {
 				<col width="20%" />
 			</colgroup>
 			<thead>
-				<tr style="font-size: 15px; text-align: center;">
+				<tr >
 					<th scope="col">글번호</th>
 					<th scope="col">제목</th>
 					<th scope="col">작성자</th>
@@ -160,9 +179,10 @@ h4 {
 					<!-- 고유 글의 번호를 출력 해 주는 것이 아닐 카테고리 별로 최신 순부터 1번으로 보여준다. -->
 					<td th:text="${list.bno}"></td>
 
-					<td class="title"><a
-						th:href="@{/board/detailed_check(bno=${list.bno})}"
-						th:text="${list.title}"> </a></td>
+					<td class="title">
+					<a th:href="@{/board/detailed_check(bno=${list.bno})}"
+						th:text="${list.title}"></a>
+					</td>
 
 					<td class="writer" th:text="${list.userNickname}"></td>
 
@@ -171,19 +191,20 @@ h4 {
 						th:text="${#temporals.format(list.regDate, 'dd-MM-yyyy HH:mm')}"></td>
 				</tr>
 
-				<tr th:unless="${#lists.size(boardList)} > 0" style="font-size: 15px; text-align: center;">
+				<tr th:unless="${#lists.size(boardList)} > 0">
 					<td colspan="4">조회된 결과가 없습니다.</td>
 				</tr>
 			</tbody>
 		</table>
-
+		<!-- 작품전 -->
 		<div class="board_list">
 			<ul th:if="${session.criteria.category} == '작품전'" class="ul_class">
 				<li th:if="${#lists.size(boardList)} > 0"
-					th:each="num : ${#numbers.sequence(0,#lists.size(boardList)-1)}" class="li_class">
+					th:each="num : ${#numbers.sequence(0,#lists.size(boardList)-1)}"
+					class="li_class">
 					<div>
 						<img th:src="'/imgfiles/'+${boardList[num].imgName}"> <br>
-						
+
 						<a th:href="@{/board/detailed_check(bno=${boardList[num].bno})}">
 							<input type="text"
 							th:value="| ${boardList[num].userNickname}: ${boardList[num].title} |">
@@ -192,23 +213,15 @@ h4 {
 						</a>
 					</div>
 				</li>
-				<li th:unless="${#lists.size(boardList)} > 0">
-	                    <div>조회된 결과가 없습니다.</div>
-	            </li>
-	        </ul>
-        </div>
-        
-        <br>
-        
-		<!-- 글쓰기 버튼 -->
-		<!-- <form th:action="@{/board/write}" method="post" class="write_class">
-			<input type="submit" value="글쓰기" />
-		</form> -->
+				<li th:unless="${#lists.size(boardList)} > 0"
+					style="font-size: 15px; text-align: center;">
+					<div>조회된 결과가 없습니다.</div>
+				</li>
+			</ul>
+		</div>
+		<input type="hidden" th:value="${pageMaker.startPage}"> <input
+			type="hidden" th:value="${pageMaker.endPage}">
 
-
-		<input type="hidden" th:value="${pageMaker.startPage}">
-		<input type="hidden" th:value="${pageMaker.endPage}">
-		
 		<div class="pageInfo_wrap">
 			<div class="pageInfo_area">
 				<!-- <ul id="pgaeInfo" class="pageInfo"> -->
@@ -220,37 +233,38 @@ h4 {
 
 						<!-- 이전 페이지 -->
 						<th:block th:if="${pageMaker.prev}">
-						<li class="pageInfo_btn previous page-item">
-						<a class="page-link" aria-label="Previous" href="javascript:;" th:value="${1}">
-								<span aria-hidden="true">&laquo;</span>
-						</a>
-						</li>
-						<li class="pageInfo_btn previous page-item"><a href="javascript:;"
-							th:value="${pageMaker.startPage-1}">&lt;</a>
-						</li>
+							<li class="pageInfo_btn previous page-item"><a
+								class="page-link" aria-label="Previous" href="javascript:;"
+								th:value="${1}"> <span aria-hidden="true">&laquo;</span>
+							</a></li>
+							<li class="pageInfo_btn previous page-item"><a
+								href="javascript:;" th:value="${pageMaker.startPage-1}">&lt;</a>
+							</li>
 						</th:block>
-						
+
 
 						<!-- 페이지 -->
-						<th:block th:each="num : ${#numbers.sequence(__${pageMaker.startPage}__,__${pageMaker.endPage}__)}">
-							<li class="pageInfo_btn page-item">
-							<a class="page-link" href="javascript:;" th:text="${num}"></a>
-							</li>
+						<th:block
+							th:each="num : ${#numbers.sequence(__${pageMaker.startPage}__,__${pageMaker.endPage}__)}">
+							<li class="pageInfo_btn page-item"><a class="page-link"
+								href="javascript:;" th:text="${num}"></a></li>
 							<li th:if="${pageMaker.cri.pageNum} == ${num}"
-							class="pageInfo_btn page-item active"><a href="javascript:;"
-							th:text="${num}"></a></li>
+								class="pageInfo_btn page-item active"><a
+								href="javascript:;" th:text="${num}"></a></li>
 							<li th:unless="${pageMaker.cri.pageNum} == ${num}"
-							class="pageInfo_btn page-item"><a href="javascript:;" th:text="${num}"></a></li>
+								class="pageInfo_btn page-item"><a href="javascript:;"
+								th:text="${num}"></a></li>
 						</th:block>
 						<!-- 다음 페이지 -->
 						<th:block th:if="${pageMaker.next}">
-						<li class="pageInfo_btn next page-item"><a class="page-link" aria-label="Next" href="javascript:;" th:value="${pageMaker.endPage+1}"
-							> <span class="pageInfo_btn next page-item" aria-hidden="true">&raquo;</span>
-						</a>
-						</li>
-						<li class="pageInfo_btn next  page-item"><a href="javascript:;"
-							th:value="${pageMaker.realEndPage}">&gt;&gt;</a>
-						</li>
+							<li class="pageInfo_btn next page-item"><a class="page-link"
+								aria-label="Next" href="javascript:;"
+								th:value="${pageMaker.endPage+1}"> <span
+									class="pageInfo_btn next page-item" aria-hidden="true">&raquo;</span>
+							</a></li>
+							<li class="pageInfo_btn next  page-item"><a
+								href="javascript:;" th:value="${pageMaker.realEndPage}">&gt;&gt;</a>
+							</li>
 						</th:block>
 					</ul>
 				</nav>
