@@ -194,7 +194,6 @@
 	</script>
 
 	<div th:replace="fragments/body :: main-nav"></div>	
-    <h1>안녕하세요</h1>
     
    <div class="userregion">
     <th:block th:if="${session.userDTO} != null">
@@ -280,13 +279,6 @@
 	<br><br>
 	
    	<div id="best"></div>
-
-
-
-	<!-- 관측지 지역 추천(서울) 다른 html에 작성-->
-	<a href="/star/goodPlaces">
-	<input type="button" value="지역추천">
-	</a>
 	
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
