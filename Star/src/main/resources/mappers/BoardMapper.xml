@@ -167,7 +167,7 @@
  		a.*, b.user_nickname
 	FROM 
 		 board_list a
-	INNER JOIN 
+	LEFT OUTER JOIN 
 		users_table b
     	ON a.user_number  = b.user_number
 	WHERE 
