@@ -213,7 +213,6 @@ public class UserController {
 		        // 2. 문자열을 JSON 형태로 JSONObject 객체에 저장. 	
 		        try {
 					JSONObject obj = (JSONObject)parser.parse(data);
-					System.out.println(obj);
 					JSONObject response = (JSONObject) obj.get("response");
 					JSONObject body = (JSONObject) response.get("body");
 					JSONObject items = (JSONObject) body.get("items");
@@ -261,7 +260,7 @@ public class UserController {
 		model.addAttribute("mapWeather", mapWeather);
 		
 		//System.out.println(model);
-        
+         
 		return "star/main2";
 	}	
 	
