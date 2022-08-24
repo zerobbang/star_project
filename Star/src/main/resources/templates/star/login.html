@@ -39,12 +39,11 @@ html, body {
 
 /* login border */
 .login_wrap {
-	border: 1px solid;
 	box-sizing: border-box;
 	margin: 10% 31% 0 30%;
 	width: 40%;
-	background-color: rgba(0, 0, 0, 0.5);
-	border-radius: 5%;
+	background-color: rgba(0, 0, 0, 0.6);
+	border-radius: 6%;
 	padding-left: 2%;
 }
 
@@ -88,7 +87,8 @@ input::placeholder {
 }
 
 .login_btn {
-	padding-left: 7%;
+	padding-left: 13%;
+	padding-right: 7%;
 }
 
 /* 회원가입, 계정찾기 css */
@@ -98,25 +98,27 @@ input::placeholder {
 	padding-right: 7%;
 } 
 
-/* .find_wrap li {
+.find_wrap li {
 	position: relative;
  	display: inline-block;
+ 	padding: 2%;
 }
+
 /* 가운데 바 위치 조정 */
 .find_wrap li+li::before {
 	content: '';
 	position: absolute;
-	margin-left: -18%;
-	top: 50%;
+	margin-left: -12%;
+	top: 30%;
 	width: 1px;
-	height: 17px;
+	height: 15px;
 	border-radius: 0.5px;
 	background-color: #8a8888;
-}  */
+		line-height: 17px;
+}
 
-.find_wrap .find_text {
-	font-size: 15px;
-	line-height: 17px;
+.find_wrap a {
+	font-size: 16px;
 	text-decoration: none;
 	color: white;
 	font-weight: bold;
@@ -178,7 +180,7 @@ input::placeholder {
 					th:object="${params}">
 					<button type="submit" class="btn btn-secondary">로그인</button>
 				</div>
-				<div class="">
+				<div>
 					<ul class="find_wrap d-flex justify-content-center">
 						<li><a href="signup" class="find_text">회원 가입</a></li>
 						<li><a href="findUser" class="find_text">계정 찾기</a></li>

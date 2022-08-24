@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head th:fragment="main-css">
 
-<link rel="stylesheet" href="../css/navHeader.css">
+<!-- <link rel="stylesheet" href="../css/navHeader.css"> -->
 <link rel="stylesheet" href="../css/bootstrap.css">
 <link rel="stylesheet" href="../js/bootstrap.js">
 <link rel="stylesheet"
@@ -24,12 +24,40 @@
 html, body {
 	font-family: 'Gowun Dodum', sans-serif;
 }
-.test_img {
-	width: 70px;
-	height: 70px;
-	object-fit: cover;
+
+/* 전체 배경 적용 */
+/* html, body {
+ 	background-position: 0 0;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-image: url(../img/starpage.jpg);
+	height: 100%;
+	background-color: white;
+	overflow-x: hidden;
+} */
+	
+header {
+    background-color: navy;
+}
+h1 {
+	color: white;
 }
 
+.Logo {
+ 	display: flex;
+ 	text-align: center;
+ 	align-items: center;
+}
+
+.nav-item input {
+	outline: none;
+	border: none;
+	background-color: transparent;
+	color: white;
+
+}
+
+/* 로그인 상태 드롭바 */
 .dropdown-toggle {
 	background-color: transparent;
 	color: white;
@@ -41,24 +69,45 @@ html, body {
 }
 
 .dropdown-toggle i {
-	color: gray;
+	color: white;
 }
 
 .nick_user {
 	border: none;
-	border-color: red;
-	border-style: double;
+	font-size: 20px;
+	background-color: transparent;
+	color: white;
 }
 
-.category li .menu {
+/* .category li .menu {
 	border: none;
 }
-
+ */
 .drop_btn {
 	border: none;
-	border-color: red;
-	border-style: double;
-	font-size: 50%;
+	font-size: 20px;
+	color: white;
+	background-color: transparent;;
+}
+
+/* .category_part {
+	width: 50%;
+	height: 86px;
+}
+ul{
+	list-style-type: none;
+	text-align: center;
+} 
+li {
+	margin-left: 5%;
+	float: left;
+	padding-top : 15px;
+	font-size: 20px;
+} */
+
+.btn {
+	margin-right: 1%;
+	font-size: 20px;
 }
 </style>
 
@@ -66,58 +115,63 @@ html, body {
 <body th:fragment="main-nav">
 
 	<header class="nav_header">
-
-		<div class="Logo">
-			<!-- 별별 이미지를 별애별 모임 글 앞으로 옮겨놓음. -->
+		<nav  class="navbar navbar-expand">
+			<div class="Logo">
 			<a href="/star/mainpage">
 				<svg class="bi me-2" width="70"
 					height="70" role="img" aria-label="Logo">
-		            <img src="../img/Logo.png" width="70" height="70">
+		            <img src="../img/Logo.png" width="80" height="80">
 		        </svg>
 			</a>
-			<h2 class="page-title d-flex align-items-center" style="color: blue;"><strong>별애별 모임</strong></h2>
+			<h1 class="page-title"><strong>별애별 모임</strong></h1>
 		</div>
-		<div class="">
-			<ul class="category">
-				<li >
-					<form class="nav-link px-2 link-secondary"
+		<!-- <div class="navbar-collapse"> -->
+			<ul class="category nav navbar-collapse justify-content-center">
+				<!-- Home -->
+				<li  class="nav-item">
+				<!-- px2 link-black -->
+					<form class="nav-link" 
 						th:action="@{/star/mainpage}" method="get">
-						<input class="menu" type="submit" value="Home">
+						<!-- <a class="nav-link active" aria-current="page" href="#"> -->
+						<input class="menu" type="submit" value="Home" style="font-size: 20px;">
+						</a>
 					</form>
 				</li>
-				<li >
-					<form class="nav-link px-2 link-dark" th:action="@{/board/list}"
+				<!-- 관측지 -->
+				<li class="nav-item">
+					<form class="nav-link" th:action="@{/board/list}"
 						method="get">
 						<input type="hidden" id="category" name="category" value="관측지">
-						<input class="menu" type="submit" value="관측지">
+						<input class="menu" type="submit" value="관측지" style="font-size: 20px;">
 					</form>
 				</li>
-
-				<li>
-					<form class="nav-link px-2 link-dark" th:action="@{/board/list}"
+				<!-- 작품전 -->
+				<li class="nav-item">
+					<form class="nav-link" th:action="@{/board/list}"
 						method="get">
 						<input type="hidden" id="category" name="category" value="작품전">
-						<input class="menu" type="submit" value="작품전">
+						<input class="menu" type="submit" value="작품전" style="font-size: 20px;">
 					</form>
 				</li>
-
-				<li>
-					<form class="nav-link px-2 link-dark" th:action="@{/board/list}"
+				<!-- 잡담 -->
+				<li class="nav-item">
+					<form class="nav-link" th:action="@{/board/list}"
 						method="get">
 						<input type="hidden" id="category" name="category" value="잡담">
-						<input class="menu" type="submit" value="소통방">
+						<input class="menu" type="submit" value="소통방" style="font-size: 20px;">
 					</form>
 				</li>
 			</ul>
-		</div>
+			</div>
+		
 		<div class="userButton">
 
-			<!-- 회원번호가 없을 때 -->
+			<!-- 회원번번호가 없을 때 -->
 			<form id="login-signup" th:if="${session.userDTO == null}">
 				<!-- 버튼 태그에 페이지 이동을 달아두는거 재밌어보여서 써봄 ㅎ -->
-				<button class="btn btn-secondary" type="button"
+				<button class="btn btn-secondary btn-sm" type="button"
 					onclick="location.href='/star/login' ">Login</button>
-				<button class="btn btn-primary" type="button"
+				<button class="btn btn-primary btn-sm" type="button"
 					onclick="location.href='/star/signup' ">회원 가입</button>
 			</form>
 			<!-- 회원번호가 있을 때 -->
@@ -146,9 +200,9 @@ html, body {
 						</a>
 					</div>
 				</div>
-
 			</form>
 		</div>
+		</nav>
 	</header>
 
 	<th:block layout:fragment="script">

@@ -1,6 +1,25 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" >
 <div id="map" style="width:70%;height:450px;"></div>
-
-    <script>    
+    <script th:inline="javascript">    
+  
+    // 서울 온도 값
+    	var a = /*[[${mapWeather}]]*/null;
+    
+    // 서울 중심 좌표 값
+    var seoulKey = new Array('강남구','강동구','강북구','강서구','관악구','광진구','구로구','금천구','노원구','도봉구','동대문구',
+    		'동작구','마포구','서대문구','서초구','성동구','성북구','송파구','양천구','영등포구','용산구','은평구','종로구','중구','중랑구');
+	var seoulCenter = new Array([37.490858, 127.055381],[37.537801,	127.140004],[37.62667, 127.025983],[37.560183,	126.825448],
+				[37.464740, 126.954547],[37.53854435173622, 127.08238008244685],[37.496756,	126.870793],
+				[37.45683032995246, 126.89544944848646],[37.65251105,127.0750347],[37.66910208, 127.0323688],
+				[37.57441483363414, 127.0397424112896],[37.496029,	126.953822],[37.55931349,126.90827],
+				[37.579152852232355, 126.93681227173859],[37.481426,	126.997596],[37.55102969, 127.0410585],
+				[37.58934979857394, 127.01675159024484],[37.499703,	127.112183],[37.51696145482368, 126.86650994142916],
+				[37.515504,	126.907628],[37.53241211712065, 126.99056990247058],[37.60281068511944, 126.92895004748966],
+				[37.5734826176003, 126.97898147021537],[37.56014356,126.9959681],[37.59780259,127.0928803]);
+	var seoulData = {seoulKey,seoulCenter};
+	
+	
+    	
         // 지도 띄우기
         var mapContainer = document.getElementById('map'),
         mapOption = { 
@@ -25,6 +44,7 @@
 	   	
          setCenter(userSelectRegionCenter);
          showMap(userSelectRegionUrl);
+         custonWeather();
             
         // 지도 보여주기
         function showMap(userSelectRegionUrl){
@@ -35,7 +55,7 @@
                 var name = '';          
 
                 $.each(data, function(index, val) {
-                    console.log("index 값 : ",index);
+                    // console.log("index 값 : ",index);
 
                     // 폴리곤 vs 멀티 폴리곤
                     polygonType = val.geometry.type;
@@ -75,8 +95,8 @@
             var path = [];
             // var points = [];
 
-            console.log(name);
-            console.log(coordinates);
+            // console.log(name);
+            // console.log(coordinates);
 
             // geojson 형태에 따라 달라질 수 있다.
             $.each(coordinates[0], function(index,coordinate){
@@ -120,22 +140,42 @@
             polygons = [];
         }
 
-        
-     // 커스텀 오버레이에 표시할 내용입니다     
-     // HTML 문자열 또는 Dom Element 입니다 
-     var content = '<div class ="label"><span class="left"></span><span class="center">카카오!</span><span class="right"></span></div>';
+     
+     // customOverlay 함수
+     function custonWeather(){
 
-     // 커스텀 오버레이가 표시될 위치입니다 
-     var position = new kakao.maps.LatLng(33.450701, 126.570667);  
+        var index = 0;
+      	for(key in a){
+    		console.log(key,a[key]);
+    		// console.log(index);
+            // 커스텀 오버레이에 표시할 내용입니다     
+            
 
-     // 커스텀 오버레이를 생성합니다
-     var customOverlay = new kakao.maps.CustomOverlay({
-         position: position,
-         content: content   
-     });
+            for(let i=0;i<seoulKey.length;i++){
+            	if(seoulData.seoulKey[i] == key){
+            		var content = '<div class ="label"><span class="left"></span><span class="center">'+key+'</span><span class="right"></span></div>';
+            		// console.log("일치!",seoulData.seoulKey[i]);
+            		// console.log(seoulData.seoulCenter[i][0]);
+            		// 커스텀 오버레이가 표시될 위치입니다 
+            		// console.log(i);
+                    var position = new kakao.maps.LatLng(seoulData.seoulCenter[i][0],seoulData.seoulCenter[i][1]);  
 
-     // 커스텀 오버레이를 지도에 표시합니다
-     customOverlay.setMap(map);
+                    // 커스텀 오버레이를 생성합니다
+                    var customOverlay = new kakao.maps.CustomOverlay({
+                        position: position,
+                        content: content   
+                    });
+
+                    // 커스텀 오버레이를 지도에 표시합니다
+                    customOverlay.setMap(map); 
+            		
+            	}
+            }
+            index++;
+    	}
+  	 
+     }
+
      
      
      
@@ -143,3 +183,4 @@
         
 
     </script>
+    </html>

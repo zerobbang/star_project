@@ -75,7 +75,10 @@
 		.label .center {background: url(https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_bg.png) repeat-x;display: inline-block;height: 24px;font-size: 12px;line-height: 24px;}
 		.label .right {background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_r.png") -1px 0  no-repeat;display: inline-block;height: 24px;overflow: hidden;width: 6px;}
 
-
+.userregion {
+	padding-left: 15%;
+	padding-bottom: 1%;
+}
     </style>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b9125e70384813c29bb964a22bf69f75"></script>
@@ -176,8 +179,9 @@
 	<div th:replace="fragments/body :: main-nav"></div>	
     <h1>안녕하세요</h1>
     
+   <div class="userregion">
     <th:block th:if="${session.userDTO} != null">
-	    <select id="userRegion" name="userRegion" required>
+	    <select id="userRegion" name="userRegion" class="form-select-sm" required>
 	        <option value="전국" th:selected="${session.userDTO.userRegion}== '전국' ">전국</option>
 	        <option value="서울" th:selected="${session.userDTO.userRegion}== '서울' ">서울</option>
 	        <option value="부산" th:selected="${session.userDTO.userRegion}== '부산' ">부산</option>
@@ -200,10 +204,11 @@
 	    
 	    <input type="hidden" id="selectedRegion" th:value="${session.userDTO.userRegion}"/>
 	</th:block>
+	</div>
 	
-	
+	<div class="userregion">
 	<th:block th:if="${session.userDTO} == null">
-	    <select id="userRegion" name="userRegion" required>
+	    <select id="userRegion" name="userRegion" class="form-select-sm" required>
 	        <option value="전국">전국</option>
 	        <option value="서울">서울</option>
 	        <option value="부산">부산</option>
@@ -226,11 +231,13 @@
 	    
 	    <input type="hidden" id="selectedRegion" th:value="전국"/>
 	</th:block>
+	</div>
     
     
     
-    
-    <div id="mapImg"></div>
+    <div class="map_border">
+    <div id="mapImg" class="d-flex justify-content-center"></div>
+    </div>
     <h2>카카오 이미지 띄우기 비동기 처리(default 가 비동기)</h2>
     
     <br><br><br>
@@ -247,7 +254,7 @@
 	<br><br>
     
     <!-- 지역별 미세번지 테이블 -->	
-   	<div id="weather"  style="overflow:scroll;"></div>
+   	<div id="weather" style="overflow:scroll;"></div>
 
 	</div>
 	
