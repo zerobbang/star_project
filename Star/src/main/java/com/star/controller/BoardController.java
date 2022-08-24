@@ -53,10 +53,10 @@ public class BoardController {
 		if (cri.getAjaxYn().equals("y")) {
 			// session.removeAttribute("criteria");
 			// 페이징 처리 시 카테고리가 변경되는 오류 처리
-//			System.out.println("페이징 처리나 검색했을 경우"+session.getAttribute("criteria"));
-//			System.out.println("그냥 크리 "+cri);
-//			Criteria prevCri = (Criteria) session.getAttribute("criteria");
-			session.removeAttribute("criteria");
+			System.out.println("페이징 처리나 검색했을 경우"+session.getAttribute("criteria"));
+			System.out.println("그냥 크리 "+cri);
+			Criteria prevCri = (Criteria) session.getAttribute("criteria");
+//			session.removeAttribute("criteria");
 //			session.setAttribute("criteria", prevCri);
 //			cri.setCategory(prevCri.getCategory());
 //			System.out.println("----------------------------------");
@@ -116,12 +116,13 @@ public class BoardController {
 		}
 		
 		int total = boardService.getCount(cri);
+		System.out.println("집 : "+total);
 		PageMakeDTO pageMake = new PageMakeDTO(cri,total);
 		
 		model.addAttribute("pageMaker", pageMake);
 		System.out.println("pageMake: " + pageMake);
 		
-		System.out.println("아아아아아ㅏ아아아아아아 cri : "+cri);
+		// System.out.println("아아아아아ㅏ아아아아아아 cri : "+cri);
 		
 		// 세션에 다시 저장
 		session.setAttribute("criteria", cri);

@@ -13,9 +13,9 @@
 				[37.45683032995246, 126.89544944848646],[37.65251105,127.0750347],[37.66910208, 127.0323688],
 				[37.57441483363414, 127.0397424112896],[37.496029,	126.953822],[37.55931349,126.90827],
 				[37.579152852232355, 126.93681227173859],[37.481426,	126.997596],[37.55102969, 127.0410585],
-				[37.58934979857394, 127.01675159024484],[37.499703,	127.112183],[37.51696145482368, 126.86650994142916],
+				[37.6057019, 127.0175795],[37.499703,	127.112183],[37.51696145482368, 126.86650994142916],
 				[37.515504,	126.907628],[37.53241211712065, 126.99056990247058],[37.60281068511944, 126.92895004748966],
-				[37.5734826176003, 126.97898147021537],[37.56014356,126.9959681],[37.59780259,127.0928803]);
+				[37.59491732,126.9773213],[37.56014356,126.9959681],[37.59780259,127.0928803]);
 	var seoulData = {seoulKey,seoulCenter};
 	
 	
@@ -41,10 +41,13 @@
                   var userSelectRegionCenter = regionCenterData.regionCenter[i];
               }
           }
-	   	
+	   	 
+	    if(first == "서울"){
+        	custonWeather();
+        }
          setCenter(userSelectRegionCenter);
          showMap(userSelectRegionUrl);
-         custonWeather();
+         // custonWeather();
             
         // 지도 보여주기
         function showMap(userSelectRegionUrl){
@@ -52,7 +55,7 @@
                 var data = geojson.features;
                 var coordinates = [];   
                 var polygonType = '';
-                var name = '';          
+                var name = '';   
 
                 $.each(data, function(index, val) {
                     // console.log("index 값 : ",index);
@@ -146,7 +149,7 @@
 
         var index = 0;
       	for(key in a){
-    		console.log(key,a[key]);
+    		// console.log(key,a[key]);
             // 커스텀 오버레이에 표시할 내용입니다     
             
 			// 현재 초단기 예보
@@ -170,9 +173,7 @@
             		</div> */
 
 
-            		var content = 
-            		'<link href="../css/weatherMap_info.css" rel="stylesheet">'
-            		+'<div class="weathermap_info"><div class="row d-flex justify-content-center align-items-center">'
+            		var content = '<div class="weathermap_info"><div class="row d-flex justify-content-center align-items-center">'
             		+'<div class="card border"><div class="card-header">'+key+'</div>'
             		+'<div class="card-body text-danger">'
             		+'<img src="../img/sunny_icon.png" alt="" width="13" height="13">'
@@ -184,7 +185,7 @@
             		// console.log(seoulData.seoulCenter[i][0]);
             		// 커스텀 오버레이가 표시될 위치입니다 
 
-            		console.log(a[key][0]['SKY']);
+            		// console.log(a[key][0]['SKY']);
                     var position = new kakao.maps.LatLng(seoulData.seoulCenter[i][0],seoulData.seoulCenter[i][1]);  
 
                     // 커스텀 오버레이를 생성합니다

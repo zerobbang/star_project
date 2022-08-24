@@ -206,14 +206,11 @@
  	SELECT 
  		count(*)
 	FROM 
-		 board_list a
-	INNER JOIN 
-		users_table b
-    	ON a.user_number  = b.user_number
+		 board_list
 	WHERE 
-		a.delete_yn = 0
+		delete_yn = 0
 		<include refid="search" />
-	AND a.category = #{category}
+	AND category = #{category}
 </select>
 
 <!-- 총 마이 페이지 수 출력 -->
@@ -221,14 +218,11 @@
  	SELECT 
  		count(*)
 	FROM 
-		 board_list a
-	INNER JOIN 
-		users_table b
-    	ON a.user_number  = b.user_number
+		 board_list
 	WHERE 
-		a.delete_yn = 0
+		delete_yn = 0
 	AND 
-		a.user_number = #{userNumber}
+		user_number = #{userNumber}
 </select>
 
 <!-- 이미지 저장 -->
