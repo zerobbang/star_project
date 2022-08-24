@@ -341,6 +341,16 @@ AND
 		cmt_num = #{cmtNum}
 </update>
 
+<!-- 댓글 수정 -->
+<update id="alterComment" parameterType="CommentDTO">
+	UPDATE
+		comment_table
+	SET
+		cmt_content = #{cmtContent}
+	WHERE
+		cmt_num = #{cmtNum} 
+</update>
+
 <!-- 댓글 수 출력 -->
 <select id="getCommentCount"  resultType="int">
  	SELECT 

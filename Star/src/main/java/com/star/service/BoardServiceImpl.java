@@ -201,7 +201,7 @@ public class BoardServiceImpl implements BoardService{
 		return commentList;
 	}
 	
-//	댓글 작성
+	//	댓글 작성
 	@Override
 	public void insertComment(CommentDTO commentDTO) {
 		// TODO Auto-generated method stub
@@ -222,7 +222,7 @@ public class BoardServiceImpl implements BoardService{
 		 	
 	}
 	
-//	댓글 삭제
+	//	댓글 삭제
 	@Override
 	public void deleteComment(CommentDTO commentDTO) {
 		
@@ -236,7 +236,21 @@ public class BoardServiceImpl implements BoardService{
 		}
 		 	
 	}
-
+	
+	//	댓글 수정
+	@Override
+	public void changeComment(CommentDTO commentDTO) {
+		
+		try {
+			boardMapper.alterComment(commentDTO);
+		} catch (Exception e) {
+			// TODO: handle exception
+			
+			System.out.println("댓글 작성 중에 에러 발생");
+			System.out.println(e);
+		}
+		 	
+	}
 
 	// 이미지 수정
 	@Override
