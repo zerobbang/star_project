@@ -424,10 +424,6 @@ public class BoardController {
 	// 댓글 삭제
 	@PostMapping(value="/board/commentDelete")
 	public String CommentDelete(@RequestParam(value="bno",required=false)Long bno, BoardDTO boardDTO, CommentDTO commentDTO, Model model) {
-		
-		System.out.println("----'---'----'----");
-    	System.out.println(commentDTO.getCmtNum()); 
-    	System.out.println("-----'-----'---'---");
 
 		boardService.deleteComment(commentDTO); 
 		List<CommentDTO> commentList = boardService.getCommentList(bno);
@@ -435,7 +431,22 @@ public class BoardController {
 		System.out.println("-----------------");
     	System.out.println(commentList);
     	System.out.println("-----------------");
+		 
+    	model.addAttribute("commentList", commentList);
+    	return "/board/commentTable";
+	}
+
+	// 댓글 삭제
+	@PostMapping(value="/board/commentChange")
+	public String CommentChange(@RequestParam(value="bno",required=false)Long bno, BoardDTO boardDTO, CommentDTO commentDTO, Model model) {
+
+		boardService.changeComment(commentDTO); 
+		List<CommentDTO> commentList = boardService.getCommentList(bno);
 		
+		System.out.println("-----------------");
+    	System.out.println(commentList);
+    	System.out.println("-----------------");
+		 
     	model.addAttribute("commentList", commentList);
     	return "/board/commentTable";
 	}

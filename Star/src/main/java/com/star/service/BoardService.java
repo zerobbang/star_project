@@ -53,6 +53,9 @@ public interface BoardService {
 	// 댓글 삭제
 	public void deleteComment(CommentDTO commentDTO);
 	
+	// 댓글 수정
+	public void changeComment(CommentDTO commentDTO);
+	
 	// 댓글 수
 	public int getCommentCount(Criteria cri);
 
