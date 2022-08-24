@@ -73,7 +73,7 @@ a:hover {
 	text-decoration: underline;
 }
 
-div>img {
+a>.board_img{
 	width: 250px;
 	height: 180px;
 }
@@ -193,13 +193,10 @@ input::placeholder {
 					th:each="num : ${#numbers.sequence(0,#lists.size(boardList)-1)}"
 					class="li_class">
 					<div>
-						<img th:src="'/imgfiles/'+${boardList[num].imgName}"> <br>
-
 						<a th:href="@{/board/detailed_check(bno=${boardList[num].bno})}">
-							<input type="text"
-							th:value="| ${boardList[num].userNickname}: ${boardList[num].title} |">
-							<!-- <input type="text" id="bno" name="bno" th:value="${boardList[num].bno}">
-	                   		<input type="text" id="userNumber" name="userNumber" th:value="${criteria.userNumber }"> -->
+							<img th:src="'/imgfiles/'+${boardList[num].imgName}" class="board_img"> <br>
+							<input type="text" 
+								th:value="| ${boardList[num].userNickname}: ${boardList[num].title} |">
 						</a>
 					</div>
 				</li>
