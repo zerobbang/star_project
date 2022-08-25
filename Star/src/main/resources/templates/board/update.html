@@ -10,9 +10,7 @@
     <style>
     	 
     	 .detail_board{
-        	/* margin-left: 10%;
-        	margin-right: 10%; */
-        	font-size: 15px;
+        	/* font-size: 15px;
         	color: white;
         }
         .detail_board .board_story{
@@ -34,11 +32,22 @@
 			background-position:top right;
 			background-attachment:fixed;
 		} 
-		.board_list {
+		.board_list { */
+        	margin-left: 10%;
+        	margin-right: 10%;
+        	font-size: 30px;
+        }.detail_board .board_story{
+        	margin-left: 5%;
+        	border: 0px white solid;
+        	font-size: 25px;
+        }.detail_board textarea {
+        	margin-left: 5%;
+			width: 100%;
+			border: 0px white solid;
+		}.board_list {
 			width: 100%;
 			text-align: center;
 		}
-    
     
     </style>
     
@@ -64,7 +73,9 @@
                     <label for="writer" class="col-sm-1 col-form-label">작성자</label>
                     <div class="col-sm-8">
                     	<input type="hidden" id=userNumber name="userNumber" th:value="${boardDto.userNumber}"/>
-                    	<input type="text" id="writer" name="writer" class="board_story form-control" maxlength="10" th:value="${session.userDTO.userNickname}" readonly="readonly" disabled style="color:white; border: none; background-color: transparent;"/>
+
+                    	<input type="hidden" id="writer" name="writer" class="board_story" maxlength="10" th:value="${session.userDTO.userNickname}" readonly="readonly"/>
+                    	<div class="board_story" th:text="${session.userDTO.userNickname}"></div>
                     </div>
                 </div>
 
@@ -83,7 +94,7 @@
                     </div>
                 </div>
                 
-               <div class="">
+               <div class="form-group" style="font-size: 20px;">
                		<div th:if="${#lists.size(imgDto)} > 0"  th:each="imgs,index : ${imgDto}">
 				    	<input type="image" id="imgPath" name="imgPath" th:src="'/imgfiles/' + ${imgs.imgName}" 
 				    		th:value="${imgs.imgPath}" style="width:450px; height:400px; margin:0 auto; border:1px solid green;">
@@ -93,6 +104,7 @@
 				   		<input type="hidden" id="imgShowYn" name="imgShowYn" th:value="${imgs.imgShowYn}" readonly="readonly">
 				   		<button th:id="${index.index}" type="button" onclick="updateImg(this.id);">삭제</button>
                		</div>
+               		
                		<div class="row mb-2">
                 	<label for="addImgButton" class="col-sm-2 form-label">파일
                 	<button id="addImgButton" type="button" class="btn btn-primary" onclick="addImg();">이미지 추가</button>
@@ -107,14 +119,11 @@
 	                <button class="btn btn-success" type="submit">수정</button>
 	            </div>
 	            
-	            
 		        <input type="hidden" id="pageNum" name="pageNum" th:value="${session.criteria.pageNum }">
 			    <input type="hidden" id="amount" name="amount" th:value="${session.criteria.amount }">
-	        
-        	</form>
+	        </form>
         </div>
 	
-
     <th:block layout:fragment="script">
         <script th:inline="javascript">
         /*<![CDATA[*/
@@ -196,8 +205,6 @@
         		return true;
         	}
         }
-        	
-        
         
         
        	// 뒤로 가기로 다시 돌아오는 거 방지

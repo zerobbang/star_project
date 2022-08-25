@@ -74,6 +74,65 @@
 	padding-bottom: 1%;
 }
 
+	/* 백그라운드 배경 설정 */
+/*  	body, html { 
+	    margin: 0;
+	    padding: 0;
+	    height: 100%;
+	}
+
+	.bgimg {
+	    border: 0;
+	    padding: 0; 
+	    background-image: url('../img/starFall.jpg');
+	    min-height: 100%;
+	    background-position: center;
+	    background-size: cover;
+	}  */
+
+	.bgimg {
+	  width: 100%;
+	  height: 100%;
+/* 	  text-align: center; */
+	  position: relative;
+	  z-index: 1;
+	}
+	.bgimg::after {
+	  width: 100%;
+	  height: 100%;
+	  content: "";
+	  background: url('../img/astro.jpg');
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  z-index: -1;
+	  opacity: 0.5;
+	}
+	
+	
+	/* 테이블 디자인 */
+	body {
+  background: #1E1930;
+  color: #D2D1D5;
+	}
+	tr:nth-child(even) {
+	  background-color: #2e2649;
+	}
+	tr:nth-child(odd) {
+	  background-color: #423b5b;
+	}
+	th {
+	  background-color: #342F44;
+	  color: white;
+	}
+	td {
+	  color : white;
+	}
+	.noBorder {
+	    border:none !important;
+	}
+
+
 
     </style>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
@@ -194,6 +253,9 @@
 	</script>
 
 	<div th:replace="fragments/body :: main-nav"></div>	
+	
+	<!-- 백그라운드 배경이미지 -->
+	<div class="bgimg">
     
    <div class="userregion">
     <th:block th:if="${session.userDTO} != null">
@@ -276,11 +338,16 @@
 	</div>
 	
 
+
 	<br><br>
+		
 	
    	<div id="best"></div>
 	
+	<!-- 여기까지 백그라운드 이미지 적용 -->
+	</div>
+	
+	
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-
 </body>
 </html>

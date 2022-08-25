@@ -43,7 +43,8 @@
         	margin-left: 10%;
         	margin-right: 10%;
         	font-size: 15px;
-        	/* color: white; */
+
+        /* color: white; */
         }.detail_board .board_story{
         	padding-left: 5%;
         	padding-top: 5%;
@@ -63,9 +64,12 @@
 			font-size: 16px;
 		}div .imgName{
 			text-align: right;
-		}/*.contour{
+		}
+		/* .contour{
 			border-bottom: 1px gray solid;
-		} html, body{
+		} 
+		 */
+		/*html, body{
 		 	background-position: 0 0;
 			background-size: cover;
 			background-repeat: no-repeat;
@@ -110,24 +114,6 @@
  
 	<!-- 글 상세 조회 -->
 	<div class="detail_board">
-	    <!-- <div class="contour">
-	   		카테고리
-	   		<br>
-	   		<input type="hidden" id="category" name="category" th:value="${session.criteria.category}">
-	   	</div>	   
-	   <br>	   
-	 	<div class="contour">
-		 	작성자
-		 	<br>
-	 		<input type="hidden" id="writer" name="writer" th:value="${boardDTO.userNickname}" readonly="readonly">
-	 	</div>	 	
-	 	<br>	 	
-	 	<div class="contour">
-		 	제목
-		 	<br> 
-	    	<input type="hidden" id="title" name="title" th:value="${boardDTO.title}" readonly="readonly">
-	    </div> -->
-	    <!-- 게시글 제목, 작성자 -->
 	    <div class="board_story">
 		    <div class="board_category" th:text="${session.criteria.category}"
 		    	style="font-size: 15px;"></div> 
