@@ -1,8 +1,6 @@
 package com.star;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-
-import java.util.List;
+import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +13,12 @@ import com.star.domain.BoardDTO;
 import com.star.domain.DustDTO;
 import com.star.domain.RegionDTO;
 import com.star.domain.UserDTO;
+import com.star.domain.WeatherDTO;
 import com.star.mapper.BoardMapper;
 import com.star.mapper.DustMapper;
 import com.star.mapper.RegionMapper;
 import com.star.mapper.UserMapper;
-import com.star.paging.Criteria;
+import com.star.mapper.WeatherMapper;
 
 @SpringBootTest
 public class MapperTests {
@@ -35,6 +34,9 @@ public class MapperTests {
 	
 	@Autowired
 	private BoardMapper boardMapper;
+	
+	@Autowired
+	private WeatherMapper weatherMapper;
 
 //	유저 정보 입력 test
 	@Test
@@ -152,6 +154,35 @@ public class MapperTests {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	// 예보 날씨 test
+	@Test
+	public void testWeather() {
+		WeatherDTO weatherDTO = new WeatherDTO();
+		
+//		weatherDTO.setDataNum(1);
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+//		time = LocalDateTime.now();
+//		System.out.println("현재 시간"+time);
+		weatherDTO.setFcstDate("20220822");
+		weatherDTO.setFcstTime(String.valueOf(LocalDateTime.now().getHour()));
+		weatherDTO.setWsd(0);
+		weatherDTO.setVec(0);
+		weatherDTO.setPcp(null);
+		weatherDTO.setReh(0);
+		weatherDTO.setPty(0);
+		weatherDTO.setSky(0);
+		weatherDTO.setTmp(0);
+		weatherDTO.setBaseDate("20220822");
+		weatherDTO.setBaseTime(String.valueOf(LocalDateTime.now().getHour()));
+		
+		
+		
+		
+		int result = weatherMapper.insertWeather(weatherDTO);
+		System.out.println("result" + result);
+		System.out.println(weatherDTO.toString());
 	}
 
 	
