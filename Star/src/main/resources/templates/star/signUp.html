@@ -63,15 +63,15 @@ div .error {
 
 /* 비밀번호 아이콘 */
 #icon_pw input {
-	background-image: url("../img/eye-slash-fill.svg");
+	/* background-image: url("../img/eye-slash-fill.svg");
 	background-position: 95% center;
-	background-repeat: no-repeat;
+	background-repeat: no-repeat; */
 }
 
 #icon_pw2 input {
-	background-image: url("../img/eye-slash-fill.svg");
+	/* background-image: url("../img/eye-slash-fill.svg");
 	background-position: 95% center;
-	background-repeat: no-repeat;
+	background-repeat: no-repeat; */
 }
 
 /* 관측 희망 지역 드롭바 다른 인풋과 간격 맞춤 */
@@ -116,8 +116,15 @@ div .error {
 						<label for="userPassword" class="col-sm-3 col-form-label">비밀번호</label>
 						<div class="col-sm-8">
 							<div id="icon_pw">
-								<input type="password" class="form-control" id="userPassword"
-									name="userPassword" placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리">
+								<div class="input-group">
+									<input type="password" class="form-control" id="userPassword"
+										name="userPassword" placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리">
+									<button id="open_eye" class="btn btn-secondary" type="button"
+										onclick="changePwView()">
+										<i id="eyeIcon" class="bi bi-eye-fill" 
+											style="color: white;"></i>
+									</button>
+								</div>
 								<div id="PasswordError" class="error"></div>
 							</div>
 						</div>
@@ -127,12 +134,18 @@ div .error {
 				<!-- 비밀번호 재확인 -->
 				<div id="password2">
 					<div class="row mb-2">
-						<label for="passwordCheck" class="col-sm-3 col-form-label">비밀번호
-							재확인</label>
+						<label for="passwordCheck" class="col-sm-3 col-form-label">비밀번호 재확인</label>
 						<div class="col-sm-8">
 							<div id="icon_pw2">
-								<input type="password" class="form-control" id="passwordCheck"
-									name="passwordCheck" placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리">
+								<div class="input-group">
+									<input type="password" class="form-control" id="passwordCheck"
+										name="passwordCheck" placeholder="영어(대소문자 구분)+ 숫자, 최소 6자리">
+									<button id="open_eye" class="btn btn-secondary" type="button"
+										onclick="changePwView2()">
+										<i id="eyeIcon2" class="bi bi-eye-fill" 
+											style="color: white;"></i>
+									</button>
+								</div>
 								<div id="PasswordCheckError" class="error"></div>
 							</div>
 						</div>
@@ -746,6 +759,32 @@ div .error {
 										});
 
 					});
+	
+	function changePwView() {
+		var inputPw = document.getElementById("userPassword");
+		var changeEye = document.getElementById("eyeIcon");
+
+		if (inputPw.getAttribute('type') == "password") {
+			inputPw.setAttribute('type', 'text');
+			changeEye.setAttribute('class',"bi bi-eye-slash-fill")
+		} else {
+			inputPw.setAttribute('type', 'password');
+			changeEye.setAttribute('class',"bi bi-eye-fill")
+		}
+	}
+	
+	function changePwView2() {
+		var inputPw = document.getElementById("passwordCheck");
+		var changeEye = document.getElementById("eyeIcon2");
+
+		if (inputPw.getAttribute('type') == "password") {
+			inputPw.setAttribute('type', 'text');
+			changeEye.setAttribute('class',"bi bi-eye-slash-fill")
+		} else {
+			inputPw.setAttribute('type', 'password');
+			changeEye.setAttribute('class',"bi bi-eye-fill")
+		}
+	}
 </script>
 
 </body>

@@ -46,13 +46,15 @@
         	font-size: 30px;
         	color: white;
         }.detail_board .board_story{
-        	margin-left: 5%;
-        	border: 0px white solid;
+        	padding-left: 5%;
         	font-size: 25px;
+        	border-bottom: 1px gray solid;
         }.detail_board textarea {
         	margin-left: 5%;
 			width: 100%;
 			border: 0px white solid;
+			background-color: transparent;
+			color: white;
 		}form {
 			margin-right: 3%;
 			float: right;
@@ -62,16 +64,13 @@
 		}div .imgName{
 			margin-left: 15%;
 		}.contour{
-			border-bottom: 1px black solid;
-		} 
-		html, body {
+			border-bottom: 1px gray solid;
+		}html, body{
 		 	background-position: 0 0;
 			background-size: cover;
 			background-repeat: no-repeat;
-			background-image: url(../img/board_back_img.jpg);
-			height: 100%;
-			/* background-color: black; */
-			
+			background-image: url(../img/board_back_img2.jpg);
+			height: 100%;			
 			background-position:top right;
 			background-attachment:fixed;
 			
@@ -98,6 +97,7 @@
 	</script>
 </head>
 <body>
+	<div class="back_img"></div>
 	<div th:replace="fragments/body :: main-css"></div>
 	<div th:replace="fragments/body :: main-nav"></div>
     
@@ -110,38 +110,43 @@
  
 	<!-- 글 상세 조회 -->
 	<div class="detail_board">
-	    <div class="contour">
-	   		카테고리 : 
+	    <!-- <div class="contour">
+	   		카테고리
 	   		<br>
 	   		<input type="hidden" id="category" name="category" th:value="${session.criteria.category}">
-	   		<div class="board_story" th:text="${session.criteria.category}"></div>
 	   	</div>
 	   
 	   <br>
 	   
 	 	<div class="contour">
-		 	작성자 :
+		 	작성자
 		 	<br>
 	 		<input type="hidden" id="writer" name="writer" th:value="${boardDTO.userNickname}" readonly="readonly">
-	 		<div class="board_story" th:text="${boardDTO.userNickname}"></div>
 	 	</div>
 	 	
 	 	<br>
 	 	
 	 	<div class="contour">
-		 	제목 :
+		 	제목
 		 	<br> 
 	    	<input type="hidden" id="title" name="title" th:value="${boardDTO.title}" readonly="readonly">
-	    	<div class="board_story" th:text="${boardDTO.title}"></div>
+	    </div> -->
+	    <div class="board_story">
+		    <div class="board_category" th:text="${session.criteria.category}"
+		    	style="font-size: 15px;"></div>
+		    <div class="board_title" th:text="${boardDTO.title}"></div>
+		    <div class="board_writer" th:text="|글쓴이: ${boardDTO.userNickname}|"
+		    	style="text-align: right; font-size: 20px;"></div>
+	    	
+	    	<br>
+	    	
 	    </div>
 	    
 	    <br>
 	    
-	    <div class="contour">
-	    	내용 : 
-	    	<br>
+	    <div class="contour" >
+	    	
 	    	<textarea rows="auto" cols="50" th:text="${boardDTO.content}" readonly="readonly"></textarea>
-	    	<!-- <div class="board_story" th:text="${boardDTO.content}"></div> -->
 	    </div>
 	    
 	    <br>
@@ -178,7 +183,7 @@
 	 	         <th:block th:if="session.userDTO != null">
 	  	         	 <input th:if="${session.userDTO == null}" type="hidden" id="inputUserNumber" name="userNumber" value="" />
 	  	         	 <input th:if="${session.userDTO != null}" type="hidden" id="inputUserNumber" name="userNumber" th:value="${session.userDTO.userNumber}" />
-		          </th:block>
+		         </th:block>
 		         <button type="button" onclick="writeComment();">댓글저장</button> 
 		         <th:block th:if="${session.userDTO} != null">
 		         	<input style="float:right" type="text" id="changeCmtContent" name="cmtContent" placeholder="텍스트 입력 후 수정 버튼" />
