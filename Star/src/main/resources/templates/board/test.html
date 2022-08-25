@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+ <h1>저장 완료</h1>
+ <script th:inline="javascript">
+	 // 서울 대기 값
+	 var a = /*[[${mapWeather}]]*/null;
+	 
+	 for(key in a){
+		 console.log(key,a[key]);
+	 }
+ </script>
+</body>
+</html>
