@@ -12,7 +12,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -35,12 +34,16 @@ import com.star.domain.DustDTO;
 import com.star.domain.MailDTO;
 import com.star.domain.UserDTO;
 import com.star.service.UserService;
+import com.star.service.WeatherService;
 
 @Controller
 public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired(required=false)
+	private WeatherService weatherService;
 
 	//	메인 페이지
 	@GetMapping(value = "/star/mainpage")

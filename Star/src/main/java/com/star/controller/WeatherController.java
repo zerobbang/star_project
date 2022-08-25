@@ -19,11 +19,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.star.domain.WeatherDTO;
+//import com.star.service.WeatherService;
 import com.star.service.WeatherService;
 
 @Controller
@@ -50,7 +52,7 @@ public class WeatherController {
 				ArrayList<Integer> geumcheongu = new ArrayList<Integer>(Arrays.asList(59,124));
 				ArrayList<Integer> gangseogu = new ArrayList<Integer>(Arrays.asList(58,126));
 				ArrayList<Integer> gulogu = new ArrayList<Integer>(Arrays.asList(58,125));
-				
+
 				weather.put("종로구", jonglogu);
 				weather.put("중구", jonglogu);
 				weather.put("용산구", yongsangu);
@@ -76,20 +78,20 @@ public class WeatherController {
 				weather.put("강남구", gangnamgu);
 				weather.put("송파구", gwangjingu);
 				weather.put("강동구", gwangjingu);
-				
+
 				// 현재 날짜
 				LocalDate now = LocalDate.now();
 				String formatedNow = "";
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-				
+
 				// 현재 시간
 				LocalTime nowTime = LocalTime.now();
 				String formatedNowTime = "";
-				
+
 				// 단기 예보 (SKY 값 존재 , 기준 시간 부터 72시간 값 )
 				// - Base_time : 0200, 0500, 0800, 1100, 1400, 1700, 2000, 2300 (1일 8회)
 				// - API 제공 시간(~이후) : 02:10, 05:10, 08:10, 11:10, 14:10, 17:10, 20:10, 23:10
-				
+
 				ArrayList<Integer> baseTime = new ArrayList<>(Arrays.asList(2,5,8,11,14,17,20,23));	
 				// 시간 비교하기
 				for(int i = 0; i<baseTime.size(); i++) {
@@ -121,10 +123,10 @@ public class WeatherController {
 				// 람다식을 사용할 때 로컬 변수를 사용하려면 final 특성이어야 한다. (불가변성)  > 그래서 재 선언
 				String formatedNowFinal = formatedNow;
 				String formatedNowTimeFinal = formatedNowTime;
-				
+
 				// 메인 페이지로 넘겨줄 list data
 				Map<String,List> mapWeather = new HashMap<>();
-				
+
 				weather.forEach((key,value)->{
 			        try {
 						int x =value.get(0);
@@ -140,8 +142,8 @@ public class WeatherController {
 				        urlBuilder.append("&" + URLEncoder.encode("base_time","UTF-8") + "=" + URLEncoder.encode(formatedNowTimeFinal, "UTF-8"));      
 			        	urlBuilder.append("&" + URLEncoder.encode("nx","UTF-8") + "=" + URLEncoder.encode(x+"", "UTF-8")); /*예보지점의 X 좌표값*/
 				        urlBuilder.append("&" + URLEncoder.encode("ny","UTF-8") + "=" + URLEncoder.encode(y+"", "UTF-8")); /*예보지점의 Y 좌표값*/
-				        
-				        
+
+
 				        // URL 객체 생성
 				        URL url = new URL(urlBuilder.toString());
 				        // 연결
@@ -149,7 +151,7 @@ public class WeatherController {
 				        conn.setRequestMethod("GET");
 				        conn.setRequestProperty("Content-type", "application/json");
 				        // System.out.println("Response code: " + conn.getResponseCode());
-				        
+
 				        BufferedReader rd;
 				        // 서버 연결 코드에 상관없이 rd로 데이터를 받아온다.
 				        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
@@ -157,7 +159,7 @@ public class WeatherController {
 				        } else {
 				            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
 				        }
-				        
+
 				        // StringBuilder로 생성
 				        StringBuilder sb = new StringBuilder();
 				        String line;
@@ -169,7 +171,7 @@ public class WeatherController {
 				        // 연결 종료
 				        rd.close();
 				        conn.disconnect();
-				        
+
 				        String data = sb.toString();
 				        // 1. 문자열 형태의 JSON을 파싱하기 위한 JSONParser 객체 생성.
 				        JSONParser parser = new JSONParser();
@@ -183,7 +185,7 @@ public class WeatherController {
 							// System.out.println(item.size());
 							Map<String,Object> air = new HashMap<>();
 							ArrayList<Map> airList = new ArrayList<>();
-							
+
 							WeatherDTO weatherDTO = new WeatherDTO();
 							int index = 0;
 							for(int i=0;i<item.size();i++) {
@@ -227,17 +229,17 @@ public class WeatherController {
 									weatherDTO.setFcstDate((String) itemList.get("fcstDate"));
 									weatherDTO.setFcstTime((String) itemList.get("fcstTime"));
 									System.out.println("한 개 데이터 완성 : "+weatherDTO.toString());
-									
+
 									// boolean result = weatherService.insertWeather(weatherDTO);
 //									if(result == true) {
 //										System.out.println("한 개 데이터 DB 저장 완료");
 //									}else {
 //										System.out.println("한 개 데이터 DB 저장 실패 ㅜㅠ");
 //									}
-									
+
 									index = 0;
 								}
-								
+
 //								if(category.equals("PTY") || category.equals("SKY") || category.equals("TMP") || category.equals("WSD") || 
 //										category.equals("VEC") || category.equals("PCP") || category.equals("REH") ) {
 //									// System.out.println(category);
@@ -270,17 +272,15 @@ public class WeatherController {
 					} catch (Exception e) {
 						e.printStackTrace();
 					} 
-			       
+
 				});
-		        
+
 				// model.addAttribute("mapWeather", mapWeather);
 				System.out.println(formatedNowFinal);
 				System.out.println(formatedNowTimeFinal);
-				
+
 				//System.out.println(model);
-				
+
 				return "/board/test";
 	}
-	
-	
 }

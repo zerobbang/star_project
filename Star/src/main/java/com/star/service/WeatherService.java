@@ -9,4 +9,5 @@ public interface WeatherService {
 
 	// 예보 데이터 저장
 	public boolean insertWeather(WeatherDTO weatherDTO);
+	
 }
