@@ -135,7 +135,7 @@ public class UserController {
 					formatedNow = now.minusDays(1).format(formatter);
 					formatedNowTime = "2300";
 					break;
-				}else if(criTime<11) {
+				}else if(criTime<12) {
 					int preTime = baseTime.get(i-1);
 					formatedNow = now.format(formatter);
 					formatedNowTime = "0"+preTime+"00";
@@ -156,8 +156,6 @@ public class UserController {
 		// 람다식을 사용할 때 로컬 변수를 사용하려면 final 특성이어야 한다. (불가변성)  > 그래서 재 선언
 		String formatedNowFinal = formatedNow;
 		String formatedNowTimeFinal = formatedNowTime;
-		// System.out.println(formatedNowFinal);
-		// System.out.println(formatedNowTimeFinal);
 		
 		// 메인 페이지로 넘겨줄 list data
 		Map<String,List> mapWeather = new HashMap<>();
@@ -258,6 +256,8 @@ public class UserController {
 		});
         
 		model.addAttribute("mapWeather", mapWeather);
+		System.out.println(formatedNowFinal);
+		System.out.println(formatedNowTimeFinal);
 		
 		//System.out.println(model);
          

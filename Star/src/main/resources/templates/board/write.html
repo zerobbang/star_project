@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" >
-<body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
+<body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="" style="overflow-x: hidden;">
 	<div th:replace="fragments/body :: main-css"></div>
 	<div th:replace="fragments/body :: main-nav"></div>
     <th:block layout:fragment="title">
@@ -14,9 +14,17 @@
                 <!-- 기존 게시글 수정인 경우, 서버로 전달할 게시글 번호(bno) -->
             <!--     <input type="hidden" th:if="${bno != null and bno > 0}" th:value="*{bno}" /> -->
                 
-                <div class="form-group">
-                	<label for="category" class="col-sm-2 control-label">카테고리</label>
-                	<select id="category" name="category">
+                <!-- 글제목 하려고 했으나 -->
+                <div style="background-color: lightblue; text-align: center; padding: 2%; margin: 3% 10% 0 10%;">
+                <h3><strong>글쓰기</strong></h3>
+                </div> 
+                
+                <!-- 카테고리 + 카테고리 종류 -->
+               <div class="cate_write" style="padding-left: 20%; padding-top: 5%;">
+                
+                <div class="form-group mb-4">
+                	<label for="category" class="col-sm-1 col-form-label">카테고리</label>
+                	<select id="category" name="category" style="text-align: center;">
                 		<option value="관측지" th:selected="${criteria.category}== '관측지'">관측지</option>
                 		<option value="작품전" th:selected="${criteria.category}== '작품전'">작품전</option>
                 		<optgroup label="소통방">
@@ -26,44 +34,53 @@
                 	</select>
                 </div>
                 
-                <div class="form-group">
-                    <label for="writer" class="col-sm-2 control-label">작성자</label>
+                <!-- 작성자(유저 닉네임) -->
+                <div class="row mb-4">
+                    <label for="writer" class="col-sm-1 col-form-label">작성자</label>
                     <div class="col-sm-10">
                     	<input type="hidden" id=userNumber name="userNumber" th:value="${session.userDTO.userNumber}"/>
-                    	<input type="text" id="writer" name="writer" class="form-control" maxlength="10" th:value="${session.userDTO.userNickname}" disabled/>
+                    	<input type="text" id="writer" name="writer" class="form-control" maxlength="10" th:value="${session.userDTO.userNickname}" disabled style="border: none; background-color: transparent;"/>
                         <!-- <input type="text" id="writer" name="writer" class="form-control" maxlength="10" value="" disabled/> -->
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="title" class="col-sm-2 control-label">제목</label>
-                    <div class="col-sm-10">
-                        <input type="text" id="title" name="title" class="form-control" maxlength="50" placeholder="글 제목" />
+                
+                <div class="row mb-4">
+                    <label for="title" class="col-sm-1 col-form-label">제목</label>
+                    <div class="col-sm-8">
+                        <input type="text" id="title" name="title" class="form-control" maxlength="50" placeholder="제목을 입력 해주세요" />
                         <!-- <input type="text" th:field="*{title}" class="form-control" placeholder="제목을 입력해 주세요." /> -->
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="content" class="col-sm-2 control-label">내용</label>
-                    <div class="col-sm-10">
-                        <textarea id="content" name="content" class="form-control" maxlength="1000" placeholder="내용을 입력해 주세요."></textarea>
+				
+                <div class="row mb-4">
+                    <label for="content" class="col-sm-1 col-form-label"></label>
+                    <div class="col-sm-8">
+                        <textarea id="content" name="content" class="form-control" maxlength="1000" placeholder="내용을 입력해 주세요."
+                        style="width: 100%; height: 20em; resize: none;">
+                        </textarea>
                     </div>
                 </div>
-                
-                <div class="form-group">
-                	<label for="img" class="col-sm-2 control-label">파일<button type="button" onclick="addImg();">이미지 추가하기</button></label>
-                	<div id="imgList" class="col-sm-10"></div>
+               
+                <div class="row mb-4">
+                	<label for="img" class="col-sm-1 col-form-label">파일</label>
+                <div class="col">
+                	<button type="button" class="btn btn-primary" onclick="addImg();">이미지 추가하기</button>
+                	<!-- 파일 선택, 리스트, 삭제 input 영역 임시로 색 표시-->
+                	<div id="imgList" class="col mb-2">
+                	</div>
+                	</div>
           		</div>
+          	</div>
                
 
 				<!-- 저장 버튼 -->            
 	            <div class="btn_wrap text-center" >
-	                <button type="submit">저장하기</button>
+	                <button type="submit" class="btn btn-secondary btn-lg">저장하기</button>
 	            </div>
 	            
 	            
-	         <input type="text" id="pageNum" name="pageNum" th:value="${criteria.pageNum }">
-		     <input type="text" id="amount" name="amount" th:value="${criteria.amount }">
+	         <input type="hidden" id="pageNum" name="pageNum" th:value="${criteria.pageNum }">
+		     <input type="hidden" id="amount" name="amount" th:value="${criteria.amount }">
 	        
         	</form>
         </div>
@@ -74,12 +91,14 @@
        	
        	function addImg(){
        		var i = document.createElement('input');
+       		i.setAttribute("class","btn btn-outline-secondary");
        		i.setAttribute("type","file");
        		i.setAttribute("name","img");
        		i.setAttribute("required","");
        		i.setAttribute("accept",".jpg, .gif, .png, .bmp, .webp, .heif");
        		
-       		var j = document.createElement('input');	
+       		var j = document.createElement('input');
+       		j.setAttribute("class","btn btn-danger");
        		j.setAttribute("type","button");
        		j.setAttribute("value","삭제");
        		j.setAttribute("onclick","deleteImg();")
