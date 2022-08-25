@@ -143,7 +143,7 @@
  		a.*, b.user_nickname
 	FROM 
 		 board_list a
-	INNER JOIN 
+	LEFT OUTER JOIN 
 		users_table b
     	ON a.user_number  = b.user_number
  	where a.bno = #{bno}
@@ -206,11 +206,14 @@
  	SELECT 
  		count(*)
 	FROM 
-		 board_list
+		 board_list a
+	LEFT OUTER JOIN
+		users_table b
+		ON a.user_number = b.user_number
 	WHERE 
-		delete_yn = 0
+		a.delete_yn = 0
 		<include refid="search" />
-	AND category = #{category}
+	AND a.category = #{category}
 </select>
 
 <!-- 총 마이 페이지 수 출력 -->
