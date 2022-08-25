@@ -24,6 +24,75 @@
  a:link {color:black; text-decoration: none;}
  a:visited {color:black; text-decoration: none;}
  a:hover {color:black; text-decoration: underline;}
+ 
+ 
+ 
+ button .btn btn-primary btn-sm {
+	font-size: 20px;
+	font-weight: bolder;
+}
+
+div table {
+	margin: auto;
+	font-size: 15px;
+	text-align: center;
+}
+
+.tr_class {
+	border-bottom: 1px solid black;
+}
+
+
+.active {
+	background-color: #cdd5ec;
+}
+
+a:link {
+	color: black;
+	text-decoration: none;
+}
+
+a:visited {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	color: black;
+	text-decoration: underline;
+}
+
+a>.board_img{
+	width: 250px;
+	height: 180px;
+}
+
+ol, ul {
+	list-style-type: none;
+}
+
+/* li로 하면 네비게이션 css와 충돌이 생김. */
+.li_class {
+	float: left;
+	/* position: relative; */
+	padding: 35px 40px 35px 0;
+}
+
+label {
+	text-align: right;
+	white-space: nowrap;
+	width: 100%;
+}
+
+input::placeholder {
+	font-size: 14px;
+}
+
+.form-group {
+	padding-top: 2%;
+}
+ 
+ 
 </style>
 </head>
 <body>
@@ -33,7 +102,7 @@
 
 <div id="list" class="container">
 	<h2>관리자 페이지</h2>
-    <table class="board_list">
+    <table class="board_list table">
         <colgroup>
             <col width="15%"/>
             <col width="*"/>
