@@ -65,15 +65,6 @@
 			margin-left: 15%;
 		}.contour{
 			border-bottom: 1px gray solid;
-		}html, body{
-		 	/* background-position: 0 0;
-			background-size: cover;
-			background-repeat: no-repeat;
-			background-image: url(../img/board_back_img2.jpg);
-			height: 100%;			
-			background-position:top right;
-			background-attachment:fixed; */
-			
 		}.board_list {
 			width: 100%;
 			text-align: center;
@@ -110,27 +101,6 @@
  
 	<!-- 글 상세 조회 -->
 	<div class="detail_board">
-	    <!-- <div class="contour">
-	   		카테고리
-	   		<br>
-	   		<input type="hidden" id="category" name="category" th:value="${session.criteria.category}">
-	   	</div>
-	   
-	   <br>
-	   
-	 	<div class="contour">
-		 	작성자
-		 	<br>
-	 		<input type="hidden" id="writer" name="writer" th:value="${boardDTO.userNickname}" readonly="readonly">
-	 	</div>
-	 	
-	 	<br>
-	 	
-	 	<div class="contour">
-		 	제목
-		 	<br> 
-	    	<input type="hidden" id="title" name="title" th:value="${boardDTO.title}" readonly="readonly">
-	    </div> -->
 	    <div class="board_story">
 		    <div class="board_category" th:text="${session.criteria.category}"
 		    	style="font-size: 15px;"></div>
