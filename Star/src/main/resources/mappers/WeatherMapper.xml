@@ -15,6 +15,7 @@
 		, tmp
 		, baseDate
 		, baseTime
+		, region
 	</sql>
 	
 	
@@ -35,9 +36,23 @@
 			, #{tmp}
 			, #{baseDate}
 			, #{baseTime}
+			, #{region}
 		)
 	</insert>
 	
 	<!-- 데이터 조회 -->
+	<select id="getWeather" resultType="WeatherDTO">
+		SELECT 
+			*
+		FROM 
+			weather_table
+		WHERE
+		<!-- 서울 데이터만 존재 할 경우 들어가지 않아도 된다. -->
+<!-- 			region = #{region}
+		AND -->
+			fcstDate = #{fcstDate}
+		AND 
+			fcstTime = #{fcstTime}
+	</select>
 
 </mapper>

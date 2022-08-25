@@ -159,8 +159,8 @@
 	 	         
 	 	         <!-- 회원이 아닌 경우 생각해줘야 할 듯! -->
 	 	         <th:block th:if="session.userDTO != null">
-	  	         	 <input th:if="${session.userDTO} == null" type="text" id="inputUserNumber" name="userNumber" value="" />
-	  	         	 <input th:if="${session.userDTO} != null" type="text" id="inputUserNumber" name="userNumber" th:value="${session.userDTO.userNumber}" />
+	  	         	 <input th:if="${session.userDTO} == null" type="hidden" id="inputUserNumber" name="userNumber" value="" />
+	  	         	 <input th:if="${session.userDTO} != null" type="hidden" id="inputUserNumber" name="userNumber" th:value="${session.userDTO.userNumber}" />
 		         </th:block>
 		        
 		    
