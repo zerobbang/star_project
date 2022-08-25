@@ -62,8 +62,8 @@
 	            </div>
 	            
 	            
-	         <input type="text" id="pageNum" name="pageNum" th:value="${criteria.pageNum }">
-		     <input type="text" id="amount" name="amount" th:value="${criteria.amount }">
+	         <input type="hidden" id="pageNum" name="pageNum" th:value="${session.criteria.pageNum }">
+		     <input type="hidden" id="amount" name="amount" th:value="${session.criteria.amount }">
 	        
         	</form>
         </div>
