@@ -17,11 +17,11 @@
                 <div class="form-group">
                 	<label for="category" class="col-sm-2 control-label">카테고리</label>
                 	<select id="category" name="category">
-                		<option value="관측지" th:selected="${criteria.category}== '관측지'">관측지</option>
-                		<option value="작품전" th:selected="${criteria.category}== '작품전'">작품전</option>
+                		<option value="관측지" th:selected="${session.criteria.category}== '관측지'">관측지</option>
+                		<option value="작품전" th:selected="${session.criteria.category}== '작품전'">작품전</option>
                 		<optgroup label="소통방">
-                			<option value="잡담" th:selected="${criteria.category}== '잡담'">잡담</option>
-                			<option value="사고팔아요" th:selected="${criteria.category}=='사고팔아요'">사고팔아요</option>
+                			<option value="잡담" th:selected="${session.criteria.category}== '잡담'">잡담</option>
+                			<option value="사고팔아요" th:selected="${session.criteria.category}=='사고팔아요'">사고팔아요</option>
                 		</optgroup>
                 	</select>
                 </div>
