@@ -10,7 +10,18 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
     <title>상세글 조회 페이지</title>
 	<style>
-	.temp3{
+		/* html, body {
+		 	background-position: 0 0;
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-image: url(../img/board_back_img.jpg); */
+			
+			/* height: 100%; */
+			/* background-color: black; */
+			/* overflow: hidden; */
+		/* } */
+	
+		.temp3{
             width:100px;
             height:20px;
             border:1px solid green;
@@ -39,6 +50,23 @@
         .bi-exclamation-circle-fill {
   			color: #FF0000;
         }
+        .detail_board{
+        	/* background-color: aqua; */
+        	margin-left: 10%;
+        	margin-right: 10%;
+        	font-size: 30px;
+        }
+        .detail_board input{
+        	margin-left: 5%;
+        	border: 0px white solid;
+        	font-size: 25px;
+        }
+        .detail_board textarea {
+        	margin-left: 5%;
+			width: 100%;
+			border: 0px white solid;
+		}
+        
 	</style>
 	
 	<!-- 신고 팝업창 -->
@@ -66,113 +94,118 @@
 	</button>
  </div>
  
- <!-- 글 상세 조회 -->
-   <!-- <input id="bno" name="bno" type="hidden" th:value="${boardDTO.bno}"> -->
-   <div>
-   	카테고리 : 
-   	<br>
-   	<input type="text" id="category" name="category" th:value="${session.criteria.category}">
-   </div>
- 	<div>
-	 	작성자 :
+	<!-- 글 상세 조회 -->
+	<div class="detail_board">
+	    <div>
+	   		카테고리 : 
+	   		<br>
+	   		<input type="text" id="category" name="category" th:value="${session.criteria.category}">
+	   	</div>
+	   
+	   <br>
+	   
+	 	<div>
+		 	작성자 :
+		 	<br>
+	 		<!-- <input type="text" id="writer" name="writer" th:value="${writer}" readonly="readonly"> -->
+	 		<input type="text" id="writer" name="writer" th:value="${boardDTO.userNickname}" readonly="readonly">
+	 	</div>
+	 	
 	 	<br>
- 		<!-- <input type="text" id="writer" name="writer" th:value="${writer}" readonly="readonly"> -->
- 		<input type="text" id="writer" name="writer" th:value="${boardDTO.userNickname}" readonly="readonly">
- 	</div>
- 	
- 	<br>
- 	
- 	<div>
-	 	제목 :
-	 	<br> 
-    	<input type="text" id="title" name="title" th:value="${boardDTO.title}" readonly="readonly">
-    </div>
-    
-    <br>
-    
-    <div>
-    	내용 : 
-    	<br>
-    	<textarea rows="10" cols="30" th:text="${boardDTO.content}" readonly="readonly"></textarea>
-    </div>
-    
-    <div th:if="${#lists.size(imgDto)} > 0"  th:each="img : ${imgDto}">
-    	<input type="image" id="imgPath" name="imgPath" th:src="'/imgfiles/' + ${img.imgName}" 
-    		style="width:450px; height:400px; margin:0 auto; border:1px solid green;">
-   		<br>
-   		<!-- <input type="text" id="imgName" name="imgName" th:value="${#strings.substring(img.imgName,37)}" readonly="readonly"> -->
-    </div> 
-         
-    <th:block th:if="${session.userDTO != null}">
+	 	
+	 	<div>
+		 	제목 :
+		 	<br> 
+	    	<input type="text" id="title" name="title" th:value="${boardDTO.title}" readonly="readonly">
+	    </div>
+	    
+	    <br>
+	    
+	    <div>
+	    	내용 : 
+	    	<br>
+	    	<textarea rows="10" cols="30" th:text="${boardDTO.content}" readonly="readonly"></textarea>
+	    	<!-- <input type="text" id="content" name="content" th:value="${boardDTO.content}" readonly="readonly"> -->
+	    </div>
+	    
+	    <div th:if="${#lists.size(imgDto)} > 0"  th:each="img : ${imgDto}">
+	    	<input type="image" id="imgPath" name="imgPath" th:src="'/imgfiles/' + ${img.imgName}" 
+	    		style="width:450px; height:400px; margin:0 auto; border:1px solid green;">
+	   		<br>
+	   		<!-- <input type="text" id="imgName" name="imgName" th:value="${#strings.substring(img.imgName,37)}" readonly="readonly"> -->
+	    </div> 
+	         
+	    <th:block th:if="${session.userDTO != null}">
 			<!-- 수정 버튼 -->            
             <form th:action="@{/board/modify}" method="post">
             	<input id="bno" name="bno" type="text" th:value="${boardDTO.bno}">
                 <button type="submit">수정 하기</button>
             </form>
-    	
-    	<form th:action="@{/board/delete.do}" method="post">
-    		<input type="hidden" name="bno" th:value="${boardDTO.bno}" />
-    		<button type="submit">삭제하기</button>
-    	</form>
-	</th:block>
+	    	
+	    	<form th:action="@{/board/delete.do}" method="post">
+	    		<input type="hidden" name="bno" th:value="${boardDTO.bno}" />
+	    		<button type="submit">삭제하기</button>
+	    	</form>
+		</th:block>
+		
+	<div id="Comment" class="container">
+		<h2>댓글</h2>
+			
+	         <div>
+		         <input type="text" id="inputCmtContent" name="cmtContent" placeholder="댓글를 입력해 주세요." />
+	 	         <input type="text" id="inputBno" name="bno" th:value="${boardDTO.bno}" />
+	 	         <!-- 회원이 아닌 경우 생각해줘야 할 듯! -->
+	 	         <th:block th:if="session.userDTO != null">
+	  	         	 <input th:if="${session.userDTO == null}" type="hidden" id="inputUserNumber" name="userNumber" value="" />
+	  	         	 <input th:if="${session.userDTO != null}" type="hidden" id="inputUserNumber" name="userNumber" th:value="${session.userDTO.userNumber}" />
+		          </th:block>
+		         <button type="button" onclick="writeComment();">댓글저장</button> 
+		         
+		         <input style="float:right" type="text" id="changeCmtContent" name="cmtContent" placeholder="텍스트 입력 후 수정 버튼" />
+	         </div>
+	     	 
+	     	 
+	     	 
+	         <table class="board_list">
+	            <colgroup>
+	                <col width="10%"/>
+	                <col width="*"/>
+	                <col width="20%"/>
+	                <col width="5%"/>
+	                <col width="5%"/>
+	            </colgroup>
+	            <thead>
+	                <tr>                   
+	                    <th scope="col">회원번호</th>
+	                    <th scope="col">내용</th>
+	                    <th scope="col">작성일</th>
 	
-<div id="Comment" class="container">
-	<h2>댓글</h2>
-		
-         <div>
-	         <input type="text" id="inputCmtContent" name="cmtContent" placeholder="댓글를 입력해 주세요." />
- 	         <input type="text" id="inputBno" name="bno" th:value="${boardDTO.bno}" />
- 	         <!-- 회원이 아닌 경우 생각해줘야 할 듯! -->
- 	         <th:block th:if="session.userDTO != null">
-  	         	 <input th:if="${session.userDTO == null}" type="hidden" id="inputUserNumber" name="userNumber" value="" />
-  	         	 <input th:if="${session.userDTO != null}" type="hidden" id="inputUserNumber" name="userNumber" th:value="${session.userDTO.userNumber}" />
-	          </th:block>
-	         <button type="button" onclick="writeComment();">댓글저장</button> 
-	         
-	         <input style="float:right" type="text" id="changeCmtContent" name="cmtContent" placeholder="텍스트 입력 후 수정 버튼" />
-         </div>
-     	 
-     	 
-     	 
-         <table class="board_list">
-            <colgroup>
-                <col width="10%"/>
-                <col width="*"/>
-                <col width="20%"/>
-                <col width="5%"/>
-                <col width="5%"/>
-            </colgroup>
-            <thead>
-                <tr>                   
-                    <th scope="col">회원번호</th>
-                    <th scope="col">내용</th>
-                    <th scope="col">작성일</th>
-
-       
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:if="${#lists.size(commentList)} > 0"  th:each="list,index : ${commentList}">
-		
-                    <!-- <td th:text="${list.bno}"></td> -->
-                    <td th:text="${list.userNumber}"></td>
-                    <td th:text="${list.cmtContent}"></td>                 
-                    <td class="writeDate" th:text="${#temporals.format(list.writeDate, 'dd-MM-yyyy HH:mm')}"></td>
-       				
-       				<td th:if="${list.userNumber} == ${session.userDTO.userNumber}">
-						<button type="button"  th:id="${index.index}" name="cmtNum" th:value="${list.cmtNum}" onclick="deleteComment(this.value);">✖</button>
-					</td>
-					<td th:if="${list.userNumber} == ${session.userDTO.userNumber}">
-						<button type="button"  th:id="${index.index}" name="cmtNum" th:value="${list.cmtNum}" onclick="changeComment(this.value);">✏️</button>
-					</td>
-       				<!--        				<input type="button" th:id="${index.index}" name="cmtNum" th:value="${list.cmtNum}" onclick="deleteComment(this.value);"/> -->
-                 </tr> 
-               <tr th:unless="${#lists.size(commentList)} > 0">
-                    <td colspan="4">조회된 결과가 없습니다.</td> 
-               </tr>
-            </tbody>
-        </table>
-</div>
+	       
+	                </tr>
+	            </thead>
+	            <tbody>
+	                <tr th:if="${#lists.size(commentList)} > 0"  th:each="list,index : ${commentList}">
+			
+	                    <!-- <td th:text="${list.bno}"></td> -->
+	                    <td th:text="${list.userNumber}"></td>
+	                    <td th:text="${list.cmtContent}"></td>                 
+	                    <td class="writeDate" th:text="${#temporals.format(list.writeDate, 'dd-MM-yyyy HH:mm')}"></td>
+	       				
+	       				<td th:if="${list.userNumber} == ${session.userDTO.userNumber}">
+							<button type="button"  th:id="${index.index}" name="cmtNum" th:value="${list.cmtNum}" onclick="deleteComment(this.value);">✖</button>
+						</td>
+						<td th:if="${list.userNumber} == ${session.userDTO.userNumber}">
+							<button type="button"  th:id="${index.index}" name="cmtNum" th:value="${list.cmtNum}" onclick="changeComment(this.value);">✏️</button>
+						</td>
+	       				<!--        				<input type="button" th:id="${index.index}" name="cmtNum" th:value="${list.cmtNum}" onclick="deleteComment(this.value);"/> -->
+	                 </tr> 
+	               <tr th:unless="${#lists.size(commentList)} > 0">
+	                    <td colspan="4">조회된 결과가 없습니다.</td> 
+	               </tr>
+	            </tbody>
+	        </table>
+		</div>
+	</div>
 
 <script th:inline="javascript">
 

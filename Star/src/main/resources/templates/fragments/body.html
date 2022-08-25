@@ -19,7 +19,9 @@
 
 <style>
 /* 글씨체 적용 테스트(매우 작다,,,) */
-@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+@import
+	url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap')
+	;
 
 html, body {
 	font-family: 'Gowun Dodum', sans-serif;
@@ -36,19 +38,19 @@ html, body {
 	background-color: white;
 	overflow-x: hidden;
 } */
-	
 header {
-    background-color: navy;
-    padding-right: 2%;
+	background-color: navy;
+	padding-right: 2%;
 }
+
 h1 {
 	color: white;
 }
 
 .Logo {
- 	display: flex;
- 	text-align: center;
- 	align-items: center;
+	display: flex;
+	text-align: center;
+	align-items: center;
 }
 
 .nav-item input {
@@ -56,18 +58,22 @@ h1 {
 	border: none;
 	background-color: transparent;
 	color: white;
-
 }
 
 /* 로그인 상태 드롭바 */
 .dropdown-toggle {
-	background-color: transparent;
+	position: relative; background-color : transparent;
 	color: white;
 	padding: 16px;
 	font-size: 13px;
 	border: none;
 	cursor: pointer;
 	width: 40%;
+	background-color: transparent;
+}
+
+.dropdown-menu a {
+	text-decoration: none;
 }
 
 .nick_user {
@@ -102,8 +108,7 @@ li {
 	padding-top : 15px;
 	font-size: 20px;
 } */
-
- .btn {
+.btn {
 	font-size: 13px;
 }
 </style>
@@ -112,93 +117,94 @@ li {
 <body th:fragment="main-nav">
 
 	<header class="nav_header">
-		<nav  class="navbar navbar-expand">
+		<nav class="navbar navbar-expand">
 			<div class="Logo">
-			<a href="/star/mainpage">
-				<svg class="bi me-2" width="70"
-					height="70" role="img" aria-label="Logo">
+				<a href="/star/mainpage"> <svg class="bi me-2" width="70"
+						height="70" role="img" aria-label="Logo">
 		            <img src="../img/Logo.png" width="80" height="80">
 		        </svg>
-			</a>
-			<h1 class="page-title"><strong>별애별 모임</strong></h1>
-		</div>
-		<!-- <div class="navbar-collapse"> -->
+				</a>
+				<h1 class="page-title">
+					<strong>별애별 모임</strong>
+				</h1>
+			</div>
+			<!-- <div class="navbar-collapse"> -->
 			<ul class="category nav navbar-collapse justify-content-center">
 				<!-- Home -->
-				<li  class="nav-item">
-				<!-- px2 link-black -->
-					<form class="nav-link" 
-						th:action="@{/star/mainpage}" method="get">
+				<li class="nav-item">
+					<!-- px2 link-black -->
+					<form class="nav-link" th:action="@{/star/mainpage}" method="get">
 						<!-- <a class="nav-link active" aria-current="page" href="#"> -->
-						<input class="menu" type="submit" value="Home" style="font-size: 20px;">
-						</a>
+						<input class="menu" type="submit" value="Home"
+							style="font-size: 20px;"> </a>
 					</form>
 				</li>
 				<!-- 관측지 -->
 				<li class="nav-item">
-					<form class="nav-link" th:action="@{/board/list}"
-						method="get">
+					<form class="nav-link" th:action="@{/board/list}" method="get">
 						<input type="hidden" id="category" name="category" value="관측지">
-						<input class="menu" type="submit" value="관측지" style="font-size: 20px;">
+						<input class="menu" type="submit" value="관측지"
+							style="font-size: 20px;">
 					</form>
 				</li>
 				<!-- 작품전 -->
 				<li class="nav-item">
-					<form class="nav-link" th:action="@{/board/list}"
-						method="get">
+					<form class="nav-link" th:action="@{/board/list}" method="get">
 						<input type="hidden" id="category" name="category" value="작품전">
-						<input class="menu" type="submit" value="작품전" style="font-size: 20px;">
+						<input class="menu" type="submit" value="작품전"
+							style="font-size: 20px;">
 					</form>
 				</li>
 				<!-- 잡담 -->
 				<li class="nav-item">
-					<form class="nav-link" th:action="@{/board/list}"
-						method="get">
+					<form class="nav-link" th:action="@{/board/list}" method="get">
 						<input type="hidden" id="category" name="category" value="잡담">
-						<input class="menu" type="submit" value="소통방" style="font-size: 20px;">
+						<input class="menu" type="submit" value="소통방"
+							style="font-size: 20px;">
 					</form>
 				</li>
 			</ul>
-		
-		<div class="userButton">
-			<!-- 회원번번호가 없을 때 -->
-			<form id="login-signup" th:if="${session.userDTO == null}">
-				<!-- 버튼 태그에 페이지 이동을 달아두는거 재밌어보여서 써봄 ㅎ -->
-				<div class="d-grid gap-2 d-md-flex justify-content-sm-end">
-				<button class="btn btn-secondary me-sm-1" type="button"
-					onclick="location.href='/star/login' ">Login</button>
-				<button class="btn btn-primary btn-sm" type="button"
-					onclick="location.href='/star/signup' ">회원 가입</button>
+
+			<div class="userButton">
+				<!-- 회원번번호가 없을 때 -->
+				<form id="login-signup" th:if="${session.userDTO == null}">
+					<!-- 버튼 태그에 페이지 이동을 달아두는거 재밌어보여서 써봄 ㅎ -->
+					<div class="d-grid gap-2 d-md-flex justify-content-sm-end">
+						<button class="btn btn-secondary me-sm-1" type="button"
+							onclick="location.href='/star/login' ">Login</button>
+						<button class="btn btn-primary btn-sm" type="button"
+							onclick="location.href='/star/signup' ">회원 가입</button>
 					</div>
-			</form>
-			<!-- 회원번호가 있을 때 -->
-			<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search"
-				th:if="${session.userDTO != null}">
-				<div class="dropdown_user">
-				<button class="drop_btn" type="button" onclick="location.href='/star/logout.do'">Logout</button>
-				<!-- <input type="button" th:value="*{session.userDTO.userNickname}"> -->
-				<!-- 드롭 다운 테스트 진행 중 -->
-					<button class="dropdown-toggle" id="dropdownMenuButtonWithIcon"
-						data-bs-toggle="dropdown" aria-expanded="false">
-						<input class="nick_user" type="button" th:value="*{session.userDTO.userNickname}">
-						<!-- <i class="bi bi-gear-fill" style="color: white;"></i> -->
-					</button>
-					<div class="dropdown-menu"
-						aria-labelledby="dropdownMenuButtonWithIcon">
-						<a class="dropdown-item" href="/board/mypage">
-						 <i class="bi bi-person-circle dropdown-item-icon"></i> 마이페이지
-						</a>
-						<a class="dropdown-item" href="/star/changeInfo">
-							<i class="bi bi-person-rolodex dropdown-item-icon"></i> 정보변경
-						</a>
-						<a class="dropdown-item" href="/board/managerpage" 
-							th:if="${session.userDTO.adminYn == true}"> 
-							<i class="bi bi-person-badge-fill dropdown-item-icon"></i> 관리자 페이지
-						</a>
+				</form>
+				<!-- 회원번호가 있을 때 -->
+				<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search"
+					th:if="${session.userDTO != null}">
+					<div class="d-flex justify-content-end">
+						<button class="drop_btn" type="button"
+							onclick="location.href='/star/logout.do'">Logout</button>
+						<!-- <input type="button" th:value="*{session.userDTO.userNickname}"> -->
+						<!-- 사용자(닉네임) 드롭다운 -->
+
+						<div class="dropdown">
+							<button class="dropdown-toggle" id="dropdownMenuButtonWithIcon"
+								data-bs-toggle="dropdown" aria-expanded="false">
+								<input class="nick_user" type="button" th:value="*{session.userDTO.userNickname}">
+							</button>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="/board/mypage"> <i
+										class="bi bi-person-circle dropdown-item-icon"></i> 마이페이지
+								</a> <a class="dropdown-item" href="/star/changeInfo"> <i
+										class="bi bi-person-rolodex dropdown-item-icon"></i> 정보변경
+								</a> <a class="dropdown-item" href="/board/managerpage"
+									th:if="${session.userDTO.adminYn == true}"> <i
+										class="bi bi-person-badge-fill dropdown-item-icon"></i> 관리자
+										페이지
+								</a></li>
+							</ul>
+						</div>
 					</div>
-				</div>
-			</form>
-		</div>
+				</form>
+			</div>
 		</nav>
 	</header>
 
