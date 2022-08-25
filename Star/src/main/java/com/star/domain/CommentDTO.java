@@ -23,12 +23,17 @@ public class CommentDTO {
 	private LocalDateTime cmtUpdate;
 
 	private boolean cmtDeleteYn;
+	
+	// 댓글 때문에 임시로 추가
+	private String userNickname;
 
 	@Override
 	public String toString() {
 		return "CommentDTO [cmtNum=" + cmtNum + ", bno=" + bno + ", userNumber=" + userNumber + ", cmtContent="
 				+ cmtContent + ", writeDate=" + writeDate + ", cmtUpdate=" + cmtUpdate + ", cmtDeleteYn=" + cmtDeleteYn
-				+ "]";
-	}	
+				+ ", userNickname=" + userNickname + "]";
+	}
+ 
+
 	
 }

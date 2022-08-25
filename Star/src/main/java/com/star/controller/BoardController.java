@@ -243,6 +243,7 @@ public class BoardController {
 		
 		// 선택된 글의 댓글 리스트 뽑기
 		List<CommentDTO> commentList = boardService.getCommentList(bno);
+		
 		System.out.println("-----------------");
     	System.out.println(commentList);
     	System.out.println("-----------------");

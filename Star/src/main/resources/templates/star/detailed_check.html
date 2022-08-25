@@ -159,8 +159,8 @@
 	 	         
 	 	         <!-- 회원이 아닌 경우 생각해줘야 할 듯! -->
 	 	         <th:block th:if="session.userDTO != null">
-	  	         	 <input th:if="${session.userDTO == null}" type="hidden" id="inputUserNumber" name="userNumber" value="" />
-	  	         	 <input th:if="${session.userDTO != null}" type="hidden" id="inputUserNumber" name="userNumber" th:value="${session.userDTO.userNumber}" />
+	  	         	 <input th:if="${session.userDTO} == null" type="text" id="inputUserNumber" name="userNumber" value="" />
+	  	         	 <input th:if="${session.userDTO} != null" type="text" id="inputUserNumber" name="userNumber" th:value="${session.userDTO.userNumber}" />
 		         </th:block>
 		        
 		    
@@ -176,6 +176,7 @@
 	     	 
 	         <table class="board_list">
 	            <colgroup>
+	           		<col width="10%"/>
 	                <col width="10%"/>
 	                <col width="*"/>
 	                <col width="20%"/>
@@ -183,7 +184,9 @@
 	                <col width="5%"/>
 	            </colgroup>
 	            <thead>
+
 	                <tr style="font-size: 13px;">                   
+						<th scope="col">닉네임</th> 
 	                    <th scope="col">회원번호</th>
 	                    <th scope="col"></th>
 	                    <th scope="col">작성일</th>
@@ -195,6 +198,7 @@
 	                <tr th:if="${#lists.size(commentList)} > 0"  th:each="list,index : ${commentList}" style="font-size: 14px;">
 			
 	                    <!-- <td th:text="${list.bno}"></td> -->
+						<td th:text="${list.userNickname}"></td>
 	                    <td th:text="${list.userNumber}" style="padding: none;"></td>
 	                    <td th:text="${list.cmtContent}"></td>                 
 	                    <td class="writeDate" th:text="${#temporals.format(list.writeDate, 'yyyy-MM-dd HH:mm')}"></td>
