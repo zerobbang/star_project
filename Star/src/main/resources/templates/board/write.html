@@ -25,11 +25,11 @@
                 <div class="form-group mb-4">
                 	<label for="category" class="col-sm-1 col-form-label">카테고리</label>
                 	<select id="category" name="category" style="text-align: center;">
-                		<option value="관측지" th:selected="${criteria.category}== '관측지'">관측지</option>
-                		<option value="작품전" th:selected="${criteria.category}== '작품전'">작품전</option>
+                		<option value="관측지" th:selected="${session.criteria.category}== '관측지'">관측지</option>
+                		<option value="작품전" th:selected="${session.criteria.category}== '작품전'">작품전</option>
                 		<optgroup label="소통방">
-                			<option value="잡담" th:selected="${criteria.category}== '잡담'">잡담</option>
-                			<option value="사고팔아요" th:selected="${criteria.category}=='사고팔아요'">사고팔아요</option>
+                			<option value="잡담" th:selected="${session.criteria.category}== '잡담'">잡담</option>
+                			<option value="사고팔아요" th:selected="${session.criteria.category}=='사고팔아요'">사고팔아요</option>
                 		</optgroup>
                 	</select>
                 </div>
@@ -64,23 +64,21 @@
                 <div class="row mb-4">
                 	<label for="img" class="col-sm-1 col-form-label">파일</label>
                 <div class="col">
-                	<button type="button" class="btn btn-primary" onclick="addImg();">이미지 추가하기</button>
+                	<button type="button" class="btn btn-primary" onclick="addImg();">이미지 추가</button>
                 	<!-- 파일 선택, 리스트, 삭제 input 영역 임시로 색 표시-->
                 	<div id="imgList" class="col mb-2">
                 	</div>
                 	</div>
           		</div>
           	</div>
-               
 
 				<!-- 저장 버튼 -->            
 	            <div class="btn_wrap text-center" >
-	                <button type="submit" class="btn btn-secondary btn-lg">저장하기</button>
+	                <button type="submit" class="btn btn-secondary btn-lg">저장</button>
 	            </div>
 	            
-	            
-	         <input type="hidden" id="pageNum" name="pageNum" th:value="${criteria.pageNum }">
-		     <input type="hidden" id="amount" name="amount" th:value="${criteria.amount }">
+	         <input type="hidden" id="pageNum" name="pageNum" th:value="${session.criteria.pageNum }">
+		     <input type="hidden" id="amount" name="amount" th:value="${session.criteria.amount }">
 	        
         	</form>
         </div>
@@ -91,7 +89,7 @@
        	
        	function addImg(){
        		var i = document.createElement('input');
-       		i.setAttribute("class","btn btn-outline-secondary");
+       		i.setAttribute("class","");
        		i.setAttribute("type","file");
        		i.setAttribute("name","img");
        		i.setAttribute("required","");
