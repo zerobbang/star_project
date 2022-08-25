@@ -1,21 +1,71 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="~{layout/default_layout}">
+<!-- <!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ddd</title>
+<style>
 
-<th:block layout:fragment="head">
-	<title>Spring Boot Unknown Error PAGE</title>
-	<!--/* 이 영역에 공통으로 사용할 css, js library를 선언한다. */-->
-	<link th:href="@{/css/common.css}" rel="stylesheet" />
-</th:block>
+/* 전체 배경 적용 */
+html, body {
+ 	background-position: 0 0;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-image: url(../img/astro.jpg);
+	height: 100%;
+	background-color: black;
+	overflow: hidden;
+}
+/* 이미지 위치 */
+.title {
+	text-align: center;
+	margin-top: 2%;
+	padding: 2%;
+	color: white;
+}
+</style>
+</head>
 <body>
-	<th:block layout:fragment="header" th:include="@{/fragments/header}"></th:block>
+	네브바  인데 로그인과 회원가입에는 필요 하지 않을 것 같아 주석처리함
+	<div th:replace="fragments/body :: main-css"></div>
+	<div th:replace="fragments/body :: main-nav"></div>
 
-	<h1>This is Unknown Error Page!</h1>
-	Unknown Server Error...
-	<br>
+	<h1 style = "color:white; width:400px" > 404 error </h1> 
 
-	<th:block layout:fragment="footer" th:include="@{/fragments/footer}"></th:block>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<title>Error Page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body, html { 
+    margin: 0;
+    padding: 0;
+    height: 100%; 
+}
+.bgimg {
+    border: 0;
+    padding: 0; 
+    background-image: url('../img/errorPage.png');
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+}
+</style>
+<body>
+	<!-- 네브바  인데 로그인과 회원가입에는 필요 하지 않을 것 같아 주석처리함 -->
+	<div th:replace="fragments/body :: main-css"></div>
+	<div th:replace="fragments/body :: main-nav"></div>
+
+
+	<div class="bgimg"></div>
+
 </body>
 </html>
