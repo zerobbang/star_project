@@ -10,19 +10,22 @@
     <style>
     	 
     	 .detail_board{
-        	margin-left: 10%;
-        	margin-right: 10%;
-        	font-size: 30px;
+        	/* margin-left: 10%;
+        	margin-right: 10%; */
+        	font-size: 15px;
         	color: white;
-        }.detail_board .board_story{
+        }
+        .detail_board .board_story{
         	margin-left: 5%;
         	border: 0px white solid;
-        	font-size: 25px;
-        }.detail_board textarea {
-        	margin-left: 5%;
-			width: 100%;
-			border: 0px white solid;
-		}html, body {
+        	font-size: 15px;
+        }
+         .detail_board textarea {
+        	 margin-left: 5%;
+			 width: 100%;
+			 border: 0px white solid;
+		} 
+		 html, body {
 		 	background-position: 0 0;
 			background-size: cover;
 			background-repeat: no-repeat;
@@ -30,7 +33,8 @@
 			height: 100%;
 			background-position:top right;
 			background-attachment:fixed;
-		}.board_list {
+		} 
+		.board_list {
 			width: 100%;
 			text-align: center;
 		}
@@ -40,11 +44,13 @@
     
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   	<div class="detail_board">
-            <form th:action="@{/board/updateBoard}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return checkNull()">    
-                <div class="form-group">
-                	<label for="category" class="col-sm-2 control-label">카테고리</label>
-                	<br>
-                	<select id="category" name="category" class="board_story">
+            <form th:action="@{/board/updateBoard}" class="form-horizontal" method="post" enctype="multipart/form-data" onsubmit="return checkNull()">  
+            
+            <!-- 카테고리 + 카테고리 드랍 -->
+            <div class="cate_write" style="padding-left: 20%; padding-top: 5%;">  
+                <div class="form-group mb-4">
+                	<label for="category" class="col-sm-1 col-form-label">카테고리</label>
+                	<select id="category" name="category" class="board_story" style="text-align: center;">
                 		<option value="관측지" th:selected="${session.criteria.category}== '관측지'">관측지</option>
                 		<option value="작품전" th:selected="${session.criteria.category}== '작품전'">작품전</option>
                 		<optgroup label="소통방">
@@ -54,29 +60,30 @@
                 	</select>
                 </div>
                 
-                <div class="form-group">
-                    <label for="writer" class="col-sm-2 control-label">작성자</label>
-                    <div class="col-sm-10">
+                <div class="row mb-4">
+                    <label for="writer" class="col-sm-1 col-form-label">작성자</label>
+                    <div class="col-sm-8">
                     	<input type="hidden" id=userNumber name="userNumber" th:value="${boardDto.userNumber}"/>
-                    	<input type="text" id="writer" name="writer" class="board_story" maxlength="10" th:value="${session.userDTO.userNickname}" readonly="readonly"/>
+                    	<input type="text" id="writer" name="writer" class="board_story form-control" maxlength="10" th:value="${session.userDTO.userNickname}" readonly="readonly" disabled style="color:white; border: none; background-color: transparent;"/>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="title" class="col-sm-2 control-label">제목</label>
-                    <div class="col-sm-10">
-                        <input type="text" id="title" name="title" class="board_story" maxlength="50" placeholder="글 제목" th:value="${boardDto.title}"/>
+                <div class="row mb-4">
+                    <label for="title" class="col-sm-1 col-form-label">제목</label>
+                    <div class="col-sm-8">
+                        <input type="text" id="title" name="title" class="board_story form-control" maxlength="50" placeholder="글 제목" th:value="${boardDto.title}"/>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="content" class="col-sm-2 control-label">내용</label>
-                    <div class="col-sm-10">
-                        <textarea id="content" name="content" class="board_story" maxlength="1000" placeholder="내용을 입력해 주세요." th:text="${boardDto.content}"></textarea>
+                <div class="row mb-4">
+                    <label for="content" class="col-sm-1 col-form-label"></label>
+                    <div class="col-sm-8">
+                        <textarea id="content" name="content" class="board_story form-control" maxlength="1000" placeholder="내용을 입력해 주세요." th:text="${boardDto.content}"
+                        style="width: 100%; height: 20em; resize: none;"></textarea>
                     </div>
                 </div>
                 
-               <div class="form-group">
+               <div class="">
                		<div th:if="${#lists.size(imgDto)} > 0"  th:each="imgs,index : ${imgDto}">
 				    	<input type="image" id="imgPath" name="imgPath" th:src="'/imgfiles/' + ${imgs.imgName}" 
 				    		th:value="${imgs.imgPath}" style="width:450px; height:400px; margin:0 auto; border:1px solid green;">
@@ -86,20 +93,23 @@
 				   		<input type="hidden" id="imgShowYn" name="imgShowYn" th:value="${imgs.imgShowYn}" readonly="readonly">
 				   		<button th:id="${index.index}" type="button" onclick="updateImg(this.id);">삭제</button>
                		</div>
-                	<label for="addImgButton" class="col-sm-2 control-label">파일<button id="addImgButton" type="button" onclick="addImg();">이미지 추가하기</button></label>
+               		<div class="row mb-2">
+                	<label for="addImgButton" class="col-sm-2 form-label">파일
+                	<button id="addImgButton" type="button" class="btn btn-primary" onclick="addImg();">이미지 추가</button>
+                	</label>
                 	<div id="imgList" class="col-sm-10"></div>
           		</div>
-               
-
+               </div>
+				</div>
 				<!-- 수정 버튼 -->            
-	            <div class="btn_wrap text-center" >
-	            <input id="bno" name="bno" type="text" th:value="${boardDTO.bno}">
-	                <button type="submit">수정 하기</button>
+	            <div class="btn_wrap text-center">
+	            <input id="bno" name="bno" type="hidden" th:value="${boardDTO.bno}" style="text-align: center;">
+	                <button class="btn btn-success" type="submit">수정</button>
 	            </div>
 	            
 	            
-		        <input type="text" id="pageNum" name="pageNum" th:value="${session.criteria.pageNum }">
-			    <input type="text" id="amount" name="amount" th:value="${session.criteria.amount }">
+		        <input type="hidden" id="pageNum" name="pageNum" th:value="${session.criteria.pageNum }">
+			    <input type="hidden" id="amount" name="amount" th:value="${session.criteria.amount }">
 	        
         	</form>
         </div>
@@ -116,7 +126,8 @@
        		i.setAttribute("required","");
        		i.setAttribute("accept",".jpg, .gif, .png, .bmp, .webp, .heif");
        		
-       		var j = document.createElement('input');	
+       		var j = document.createElement('input');
+       		j.setAttribute("class","btn btn-danger");
        		j.setAttribute("type","button");
        		j.setAttribute("value","삭제");
        		j.setAttribute("onclick","deleteImg();")
