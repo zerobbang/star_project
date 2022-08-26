@@ -28,11 +28,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.star.domain.DustDTO;
 import com.star.domain.MailDTO;
 import com.star.domain.UserDTO;
+import com.star.domain.WeatherDTO;
 import com.star.service.UserService;
 import com.star.service.WeatherService;
 
@@ -42,7 +44,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@Autowired(required=false)
+	@Autowired
 	private WeatherService weatherService;
 
 	//	메인 페이지
@@ -215,6 +217,7 @@ public class UserController {
 		        try {
 					JSONObject obj = (JSONObject)parser.parse(data);
 					JSONObject response = (JSONObject) obj.get("response");
+//					System.err.println(response);
 					JSONObject body = (JSONObject) response.get("body");
 					JSONObject items = (JSONObject) body.get("items");
 					JSONArray item = (JSONArray) items.get("item");
@@ -272,16 +275,38 @@ public class UserController {
 	
 	// 메인페이지 ( with. 중간에 있는 테이블 )
 	@GetMapping(value = "/star/main3")
-	public String openPredictionList(DustDTO params, Model model) {
+	public String openPredictionList(DustDTO params, Model model,
+			@RequestParam(required= false) String dateWeather) {
 		
+		// System.out.println(dateWeather);
 		// 임시로 일단 서울만 계속 보여주도록
 		params.setRegion("서울");
 		
 		List<DustDTO> dustList = userService.getPrediction(params) ;
-		model.addAttribute("dustList", dustList); 
-		System.out.println(params);
-		 
-		System.out.println(dustList.get(0).getHumidity());
+		model.addAttribute("dustList", dustList);
+		
+		// 처음 실행
+		if(dateWeather == null) {
+			dateWeather = "시간";
+		}
+		
+		if(dateWeather.equals("날짜")) {
+			// 오늘 날짜 3일만 예보 값을 보여준다
+			// 현재 시각 하루 한번만 > 3번
+			String fcstDate = "20220827";
+			String fcstTime = "0700";
+			List<WeatherDTO> weatherList = weatherService.getWeather(fcstDate, fcstTime);
+			model.addAttribute("weatherList", weatherList);
+		}else {
+			// 예보 정보
+			// 현재 시각 기준 + 3씩
+			String fcstDate = "20220826";
+			String fcstTime = "0700";
+			List<WeatherDTO> weatherList = weatherService.getWeather(fcstDate, fcstTime);
+			model.addAttribute("weatherList", weatherList);
+		}
+		 System.out.println(model);
+		// System.out.println(dustList.get(0).getHumidity());
 
 		return "star/main3"; 
 	}
