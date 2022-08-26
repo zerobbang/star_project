@@ -4,10 +4,6 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- bootstrap css 연결 -->
-    <link rel="stylesheet" href="../css/bootstrap.css">
-    <!-- bootstrap icon 연결 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
     <title>상세글 조회 페이지</title>
 	<style>
 	
@@ -22,6 +18,7 @@
         .wrap button {
         	margin-left: 93%;
         	font-size: 13px;
+        	margin-bottom: 2%;
         }
         
         /* 신고 아이콘 색상(화이트) */
@@ -34,16 +31,21 @@
         	margin-right: 10%;
         	font-size: 15px;
         color: white;
-        }.detail_board .board_story{
+        }
+        
+        .detail_board .board_story{
         	padding-left: 5%;
         	padding-top: 5%;
         	font-size: 17px;
         	
         }.detail_board textarea {
         	margin-left: 5%;
-			width: 100%;
+			width: 90%;
 			background-color: transparent;
 			color: white;
+			height: 15em;
+			border: none;
+			resize: none;
 		}
 		form {
 			margin-right: 3%;
@@ -65,13 +67,12 @@
 			height: 100%;			
 			background-position:top right;
 			background-attachment:fixed;
-			
 		}
+		
 		.board_list {
 			width: 100%;
 			text-align: center;
 		}
-		
 	</style>
 	
 	<!-- 신고 팝업창 -->
@@ -92,14 +93,7 @@
 	<div class="back_img"></div>
 	<div th:replace="fragments/body :: main-css"></div>
 	<div th:replace="fragments/body :: main-nav"></div>
-    
-   <!--  <!-- 신고하기 버튼     
-  	<div class="wrap">
-	<button type="button" onclick="openPop()">
-		<i class="bi bi-exclamation-circle-fill"></i>신고
-	</button>
- </div> -->
- 
+     
 	<!-- 글 상세 조회 -->
 	<div class="detail_board">
 	    <div class="board_story">
@@ -117,8 +111,7 @@
 	     <!-- 신고하기 버튼 -->     
   	<div class="wrap">
 	<button class="btn btn-danger btn-sm" type="button" onclick="openPop()">
-		<i class="bi bi-exclamation-circle-fill"></i>신고
-	</button>
+		<i class="bi bi-exclamation-circle-fill"></i>신고</button>
  </div>
 	    <div class="contour" >	    	
 	    	<textarea rows="auto" cols="50" th:text="${boardDTO.content}" readonly="readonly"></textarea>
@@ -141,7 +134,7 @@
             </form>
 	    	
 	    	<form th:action="@{/board/delete.do}" method="post">
-	    		<input type="hidden" name="bno" th:value="${boardDTO.bno}" />
+	    		<input type="hidden" name="bno" th:value="${boardDTO.bno}"/>
 	    		<button class="btn btn-danger" type="submit">삭제</button>
 	    	</form>
 		</th:block>
@@ -160,7 +153,7 @@
 	 	         <!-- 회원이 아닌 경우 생각해줘야 할 듯! -->
 	 	         <th:block th:if="session.userDTO != null">
 	  	         	 <input th:if="${session.userDTO} == null" type="text" id="inputUserNumber" name="userNumber" value="" />
-	  	         	 <input th:if="${session.userDTO} != null" type="text" id="inputUserNumber" name="userNumber" th:value="${session.userDTO.userNumber}" />
+	  	         	 <input th:if="${session.userDTO} != null" type="hidden" id="inputUserNumber" name="userNumber" th:value="${session.userDTO.userNumber}" />
 		         </th:block>
 		        
 		    
@@ -177,7 +170,6 @@
 	         <table class="board_list">
 	            <colgroup>
 	           		<col width="10%"/>
-	                <col width="10%"/>
 	                <col width="*"/>
 	                <col width="20%"/>
 	                <col width="5%"/>
@@ -186,8 +178,7 @@
 	            <thead>
 
 	                <tr style="font-size: 13px;">                   
-						<th scope="col">닉네임</th> 
-	                    <th scope="col">회원번호</th>
+						<th scope="col">닉네임</th>
 	                    <th scope="col"></th>
 	                    <th scope="col">작성일</th>
 	
@@ -196,10 +187,10 @@
 	            </thead>
 	            <tbody>
 	                <tr th:if="${#lists.size(commentList)} > 0"  th:each="list,index : ${commentList}" style="font-size: 14px;">
+	              <p></p>
 			
 	                    <!-- <td th:text="${list.bno}"></td> -->
 						<td th:text="${list.userNickname}"></td>
-	                    <td th:text="${list.userNumber}" style="padding: none;"></td>
 	                    <td th:text="${list.cmtContent}"></td>                 
 	                    <td class="writeDate" th:text="${#temporals.format(list.writeDate, 'yyyy-MM-dd HH:mm')}"></td>
 	       				
@@ -214,7 +205,6 @@
 							</td>
 						<th:block>
 	                 </tr> 
-	               
 	            </tbody>
 	        </table>
 		</div>
