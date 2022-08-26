@@ -227,8 +227,7 @@ public class BoardController {
     	
     	BoardDTO boardDto = boardService.getBoardDetail(bno);
     	model.addAttribute(boardDto);
-
-    	
+    	    	
     	Long boardBno = boardDto.getBno();
     	System.out.println("상세 조회할 글 번호 : "+boardBno);
     	List<ImgDTO> imgs = boardService.getImgsFromBno(boardBno);
