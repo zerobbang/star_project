@@ -294,14 +294,14 @@ public class UserController {
 			// 오늘 날짜 3일만 예보 값을 보여준다
 			// 현재 시각 하루 한번만 > 3번
 			String fcstDate = "20220827";
-			String fcstTime = "0700";
+			String fcstTime = "1100";
 			List<WeatherDTO> weatherList = weatherService.getWeather(fcstDate, fcstTime);
 			model.addAttribute("weatherList", weatherList);
 		}else {
 			// 예보 정보
 			// 현재 시각 기준 + 3씩
 			String fcstDate = "20220826";
-			String fcstTime = "0700";
+			String fcstTime = "1100";
 			List<WeatherDTO> weatherList = weatherService.getWeather(fcstDate, fcstTime);
 			model.addAttribute("weatherList", weatherList);
 		}
