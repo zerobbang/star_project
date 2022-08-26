@@ -123,6 +123,10 @@ input::placeholder {
 .title a {
 	text-decoration: none;
 }
+
+.board_list {
+	padding-bottom: 25%;
+}
 </style>
 </head>
 <body id="list">
@@ -202,16 +206,17 @@ input::placeholder {
 				</tr>
 			</tbody>
 		</table>
-		<!-- 작품전, 소통방 -->
+		<!-- 작품전 -->
 		<div class="board_list">
 			<ul th:if="${session.criteria.category} == '작품전'" class="ul_class">
 				<li th:if="${#lists.size(boardList)} > 0"
 					th:each="num : ${#numbers.sequence(0,#lists.size(boardList)-1)}"
 					class="li_class">
 					<div>
-						<a th:href="@{/board/detailed_check(bno=${boardList[num].bno})}">
+						<a th:href="@{/board/detailed_check(bno=${boardList[num].bno})}" style="text-decoration: none; cursor: pointer;">
 							<img th:src="'/imgfiles/'+${boardList[num].imgName}" class="board_img"> <br>
-							<input type="text" 
+							
+							<input type="text" class="form-control" 
 								th:value="| ${boardList[num].userNickname}: ${boardList[num].title} |">
 						</a>
 					</div>
