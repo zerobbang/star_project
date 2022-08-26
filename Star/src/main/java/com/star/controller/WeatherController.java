@@ -228,42 +228,20 @@ public class WeatherController {
 									weatherDTO.setBaseTime((String) itemList.get("baseTime"));
 									weatherDTO.setFcstDate((String) itemList.get("fcstDate"));
 									weatherDTO.setFcstTime((String) itemList.get("fcstTime"));
+//									System.out.println(key);
+//									System.out.println(key.getClass().getTypeName());
+									weatherDTO.setRegion(key);
 									System.out.println("한 개 데이터 완성 : "+weatherDTO.toString());
 
-									// boolean result = weatherService.insertWeather(weatherDTO);
-//									if(result == true) {
-//										System.out.println("한 개 데이터 DB 저장 완료");
-//									}else {
-//										System.out.println("한 개 데이터 DB 저장 실패 ㅜㅠ");
-//									}
+									boolean result = weatherService.insertWeather(weatherDTO);
+									if(result == true) {
+										System.out.println("한 개 데이터 DB 저장 완료");
+									}else {
+										System.out.println("한 개 데이터 DB 저장 실패 ㅜㅠ");
+									}
 
 									index = 0;
-								}
-
-//								if(category.equals("PTY") || category.equals("SKY") || category.equals("TMP") || category.equals("WSD") || 
-//										category.equals("VEC") || category.equals("PCP") || category.equals("REH") ) {
-//									// System.out.println(category);
-//									// System.out.println(String.valueOf(itemList.get("fcstValue")));
-//									float airVal = Float.parseFloat(String.valueOf(itemList.get("fcstValue")));
-//									// System.out.println("airVal"+airVal);
-//									// System.out.println(itemList);
-//									air.put(category,airVal);
-//									// System.out.println("-"+air);
-//									if(air.size() == 7) {
-//										air.put("fcstDate", itemList.get("fcstDate"));
-//										air.put("fcstTime", itemList.get("fcstTime"));
-//										// 새로운 Map 객체 airClone을 air 사이즈가 3일 때마다 생성 (덮어씌우기) > 주소가 매번 달라짐.
-//										// air는 for문 밖에 존재하기 때문에 값이 덮어씌우기가 안된다. 그래서 add(air)하면 같은 주소값만 들어감.
-//										// add는 주소값 저장
-//										// clone은 public 메소드가 아니어서? 형변환 하고 clone해야 한다.
-//										Map<String,Object> airClone = new HashMap<>(air);
-//										//a로 바꿔도 air바뀌고    air로 바꿔도 a바뀐다.
-//										// System.out.println("air : "+air);
-//										// System.out.println("airClone : "+airClone);
-//										airList.add(airClone);	//air를 쓰면 마지막 air만 반복해서 들어간다.
-//										air.clear();
-//									}							
-//								}						
+								}					
 							}
 							// mapWeather.put(key, airList);
 						} catch (ParseException e) {

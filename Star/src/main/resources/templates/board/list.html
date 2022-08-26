@@ -119,6 +119,10 @@ input::placeholder {
 .pageInfo_wrap {
 	text-align: center;
 }
+
+.title a {
+	text-decoration: none;
+}
 </style>
 </head>
 <body id="list">
@@ -315,7 +319,7 @@ input::placeholder {
 					"searchType" : $("#searchType").val(),
 					"ajaxYn" : "y"},
 			success : function(data){
-				alert("완료");
+				/* alert("완료"); */
 				$("#list").html(data);
 			},
 			error : function (error){

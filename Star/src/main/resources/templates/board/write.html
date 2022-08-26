@@ -64,7 +64,7 @@
                 <div class="row mb-4">
                 	<label for="img" class="col-sm-1 col-form-label">파일</label>
                 <div class="col">
-                	<button type="button" class="btn btn-primary" onclick="addImg();">이미지 추가하기</button>
+                	<button type="button" class="btn btn-primary" onclick="addImg();">이미지 추가</button>
                 	<!-- 파일 선택, 리스트, 삭제 input 영역 임시로 색 표시-->
                 	<div id="imgList" class="col mb-2">
                 	</div>
@@ -74,7 +74,7 @@
 
 				<!-- 저장 버튼 -->            
 	            <div class="btn_wrap text-center" >
-	                <button type="submit" class="btn btn-secondary btn-lg">저장하기</button>
+	                <button type="submit" class="btn btn-secondary btn-lg">저장</button>
 	            </div>
 	            
 	         <input type="hidden" id="pageNum" name="pageNum" th:value="${session.criteria.pageNum }">
@@ -89,7 +89,7 @@
        	
        	function addImg(){
        		var i = document.createElement('input');
-       		i.setAttribute("class","btn btn-outline-secondary");
+       		i.setAttribute("class","");
        		i.setAttribute("type","file");
        		i.setAttribute("name","img");
        		i.setAttribute("required","");

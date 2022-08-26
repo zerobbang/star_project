@@ -93,11 +93,11 @@
  	from report_table
  </select>
  
-  <!-- 댓글 조회 -->
- <select id="detailComment" parameterType="BoardDTO" resultType="BoardDTO">
+  <!-- 댓글 조회? 따로 댓글 조회 있던데 -->
+<!--  <select id="detailComment" parameterType="BoardDTO" resultType="BoardDTO">
  	select <include refid="commentColumns"/>
  	from comment_table
- </select>
+ </select> -->
  
   <!-- 이미지 조회 -->
  <select id="detailImg" parameterType="BoardDTO" resultType="BoardDTO">
@@ -301,7 +301,7 @@ AND
 
 <!-- 댓글 조회 -->
 <select id="getCommentList" parameterType="long" resultType="CommentDTO">
- 	SELECT 
+<!--  	SELECT 
  		*
 	FROM
 		 comment_table
@@ -310,7 +310,29 @@ AND
   	AND 
 		bno = #{bno}
 	ORDER BY
-		cmt_num DESC;
+		cmt_num DESC; -->
+		
+	select 
+		 ct.cmt_num
+	 	, ct.bno
+	 	, ct.user_number
+	 	, ct.cmt_content
+	 	, ct.write_date
+	 	, ct.cmt_update
+	 	, ct.cmt_delete_yn
+	 	, ut.user_nickname 
+	from
+		users_table ut
+	inner join
+		 comment_table ct
+	where 
+		ct.user_number = ut.user_number
+  	AND 
+		bno = #{bno}
+  	AND 
+		cmt_delete_yn = 0
+	order 
+		by ct.cmt_num desc;
 </select>
 
 <!-- 댓글 작성 -->

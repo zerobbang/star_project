@@ -31,11 +31,15 @@ public class WeatherDTO {
 	
 	private String baseTime;
 	
+	private String region;
+
 	@Override
 	public String toString() {
 		return "WeatherDTO [dataNum=" + dataNum + ", fcstDate=" + fcstDate + ", fcstTime=" + fcstTime + ", wsd=" + wsd
 				+ ", vec=" + vec + ", pcp=" + pcp + ", reh=" + reh + ", pty=" + pty + ", sky=" + sky + ", tmp=" + tmp
-				+ ", baseDate=" + baseDate + ", baseTime=" + baseTime + "]";
+				+ ", baseDate=" + baseDate + ", baseTime=" + baseTime + ", region=" + region + "]";
 	}
+	
+	
 	
 }

@@ -1,5 +1,8 @@
 package com.star.service;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +17,17 @@ public class WeatherServiceImpl implements WeatherService {
 	
 	@Override
 	public boolean insertWeather(WeatherDTO weatherDTO) {
-		// TODO Auto-generated method stub
-		int result =weatherMapper.insertWeather(weatherDTO);
+		int result = weatherMapper.insertWeather(weatherDTO);
 		
 //		int result = 1;
 		return (result == 1) ? true:false ;
+	}
+
+	@Override
+	public List<WeatherDTO> getWeather(String fcstDate, String fcstTime) {
+		List<WeatherDTO> weatherForcast = Collections.emptyList();
+		weatherForcast = weatherMapper.getWeather(fcstDate, fcstTime);
+		return weatherForcast;
 	}
 
 }
