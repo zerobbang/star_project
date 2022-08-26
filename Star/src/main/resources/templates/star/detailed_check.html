@@ -128,7 +128,7 @@
 	    </div>
 	    
 	    <th:block th:if="${session.userDTO != null}">
-		<!-- 수정, 삭제 -->            
+		<th:block th:if="${boardDTO.userNumber} == ${session.userDTO.userNumber}">
             <form th:action="@{/board/modify}" method="post">
             	<input type="hidden" id="bno" name="bno" th:value="${boardDTO.bno}">
                 <button class="btn btn-primary" type="submit">수정</button>
@@ -138,12 +138,12 @@
 	    		<input type="hidden" name="bno" th:value="${boardDTO.bno}"/>
 	    		<button class="btn btn-danger" type="submit">삭제</button>
 	    	</form>
+	    	</th:block>
 		</th:block>
 		<br>
 		<div class="line">
                 <hr>
             </div>
-	
 	<div id="Comment">
 	         	<div class="sm-7">
 	         	<div class="input-group">
