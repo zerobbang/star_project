@@ -15,3 +15,5 @@
 ## 화면설계서
 [화면설계서](https://ovenapp.io/view/8v5Urdj5kv3RY7UBRAnXWz1JgZ8lrbMN/, "화면 설계서")
 ## ERD
+![ERD](/imgs/STAR_ERD)
+<img src="/imgs/STAR_ERD" ></img><br>
