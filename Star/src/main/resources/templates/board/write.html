@@ -111,7 +111,7 @@
     	   var addImg = document.getElementById("imgList");	   
     	   var childList = addImg.children;
     	   var childListSize = childList.length;
-    	   childList[childListSize-1].remove();
+    	   childList[childListSize-1].remove(); 
     	   childList[childListSize-2].remove();
     	   childList[childListSize-3].remove();  	   
        }
@@ -129,9 +129,11 @@
         	var imgList = Array.from(document.querySelectorAll("#imgList input"));
         	
         	var imgListLength = imgList.length;
+
         	
-         	console.log(imgList);
-        	console.log(imgListLength);
+	/* 		console.log(imgListLength);   
+			console.log($("select").val()); */
+
 
         	if(titleRegex.test($("#title").val()) == false){
         		alert("제목을 입력해주세요.")
@@ -139,7 +141,7 @@
         	}else if(contentRegex.test($("#content").val()) == false){
         		alert("내용을 입력해주세요.");
         		return false;
-        	}else if( imgListLength == 0 && $("#category").val() == "작품전"){
+        	}else if( imgListLength == 0 && $("select").val() == "작품전"){
         		alert("작품전은 최소 1개 이상의 사진이 필요합니다.");
         		return false;
         	}else if(imgListLength > 0){
