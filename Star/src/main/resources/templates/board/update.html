@@ -100,7 +100,7 @@
 				   		<br>
 				   		<input type="hidden" id="imgNumber" name="imgNumber" th:value="${imgs.imgNumber}">
 				   		<input type="text" id="imgName" name="imgName" th:value="${#strings.substring(imgs.imgName,37)}" readonly="readonly">
-				   		<input type="hidden" id="imgShowYn" name="imgShowYn" th:value="${imgs.imgShowYn}" readonly="readonly">
+				   		<input type="text" id="imgShowYn" name="imgShowYn" th:value="${imgs.imgShowYn}" readonly="readonly">
 				   		<button th:id="${index.index}" type="button" onclick="updateImg(this.id);">삭제</button>
                		</div>
                		
@@ -158,6 +158,7 @@
        
        function updateImg(clicked_id){
     	   var imgShow = Array.from(document.querySelectorAll("#imgShowYn"));
+    	   var inputImage = Array.from(document.querySelectorAll("#imgPath"));
     	   
     	   /* console.log(clicked_id);
     	   console.log(typeof clicked_id); */
@@ -167,7 +168,9 @@
     		   var iString = i+"";
     		   /* console.log(typeof iString); */
     		   if(clicked_id == iString){
-    			   imgShow[i].value = "false";    			   
+    			   imgShow[i].value = "false";
+    				inputImage[i].type = "hidden";
+    			   
     		   }
     	   }
        }
