@@ -50,13 +50,13 @@ div table {
 /* 	text-align: center; */
 }
 
+/* 페이지 넘기는 부분 */
 .pageInfo li {
 	float: left;
 	font-size: 20px;
 	/* margin-left: 18px;
 	padding: 7px; */
 	font-weight: 500;
-	/* display: inline-block; */
 }
 
 .active {
@@ -88,6 +88,7 @@ ol, ul {
 }
 
 /* li로 하면 네비게이션 css와 충돌이 생김. */
+/* 작품전 li 태그 */
 .li_class {
 	float: left;
 	/* position: relative; */
@@ -117,6 +118,7 @@ input::placeholder {
 }
 
 .pageInfo_wrap {
+	clear : both;
 	text-align: center;
 }
 
@@ -204,7 +206,7 @@ input::placeholder {
 			</tbody>
 		</table>
 		<!-- 작품전 -->
-		<div class="board_list" style="padding-left: 20%;">
+		<div class="board_list" style="padding-left: 10%;">
 			<ul th:if="${session.criteria.category} == '작품전'" class="ul_class">
 				<li th:if="${#lists.size(boardList)} > 0"
 					th:each="num : ${#numbers.sequence(0,#lists.size(boardList)-1)}"
@@ -224,6 +226,7 @@ input::placeholder {
 				</li>
 			</ul>
 		</div>
+		
 		<input type="hidden" th:value="${pageMaker.startPage}"> <input
 			type="hidden" th:value="${pageMaker.endPage}">
 
