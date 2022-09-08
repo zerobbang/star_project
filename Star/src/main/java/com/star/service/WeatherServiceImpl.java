@@ -31,4 +31,20 @@ public class WeatherServiceImpl implements WeatherService {
 		return weatherForcast;
 	}
 
+	@Override
+	public List<String> getLowerRegion(String region) {
+		
+		List<String> lowerRegion = null;
+		
+		// TODO Auto-generated method stub
+		if( (region == null) || (region == "전국") ) {
+			lowerRegion = weatherMapper.getAllLowerRegion();
+		} else {
+			lowerRegion = weatherMapper.getLowerRegion(region);
+		}
+		
+		
+		return lowerRegion;
+	}
+
 }

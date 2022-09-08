@@ -278,6 +278,13 @@ public class UserController {
 	public String openPredictionList(DustDTO params, Model model,
 			@RequestParam(required= false) String dateWeather) {
 		
+		List<String> lowerRegion = weatherService.getLowerRegion(params.getRegion());
+		System.out.println("aaaaaaaaaaaaaaaaaa");
+		System.out.println(lowerRegion);
+		System.out.println("aaaaaaaaaaaaaaaaaa");
+		model.addAttribute("regionList", lowerRegion);
+		
+		
 		// System.out.println(dateWeather);
 		// 임시로 일단 서울만 계속 보여주도록
 		params.setRegion("서울");

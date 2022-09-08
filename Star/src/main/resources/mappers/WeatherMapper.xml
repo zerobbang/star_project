@@ -90,5 +90,25 @@
 			) > -24 ]]> ;
 			
 	</select>
+	
+	<select id="getLowerRegion" resultType="String">
+	
+		select
+			lower_region 
+		from 
+			region_detail_table
+		where 
+			upper_region = #{region};
+	
+	</select>
+	
+	<select id="getAllLowerRegion" resultType="String">
+	
+		select
+			lower_region 
+		from
+			region_detail_table;
+	
+	</select>
 
 </mapper>

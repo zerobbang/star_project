@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+	
+<style>
+/* html, body {
+background-color: cyan;
+}  */
+</style>
+</head>
+<!-- 임시 : 날씨, 습도 , 풍속, 풍향 , 임시 서울 미먼 -->
+<body>
+<!-- <div class="scrollbar scrollbar-primary">
+          <div class="force-overflow"> -->
+<div id="date" class="scrollMenu col-md-5 g-4">
+	<table class="table table-hover" style="color:white">
+		
+		<thead> 
+			<tr>
+				<th>지역</th>
+				<th id="chaCol">시간</th>
+				<th>구름</th>
+				<th>습도</th>	
+				<th>풍속</th>
+				<th>바람</th>
+				<th>온도</th>
+				<!-- <th>중국미세</th> -->
+				<th>한국미세</th>
+			</tr>
+		</thead>
+		<tbody>
+<!-- 			<tr th:each="row : ${dustList}" >
+			
+ 				<td th:text="${row.region}"></td>
+				<td th:text="${row.date}"></td> 
+				<td th:text="${row.weather}"></td>
+				<td th:text="${row.sky}"></td>
+				<td th:text="${row.humidity}"></td>
+				<td th:text="${row.windSpeed}"></td>
+				<td th:text="${row.korWind}"></td>
+				<td th:text="${row.cnPm10}"></td>
+				<td th:text="${row.korPm10}"></td>
+			</tr> -->
+	
+			<tr th:each="row : ${weatherList}" >
+			
+	 				<td th:text="${row.region}"></td>
+					<td th:text="|${row.fcstDate} - ${row.fcstTime}|"></td> 
+				<!-- <td th:text="${row.weather}"></td> -->
+				<th:block th:if="${row.sky}== 4">
+					<td th:text="흐림"></td>
+				</th:block>
+				<th:block th:if="${row.sky}== 3">
+					<td th:text="구름많음"></td>
+				</th:block>
+				<th:block th:if="${row.sky}== 1">
+					<td th:text="맑음"></td>
+				</th:block>
+					<td th:text="|${row.reh} %|"></td>
+					<td th:text="|${row.wsd} m/s|"></td>
+				<th:block th:if="${row.vec} >= 0 and ${row.vec} < 11.25">
+					<td th:text="북"></td>
+				</th:block>
+				<th:block th:if="${row.vec} >= 11.25 and ${row.vec} < 33.75">
+					<td th:text="북북동"></td>
+				</th:block>
+				<th:block th:if="${row.vec} >= 33.75 and ${row.vec} < 56.25">
+					<td th:text="북동"></td>
+				</th:block>
+				<th:block th:if="${row.vec} >= 56.25 and ${row.vec} < 78.75">
+					<td th:text="동북동"></td>
+				</th:block>
+				<th:block th:if="${row.vec} >= 78.75 and ${row.vec} < 101.25">
+					<td th:text="동"></td>
+				</th:block>
+				<th:block th:if="${row.vec} >= 101.25 and ${row.vec} < 123.75">
+					<td th:text="동남동"></td>
+				</th:block>
+				<th:block th:if="${row.vec} >= 123.75 and ${row.vec} < 146.25">
+					<td th:text="남동"></td>
+				</th:block>
+				<th:block th:if="${row.vec} >= 146.25 and ${row.vec} < 168.75">
+					<td th:text="남남동"></td>
+				</th:block>
+				<th:block th:if="${row.vec} >= 168.75 and ${row.vec} < 191.25">
+					<td th:text="남"></td>
+				</th:block>
+				<th:block th:if="${row.vec} >= 191.25 and ${row.vec} < 213.75">
+					<td th:text="남남서"></td>
+				</th:block>
+				<th:block th:if="${row.vec} >= 213.75 and ${row.vec} < 236.25">
+					<td th:text="남서"></td>
+				</th:block>
+				<th:block th:if="${row.vec} >= 236.75 and ${row.vec} < 258.75">
+					<td th:text="서남서"></td>
+				</th:block>
+				<th:block th:if="${row.vec} >= 258.75 and ${row.vec} < 281.25">
+					<td th:text="서"></td>
+				</th:block>
+				<th:block th:if="${row.vec} >= 281.25 and ${row.vec} < 303.75">
+					<td th:text="서북서"></td>
+				</th:block>
+				<th:block th:if="${row.vec} >= 303.75 and ${row.vec} < 326.25">
+					<td th:text="북서"></td>
+				</th:block>
+				<th:block th:if="${row.vec} >= 326.25 and ${row.vec} < 348.75">
+					<td th:text="북북서"></td>
+				</th:block>
+				<th:block th:if="${row.vec} >= 348.75 and ${row.vec} <= 360">
+					<td th:text="북"></td>
+				</th:block>
+				<!-- <td th:text="${row.wsd}"></td> -->
+				<td th:text="${row.tmp}"></td>
+				<!-- td th:text="${row.cnPm10}"></td> -->
+				<!-- <td th:text="${row.korPm10}"></td> -->
+				<!-- 이 기준은 2022년 8월 26일 기준 ~ -->
+				<th:block th:if="${row.region} == '강북구' or ${row.region} == '강동구'  or ${row.region} == '강서구' or ${row.region} == '관악구'or ${row.region} == '광진구'">
+					<td th:text="보통" style="color:blue"></td>
+				</th:block>
+				<th:block th:unless="${row.region} == '강북구' or ${row.region} == '강동구'  or ${row.region} == '강서구' or ${row.region} == '관악구' or ${row.region} == '광진구'">
+					<td th:text="좋음"style="color:green"></td>
+				</th:block>
+			</tr>
+			
+		</tbody>
+	</table>
+	</div>
+
+<script th:inline="javascript">
+	
+	$('input[type=checkbox]').click(function(){
+		// alert("변경");
+		var ha = document.getElementById("chaCol").innerHTML;
+		// alert(ha);
+		if(ha === "시간"){
+			document.getElementById("chaCol").innerHTML= "날짜";
+			// alert("변경1");
+			$.ajax({
+				url : "/star/main3",
+				type : "get",
+				data : {"dateWeather" : "날짜"},
+				success:function(data){
+					$("#date").html(data);
+				},
+				error : function(error){
+					alert("실패");
+				}
+			});
+			return;
+		}else{
+			document.getElementById("chaCol").innerHTML = "시간";
+			// alert("변경2");
+			$.ajax({
+				url : "/star/main3",
+				type : "get",
+				data : {"dateWeather" : "시간"},
+				success:function(data){
+					$("#date").html(data);
+				},
+				error : function(error){
+					alert("실패");
+				}
+			});
+			return;
+		}
+	});
+
+</script>
+</body>
+</html>
