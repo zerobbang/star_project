@@ -15,4 +15,6 @@ public interface WeatherMapper {
 	
 	// 예보 날씨 불러오기
 	public List<WeatherDTO> getWeather(@Param("fcstDate") String fcstDate, @Param("fcstTime")String fcstTime);
+	
+	public List<WeatherDTO> getWeatherFromTime();
 }

@@ -26,7 +26,8 @@ public class WeatherServiceImpl implements WeatherService {
 	@Override
 	public List<WeatherDTO> getWeather(String fcstDate, String fcstTime) {
 		List<WeatherDTO> weatherForcast = Collections.emptyList();
-		weatherForcast = weatherMapper.getWeather(fcstDate, fcstTime);
+//		weatherForcast = weatherMapper.getWeather(fcstDate, fcstTime);
+		weatherForcast = weatherMapper.getWeatherFromTime();
 		return weatherForcast;
 	}
 

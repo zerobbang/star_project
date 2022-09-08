@@ -19,6 +19,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 //import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,14 +30,19 @@ import com.star.domain.WeatherDTO;
 //import com.star.service.WeatherService;
 import com.star.service.WeatherService;
 
+@Component
 @Controller
 public class WeatherController {
 	
 	@Autowired
 	private WeatherService weatherService;
 	
+	@Scheduled(cron = "0 0 0 * * *")
+//	@Scheduled(cron = "0 * * * * *")
 	@GetMapping(value="/weather")
-	public String getWeather(Model model) {
+//	public void getWeather(Model model) {
+	public void getWeather() {
+		System.out.println("슈웃~!");
 		// 서울 메타데이타
 				Map<String,List<Integer>> weather = new HashMap<>();
 				ArrayList<Integer> junglanggu = new ArrayList<Integer>(Arrays.asList(62,128));
@@ -190,6 +197,22 @@ public class WeatherController {
 							int index = 0;
 							for(int i=0;i<item.size();i++) {
 								JSONObject itemList = (JSONObject) item.get(i);
+								
+								String targetTime = (String) itemList.get("fcstTime");
+								
+								if (	(
+										targetTime.equals("0000") || 
+										targetTime.equals("0300") ||
+										targetTime.equals("0600") ||
+										targetTime.equals("0900") ||
+										targetTime.equals("1200") ||
+										targetTime.equals("1500") ||
+										targetTime.equals("1800") ||
+										targetTime.equals("2100") ) == false){
+									System.out.println("여기 사람있어요!!");
+									continue;
+								}
+								
 								String category = (String) itemList.get("category");
 								System.out.println("index : "+index);
 								if(category.equals("TMP")) {
@@ -232,6 +255,8 @@ public class WeatherController {
 //									System.out.println(key.getClass().getTypeName());
 									weatherDTO.setRegion(key);
 									System.out.println("한 개 데이터 완성 : "+weatherDTO.toString());
+									
+									
 
 									boolean result = weatherService.insertWeather(weatherDTO);
 									if(result == true) {
@@ -259,6 +284,7 @@ public class WeatherController {
 
 				//System.out.println(model);
 
-				return "/board/test";
+//				return "/board/test";
 	}
+	
 }

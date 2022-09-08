@@ -3,8 +3,7 @@
 <mapper namespace="com.star.mapper.WeatherMapper">
 
 	<sql id="weatherColumns">
-		data_num
-		, fcstDate
+		fcstDate
 		, fcstTime
 		, wsd
 		, vec
@@ -24,8 +23,7 @@
 		INSERT INTO weather_table (
 			<include refid="weatherColumns"/>
 		) VALUES (
-			#{dataNum}
-			, #{fcstDate}
+			#{fcstDate}
 			, #{fcstTime}
 			, #{wsd}
 			, #{vec}
@@ -53,6 +51,44 @@
 			fcstDate = #{fcstDate}
 		AND 
 			fcstTime = #{fcstTime}
+	</select>
+	
+	<!-- 미래 24시간까지의 기상 조회 -->
+	<select id="getWeatherFromTime" resultType="WeatherDTO">
+		select 
+			*
+		from 
+			weather_table
+		
+		<![CDATA[where
+			TIMESTAMPDIFF(
+				hour 
+				, CONCAT(
+					date_format(fcstDate, '%Y-%m-%d')
+					, ' '
+					, CONCAT( 
+						substr(fcstTime, 1, 2 )
+						, ':' 
+						, SUBSTR(fcstTime, 3, 2)
+					)
+				)		
+				, now()
+			) < 0
+		and 
+			TIMESTAMPDIFF(
+				hour 
+				, concat(
+					date_format(fcstDate, '%Y-%m-%d')
+					, ' '
+					, CONCAT( 
+						SUBSTR(fcstTime, 1, 2 )
+						, ':' 
+						, SUBSTR(fcstTime, 3, 2)
+					)
+				)		
+				, now()
+			) > -24 ]]> ;
+			
 	</select>
 
 </mapper>

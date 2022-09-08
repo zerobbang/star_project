@@ -7,8 +7,6 @@ import lombok.Setter;
 @Setter
 public class WeatherDTO {
 	
-	private int dataNum;
-	
 	private String fcstDate;
 	
 	private String fcstTime;
@@ -35,7 +33,7 @@ public class WeatherDTO {
 
 	@Override
 	public String toString() {
-		return "WeatherDTO [dataNum=" + dataNum + ", fcstDate=" + fcstDate + ", fcstTime=" + fcstTime + ", wsd=" + wsd
+		return "WeatherDTO [fcstDate=" + fcstDate + ", fcstTime=" + fcstTime + ", wsd=" + wsd
 				+ ", vec=" + vec + ", pcp=" + pcp + ", reh=" + reh + ", pty=" + pty + ", sky=" + sky + ", tmp=" + tmp
 				+ ", baseDate=" + baseDate + ", baseTime=" + baseTime + ", region=" + region + "]";
 	}
